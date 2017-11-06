@@ -98,8 +98,8 @@ public class StaticMap {
         double lon = -73.98572;
         double lat = 40.74843;
         int zoom = 16;
-        int width = 1280;
-        int height = 1280;
+        int width = 500;//1280;
+        int height = 500;//1280;
 
         BufferedImage[] imgs = getImages(lon, lat, zoom, width, height);
 
