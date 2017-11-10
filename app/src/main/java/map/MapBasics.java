@@ -1,27 +1,25 @@
 package map;
 
+import java.awt.geom.Point2D;
+import java.awt.Dimension;
+
 /**
  * Basic data about a map.
  *
- * @author Martin Sellergren
+ * @inv width,height > 0
+ * @inv 0 <= zoom <= 22
  */
 public class MapBasics {
-    int x;
-    int y;
-    int width;
-    int height;
-    int zoom;
+    private Point2D.Double pos;
+    private Dimension dim;
+    private double zoom;
 
     /**
-     * Creates a MapBasics object.
-     * @param x x-coordinate
-     * @param y y-coordinate
-     * @param w width
-     * @param h height
-     * @param z zoom
-     * @inv {@code w,h>0}
-     * @inv {@code 0<z<16}
+     * Constructs a MapBasics object.
+     * @param pos Position.
+     * @param dim Dimensions. dim.width,dim.height > 0
+     * @param z Zoom. 0 <= z <= 16
      */
-    public MapBasics(int x, int y, int w, int h, int z) {
+    public MapBasics(Point2D.Double pos, Dimension dim, double z) {
     }
 }
