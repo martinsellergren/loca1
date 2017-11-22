@@ -1,29 +1,28 @@
 package map;
 
-import com.mapbox.services.api.staticimage.v1.MapboxStaticImage.Builder;
-import com.mapbox.services.api.staticimage.v1.MapboxStaticImage;
-import com.mapbox.services.Constants;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.net.URL;
 import java.io.File;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.Color;
 
 public class StaticMap {
-    static boolean useRetina = false;
-    static String uname = "masel";
-    static String token = "pk.eyJ1IjoibWFzZWwiLCJhIjoiY2o0ZTR2NWtrMHZudDJ3cDQzdXRwZ29zZCJ9.VrI0NDIYaP_5ZAXqnpaD1A";
-    static String fullStyleID = "cj962wpa3p3g22spbnw89cisy";
-    static String labelsStyleID = "cj962xk828lks2svxh8s2ahed";
     static int labelAlphaThreshold = 100; //pixels alpha-value- over means show, under means hide.
 
     static BufferedImage[] getImages(double lon, double lat, int zoom, int width, int height) {
+        MapBasics mb = new MapBasics(lon, lat, width, height, zoom);
+        boolean useRetina = true;
         boolean attribution = false;
-        BufferedImage full = getImage(fullStyleID, lon, lat, zoom, width, height, attribution);
-        BufferedImage labels = getImage(labelsStyleID, lon, lat, zoom, width, height, attribution);
+        BufferedImage full = null;
+        BufferedImage labels = null;
+
+        try {
+            full = MapFetcher.fetchRawImage(mb, MapFetcher.fullStyleID, useRetina, attribution);
+            labels = MapFetcher.fetchRawImage(mb, MapFetcher.labelStyleID, useRetina, attribution);
+        } catch (Exception e) { e.printStackTrace(); }
         fixLabelImage(labels);
+
         return (new BufferedImage[] {full, labels});
     }
 
@@ -46,36 +45,7 @@ public class StaticMap {
     // static int getGreen(int clr) { return (clr & 0x00ff0000) >> 16; }
     // static int getBlue(int clr) { return (clr & 0x00ff0000) >> 16; }
 
-    static BufferedImage getImage(String style, double lon, double lat, int zoom, int width, int height, boolean attribution) {
-        MapboxStaticImage staticImage = new MapboxStaticImage.Builder()
-            .setAccessToken(token)
-            .setUsername(uname)
-            .setStyleId(style)
-            .setLon(lon).setLat(lat) // Image center position
-            .setZoom(zoom)
-            .setWidth(width).setHeight(height) // Image size
-            .setRetina(useRetina) // Retina 2x image will be returned
-            .build();
 
-        String imageUrl = staticImage.getUrl().toString();
-        if (!attribution) {
-                imageUrl += "&attribution=false&logo=false";
-            }
-        //System.out.println(imageUrl);
-
-        BufferedImage img = null;
-
-        try {
-            img = ImageIO.read(new URL(imageUrl));
-            //displayImg(img);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            System.exit(-1);
-        }
-
-        return img;
-    }
 
     static void displayImg(BufferedImage img) {
         JFrame frame = new JFrame();

@@ -3,7 +3,7 @@ package map;
 import java.awt.image.BufferedImage;
 
 /**
- * An image with some loosly map oriented behaviour.
+ * An image with some loosly map-oriented behaviour.
  */
 public class MapImage {
     private BufferedImage img;
@@ -32,7 +32,7 @@ public class MapImage {
     }
 
     /**
-     * Detect text of label in the image specified by a label layout.
+     * Detects text of label in the image specified by a label layout.
      * Uses OCR-methods.
      *
      * @param layout Specification for the label to be detected.
