@@ -5,18 +5,38 @@ import java.awt.Point;
 /**
  * A box-image is a map image where only labels are showing and instead
  * of letters in the labels, there are boxes. Each box is formed like
- * the letter C (with straight lines) with the opeing towards right
- * -to provide direction.
- * So, the boxes (letters) form groups:
- *  -Words separated by a horizontal space.
+ * the letter C (with straight lines) with the opening towards right
+ * -to provide direction. The space-character is also represented as
+ * a box. The box is sized and positioned so that corresponding letter
+ * just barely fits inside. If the character is very short/thin the
+ * box is given a min-width/height (which doesn't effect the
+ * letter-spacing/box-spacing relationship).
+ *
+ * Note: the underlying font must comply with box-image constraints -
+ * the font should be mono-spaced.
+ *
+ * The boxes (letters) form groups:
  *  -Rows of horizontally adjacent boxes.
  *  -Labels (multiple rows) separated by surrounding space.
  *
- * This class represents a box-image using a 2D boolean array.
+ * More underlying map-image properties:
+ *  -Labels are located anywhere in the image, at any rotation.
+ *  -The baseline of a row might not be a straight line - letters
+ *   are rotated accordingly folloing the row. Maximum angle change
+ *   between adjacent characters around 40deg.
+ *  -Labels with multiple rows has no rotation and a straight base line.
+ *
+ * This class represents a box-image using a 2D boolean array (a "map").
  * If map[x][y] is True, this is a box-point.
  * This is useful for creating labelLayouts for labels in an image.
  *
- * @pre No letter-box touches another.
+ * @pre No (or few..) letter-boxes touch.
+ * @pre Horizontal space between boxes of same row is always less
+ * than the width of any box in the label.
+ * @pre Vertical space between boxes of neighboring rows is always
+ * less than the heigh of any box in the label (...).
+ * @pre Highest box is always shorter than 2*shortest box (in same
+ * label i.e same font-size).
  */
 
 public class BoxImage {
