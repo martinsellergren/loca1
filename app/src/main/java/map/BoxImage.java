@@ -35,18 +35,18 @@ import java.awt.Point;
  * than the width of any box in the label.
  * @pre Vertical space between boxes of neighboring rows is always
  * less than the heigh of any box in the label (...).
- * @pre Highest box is always shorter than 2*shortest box (in same
- * label i.e same font-size).
+ * @pre Highest box is always shorter than 2*shortest box in same
+ * label (i.e same font-size).
  */
 
 public class BoxImage {
     private boolean[][] map;
 
     /**
-     * Constructs the box-image representation from a rgba-image.
+     * Constructs the box-image representation from an rgba-image.
      * Close to transparent pixels are marked as non-letter.
      * Lowest alpha value still counted as box-point is the
-     * alpha threshold.
+     * alpha-threshold.
      *
      * @param boxImg A box image.
      * @param alphaThreshold Pixels alpha-value-threshold where
@@ -68,7 +68,7 @@ public class BoxImage {
      * finds a box-point, expands it into a label-layout.
      * Returns good and bad (e.g clipped, half outside of view) labels.
      */
-    public class LabelLayoutIter {
+    public class LabelLayoutIterator {
         private boolean[][] copy;
         private LabelLayout next = null;
 
@@ -76,7 +76,7 @@ public class BoxImage {
          * Constructs the iterator by making a copy of the boxImage-map
          * which can be modified without concerns.
          */
-        public LabelLayoutIter() {
+        public LabelLayoutIterator() {
             copy = new boolean[map.length][];
 
             for (int i = 0; i < map.length; i++) {
@@ -96,7 +96,7 @@ public class BoxImage {
         }
 
         /**
-         * True if iterator has more next's. Also steps one step, i.e
+         * True if iterator has more nexts. Also steps one step, i.e
          * sets next. Always call this before calling next().
          *
          * @return True if not done.
@@ -122,10 +122,10 @@ public class BoxImage {
          * row is an adjacent row in same label as the start-row.
          *
          * Conditions for beeing a neighboring row:
-         *  -In close proximity to up/down of start-row.
-         *  -Centered in relation to start-row.
-         *  -Generally(by average) at same rotation as start-row.
+         *  -No rotation (like start-row).
+         *  -In close proximity (up/down) to start-row (~box-height).
          *  -Generally same line-height as start-row.
+         *  -Centered in relation to start-row.
          *
          * @param up Search up, otherwise down.
          * @param startRow Start row.
@@ -133,7 +133,7 @@ public class BoxImage {
          * if such a neighbor-row doesn't exist.
          *
          * @pre startRow a row in the map-copy (i.e horizontaly
-         * adjacent boxes).
+         * adjacent boxes) with no rotation and a straight baseline.
          */
         private Point findNeighborRowPoint(boolean up, Box[] startRow) {
             return null;
@@ -146,9 +146,9 @@ public class BoxImage {
          * the start-box.
          *
          * Conditions for beeing a neighboring box:
-         *  -In close proximity to left/right of start-box.
-         *  -At about the same rotation as start-box.
-         *  (-At about same width as start-box (dot,dash,..?))
+         *  -In close proximity to left/right of start-box (~box-width).
+         *  -At about the same rotation as start-box (~40deg).
+         *  -At about same size as start-box (~height*2)
          *
          * @param left Search left, otherwise right.
          * @param startBox Start box.
@@ -229,22 +229,49 @@ public class BoxImage {
         }
 
         /**
-         * Adds all rows above or below some start-row, in same label
-         * in the map-copy.
+         * Adds, to a label-layout, all rows above or below some
+         * start-row in same label in the map-copy.
          *
-         * @param up If true add rows above startRow, otherwise below.
+         * @param up If true, adds rows above startRow, otherwise below.
          * @param startRow Start-row.
-         * @param layout Accumulator of the new rows, already
-         * containing start-row.
-         * @return A layout containing the start-row and all rows
-         * above/below, in same label as start-row, or NULL if no
-         * rows in that direction.
+         * @param layout Accumulator for the new rows.
+         * @return The provided label-layout, prepended/appended
+         * with all rows above/below in same label as start-row.
          *
-         * @pre startRow a row of some label in the map-copy.
-         * @pre layout contains startRow.
+         * @pre startRow a row of some label in the map-copy, that has
+         * no rotation and a straight base-line.
          */
         private LabelLayout addRows(boolean up, Box[] startRow, LabelLayout layout) {
             return null;
+        }
+
+        /**
+         * Adds, to an array, all boxes to the left or right of some
+         * start-box, in same row of some label in the map-copy.
+         *
+         * @param left If true, adds boxes to the left of startBox,
+         * otherwise to the right.
+         * @param startBox Start-box.
+         * @param bs Accumulator for the new boxes.
+         * @return The provided box-array (bs) prepended/appended
+         * with all boxes to left/right of that box (in same label).
+         *
+         * @pre startBox a letter-box in the map-copy.
+         */
+        private Box[] addBoxes(boolean left, Box startBox, Box[] bs) {
+            return null;
+        }
+
+        /**
+         * Removes a label from the map-copy, i.e deactivates all its
+         * points. Goes through the label-layout and deactivates every
+         * point of every letter-box in the layout. Extends the size of
+         * the letter-box-area slightly to ensure that no point is
+         * missed.
+         *
+         * @param layout Layout for the label to be removed.
+         */
+        private void removeLabel(LabelLayout layout) {
         }
     }
 }

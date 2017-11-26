@@ -29,10 +29,10 @@ BoxImage
         expandToRow(boxed-Point)::Box[]
         addBoxes(LEFT/RIGHT, startBox::Box, accum(contains startBox)::Box[])::Box[]
         addRows(UP/DOWN, startRow::Box[], labelLayout(accumulator, contains startRow))::LabelLayout
-        turnOffBoxedPoints(boxes::box[])::Void
+        removeLabel(layout::LabelLayout)::Void
 
         expandToBox(boxed-Point)::Box
-            expandToBoxedPoints(boxed-Point)::Point[]
+            expandToBoxPoints(boxed-Point)::Point[]
             getCorners(points::Point[])::Point[](0Left 1Up 2Right 3Down)
                 findExtremes(Point[])::Point[](0Left 1Up 2Right 3Down)
                 rotate(Point[], deg)::Point[]
@@ -75,7 +75,6 @@ LabelLayout
     getLowest()
     getLeftest()
     getRightest()
-    predictSpaceWidth()::double
     getAverageHeight()::double
 
     innner:
@@ -108,9 +107,9 @@ Map(MapBasics)
     new Map(mapBasics, mapImg::MapImage, labelsImg(null?)::MapImage, letterBoxesImg::BoxImage)
     new Map(mapBasics, imgs::BufferedImage[]3pcs)
     new Map(maps::Map[][])
+    mapBasics::MapBasics
     mapImg::MapImage
     labels::Labels
-    createQuestionMap() -> QuestionMap
     fetchAndSetLabelCategories():
         labels.fetchAndSetCategories(mapBasics)
     removeUnspecifidLabels()

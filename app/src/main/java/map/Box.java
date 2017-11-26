@@ -41,6 +41,36 @@ public class Box {
         return 0;
     }
 
+    /**
+     * @return A non-rotated bounding-box to this box represented
+     * as four corner points (top/bottom/left/right is relative
+     * to the screen):
+     *  bb[0] - top-left
+     *  bb[1] - top-right
+     *  bb[2] - bottom-right
+     *  bb[3] - bottom-left
+     *
+     * Note: bb[0] equal to getTopLeft() if box has no rotation.
+     */
+    public Point[] getBoundingBox() {
+        return null;
+    }
+
+    /**
+     * @param b Box to compare to this box.
+     * @return True if this box and b is centered horizontally.
+     *
+     * @pre This box and b both has no rotation.
+     */
+    public boolean isCentered(Box b) {
+        return false;
+    }
+
+    /**
+     * Returns the top-left point of this rotated box. For this method
+     * and the similar below, note that e.g "top-left" is relative to
+     * the box, not screen.
+     */
     public Point getTopLeft() {
         return null;
     }
@@ -65,16 +95,7 @@ public class Box {
     public Point getRightMid() {
         return null;
     }
-    public Point getHighest() {
-        return null;
-    }
-    public Point getLowest() {
-        return null;
-    }
-    public Point getLeftest() {
-        return null;
-    }
-    public Point getRightest() {
+    public Point getMid() {
         return null;
     }
 }

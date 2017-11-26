@@ -41,4 +41,11 @@ public class MapImage {
     public String detectLabel(LabelLayout layout) {
         return null;
     }
+
+    /**
+     * @return A deep copy of this MapImage.
+     */
+    public MapImage copy() {
+        return null;
+    }
 }

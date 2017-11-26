@@ -18,7 +18,7 @@ public class Label {
     private LabelLayout layout;
 
     /**
-     * Construct a Label from known blocks.
+     * Construct a Label from known data.
      *
      * @param text Label-text. length(text) > 0
      * @param l Basics; pos, dim.

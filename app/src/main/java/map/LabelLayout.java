@@ -36,14 +36,14 @@ public class LabelLayout {
     }
 
     /**
-     * @return All letter-boxes in a 1d-array.
+     * @return All letter-boxes in a 1d-array. Letter box copies.
      */
     public Box[] getBoxes() {
         return null;
     }
 
     /**
-     * @return Letter-box at specified row and position in row.
+     * @return Letter-box at specified row and position in row. A copy.
      */
     public Box getBox(int row, int pos) {
         return null;
@@ -51,38 +51,10 @@ public class LabelLayout {
 
     /**
      * Predict the line-height of the label.
-     *
      * @return A line-height prediction.
      */
     public double predictLineHeight() {
         return getAverageHeight();
-    }
-
-    /**
-     * @return Average rotation of the boxes.
-     */
-    public double getAverageRotation() {
-        return 0;
-    }
-
-    public Point getHighest() {
-        return null;
-    }
-    public Point getLowest() {
-        return null;
-    }
-    public Point getLeftest() {
-        return null;
-    }
-    public Point getRightest() {
-        return null;
-    }
-
-    /**
-     * @return A prediction of the length of one space-character.
-     */
-    private double predictSpaceWidth() {
-        return 0;
     }
 
     /**
@@ -92,20 +64,40 @@ public class LabelLayout {
         return 0;
     }
 
+    /**
+     * @return Average rotation of the boxes.
+     */
+    public double getAverageRotation() {
+        return 0;
+    }
+
+    /**
+     * @return A non-rotated bounding-box to this layout.
+     */
+    public Box getBoundingBox() {
+        return null;
+    }
+
+    /**
+     * @return True if any letter-box has a significant rotation,
+     * i.e if the label is rotated as a whole, or has a curver baseline.
+     */
+    public boolean hasRotation() {
+        return false;
+    }
+
 
     /**
      * Iterator that returns letter-boxes of the label-layout.
-     * Also indicates how letters group into words.
      * Usage: call hasMore() before getNext().
      */
-    public class LetterBoxIter {
+    public class LetterBoxIterator {
         private int row = 0;
         private int pos = 0;
         private Box next = null;
 
         /**
-         * @return Next letter-box in iterator. NULL if next is a
-         * delimiter (space/newline).
+         * @return Next letter-box in iterator.
          */
         public Box next() {
             return next;
@@ -113,8 +105,7 @@ public class LabelLayout {
 
         /**
          * Indicates if more letter-boxes in iterator, and updates
-         * next if there is. next=null if next pos is delimiter.
-         * Always call this before next().
+         * next if there is. Always call this before next().
          *
          * @return True if iter has more.
          */

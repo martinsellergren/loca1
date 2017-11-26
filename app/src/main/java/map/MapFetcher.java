@@ -36,7 +36,8 @@ public class MapFetcher {
     /**
      * Creates a map image from specified mapbox-style.
      * Image(s) are fetched from mapbox servers and concatenated by
-     * need.
+     * need. If dims <= 1280 (mapbox limit) there is no concatenation:
+     * only one image is fetched from server and returned.
      *
      * @param mb Basic map specification.
      * @param style Mapbox style ID.
@@ -60,7 +61,7 @@ public class MapFetcher {
      * @throws IOException if failed to fetch image (bad internet-conn?)
      * @return Static mapbox-image.
      */
-    public static BufferedImage fetchRawImage(MapBasics mb, String style, boolean useRetina, boolean attribution) throws IOException {
+    private static BufferedImage fetchRawImage(MapBasics mb, String style, boolean useRetina, boolean attribution) throws IOException {
         MapboxStaticImage staticImage = new MapboxStaticImage.Builder()
             .setAccessToken(token)
             .setUsername(uname)

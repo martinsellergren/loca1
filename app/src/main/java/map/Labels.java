@@ -6,6 +6,8 @@ import java.io.IOException;
  * A representation of a set of {@link Label}s.
  */
 public class Labels {
+    private Labels[] labels;
+
     /**
      * Constructs a new set of labels by extracting label-data from
      * a labelImg and is's corresponding boxImg. OCR-method is used.
@@ -25,7 +27,7 @@ public class Labels {
     }
 
     /**
-     * Fetches categories for each label from online sources and sets
+     * Fetches category for each label from online sources and sets
      * the label's category.
      *
      * @param mb Map-data for the map of the labels. Needed for a
