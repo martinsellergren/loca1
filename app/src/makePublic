@@ -1,0 +1,2 @@
+find . -type f -name "*.java" -print0 |
+xargs -0 -Ix sh -c 'cat "$1" | sed -e "s/private/public\/\*\*\*\//" > "$1.temp"; mv "$1.temp" "$1";' -- x
