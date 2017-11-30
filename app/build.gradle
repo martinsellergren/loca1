@@ -9,8 +9,25 @@ repositories {
 
 dependencies {
     compile 'com.mapbox.mapboxsdk:mapbox-java-services:2.2.6'
+    testCompile "junit:junit:4.11"
+}
+
+test {
+    testLogging.showStandardStreams = true
 }
 
 javadoc {
     options.tags = [ "pre:a:Pre:", "post:a:Post:", "inv:a:Invariants:" ]
+}
+
+task makePublic(type: Exec) {
+    commandLine './src/makePublic'
+}
+
+task backToDefaults(type: Exec) {
+    commandLine './src/backToDefaults'
+}
+
+task ptest(type: GradleBuild) {
+    tasks = ['makePublic', 'test', 'backToDefaults']
 }

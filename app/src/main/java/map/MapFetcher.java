@@ -61,7 +61,7 @@ public class MapFetcher {
      * @throws IOException if failed to fetch image (bad internet-conn?)
      * @return Static mapbox-image.
      */
-    private static BufferedImage fetchRawImage(MapBasics mb, String style, boolean useRetina, boolean attribution) throws IOException {
+    public static BufferedImage fetchRawImage(MapBasics mb, String style, boolean useRetina, boolean attribution) throws IOException {
         MapboxStaticImage staticImage = new MapboxStaticImage.Builder()
             .setAccessToken(token)
             .setUsername(uname)
