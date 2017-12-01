@@ -48,4 +48,14 @@ public class MapImage {
     public MapImage copy() {
         return null;
     }
+
+    /**
+     * Concatenates multiple images into one.
+     *
+     * @param imgs 2d layout of concatenation-images.
+     * @return One concatenated image.
+     */
+    public static MapImage concatenateImages(MapImage[][] imgs) {
+        return null;
+    }
 }

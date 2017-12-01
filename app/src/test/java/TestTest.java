@@ -7,7 +7,6 @@ public class TestTest {
     public void testTest() {
         //System.out.println("ttteeesssttt");
 
-        assert(1 == 1);
         assertTrue(1 == 1);
         assertFalse(1 == 2);
         assertEquals(1, 1);

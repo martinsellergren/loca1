@@ -47,6 +47,22 @@ public class MapFetcher {
      * @return A map image.
      */
     public static MapImage fetchMapImage(MapBasics mb, String style, boolean useRetina, boolean attribution) throws IOException {
+        int d = 1280;
+        int nwidths = mb.width / d;
+        int nheights = mb.height / d;
+        int rows = nwidths;
+        int cols = nheights;
+        if (mb.width % d != 0) rows += 1;
+        if (mb.height % d != 0) cols += 1;
+
+        MapImage[][] imgLayout = new MapImage[rows][cols];
+
+        for (int r = 0; r < imgLayout.length; r++) {
+            for (int c = 0; c < imgLayout[r].length; c += d) {
+                //imgLayout[r][c]
+
+            }
+        }
         return null;
     }
 
@@ -57,7 +73,7 @@ public class MapFetcher {
      * @param style Mapbox style ID.
      * @param useRetina True means a high-quality image.
      * @param attribution Adds mapbox-attribution to the map if True.
-     * @throws IllegalArgumentException if mb dims > 1280
+     * @pre 0 < width,height <= 1280
      * @throws IOException if failed to fetch image (bad internet-conn?)
      * @return Static mapbox-image.
      */
@@ -79,15 +95,5 @@ public class MapFetcher {
 
         BufferedImage img = ImageIO.read(new URL(imageUrl));
         return img;
-    }
-
-    /**
-     * Concatenates multiple images into one.
-     *
-     * @param imgs 2d layout of concatenation-images.
-     * @return One concatenated image.
-     */
-    private static BufferedImage concatenateImages(BufferedImage[][] imgs) {
-        return null;
     }
 }
