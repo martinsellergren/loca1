@@ -17,6 +17,7 @@ public class MapFetcher {
     public static final String labelStyleID = "cj962xk828lks2svxh8s2ahed";
     public static final String boxStyleID = "cj962xk828lks2svxh8s2ahed";
     public static final boolean useRetina = false;
+    public static final int mapboxMaxWidthHeight = 1280;
 
     /**
      * Creates map images with data from mapbox-servers. Uses default
@@ -36,7 +37,7 @@ public class MapFetcher {
     /**
      * Creates a map image from specified mapbox-style.
      * Image(s) are fetched from mapbox servers and concatenated by
-     * need. If dims <= 1280 (mapbox limit) there is no concatenation:
+     * need. If dims <= mapboxMaxWidthHeight there is no concatenation:
      * only one image is fetched from server and returned.
      *
      * @param mb Basic map specification.
@@ -47,33 +48,29 @@ public class MapFetcher {
      * @return A map image.
      */
     public static MapImage fetchMapImage(MapBasics mb, String style, boolean useRetina, boolean attribution) throws IOException {
-        int d = 1280;
-        int nwidths = mb.width / d;
-        int nheights = mb.height / d;
-        int rows = nwidths;
-        int cols = nheights;
-        if (mb.width % d != 0) rows += 1;
-        if (mb.height % d != 0) cols += 1;
+        MapBasics[][] mbs = mb.split(MapFetcher.mapboxMaxWidthHeight);
+        int rows = mbs.length;
+        int cols = mbs[0].length;
+        MapImage[][] imgs = new MapImage[rows][cols];
 
-        MapImage[][] imgLayout = new MapImage[rows][cols];
-
-        for (int r = 0; r < imgLayout.length; r++) {
-            for (int c = 0; c < imgLayout[r].length; c += d) {
-                //imgLayout[r][c]
-
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                BufferedImage bimg = fetchRawImage(mbs[r][c], style, useRetina, attribution);
+                imgs[r][c] = new MapImage(bimg);
             }
         }
-        return null;
+
+        return MapImage.concatenateImages(imgs);
     }
 
     /**
      * Fetches an image from mapbox servers.
      *
-     * @param mb Basic map specs. width,height <= 1280 (mapbox limit)
+     * @param mb Basic map specs. width,height <= mapboxMaxWidthHeight
      * @param style Mapbox style ID.
      * @param useRetina True means a high-quality image.
      * @param attribution Adds mapbox-attribution to the map if True.
-     * @pre 0 < width,height <= 1280
+     * @pre 0 < width,height <= mapboxMaxWidthHeight
      * @throws IOException if failed to fetch image (bad internet-conn?)
      * @return Static mapbox-image.
      */
@@ -93,7 +90,12 @@ public class MapFetcher {
                 imageUrl += "&attribution=false&logo=false";
         }
 
-        BufferedImage img = ImageIO.read(new URL(imageUrl));
-        return img;
+        try {
+            BufferedImage img = ImageIO.read(new URL(imageUrl));
+            return img;
+        }
+        catch (IOException e) {
+            throw new IOException("request: " + imageUrl, e);
+        }
     }
 }
