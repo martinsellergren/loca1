@@ -1,21 +1,37 @@
 package map;
 
 import java.awt.geom.Point2D;
-//import java.lang.Math;
 
 /**
- * Basic data about a map. Immutable. X-pos(longitude) and
- * Y-pos(latitude) are center-point of map.
+ * Basic data about a map (with a pixel size.., like a printed map
+ * or something). Immutable. X-pos(longitude) and
+ * Y-pos(latitude) are the center-point of map.
  *
  * @inv width,height > 0
  * @inv 0 <= zoom <= 22
  */
 public class MapBasics {
+    /** Map-center x-value. */
     public final double x;
+
+    /** Map-center y-value. */
     public final double y;
-    public final int width;
-    public final int height;
-    public final double zoom;
+
+    /** Map width in degrees. */
+    public final int width;//double!
+
+    /** Map height in degrees. */
+    public final int height;//double!
+
+    /** Map-image pixels on width. */
+    public final int pixelWidth=0;
+
+    /** Map-image pixels on height. */
+    public final int pixelHeight=0;
+
+    /** Zoom of image following mapbox-standard where
+     * 0 is all way out and 16 is all way in. */
+    public final double zoom; //int!
 
     /**
      * Constructs a MapBasics object.
