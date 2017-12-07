@@ -47,7 +47,7 @@ public class MapFetcher {
      * @throws IOException if failed to fetch image (bad internet-conn?)
      * @return A map image.
      */
-    public static MapImage fetchMapImage(MapBasics mb, String style, boolean useRetina, boolean attribution) throws IOException {
+    public static MapImage fetchMapImage(MapBasics mb, String style) throws IOException {
         MapBasics[][] mbs = mb.split(MapFetcher.mapboxMaxWidthHeight);
         int rows = mbs.length;
         int cols = mbs[0].length;
@@ -55,7 +55,7 @@ public class MapFetcher {
 
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
-                BufferedImage bimg = fetchRawImage(mbs[r][c], style, useRetina, attribution);
+                BufferedImage bimg = fetchRawImage(mbs[r][c], style);
                 imgs[r][c] = new MapImage(bimg);
             }
         }
@@ -68,25 +68,23 @@ public class MapFetcher {
      *
      * @param mb Basic map specs. width,height <= mapboxMaxWidthHeight
      * @param style Mapbox style ID.
-     * @param useRetina True means a high-quality image.
-     * @param attribution Adds mapbox-attribution to the map if True.
      * @pre 0 < width,height <= mapboxMaxWidthHeight
      * @throws IOException if failed to fetch image (bad internet-conn?)
      * @return Static mapbox-image.
      */
-    public static BufferedImage fetchRawImage(MapBasics mb, String style, boolean useRetina, boolean attribution) throws IOException {
+    public static BufferedImage fetchRawImage(MapBasics mb, String style) throws IOException {
         MapboxStaticImage staticImage = new MapboxStaticImage.Builder()
             .setAccessToken(token)
             .setUsername(uname)
             .setStyleId(style)
             .setLon(mb.x).setLat(mb.y)
             .setZoom(mb.zoom)
-            .setWidth(mb.width).setHeight(mb.height)
-            .setRetina(useRetina)
+            .setWidth(mb.pixelWidth).setHeight(mb.pixelHeight)
+            .setRetina(mb.highQuality)
             .build();
 
         String imageUrl = staticImage.getUrl().toString();
-        if (!attribution) {
+        if (!mb.attribution) {
                 imageUrl += "&attribution=false&logo=false";
         }
 

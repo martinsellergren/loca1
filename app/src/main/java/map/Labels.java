@@ -6,7 +6,7 @@ import java.io.IOException;
  * A representation of a set of {@link Label}s.
  */
 public class Labels {
-    private Labels[] labels;
+    private Label[] labels;
 
     /**
      * Constructs a new set of labels by extracting label-data from
@@ -24,6 +24,13 @@ public class Labels {
      * the boxImg connect.
      */
     public Labels(MapImage labelImg, BoxImage boxImg) {
+    }
+
+    /**
+     * Constructs an empty set of labels.
+     */
+    public Labels() {
+        labels = new Label[0];
     }
 
     /**

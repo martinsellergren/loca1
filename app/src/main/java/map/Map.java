@@ -14,7 +14,6 @@ import java.io.IOException;
 public class Map {
     private MapBasics mapBasics;
     private MapImage mapImage;
-    private Labels labels;
 
     /**
      * Constructs a map from a provided map-image and by

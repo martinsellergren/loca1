@@ -8,9 +8,12 @@ public class MapDimensions {
      * the area. Pixel-properties, i.e pixel-width/height and
      * density (tileSize). Mapbox-standards..
      *
+     * The map-area is cut in height if latitude reaches
+     * outside [-90, 90].
+     *
      * @param mid Mid-point, where [0]=x, mid[1]=y.
-     * @param zoom Zoom-level (0-16).
-     * @param pixelDims, [0]=width, [1]=height.
+     * @param zoom Zoom-level (0-22).
+     * @param pixelDims {width, height} of area in pixels.
      * @param retina Pixel-density. false=default=256, true=retina=512.
      * @return Map-dims in degrees, where [0]=width, [1]=height.
      */
@@ -22,10 +25,21 @@ public class MapDimensions {
         double width = Math.abs(bounds[0] - bounds[2]);
         double height = Math.abs(bounds[1] - bounds[3]);
 
-        return new double[]{width, height};
+        return new double[] {width, height};
     }
 
-    private static double[] getBounds(double[] mid, int zoom, int[] pixelDims, int tileSize) {
+    /**
+     * Given a centerpoint, a zoom, pixelDims and pixelDensity,
+     * returns a geo-coordinate bounding box. Box is cut in height
+     * if latitude reaches outside [-90, 90].
+     *
+     * @param mid Centerpoint.
+     * @param zoom Zoom level.
+     * @param pixelDims Width and height of area in pixels.
+     * @param tileSize Pixel-density (tileSize).
+     * @return {minX, minY, maxX, maxY}
+     */
+    public static double[] getBounds(double[] mid, int zoom, int[] pixelDims, int tileSize) {
         double[][] env = getEnvironment(tileSize);
         double[] px = px(mid, zoom, env);
         double[] tl = ll(new double[] {
@@ -65,6 +79,13 @@ public class MapDimensions {
         return env;
     }
 
+    /**
+     * Convert lon lat to screen pixel value.
+     *
+     * @param ll {lon, lat} array of cordinates.
+     * @param zoom Zoom level.
+     * @return {x, y}
+     */
     private static double[] px(double[] ll, int zoom, double[][] env) {
         double d = env[2][zoom];
         double f = Math.min(Math.max(Math.sin(Math.PI/180 * ll[1]), -0.9999), 0.9999);
@@ -76,6 +97,13 @@ public class MapDimensions {
         return new double[] {x, y};
     }
 
+    /**
+     * Convert screen pixel value to lon lat.
+     *
+     * @param px {x, y} pixel values.
+     * @param zoom Zoom level.
+     * @return {lon, lat}
+     */
     private static double[] ll(double[] px, int zoom, double[][] env) {
         double g = (px[1] - env[2][zoom]) / (-env[1][zoom]);
         double lon = (px[0] - env[2][zoom]) / env[0][zoom];

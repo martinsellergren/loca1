@@ -9,16 +9,20 @@ import javax.imageio.ImageIO;
 import java.io.File;
 
 /**
- * An image with some loosly map-oriented behaviour.
+ * An image with some loosly map-oriented behaviour. The image might
+ * have a defined set of labels.
  */
 public class MapImage {
     private BufferedImage img;
+    private Labels labels;
 
     /**
-     * Constructs a MapImage from a BufferedImage.
+     * Constructs a MapImage from a BufferedImage without any defined
+     * labels (use setLabels() for that).
      */
     public MapImage(BufferedImage img) {
         this.img = img;
+        this.labels = new Labels();
     }
 
     /**
@@ -56,9 +60,23 @@ public class MapImage {
         return null;
     }
 
+    /**
+     * Sets labels for this mapImage.
+     */
+    public void setLabels(Labels l) {
+        this.labels = l;
+    }
+
+    /**
+     * @return Img width, i.e no of pixels on width.
+     */
     public int getWidth() {
         return img.getWidth();
     }
+
+    /**
+     * @return Img height, i.e no of pixels on height.
+     */
     public int getHeight() {
         return img.getHeight();
     }

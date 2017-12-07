@@ -11,15 +11,15 @@ public class StaticMap {
     static int labelAlphaThreshold = 100; //pixels alpha-value- over means show, under means hide.
 
     static BufferedImage[] getImages(double lon, double lat, int zoom, int width, int height) {
-        MapBasics mb = new MapBasics(lon, lat, width, height, zoom);
         boolean useRetina = true;
         boolean attribution = false;
+        MapBasics mb = new MapBasics(lon, lat, width, height, zoom, useRetina, attribution);
         BufferedImage full = null;
         BufferedImage labels = null;
 
         try {
-            full = MapFetcher.fetchRawImage(mb, MapFetcher.fullStyleID, useRetina, attribution);
-            labels = MapFetcher.fetchRawImage(mb, MapFetcher.labelStyleID, useRetina, attribution);
+            full = MapFetcher.fetchRawImage(mb, MapFetcher.fullStyleID);
+            labels = MapFetcher.fetchRawImage(mb, MapFetcher.labelStyleID);
         } catch (Exception e) { e.printStackTrace(); }
         fixLabelImage(labels);
 
@@ -41,12 +41,6 @@ public class StaticMap {
         }
     }
 
-    // static int getRed(int clr) { return (clr & 0x00ff0000) >> 16; }
-    // static int getGreen(int clr) { return (clr & 0x00ff0000) >> 16; }
-    // static int getBlue(int clr) { return (clr & 0x00ff0000) >> 16; }
-
-
-
     static void displayImg(BufferedImage img) {
         JFrame frame = new JFrame();
         frame.getContentPane().setLayout(new FlowLayout());
@@ -67,17 +61,31 @@ public class StaticMap {
 
 
     public static void main(String[] args) {
-        double lon = -73.98572;
-        double lat = 40.74843;
-        int zoom = 16;
-        int width = 500;//1280;
-        int height = 500;//1280;
+        // double lon = -73.98572;
+        // double lat = 40.74843;
+        // int zoom = 16;
+        // int width = 500;//1280;
+        // int height = 500;//1280;
 
-        BufferedImage[] imgs = getImages(lon, lat, zoom, width, height);
+        // BufferedImage[] imgs = getImages(lon, lat, zoom, width, height);
 
-        saveImage(imgs[0], "full.png");
-        saveImage(imgs[1], "labels.png");
+        // saveImage(imgs[0], "full.png");
+        // saveImage(imgs[1], "labels.png");
 
-        System.out.println("done");
+        double lon = 0;
+        double lat = 170;
+        int width = 200;
+        int height = 200;
+        int zoom = 0;
+        MapBasics mb = new MapBasics(lon, lat, width, height, zoom);
+
+        try {
+            BufferedImage img = MapFetcher.fetchRawImage(mb, MapFetcher.fullStyleID);
+            saveImage(img, "full.png");
+            System.out.println("done");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

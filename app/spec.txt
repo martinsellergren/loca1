@@ -1,21 +1,38 @@
+MapImageBasics
+    new MapImageBasics(lon, lat, w, h, z, highQ::bool, attrib::bool)
+    lon,lat::double, mid-cordinates
+    w/h::double, degrees
+    zoom::int(0-22)
+    inv: lat+h/2<=90, lat-h/2>=-90
+         w <= 360
+
 MapFetcher, static
-    fetchMapImges(mapBasics) -> MapImage[]
-        [0] - fullMapImg
-        [1] - labelsImg
-        [2] - letterBoxesImg
+    fetchMapImges(mapImageBasics) -> BasicImage[]
+        [0] - mapImg
+        [1] - labelImg
+        [2] - boxImg
 
-        fetchRawImage(max dim 1280*1280) -> BufferedImage
-        fetchMapImage(mapBasics)
-            concatenateRawImages()..
+    fetchRawImage(max dim 1280*1280) -> BufferedImage
+    ...
 
-MapImage
-    new MapImage(BufferedImage)
-    rotate(deg) -> MapImage
-    extract(box) -> MapImage
-    detectLabel(labelLayout)::string
+BasicImage
+    img::BufferedImage
+    new BasicImage(img::BufferedImage)
+    rotate(deg)::BasicImage
+    extract(box)::BasicImage
+    copy()::BasicImage
+    static concatenateImages(BasicImages[][] layout)
+
+MapImage<-BasicImage
+    labels::Labels
+    basics::MapImageBasics
+    new MapImage(mib::MapImageBasics, mapImg::BasicImage, labelImg(null?)::BasicImage, boxImg::BasicImage)
+    new MapImage(mib, imgs::BasicImages[map,label,box])
+    fetchAndSetLabelCategories()::void throws IOException
+    removeUnspecifiedLabels()::void
 
 BoxImage
-    new BoxImage(letterBoxesImg::MapImage, alphaTreshold)
+    new BoxImage(boxImg::BasicImage, alphaTreshold::int)
     (alphaTreshold: pixels alpha-value- over means show, under means hide)
 
     inner:
@@ -37,31 +54,24 @@ BoxImage
                 findExtremes(Point[])::Point[](0Left 1Up 2Right 3Down)
                 rotate(Point[], deg)::Point[]
 
-MapBasics
-    new MapBasics(x,y,w,h,z)
-    pos
-    dim
-    zoom
-    getCornerPoints()::Point2D.Double[]-4corner-points
-
 Label
-    new Label(text, layout, category)
+    new Label(text::String, layout::LabelLayout)
+    new Label(labelImg::BasicImage, layout::LabelLayout)
     text: String
     category: enum
     layout: LabelLayout
     setCategory(c::category enum)
-    fetchCategory(mapBasics)::category enum
+    fetchCategory(mapImageBasics)::category enum (if place not found, returns undefined-category)
 
-Labels
+Labels(tied to a mapImage)
     labels Label[]
-    new Labels(labelsImg::MapImage, letterBoxesImg::BoxImage)
-        auxBImg = letterBoxesImg.clone() #iter edits img
-        iter = new auxBImg.LabelLayoutIter()
-            labelsImg.extract(box..)
-            ...
-    fetchAndSetCategories(mapBasics)
+    new Labels(labelImg::BasicImage, boxImg::BoxImage)
+        iter = new boxImage.LabelLayoutIter()
+            layout = iter.next()
+            labels[i] = new Label(labelImg, layout)
+    fetchAndSetCategories(mapImageBasics)
         for each label:
-            c = label.fetchCategory(mapBasics)
+            c = label.fetchCategory(mapImageBasics)
             label.setCategory(c)
 
 LabelLayout
@@ -76,6 +86,7 @@ LabelLayout
     getLeftest()
     getRightest()
     getAverageHeight()::double
+    getBoundingBox()::double[xmin,ymin,xmax,ymax]
 
     innner:
     LetterBoxIter
@@ -103,16 +114,11 @@ Box
     getLeftest()
     getRightest()
 
-Map(MapBasics)
-    new Map(mapBasics, mapImg::MapImage, labelsImg(null?)::MapImage, letterBoxesImg::BoxImage)
-    new Map(mapBasics, imgs::BufferedImage[]3pcs)
-    new Map(maps::Map[][])
-    mapBasics::MapBasics
-    mapImg::MapImage
-    labels::Labels
-    fetchAndSetLabelCategories():
-        labels.fetchAndSetCategories(mapBasics)
-    removeUnspecifidLabels()
+Map
+    lon,lat,width,height::Double
+    zoomLevelImgs::MapImage[]
+    new Map(lon::Double, lat::Double, width::Double, height::Double)
+    addZoomLevel(img::MapImage)::void
 
 
 
