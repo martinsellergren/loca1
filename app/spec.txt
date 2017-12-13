@@ -1,19 +1,35 @@
 MapImageBasics
-    new MapImageBasics(lon, lat, w, h, z, highQ::bool, attrib::bool)
+    new MapImageBasics(lon, lat, w, h, z, highQ, attrib)
+    new MapImageBasics(lon, lat, w, h, z) (highQ from MapFetcher global)
+    new MapImageBasics(westLon::double, northLat, eastLon, southLat, z, attrib, highQ)
+    new MapImageBasics(west, north, east, south, z)
     lon,lat::double, mid-cordinates
-    w/h::double, degrees
+    w/h::int, pxs
     zoom::int(0-22)
-    inv: lat+h/2<=90, lat-h/2>=-90
-         w <= 360
+    highQ::bool
+    attrib::bool
+    expand(factor::double)
+    expandToIncludeCutLabels()
+        expand(10)
+    split(maxWidth::int, maxHeight::int)::MapImageBasics[]
+    getGeoCoordinates(x::int, y::int)::double[lon,lat]
+    getPixelCoordinates(lon::double, lat::double)::int[x,y]
+    getPixelCoordinates_real(lon::double, lat::double)::double[x,y]
+
+    static getGlobalPixelCoordinates(lon, lat, zoom, tileSize)
+    static getGeoCoordinates_global(xGlobal::int, yGlobal::int, tileSize)
+
+    inv:
+        -180 < lon < 180
+        -85 < lat < 85 (2*arctan(e^pi) - pi/2)
+        w/h > 0
+        0 <= zoom <= 22
+        lat-bounds inside +-85...
 
 MapFetcher, static
-    fetchMapImges(mapImageBasics) -> BasicImage[]
-        [0] - mapImg
-        [1] - labelImg
-        [2] - boxImg
-
-    fetchRawImage(max dim 1280*1280) -> BufferedImage
-    ...
+    fetchMapImges(mapImageBasics)::BasicImage[mapImg,labelImg,boxImg]
+    fetchMapImage(mapImageBasics)::BasicImage
+    fetchRawImage(max dim 1280*1280)::BufferedImage
 
 BasicImage
     img::BufferedImage
@@ -24,10 +40,11 @@ BasicImage
     static concatenateImages(BasicImages[][] layout)
 
 MapImage<-BasicImage
-    labels::Labels
+    labels::Labels(alt. Label[])
     basics::MapImageBasics
     new MapImage(mib::MapImageBasics, mapImg::BasicImage, labelImg(null?)::BasicImage, boxImg::BasicImage)
     new MapImage(mib, imgs::BasicImages[map,label,box])
+        pre: mib and imgs correspond
     fetchAndSetLabelCategories()::void throws IOException
     removeUnspecifiedLabels()::void
 
@@ -63,6 +80,7 @@ Label
     setCategory(c::category enum)
     fetchCategory(mapImageBasics)::category enum (if place not found, returns undefined-category)
 
+//skip
 Labels(tied to a mapImage)
     labels Label[]
     new Labels(labelImg::BasicImage, boxImg::BoxImage)
@@ -81,10 +99,6 @@ LabelLayout
     addRowLast(row::Box[])
     getBoxes()::Box[] (1d)
     getBox(x,y)
-    getHighest()
-    getLowest()
-    getLeftest()
-    getRightest()
     getAverageHeight()::double
     getBoundingBox()::double[xmin,ymin,xmax,ymax]
 
@@ -94,14 +108,16 @@ LabelLayout
         pos = 0
         next = null
         new LetterBoxIter()
-        next()::Box/null(delim)
+        next()::Box
         hasMore()::boolean(sets next)
 
 Box
     new Box(topLeft,topRight,bottomRight,bottomLeft)
     topLeft,topRight,height
-    getRotation() -> float
-    getTopLeft()
+    getRotation()::double
+    getWidth()::double
+    getHeight()::double
+    getTopLeft()::double[x,y]
     getTopRight()
     getBottomLeft()
     getBottomRight()
@@ -109,15 +125,13 @@ Box
     getBottomMid()
     getLeftMid()
     getRightMid()
-    getHighest()
-    getLowest()
-    getLeftest()
-    getRightest()
+    getMid()
+    getBounds()::double[xmin,ymin,xmax,ymax]
 
 Map
-    lon,lat,width,height::Double
+    bounds::double[WNES]
     zoomLevelImgs::MapImage[]
-    new Map(lon::Double, lat::Double, width::Double, height::Double)
+    new Map(westLon::double, northLat, eastLon, southLat)
     addZoomLevel(img::MapImage)::void
 
 

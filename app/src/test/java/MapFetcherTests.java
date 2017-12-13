@@ -48,16 +48,24 @@ public class MapFetcherTests {
     //     }
     // }
 
-    // @Test
-    // public void fetchRawImage_x_fetched() {
-    //     MapBasics mb = new MapBasics(0, 0, MapFetcher.mapboxMaxWidthHeight, MapFetcher.mapboxMaxWidthHeight, 0);
+    @Test
+    public void fetchRawImage_x_fetched() {
+        double lon = 0;
+        double lat = 85;
+        int width = MapFetcher.mapboxMaxWidthHeight;
+        int height = MapFetcher.mapboxMaxWidthHeight;
+        int zoom = 3;
 
-    //     try {
-    //         BufferedImage img = MapFetcher.fetchRawImage(mb, MapFetcher.fullStyleID, false, false);
-    //         assertTrue(img != null);
-    //     }
-    //     catch (IOException e) {
-    //         assertTrue(false);
-    //     }
-    // }
+        MapBasics mb = new MapBasics(lon, lat, width, height, zoom);
+
+        try {
+            BufferedImage img = MapFetcher.fetchRawImage(mb, MapFetcher.fullStyleID);
+            assertTrue(img != null);
+
+            new MapImage(img).save("mapTest.png");
+        }
+        catch (IOException e) {
+            assertTrue(false);
+        }
+    }
 }

@@ -56,7 +56,7 @@ public class MapDimensions {
     /**
      * From sphericalmercator constructor.
      */
-    private static double[][] getEnvironment(int tileSize) {
+    public static double[][] getEnvironment(int tileSize) {
         double size = tileSize;
         double[] bc = new double[30];
         double[] cc = new double[30];
@@ -86,7 +86,7 @@ public class MapDimensions {
      * @param zoom Zoom level.
      * @return {x, y}
      */
-    private static double[] px(double[] ll, int zoom, double[][] env) {
+    public static double[] px(double[] ll, int zoom, double[][] env) {
         double d = env[2][zoom];
         double f = Math.min(Math.max(Math.sin(Math.PI/180 * ll[1]), -0.9999), 0.9999);
         double x = Math.round(d + ll[0] * env[0][zoom]);
@@ -104,7 +104,7 @@ public class MapDimensions {
      * @param zoom Zoom level.
      * @return {lon, lat}
      */
-    private static double[] ll(double[] px, int zoom, double[][] env) {
+    public static double[] ll(double[] px, int zoom, double[][] env) {
         double g = (px[1] - env[2][zoom]) / (-env[1][zoom]);
         double lon = (px[0] - env[2][zoom]) / env[0][zoom];
         double lat = 180/Math.PI * (2 * Math.atan(Math.exp(g)) - 0.5 * Math.PI);

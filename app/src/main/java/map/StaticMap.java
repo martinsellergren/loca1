@@ -73,10 +73,10 @@ public class StaticMap {
         // saveImage(imgs[1], "labels.png");
 
         double lon = 0;
-        double lat = 170;
-        int width = 200;
-        int height = 200;
-        int zoom = 0;
+        double lat = -85;
+        int width = 1280;
+        int height = 1280;
+        int zoom = 2;
         MapBasics mb = new MapBasics(lon, lat, width, height, zoom);
 
         try {

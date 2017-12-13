@@ -52,6 +52,24 @@ return SphericalMercator;
 
 })();
 
+function viewport(bounds, dimensions, minzoom, maxzoom, tileSize) {
+    minzoom = (minzoom === undefined) ? 0 : minzoom;
+    maxzoom = (maxzoom === undefined) ? 20 : maxzoom;
+    var merc = fetchMerc(tileSize);
+    var base = maxzoom,
+        bl = merc.px([bounds[0], bounds[1]], base),
+        tr = merc.px([bounds[2], bounds[3]], base),
+        width = tr[0] - bl[0],
+        height = bl[1] - tr[1],
+        ratios = [width / dimensions[0], height / dimensions[1]],
+        center = [(bounds[0] + bounds[2]) / 2, (bounds[1] + bounds[3]) / 2],
+        adjusted = Math.floor(Math.min(
+            base - (Math.log(ratios[0]) / Math.log(2)),
+            base - (Math.log(ratios[1]) / Math.log(2)))),
+        zoom = Math.max(minzoom, Math.min(maxzoom, adjusted));
+
+    return { center: center, zoom: zoom };
+}
 
 function bounds(viewport, zoom, dimensions, tileSize) {
     var merc = new SphericalMercator({ size: tileSize });
@@ -67,9 +85,10 @@ function bounds(viewport, zoom, dimensions, tileSize) {
     return [tl[0], br[1], br[0], tl[1]];
 }
 
-//var merc = new SphericalMercator({ size: 256 });
+var merc = new SphericalMercator({ size: 256 });
 //document.write(merc.Bc, merc.Cc, merc.zc, merc.Ac);
-var b = bounds([-75.03, 35.25], 14, [600, 400], 256);
-var width = Math.abs(b[0]-b[2]);
-var height = Math.abs(b[1]-b[3]);
-document.write(width, ", ", height);
+// var b = bounds([-75.03, 35.25], 14, [600, 400], 256);
+// var width = Math.abs(b[0]-b[2]);
+// var height = Math.abs(b[1]-b[3]);
+var px = merc.px([-180,85], 0)
+document.write(px);
