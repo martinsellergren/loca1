@@ -71,21 +71,7 @@ BoxImage
         addBoxes(LEFT/RIGHT, startBox::Box, accum(contains startBox)::Box[])::Box[]
         addRows(UP/DOWN, startRow::Box[], labelLayout(accumulator, contains startRow))::LabelLayout
         removeLabel(layout::LabelLayout)::Void
-
-        expandToBox(boxed-Point)::Box
-            expandToBoxPoints(boxed-Point)::Point[]
-            getCorners(points::Point[])::Point[](0Left 1Up 2Right 3Down)
-                findExtremes(Point[])::Point[](0Left 1Up 2Right 3Down)
-                rotate(Point[], deg)::Point[]
-
-Label
-    new Label(text::String, layout::LabelLayout, category)
-    new Label(labelImg::BasicImage, layout::LabelLayout)
-    text: String
-    category: enum
-    layout: LabelLayout
-    setCategory(c::category enum)
-    fetchCategory(mapImageBasics)::category enum (if place not found, returns undefined-category)
+apImageBasics)::category enum (if place not found, returns undefined-category)
 
 //skip
 Labels(tied to a mapImage)
@@ -106,9 +92,8 @@ LabelLayout
     addRowLast(row::Box[])
     getBoxes()::Box[] (1d)
     getBox(x,y)
-    getTallestBoxHeight()::double
-    getBounds()::double[xmin,ymin,xmax,ymax]
-    hasRotation()::boolean
+    getAverageHeight()::double
+    getBoundingBox()::double[xmin,ymin,xmax,ymax]
 
     innner:
     LetterBoxIter
@@ -124,7 +109,6 @@ Box
     topLeft,topRight,height
     containsPoint(x::int, y::int)
     getRotation()::double
-    isCentered(box::Box)::bool
     getWidth()::double
     getHeight()::double
     getTopLeft()::double[x,y]
@@ -139,12 +123,10 @@ Box
     getBounds()::double[xmin,ymin,xmax,ymax]
 
 Map
-    new Map(westLon::double, northLat, eastLon, southLat)
     bounds::double[WNES]
     zoomLevelImgs::MapImage[]
+    new Map(westLon::double, northLat, eastLon, southLat)
     addZoomLevel(img::MapImage)::void
-    hasZoomLevel(int z)::bool
-    getBounds()::double[]
 
 
 

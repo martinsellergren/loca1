@@ -1,86 +1,52 @@
 package map;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
+import java.util.LinkedList;
 
 /**
- * A map with full specification of its labels.
- * A map is represented as basic map data (area covered, zoom),
- * a map-image and detailed label data (letter-precice details for
- * each label).
+ * A map is represented as a defined area and an array of map-images
+ * ({@link MapImage}) covering this area.
  *
- * @inv mapImage width, height > 0
+ * @pre Every zoom-level's map-image covers the map's area.
  */
 public class Map {
-    private MapBasics mapBasics;
-    private MapImage mapImage;
+    private double westLon;
+    private double northLat;
+    private double eastLon;
+    private double southLat;
+    private LinkedList<MapImage> zoomLevels;
 
     /**
-     * Constructs a map from a provided map-image and by
-     * extracting label-info from a label-image and a box-image.
-     *
-     * For creating this map, only local data and functions are used
-     * (like image-analysis and ocr-method). No need for a server
-     * connection. Therefore, label categories are unspecified (needs
-     * a server query). So use fetchAndSetLabelCategories() afterwords.
-     *
-     * @param mb Map-basics (covered area, zoom).
-     * @param mapImg Map-image.
-     * @param labelImg Label-image: equal to the map-image except
-     * that everying except labels are transparent. Label areas are
-     * extracted from this image in order to detect the label-text
-     * (using OCR). If labelImg is NULL, a copy of the map-image is
-     * used as labal-image.
-     * @param boxImg Box-image: equal to the labelImg except that
-     * instead of letters are boxes (see {@link BoxImage}). Used
-     * for detecting where labels are located and their internal
-     * layout.
-     *
-     * @pre mapImg, labelImg, boxImg all correspond to the basic
-     * map specification and are equal except above described
-     * differences.
+     * Constructs an empty map (no zoom-levels).
      */
-    public Map(MapBasics mb, MapImage mapImg, MapImage labelImg, BoxImage boxImg) {
+    public Map(double w, double n, double e, double s) {
+        westLon = w;
+        northLat = n;
+        eastLon = e;
+        southLat = s;
+        zoomLevels = new LinkedList<MapImage>();
     }
 
     /**
-     * Convenient constructor, same as above except that the three
-     * images are represented as (raw) buffered images in an array.
+     * Complements the map with an additional zoom level.
+     * If this zoom-level already exists, does nothing.
      *
-     * @param mb Map-basics (covered area, zoom).
-     * @param imgs
-     *  imgs[0] - map-image
-     *  imgs[1] - label-image
-     *  imgs[2] - box-image
+     * @param mi Map-image covering map's area.
      */
-    public Map(MapBasics mb, BufferedImage[] imgs) {
+    public void addZoomLevel(MapImage mi) {
     }
 
     /**
-     * Constructs a map from a map-layout-structure. This structure
-     * is a quadratic matrix where each element is a subpart of the
-     * constructed map.
-     *
-     * @param maps A map-layout-structure of subset-maps.
-     * @pre The subset-maps are equally dimensioned and has same zoom.
-     * They fit perfectly together by concatenating the map-images.
+     * @param z Zoom-level.
+     * @return True if z present.
      */
-    public Map(Map[][] maps) {
+    public boolean hasZoomLevel(int z) {
+        return false;
     }
 
     /**
-     * Fetches category for each label from online sources and sets
-     * each label's category. Only sets the category if label-text
-     * was found in online database (inside relevant bounding-box).
-     *
-     * @throws IOException if communication problem (network error?)
+     * @return [westLon, northLat, eastLon, southLat]
      */
-    public void fetchAndSetLabelCategories() throws IOException {
-    }
-
-    /**
-     * Removes all labels with unspecified category.
-     */
-    public void removeUnspecifiedLabels() throws IOException {
+    public double[] getBounds() {
+        return null;
     }
 }

@@ -3,12 +3,12 @@ package map;
 import java.awt.Point;
 
 /**
- * A box-image is a map image where only labels are showing and instead
+ * A box-image is an image where only labels are showing and instead
  * of letters in the labels, there are boxes. Each box is formed like
  * the letter C (with straight lines) with the opening towards right
  * -to provide direction. The space-character is also represented as
  * a box. The box is sized and positioned so that corresponding letter
- * just barely fits inside. If the character is very short/thin the
+ * precisely fits inside. If the character is very short/thin the
  * box is given a min-width/height (which doesn't effect the
  * letter-spacing/box-spacing relationship).
  *
@@ -19,16 +19,16 @@ import java.awt.Point;
  *  -Rows of horizontally adjacent boxes.
  *  -Labels (multiple rows) separated by surrounding space.
  *
- * More underlying map-image properties:
+ * More underlying properties:
  *  -Labels are located anywhere in the image, at any rotation.
  *  -The baseline of a row might not be a straight line - letters
  *   are rotated accordingly folloing the row. Maximum angle change
- *   between adjacent characters around 40deg.
+ *   between adjacent characters is around 40deg.
  *  -Labels with multiple rows has no rotation and a straight base line.
  *
  * This class represents a box-image using a 2D boolean array (a "map").
  * If map[x][y] is True, this is a box-point.
- * This is useful for creating labelLayouts for labels in an image.
+ * This is useful for creating labelLayouts for labels in a map-image.
  *
  * @pre No (or few..) letter-boxes touch.
  * @pre Horizontal space between boxes of same row is always less
@@ -38,17 +38,16 @@ import java.awt.Point;
  * @pre Highest box is always shorter than 2*shortest box in same
  * label (i.e same font-size).
  */
-
 public class BoxImage {
     private boolean[][] map;
 
     /**
      * Constructs the box-image representation from an rgba-image.
-     * Close to transparent pixels are marked as non-letter.
+     * Close to transparent pixels are marked as non-box-point.
      * Lowest alpha value still counted as box-point is the
      * alpha-threshold.
      *
-     * @param boxImg A box image.
+     * @param img An rgb-image (box-image).
      * @param alphaThreshold Pixels alpha-value-threshold where
      * over means box-point, under means non-box-point.
      */
@@ -63,8 +62,8 @@ public class BoxImage {
     }
 
     /**
-     * Iterator that finds labels (clusters of boxes) of the boxImage
-     * and returns each label's layout. Scans through a boxImage,
+     * Iterator that finds labels (clusters of boxes) in the box-image
+     * and returns each label's layout. Scans through a box-image,
      * finds a box-point, expands it into a label-layout.
      * Returns good and bad (e.g clipped, half outside of view) labels.
      */

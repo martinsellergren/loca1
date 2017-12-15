@@ -1,150 +1,69 @@
 package map;
 
-import java.awt.image.BufferedImage;
-import java.awt.Color;
-
-import javax.swing.*;
-import java.awt.FlowLayout;
-import javax.imageio.ImageIO;
-import java.io.File;
+import java.io.IOException;
 
 /**
- * An image with some loosly map-oriented behaviour. The image might
- * have a defined set of labels.
+ * An image of a map with full specification of its labels
+ * (letter-precise details). The image has e.g a location on earth
+ * and specified zoom.
  */
-public class MapImage {
-    private BufferedImage img;
-    private Labels labels;
+public class MapImage extends BasicImage {
+    private MapImageBasics basics;
+    private Label[] labels;
 
     /**
-     * Constructs a MapImage from a BufferedImage without any defined
-     * labels (use setLabels() for that).
-     */
-    public MapImage(BufferedImage img) {
-        this.img = img;
-        this.labels = new Labels();
-    }
-
-    /**
-     * Rotates image.
-     * @param deg Rotation in degrees.
-     */
-    public void rotate(double deg) {
-    }
-
-    /**
-     * Extracts a rectangular area from the image.
+     * Constructs a map-image from an basic image of a map with
+     * associated specification, and additional auxilary images for
+     * detection of labels.
      *
-     * @param b {@link Box} specifying area to extract.
-     * @return New image - a non-rotated rectangle where the extracted area fits perfectly.
-     */
-    public MapImage extract(Box b) {
-        return null;
-    }
-
-    /**
-     * Detects text of label in the image specified by a label layout.
-     * Uses OCR-methods.
+     * For creating this map-image, only local data and functions are
+     * used (like image-analysis and ocr-method). No need for a server
+     * connection. Therefore, label categories are unspecified (need
+     * a server query). So use fetchAndSetLabelCategories() afterwords.
      *
-     * @param layout Specification for the label to be detected.
-     * @return Text of label.
-     */
-    public String detectLabel(LabelLayout layout) {
-        return null;
-    }
-
-    /**
-     * @return A deep copy of this MapImage.
-     */
-    public MapImage copy() {
-        return null;
-    }
-
-    /**
-     * Sets labels for this mapImage.
-     */
-    public void setLabels(Labels l) {
-        this.labels = l;
-    }
-
-    /**
-     * @return Img width, i.e no of pixels on width.
-     */
-    public int getWidth() {
-        return img.getWidth();
-    }
-
-    /**
-     * @return Img height, i.e no of pixels on height.
-     */
-    public int getHeight() {
-        return img.getHeight();
-    }
-
-    /**
-     * Concatenates multiple images into one.
+     * @param b Basic map image specifications.
+     * @param mapImg A basic image of a map.
+     * @param labelImg Equal to the map-image except
+     * that everying except labels are transparent. Label areas are
+     * extracted from this image in order to detect the label-text
+     * (using OCR).
+     * @param boxImg Box-image: equal to the labelImg except that
+     * instead of letters are boxes (see {@link BoxImage}). Used
+     * for detecting where labels are located and their internal
+     * layout.
      *
-     * @param imgs 2d layout of concatenation-images.
-     * @return One image.
+     * @pre mapImg, labelImg, boxImg all correspond to the basic
+     * map image specification and are equal except above described
+     * differences.
+     */
+    public MapImage(MapImageBasics b, BasicImage mapImg, BasicImage labelImg, BasicImage boxImg) {
+        super(null);
+    }
+
+    /**
+     * Convenient constructor, same as above except that the three
+     * images are represented in an array.
      *
-     * @pre All images in layout has same dimensions, with the
-     * exceptions: imgs in last column may be thinner, and last row
-     * may be shorter.
+     * @param b Basic map image specifications.
+     * @param imgs [mapImg, labelImg, boxImg]
      */
-    public static MapImage concatenateImages(MapImage[][] imgs) {
-        int rows = imgs.length;
-        int cols = imgs[0].length;
-        int partWidth = imgs[0][0].getWidth();
-        int partHeight = imgs[0][0].getHeight();
-
-        int width = 0;
-        int height = 0;
-        for (int c = 0; c < cols; c++) width += imgs[0][c].getWidth();
-        for (int r = 0; r < rows; r++) height += imgs[r][0].getHeight();
-
-        BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-
-        for (int y = 0; y < img.getHeight(); y++) {
-            for (int x = 0; x < img.getWidth(); x++) {
-                int r = y / partHeight;
-                int c = x / partWidth;
-                BufferedImage part = imgs[r][c].img;
-                int partX = x % partWidth;
-                int partY = y % partHeight;
-                boolean hasAlpha = true;
-                Color clr = new Color(part.getRGB(partX, partY), hasAlpha);
-                img.setRGB(x, y, clr.getRGB());
-            }
-        }
-
-        return new MapImage(img);
-    }
-
-
-    /*******************************FOR TESTING
-
-
-    /**
-     * Draw img to screen.
-     */
-    public void display() {
-        JFrame frame = new JFrame();
-        frame.getContentPane().setLayout(new FlowLayout());
-        frame.getContentPane().add(new JLabel(new ImageIcon(this.img)));
-        frame.pack();
-        frame.setVisible(true);
+    public MapImage(MapImageBasics b, BasicImage[] imgs) {
+        this(b, imgs[0], imgs[1], imgs[2]);
     }
 
     /**
-     * Save img.
+     * Fetches category for each label from online sources and sets
+     * each label's category. Only sets the category if label-text
+     * was found in online database (inside relevant bounding-box).
+     *
+     * @throws IOException if communication problem (network error?)
      */
-    public void save(String fileName) {
-        try {
-            ImageIO.write(img, "png", new File(fileName));
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            System.exit(-1);
-        }
+    public void fetchAndSetLabelCategories() throws IOException {
+    }
+
+    /**
+     * Removes all labels with unspecified category.
+     */
+    public void removeUnspecifiedLabels() throws IOException {
     }
 }

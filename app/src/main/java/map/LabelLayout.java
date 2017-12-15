@@ -1,13 +1,10 @@
 package map;
 
-import java.awt.Point;
-
 /**
  * A layout specification of a label, describing where each letter
  * in the label is located in some a integer-coordinate system.
- * Represented as an 2d-array of Box-objects where each box represents
- * a letter in the label, like:
- * letterBox[ row ][ pos in row ].
+ * Represented as a 2d-array of Box-objects where each box represents
+ * a letter in the label, like: letterBox[ row ][ pos in row ].
  *
  * @inv Number of letters > 0
  */
@@ -50,31 +47,16 @@ public class LabelLayout {
     }
 
     /**
-     * Predict the line-height of the label.
-     * @return A line-height prediction.
-     */
-    public double predictLineHeight() {
-        return getAverageHeight();
-    }
-
-    /**
-    * @return The average height of the boxes in the layout.
+    * @return The height of the tallest box.
     */
-    private double getAverageHeight() {
+    public double getTallestBoxHeight() {
         return 0;
     }
 
     /**
-     * @return Average rotation of the boxes.
+     * @return [xmin, ymin, xmax, ymax]
      */
-    public double getAverageRotation() {
-        return 0;
-    }
-
-    /**
-     * @return A non-rotated bounding-box to this layout.
-     */
-    public Box getBoundingBox() {
+    public double[] getBounds() {
         return null;
     }
 

@@ -1,27 +1,25 @@
 package map;
 
-import java.awt.Point;
-
 /**
  * A box located in an integer-grid, with some rotation.
  *
  * @inv width,height > 0
  */
 public class Box {
-    private Point topL;
-    private Point topR;
+    private int[] topL;
+    private int[] topR;
     private double height;
 
     /**
-     * Constructs a Box from four corner points.
+     * Constructs a Box from four corner points [x,y].
      * Top points are final. Rest is calculated to create an actual
      * rectangular box.
      */
-    public Box(Point topL, Point topR, Point bottomR, Point bottomL) {
+    public Box(int[] topL, int[] topR, int[] bottomR, int[] bottomL) {
     }
 
     /**
-     * @return Rotation of box in degrees.
+     * @return Rotation of box with horizontal axis, in degrees.
      */
     public double getRotation() {
         return 0;
@@ -42,21 +40,6 @@ public class Box {
     }
 
     /**
-     * @return A non-rotated bounding-box to this box represented
-     * as four corner points (top/bottom/left/right is relative
-     * to the screen):
-     *  bb[0] - top-left
-     *  bb[1] - top-right
-     *  bb[2] - bottom-right
-     *  bb[3] - bottom-left
-     *
-     * Note: bb[0] equal to getTopLeft() if box has no rotation.
-     */
-    public Point[] getBoundingBox() {
-        return null;
-    }
-
-    /**
      * @param b Box to compare to this box.
      * @return True if this box and b is centered horizontally.
      *
@@ -71,31 +54,38 @@ public class Box {
      * and the similar below, note that e.g "top-left" is relative to
      * the box, not screen.
      */
-    public Point getTopLeft() {
+    public int[] getTopLeft() {
         return null;
     }
-    public Point getTopRight() {
+    public int[] getTopRight() {
         return null;
     }
-    public Point getBottomLeft() {
+    public int[] getBottomLeft() {
         return null;
     }
-    public Point getBottomRight() {
+    public int[] getBottomRight() {
         return null;
     }
-    public Point getTopMid() {
+    public int[] getTopMid() {
         return null;
     }
-    public Point getBottomMid() {
+    public int[] getBottomMid() {
         return null;
     }
-    public Point getLeftMid() {
+    public int[] getLeftMid() {
         return null;
     }
-    public Point getRightMid() {
+    public int[] getRightMid() {
         return null;
     }
-    public Point getMid() {
+    public int[] getMid() {
+        return null;
+    }
+
+    /**
+     * @return [xmin, ymin, xmax, ymax]
+     */
+    public double[] getBounds() {
         return null;
     }
 }
