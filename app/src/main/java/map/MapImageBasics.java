@@ -30,8 +30,8 @@ public class MapImageBasics {
 
     /** Map-image is highQuality. Tile-size low=256, hight=512. */
     public final boolean highQuality;
-    private final int LOW_TILE_SIZE = 256;
-    private final int HIGH_TILE_SIZE = 512;
+    public/***/ static final int LOW_TILE_SIZE = 256;
+    public/***/ static final int HIGH_TILE_SIZE = 512;
 
     /** Show map-provider's attribution on map. */
     public final boolean attribution;
@@ -42,7 +42,7 @@ public class MapImageBasics {
      * Used by method expandToIncludeCutLabels().
      * Value derived from experiments.
      */
-    private final double INCLUDE_CUT_LABELS_EXPANSION_FACTOR = 10;
+    public/***/ final double INCLUDE_CUT_LABELS_EXPANSION_FACTOR = 10;
 
     /** Max/min value for latitude. */
     public static final double LATITUDE_BOUND = Math.toDegrees(2*Math.atan(Math.exp(Math.PI)) - Math.PI/2);
@@ -66,6 +66,8 @@ public class MapImageBasics {
         this.zoom = z;
         this.highQuality = highQ;
         this.attribution = attrib;
+
+        assertLatitude(this.lat, this.height, this.zoom, this.highQuality);
     }
 
     /**
@@ -76,7 +78,7 @@ public class MapImageBasics {
         this(lon, lat, w, h, z, MapFetcher.USE_HIGH_QUALITY_IMAGE, false);
     }
 
-    /** NEEDS TESTING
+    /**
      * Constructs from map-bounds.
      *
      * @param west Western longitude.
@@ -103,6 +105,8 @@ public class MapImageBasics {
         this.zoom = z;
         this.highQuality = highQ;
         this.attribution = attrib;
+
+        assertLatitude(this.lat, this.height, this.zoom, this.highQuality);
     }
 
     /**
@@ -112,7 +116,48 @@ public class MapImageBasics {
         this(west, north, east, south, z, MapFetcher.USE_HIGH_QUALITY_IMAGE, false);
     }
 
-    /** NEEDS TESTING
+    /**
+     * Throws RuntimeException if latitude bound is ouside valid span.
+     *
+     * @param lat Latitude.
+     * @param h Height.
+     * @param z Zoom.
+     * @param highQ High quality tile size.
+     */
+    private static void assertLatitude(double lat, int h, int z, boolean highQ) {
+        int q = LOW_TILE_SIZE;
+        if (highQ) q = HIGH_TILE_SIZE;
+        if (!okLatitudeBound(lat, h, z, q)) {
+            throw new RuntimeException("Illegal latitude bounds");
+        }
+    }
+
+    /**
+     * @param lat Latitude.
+     * @param h Height.
+     * @param z Zoom.
+     * @param q Tile size.
+     * @return False if latitude bound is ouside valid span.
+     */
+    public/***/ static boolean okLatitudeBound(double lat, int h, int z, int q) {
+        double[] globMid = getPixelCoordinates_global(0, lat, z, q);
+        double y = globMid[1] - h;
+        return (y >= 0 && y <= getYMax(z, q));
+    }
+
+    /**
+     * Get max y pixel coordinate for a certain zoom, img quality.
+     *
+     * @param z Zoom level.
+     * @param q Tile size.
+     * @return Max y pixel coordinate.
+     */
+    public/***/ static double getYMax(int z, int q) {
+        double[] xy = getPixelCoordinates_global(0, -LATITUDE_BOUND, z, q);
+        return xy[1];
+    }
+
+    /**
      * @return [wLon, nLat, eLon, sLat]
      */
     public double[] getBounds() {
@@ -131,7 +176,7 @@ public class MapImageBasics {
         return expand(INCLUDE_CUT_LABELS_EXPANSION_FACTOR);
     }
 
-    /** NEEDS TESTING
+    /**
      * Increases width and height.
      *
      * @param factor Expansion factor.

@@ -5,15 +5,19 @@ import map.*;
 
 public class MapImageBasicsTests {
 
-    // @Test
-    // public void getCornerPoints() {
-    //     MapBasics mb = new MapBasics(0, 0, 10, 10, 0);
-    //     Point2D.Double[] cps = mb.getCornerPoints();
-    //     assertTrue(cps[0].equals(new Point2D.Double(-5, -5)));
-    //     assertTrue(cps[1].equals(new Point2D.Double(5, -5)));
-    //     assertTrue(cps[2].equals(new Point2D.Double(5, 5)));
-    //     assertTrue(cps[3].equals(new Point2D.Double(-5, 5)));
-    // }
+    @Test
+    public void getYMax() {
+        double maxy = MapImageBasics.getYMax(0, 256);
+        assertEquals(maxy, 256, 0.0001);
+    }
+
+    @Test
+    public void okLatutudeBound() {
+        boolean ok = MapImageBasics.okLatitudeBound(0, 100, 0, 256);
+        assertEquals(ok, true);
+        ok = MapImageBasics.okLatitudeBound(0, 300, 0, 256);
+        assertEquals(ok, false);
+    }
 
     @Test
     public void split_bigMap_multipleBlocks() {
