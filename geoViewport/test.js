@@ -85,10 +85,17 @@ function bounds(viewport, zoom, dimensions, tileSize) {
     return [tl[0], br[1], br[0], tl[1]];
 }
 
-var merc = new SphericalMercator({ size: 256 });
+
+
+var lon = 180;
+var lat = -85.05112877980659;
+var zoom = 29;
+var tileSize = 1234;
+
+var merc = new SphericalMercator({ size: tileSize });
 //document.write(merc.Bc, merc.Cc, merc.zc, merc.Ac);
 // var b = bounds([-75.03, 35.25], 14, [600, 400], 256);
 // var width = Math.abs(b[0]-b[2]);
 // var height = Math.abs(b[1]-b[3]);
-var px = merc.px([-180,85], 0)
+var px = merc.px([lon, lat], zoom)
 document.write(px);

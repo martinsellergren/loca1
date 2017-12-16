@@ -6,9 +6,9 @@ package map;
  * @inv width,height > 0
  */
 public class Box {
-    private int[] topL;
-    private int[] topR;
-    private double height;
+    public/***/ int[] topL;
+    public/***/ int[] topR;
+    public/***/ double height;
 
     /**
      * Constructs a Box from four corner points [x,y].

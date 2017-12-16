@@ -9,7 +9,7 @@ package map;
  * @inv Number of letters > 0
  */
 public class LabelLayout {
-    private Box[][] letterBoxes;
+    public/***/ Box[][] letterBoxes;
 
     /**
      * Constructs a LabelLayout from a label-row.
@@ -74,9 +74,9 @@ public class LabelLayout {
      * Usage: call hasMore() before getNext().
      */
     public class LetterBoxIterator {
-        private int row = 0;
-        private int pos = 0;
-        private Box next = null;
+        public/***/ int row = 0;
+        public/***/ int pos = 0;
+        public/***/ Box next = null;
 
         /**
          * @return Next letter-box in iterator.

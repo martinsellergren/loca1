@@ -6,7 +6,7 @@
 //  * A representation of a set of {@link Label}s.
 //  */
 // public class Labels {
-//     private Label[] labels;
+//     public/***/ Label[] labels;
 
 //     /**
 //      * Constructs a new set of labels by extracting label-data from

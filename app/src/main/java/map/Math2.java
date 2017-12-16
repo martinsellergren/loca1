@@ -1,9 +1,9 @@
 package map;
 
 /**
- * Some math for 2d-vectors.
+ * Some additional math.
  */
-public class Math2d {
+public class Math2 {
     /**
      * @return Distance between two points.
      */
@@ -40,5 +40,14 @@ public class Math2d {
      */
     public static double angle(int[] v) {
         return angle(new double[]{v[0], v[1]});
+    }
+
+    /**
+     * Ands/removes 360 to an angle to make it inside [-180, 180).
+     */
+    public static double toUnitDegrees(double deg) {
+        while (deg < -180) deg += 360;
+        while (deg >= 180) deg -= 360;
+        return deg;
     }
 }

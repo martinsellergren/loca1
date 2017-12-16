@@ -12,7 +12,7 @@ import java.io.File;
  * A basic image with some useful behavior. A wrapper of BufferedImage.
  */
 public class BasicImage {
-    private BufferedImage img;
+    public/***/ BufferedImage img;
 
     public BasicImage(BufferedImage img) {
         this.img = img;
@@ -96,8 +96,8 @@ public class BasicImage {
      * a straight line, returning the positions that are stepped on.
      */
     public class PixelWalk {
-        private int x, y;
-        private int endX, endY;
+        public/***/ int x, y;
+        public/***/ int endX, endY;
 
         public PixelWalk(int startX, int startY, int endX, int endY) {
             x = startX;
