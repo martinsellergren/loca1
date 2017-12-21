@@ -8,7 +8,7 @@ import java.io.IOException;
  * and specified zoom.
  */
 public class MapImage extends BasicImage {
-    public/***/ MapImageBasics basics;
+    public/***/ MapView basics;
     public/***/ Label[] labels;
 
     /**
@@ -21,7 +21,7 @@ public class MapImage extends BasicImage {
      * connection. Therefore, label categories are unspecified (need
      * a server query). So use fetchAndSetLabelCategories() afterwords.
      *
-     * @param b Basic map image specifications.
+     * @param v Basic map image specifications.
      * @param mapImg A basic image of a map.
      * @param labelImg Equal to the map-image except
      * that everying except labels are transparent. Label areas are
@@ -36,7 +36,7 @@ public class MapImage extends BasicImage {
      * map image specification and are equal except above described
      * differences.
      */
-    public MapImage(MapImageBasics b, BasicImage mapImg, BasicImage labelImg, BasicImage boxImg) {
+    public MapImage(MapView v, BasicImage mapImg, BasicImage labelImg, BasicImage boxImg) {
         super(null);
     }
 
@@ -44,11 +44,11 @@ public class MapImage extends BasicImage {
      * Convenient constructor, same as above except that the three
      * images are represented in an array.
      *
-     * @param b Basic map image specifications.
+     * @param v Basic map image specifications.
      * @param imgs [mapImg, labelImg, boxImg]
      */
-    public MapImage(MapImageBasics b, BasicImage[] imgs) {
-        this(b, imgs[0], imgs[1], imgs[2]);
+    public MapImage(MapView v, BasicImage[] imgs) {
+        this(v, imgs[0], imgs[1], imgs[2]);
     }
 
     /**

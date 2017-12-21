@@ -23,14 +23,14 @@ public class MapFetcher {
      * Creates map images with data from mapbox-servers. Uses default
      * values for styleIDs and mapbox-user-data etc.
      *
-     * @param b Basic map image specification.
+     * @param v Basic map image specification.
      * @throws IOException if failed to fetch image (bad internet-conn?)
      * @return Array of images where
      *   [0] - full map img
      *   [1] - labels img
      *   [2] - letter bounding box img
      */
-    public static MapImage[] fetchMapImages(MapImageBasics b) throws IOException {
+    public static BasicImage[] fetchMapImages(MapView v) throws IOException {
         return null;
     }
 
@@ -41,56 +41,72 @@ public class MapFetcher {
      * concatenation: only one image is fetched from server and
      * returned.
      *
-     * @param b Basic map image specification.
+     * @param v Basic map image specification.
      * @param style Mapbox style ID.
      * @throws IOException if failed to fetch image (bad internet-conn?)
      * @return A map image.
      */
-    public static MapImage fetchMapImage(MapImageBasics b, String style) throws IOException {
-        // MapImageBasics[][] bs = b.split(IMAGE_REQUEST_WIDTH_HEIGHT_LIMIT);
-        // int rows = bs.length;
-        // int cols = bs[0].length;
-        // MapImage[][] imgs = new MapImage[rows][cols];
+    public static BasicImage fetchMapImage(MapView v, String style) throws IOException {
+        boolean highQ = false;
+        int w = v.width;
+        int h = v.height;
+        if (v.highQuality) {
+            w = (int) Math.ceil(w / 2.0);
+            h = (int) Math.ceil(h / 2.0);
+        }
 
-        // for (int r = 0; r < rows; r++) {
-        //     for (int c = 0; c < cols; c++) {
-        //         BufferedImage bimg = fetchRawImage(bs[r][c], style);
-        //         imgs[r][c] = new MapImage(bimg);
-        //     }
-        // }
+        MapView[][] vs = new MapView(v.lon, v.lat, w, h, v.zoom, highQ, v.attribution).split(IMAGE_REQUEST_WIDTH_HEIGHT_LIMIT);
+        int rows = vs.length;
+        int cols = vs[0].length;
+        BasicImage[][] imgs = new MapImage[rows][cols];
 
-        // return MapImage.concatenateImages(imgs);
-        return null;
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                MapView p = vs[r][c];
+                p = new MapView(p.lon, p.lat, p.width, p.height, p.zoom, v.highQuality, p.attribution);
+
+                imgs[r][c] = fetchRawImage(p, style);
+            }
+        }
+
+        return BasicImage.concatenateImages(imgs);
     }
 
     /**
-     * Fetches an image from mapbox servers.
+     * Fetches an image from mapbox servers. Request details are held
+     * in a map-image-view.
      *
-     * @param b Basic map img specs.
+     * This map-image-view is special in regard of pixel dimensions and
+     * density. Dimensions are defined in low-pixel-density regardless
+     * of the quality-property. The quality-property merely determines
+     * if a high quality image is requested. By this, the returned
+     * image will match the map-image-view.
+     *
+     * @param v Map image view details.
      * @param style Mapbox style ID.
-     * @pre b's width,height <= IMAGE_REQUEST_WIDTH_HEIGHT_LIMIT
+     * @pre v's width,height <= IMAGE_REQUEST_WIDTH_HEIGHT_LIMIT
      * @throws IOException if failed to fetch image (bad internet-conn?)
      * @return Static mapbox-image.
      */
-    public static BufferedImage fetchRawImage(MapImageBasics b, String style) throws IOException {
+    public static BasicImage fetchRawImage(MapView v, String style) throws IOException {
         MapboxStaticImage staticImage = new MapboxStaticImage.Builder()
             .setAccessToken(TOKEN)
             .setUsername(USER_NAME)
             .setStyleId(style)
-            .setLon(b.lon).setLat(b.lat)
-            .setZoom(b.zoom)
-            .setWidth(b.width).setHeight(b.height)
-            .setRetina(b.highQuality)
+            .setLon(v.lon).setLat(v.lat)
+            .setZoom(v.zoom)
+            .setWidth(v.width).setHeight(v.height)
+            .setRetina(v.highQuality)
             .build();
 
         String imageUrl = staticImage.getUrl().toString();
-        if (!b.attribution) {
+        if (!v.attribution) {
                 imageUrl += "&attribution=false&logo=false";
         }
 
         try {
             BufferedImage img = ImageIO.read(new URL(imageUrl));
-            return img;
+            return new BasicImage(img);
         }
         catch (IOException e) {
             throw new IOException("request: " + imageUrl, e);

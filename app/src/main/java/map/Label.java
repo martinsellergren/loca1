@@ -45,10 +45,10 @@ public class Label {
      * geo-position. Geo-position obtained from label's layout and
      * specification about the image where the label resides.
      *
-     * @param b Specification about the map where the label resides.
+     * @param v Specification about the map where the label resides.
      * @return Category of the label.
      */
-    public Category fetchCategory(MapImageBasics b) {
+    public Category fetchCategory(MapView v) {
         return null;
     }
 
@@ -56,14 +56,14 @@ public class Label {
      * Finds the geo-coordinates [lon, lat] for corner-points of
      * a non-rotated bounding box of this label.
      *
-     * @param b Specification about the map where the label resides
+     * @param v Specification about the map where the label resides
      * for coordinate reference.
      * @return points[0] - top left corner point
      *         points[1] - top right
      *         points[2] - bottom right
      *         points[3] - bottom left
      */
-    public/***/ double[][] getBoundingBoxCoordinates(MapImageBasics b) {
+    public/***/ double[][] getBoundingBoxCoordinates(MapView v) {
         return null;
     }
 

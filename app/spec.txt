@@ -1,21 +1,14 @@
-MapImageBasics
-    new MapImageBasics(lon, lat, w, h, z, highQ, attrib)
-    new MapImageBasics(lon, lat, w, h, z) (highQ from MapFetcher global)
-    new MapImageBasics(westLon::double, northLat, eastLon, southLat, z, highQ, attrib)
-    new MapImageBasics(west, north, east, south, z)
+MapImageView
     lon,lat::double, mid-cordinates
-    w/h::int, pxs
+    w/h::int (in pxs - depends on highQ)
     zoom::int(0-22)
-    highQ::bool
+    doubleQ::bool
     attrib::bool
-    expandToIncludeCutLabels()
-    expand(factor::double)
-        expand(10)
-    split(maxSideLength::int)::MapImageBasics[]
-    getGeoCoordinates(x::int, y::int)::double[lon,lat]
-    getPixelCoordinates(lon::double, lat::double)::int[x,y]
-    getPixelCoordinates_real(lon::double, lat::double)::double[x,y]
-
+    new MapImageView(lon, lat, w, h, z, doubleQ, attrib)
+    new MapImageView(westLon::double, northLat, eastLon, southLat, z, doubleQ, attrib)
+    new MapImageView(west, north, east, south, z) (doubleQ from MapRequest)
+    getGeoCoordinates(x::double, y::double)::double[lon,lat]
+    getPixelCoordinates(lon::double, lat::double)::double[x,y]
     static getGlobalPixelCoordinates(lon, lat, zoom, tileSize)
     static getGeoCoordinates_global(xGlobal::int, yGlobal::int, tileSize)
 
@@ -26,10 +19,18 @@ MapImageBasics
         0 <= zoom <= 22
         lat-bounds inside +-85...
 
-MapFetcher, static
-    fetchMapImges(mapImageBasics)::BasicImage[mapImg,labelImg,boxImg]
-    fetchMapImage(mapImageBasics)::BasicImage
-    fetchRawImage(max dim 1280*1280)::BufferedImage
+MapRequest
+    lon,lat::double
+    w,h::int (pxs in lowQ)
+    zoom::int(0-22)
+    doubleQ::bool
+    attrib::bool
+    new MapRequest(view::MapImageView)
+    fetchExtended3()::BasicImage[map,label,box]
+    fetchExtended()::BasicImage
+    fetch()::BasicImage
+        split(maxWH::int)::MapRequest[][]
+        fetchRaw()::BasicImage (pre: maxdim 1280*1280)
 
 BasicImage
     img::BufferedImage
@@ -47,11 +48,12 @@ BasicImage
         next()::int[x,y]
 
 MapImage<-BasicImage
-    labels::Labels(alt. Label[])
-    basics::MapImageBasics
-    new MapImage(mib::MapImageBasics, mapImg::BasicImage, labelImg(null?)::BasicImage, boxImg::BasicImage)
-    new MapImage(mib, imgs::BasicImages[map,label,box])
-        pre: mib and imgs correspond
+    labels::Label[]
+    viewportView::MapImageView
+    imageView::MapImageView
+    img::BasicImage
+    new MapImage(view::MapView, imgs::BasicImages[map,label,box])
+        pre: view and imgs correspond
     fetchAndSetLabelCategories()::void throws IOException
     removeUnspecifiedLabels()::void
 
@@ -85,7 +87,7 @@ Label
     category: enum
     layout: LabelLayout
     setCategory(c::category enum)
-    fetchCategory(mapImageBasics)::category enum (if place not found, returns undefined-category)
+    fetchCategory(double[wnes])::category enum (if place not found, returns undefined-category)
 
 //skip
 Labels(tied to a mapImage)

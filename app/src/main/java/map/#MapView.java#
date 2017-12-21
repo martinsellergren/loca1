@@ -1,7 +1,7 @@
 package map;
 
 /**
- * Basic data about a map image. Immutable. Lon(gitude) and lat(itude)
+ * A . Immutable. Lon(gitude) and lat(itude)
  * are the center-point (in degrees). (Web-)Mercator-projection.
  * (0,0) is equator around Africa. Lon grows west, lat grows north.
  *
@@ -11,38 +11,29 @@ package map;
  * @inv 0 <= zoom <= 22
  * @inv lat-bounds inside +-85...
  */
-public class MapImageBasics {
+public class MapView {
     /** Map-center longitude (degrees). */
     public final double lon;
 
     /** Map-center latitude (degrees). */
     public final double lat;
 
-    /** Map width in pixels. */
+    /** Map width in pixels. Depends on pixel density (highQuality). */
     public final int width;
 
-    /** Map height in pixels. */
+    /** Map height in pixels. Depends on pixel density (highQuality). */
     public final int height;
 
-    /** Zoom of image following mapbox-standard where
-     * 0 is all way out and 22 is all way in. */
+    /** Zoom of image where 0 is all way out and 22 is all way in. */
     public final int zoom;
 
-    /** Map-image is highQuality. Tile-size low=256, hight=512. */
+    /** Map-image is highQuality. */
     public final boolean highQuality;
     public/***/ static final int LOW_TILE_SIZE = 256;
     public/***/ static final int HIGH_TILE_SIZE = 512;
 
     /** Show map-provider's attribution on map. */
     public final boolean attribution;
-
-    /**
-     * Expansion factor for expanding the dimensions in order
-     * to include original-size's cut labels.
-     * Used by method expandToIncludeCutLabels().
-     * Value derived from experiments.
-     */
-    public/***/ final double INCLUDE_CUT_LABELS_EXPANSION_FACTOR = 10;
 
     /** Max/min value for latitude. */
     public static final double LATITUDE_BOUND = Math.toDegrees(2*Math.atan(Math.exp(Math.PI)) - Math.PI/2);
@@ -52,13 +43,13 @@ public class MapImageBasics {
      *
      * @param lon Center longitude.
      * @param lat Center latitude.
-     * @param w Pixel-width. w > 0
-     * @param h Pixel-height. h > 0
+     * @param w Pixel-width. w > 0. Depends on highQ.
+     * @param h Pixel-height. h > 0. Depends on highQ.
      * @param z Zoom. 0 <= z <= 22
      * @param highQ Use high quality image.
      * @param attrib Show attribution on map.
      */
-    public MapImageBasics(double lon, double lat, int w, int h, int z, boolean highQ, boolean attrib) {
+    public MapView(double lon, double lat, int w, int h, int z, boolean highQ, boolean attrib) {
         this.lon = lon;
         this.lat = lat;
         this.width = w;
@@ -71,14 +62,6 @@ public class MapImageBasics {
     }
 
     /**
-     * Constructor for default quality and no attribution.
-     * Quality-default defined in MapFetcher.
-     */
-    public MapImageBasics(double lon, double lat, int w, int h, int z) {
-        this(lon, lat, w, h, z, MapFetcher.USE_HIGH_QUALITY_IMAGE, false);
-    }
-
-    /**
      * Constructs from map-bounds.
      *
      * @param west Western longitude.
@@ -86,7 +69,7 @@ public class MapImageBasics {
      * @param east Eastern longitude.
      * @param south Southern latitude.
      */
-    public MapImageBasics(double west, double north, double east, double south, int z, boolean highQ, boolean attrib) {
+    public MapView(double west, double north, double east, double south, int z, boolean highQ, boolean attrib) {
         int q = LOW_TILE_SIZE;
         if (highQ) q = HIGH_TILE_SIZE;
 
@@ -112,7 +95,7 @@ public class MapImageBasics {
     /**
      * Map-bounds constructor with default quality, no attribution.
      */
-    public MapImageBasics(double west, double north, double east, double south, int z) {
+    public MapView(double west, double north, double east, double south, int z) {
         this(west, north, east, south, z, MapFetcher.USE_HIGH_QUALITY_IMAGE, false);
     }
 
@@ -124,7 +107,7 @@ public class MapImageBasics {
      * @param z Zoom.
      * @param highQ High quality tile size.
      */
-    private static void assertLatitude(double lat, int h, int z, boolean highQ) {
+    public/***/ static void assertLatitude(double lat, int h, int z, boolean highQ) {
         int q = LOW_TILE_SIZE;
         if (highQ) q = HIGH_TILE_SIZE;
         if (!okLatitudeBound(lat, h, z, q)) {
@@ -172,21 +155,8 @@ public class MapImageBasics {
      *
      * @return New object with updated dims.
      */
-    public MapImageBasics expandToIncludeCutLabels() {
-        return expand(INCLUDE_CUT_LABELS_EXPANSION_FACTOR);
-    }
-
-    /**
-     * Increases width and height.
-     *
-     * @param factor Expansion factor.
-     * @return New object with updated dims.
-     */
-    public MapImageBasics expand(double factor) {
-        int newW = Math.round(this.width * (float)factor);
-        int newH = Math.round(this.height * (float)factor);
-
-        return new MapImageBasics(this.lon, this.lat, newW, newH, this.zoom, this.highQuality, this.attribution);
+    public MapView expandToIncludeCutLabels() {
+        return null;
     }
 
     /**
@@ -199,13 +169,13 @@ public class MapImageBasics {
      * @param l Maximum side length.
      * @return A 2d-layout of "maps".
      */
-    public MapImageBasics[][] split(int l) {
+    public MapView[][] split(int l) {
         int rows = this.height / l;
         int cols = this.width / l;
         if (this.height % l != 0) rows += 1;
         if (this.width % l != 0) cols += 1;
 
-        MapImageBasics[][] layout = new MapImageBasics[rows][cols];
+        MapView[][] layout = new MapView[rows][cols];
 
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
@@ -217,7 +187,7 @@ public class MapImageBasics {
                 double yMid = (y0 + y1) / 2d;
                 double[] latlon = getGeoCoordinates(xMid, yMid);
 
-                layout[r][c] = new MapImageBasics(latlon[0], latlon[1], x1-x0, y1-y0, this.zoom, this.highQuality, this.attribution);
+                layout[r][c] = new MapView(latlon[0], latlon[1], x1-x0, y1-y0, this.zoom, this.highQuality, this.attribution);
             }
         }
 
