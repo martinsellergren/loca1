@@ -1,12 +1,10 @@
 MapImageView
     lon,lat::double, mid-cordinates
-    w/h::int (in pxs - depends on highQ)
+    w/h::int (in pxs - depends on doubleQ)
     zoom::int(0-22)
-    doubleQ::bool
-    attrib::bool
-    new MapImageView(lon, lat, w, h, z, doubleQ, attrib)
-    new MapImageView(westLon::double, northLat, eastLon, southLat, z, doubleQ, attrib)
-    new MapImageView(west, north, east, south, z) (doubleQ from MapRequest)
+    tileSize::int
+    new MapImageView(lon, lat, w, h, z, doubleQ::bool)
+    new MapImageView(westLon::double, northLat, eastLon, southLat, z, doubleQ)
     getGeoCoordinates(x::double, y::double)::double[lon,lat]
     getPixelCoordinates(lon::double, lat::double)::double[x,y]
     static getGlobalPixelCoordinates(lon, lat, zoom, tileSize)
@@ -21,16 +19,21 @@ MapImageView
 
 MapRequest
     lon,lat::double
-    w,h::int (pxs in lowQ)
+    w,h::int(pxs in lowQ)
     zoom::int(0-22)
     doubleQ::bool
     attrib::bool
-    new MapRequest(view::MapImageView)
-    fetchExtended3()::BasicImage[map,label,box]
-    fetchExtended()::BasicImage
-    fetch()::BasicImage
+
+    globals...
+    DEFAULT_TILE_SIZE
+    EXTENSION_TERM
+
+    new MapRequest(lon,lat,w,h,z,doubleQ,attrib,ext)
+    new MapRequest(view::MapImageView, attribution::bool, extended::bool)
+    fetch3()::BasicImage[map,label,box]
+    fetch(style::String)::BasicImage
         split(maxWH::int)::MapRequest[][]
-        fetchRaw()::BasicImage (pre: maxdim 1280*1280)
+        fetchRaw(style::String)::BasicImage (pre: maxdim 1280*1280)
 
 BasicImage
     img::BufferedImage
@@ -51,7 +54,6 @@ MapImage<-BasicImage
     labels::Label[]
     viewportView::MapImageView
     imageView::MapImageView
-    img::BasicImage
     new MapImage(view::MapView, imgs::BasicImages[map,label,box])
         pre: view and imgs correspond
     fetchAndSetLabelCategories()::void throws IOException

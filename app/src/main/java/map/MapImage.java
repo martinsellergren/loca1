@@ -4,16 +4,17 @@ import java.io.IOException;
 
 /**
  * An image of a map with full specification of its labels
- * (letter-precise details). The image has e.g a location on earth
+ * (letter-precise details). The image has a location on earth
  * and specified zoom.
  */
 public class MapImage extends BasicImage {
-    public/***/ MapView basics;
     public/***/ Label[] labels;
+    private MapImageView viewportView;
+    private MapImageView imageView;
 
     /**
-     * Constructs a map-image from an basic image of a map with
-     * associated specification, and additional auxilary images for
+     * Constructs a map-image from an image of a map with
+     * associated viewport, and additional auxilary images for
      * detection of labels.
      *
      * For creating this map-image, only local data and functions are
@@ -21,7 +22,7 @@ public class MapImage extends BasicImage {
      * connection. Therefore, label categories are unspecified (need
      * a server query). So use fetchAndSetLabelCategories() afterwords.
      *
-     * @param v Basic map image specifications.
+     * @param v Map image view.
      * @param mapImg A basic image of a map.
      * @param labelImg Equal to the map-image except
      * that everying except labels are transparent. Label areas are
@@ -33,10 +34,12 @@ public class MapImage extends BasicImage {
      * layout.
      *
      * @pre mapImg, labelImg, boxImg all correspond to the basic
-     * map image specification and are equal except above described
-     * differences.
+     * map image view and are equal except above described
+     * differences. That means, the view spec and images have same
+     * mid-point, zoom and quality(pixel density), and the images
+     * have equal or larger dims.
      */
-    public MapImage(MapView v, BasicImage mapImg, BasicImage labelImg, BasicImage boxImg) {
+    public MapImage(MapImageView v, BasicImage mapImg, BasicImage labelImg, BasicImage boxImg) {
         super(null);
     }
 
@@ -44,10 +47,10 @@ public class MapImage extends BasicImage {
      * Convenient constructor, same as above except that the three
      * images are represented in an array.
      *
-     * @param v Basic map image specifications.
+     * @param v Basic map image view.
      * @param imgs [mapImg, labelImg, boxImg]
      */
-    public MapImage(MapView v, BasicImage[] imgs) {
+    public MapImage(MapImageView v, BasicImage[] imgs) {
         this(v, imgs[0], imgs[1], imgs[2]);
     }
 

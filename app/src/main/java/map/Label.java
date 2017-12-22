@@ -42,28 +42,12 @@ public class Label {
 
     /**
      * Fetches category from online-servers based on label's text and
-     * geo-position. Geo-position obtained from label's layout and
-     * specification about the image where the label resides.
+     * geo-position.
      *
-     * @param v Specification about the map where the label resides.
+     * @param bounds [WNES] geo-bounds of the label.
      * @return Category of the label.
      */
-    public Category fetchCategory(MapView v) {
-        return null;
-    }
-
-    /**
-     * Finds the geo-coordinates [lon, lat] for corner-points of
-     * a non-rotated bounding box of this label.
-     *
-     * @param v Specification about the map where the label resides
-     * for coordinate reference.
-     * @return points[0] - top left corner point
-     *         points[1] - top right
-     *         points[2] - bottom right
-     *         points[3] - bottom left
-     */
-    public/***/ double[][] getBoundingBoxCoordinates(MapView v) {
+    public Category fetchCategory(double[] bounds) {
         return null;
     }
 
