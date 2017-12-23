@@ -6,9 +6,9 @@ package map;
  * @inv width,height > 0
  */
 public class Box {
-    public/***/ int[] topL;
-    public/***/ int[] topR;
-    public/***/ double height;
+    private int[] topL;
+    private int[] topR;
+    private double height;
 
     /**
      * Constructs a Box from four corner points [x,y].
@@ -47,6 +47,12 @@ public class Box {
      */
     public boolean isCentered(Box b) {
         return false;
+    }
+
+    /**
+     * Add offset box position.
+     */
+    public void addOffset(int addX, int addY) {
     }
 
     /**

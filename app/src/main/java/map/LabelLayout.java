@@ -9,7 +9,7 @@ package map;
  * @inv Number of letters > 0
  */
 public class LabelLayout {
-    public/***/ Box[][] letterBoxes;
+    private Box[][] letterBoxes;
 
     /**
      * Constructs a LabelLayout from a label-row.
@@ -68,15 +68,21 @@ public class LabelLayout {
         return false;
     }
 
+    /**
+     * Add offset to every position in layout.
+     */
+    public void addOffset(int addX, int addY) {
+    }
+
 
     /**
      * Iterator that returns letter-boxes of the label-layout.
      * Usage: call hasMore() before getNext().
      */
     public class LetterBoxIterator {
-        public/***/ int row = 0;
-        public/***/ int pos = 0;
-        public/***/ Box next = null;
+        private int row = 0;
+        private int pos = 0;
+        private Box next = null;
 
         /**
          * @return Next letter-box in iterator.

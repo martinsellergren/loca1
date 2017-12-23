@@ -12,7 +12,7 @@ import java.io.File;
  * A basic image with some useful behavior. A wrapper of BufferedImage.
  */
 public class BasicImage {
-    public/***/ BufferedImage img;
+    private BufferedImage img;
 
     public BasicImage(BufferedImage img) {
         this.img = img;
@@ -49,6 +49,15 @@ public class BasicImage {
      * @return A deep copy of this image.
      */
     public BasicImage copy() {
+        return null;
+    }
+
+    /**
+     * @return New dimensioned image.
+     * @pre Positions inside this image.
+     * @pre mins < maxes.
+     */
+    public BasicImage crop(int xmin, int ymin, int xmax, int ymax) {
         return null;
     }
 
@@ -96,8 +105,8 @@ public class BasicImage {
      * a straight line, returning the positions that are stepped on.
      */
     public class PixelWalk {
-        public/***/ int x, y;
-        public/***/ int endX, endY;
+        private int x, y;
+        private int endX, endY;
 
         public PixelWalk(int startX, int startY, int endX, int endY) {
             x = startX;

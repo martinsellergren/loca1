@@ -9,11 +9,11 @@ import java.util.LinkedList;
  * @pre Every zoom-level's map-image covers the map's area.
  */
 public class Map {
-    public/***/ double westLon;
-    public/***/ double northLat;
-    public/***/ double eastLon;
-    public/***/ double southLat;
-    public/***/ LinkedList<MapImage> zoomLevels;
+    private double westLon;
+    private double northLat;
+    private double eastLon;
+    private double southLat;
+    private LinkedList<MapImage> zoomLevels;
 
     /**
      * Constructs an empty map (no zoom-levels).

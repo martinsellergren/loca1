@@ -11,9 +11,9 @@ package map;
  * @inv length(text) > 0
  */
 public class Label {
-    public/***/ String text;
-    public/***/ Category category;
-    public/***/ LabelLayout layout;
+    private String text;
+    private Category category;
+    private LabelLayout layout;
 
     /**
      * Constructs a new label from a layout and the layout's
@@ -38,6 +38,12 @@ public class Label {
      * @param c Label's category.
      */
     public Label(String text, LabelLayout l, Category c) {
+    }
+
+    /**
+     * Add offset to every position in label.
+     */
+    public void addOffset(int addX, int addY) {
     }
 
     /**

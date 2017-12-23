@@ -5,6 +5,8 @@ MapImageView
     tileSize::int
     new MapImageView(lon, lat, w, h, z, doubleQ::bool)
     new MapImageView(westLon::double, northLat, eastLon, southLat, z, doubleQ)
+    split(maxWH::int)::MapImageView[][]
+    getExtendedView()::MapImageView
     getGeoCoordinates(x::double, y::double)::double[lon,lat]
     getPixelCoordinates(lon::double, lat::double)::double[x,y]
     static getGlobalPixelCoordinates(lon, lat, zoom, tileSize)
@@ -26,10 +28,8 @@ MapRequest
 
     globals...
     DEFAULT_TILE_SIZE
-    EXTENSION_TERM
 
-    new MapRequest(lon,lat,w,h,z,doubleQ,attrib,ext)
-    new MapRequest(view::MapImageView, attribution::bool, extended::bool)
+    new MapRequest(view::MapImageView, attrib::bool)
     fetch3()::BasicImage[map,label,box]
     fetch(style::String)::BasicImage
         split(maxWH::int)::MapRequest[][]
@@ -41,6 +41,7 @@ BasicImage
     //rotate(deg)::BasicImage
     extractElement(box)::BasicImage (returns un-rotated subsection)
     copy()::BasicImage
+    crop(x::int, y::int, width::int, height::int)::BasicImage
     static concatenateImages(BasicImages[][] layout)
 
     inner:
@@ -52,10 +53,10 @@ BasicImage
 
 MapImage<-BasicImage
     labels::Label[]
-    viewportView::MapImageView
-    imageView::MapImageView
-    new MapImage(view::MapView, imgs::BasicImages[map,label,box])
-        pre: view and imgs correspond
+    view::MapImageView
+    new MapImage(viewportView::MapImageView, imgView::MapImageView, imgs::BasicImages[map,label,box])
+        pre: viewportView fits in imgView. imgView and imgs correspond.
+    addLabelOffset(x::int, y::int)::void
     fetchAndSetLabelCategories()::void throws IOException
     removeUnspecifiedLabels()::void
 
@@ -88,6 +89,7 @@ Label
     text: String
     category: enum
     layout: LabelLayout
+    addOffset(addX::int, addY::int)
     setCategory(c::category enum)
     fetchCategory(double[wnes])::category enum (if place not found, returns undefined-category)
 
@@ -113,6 +115,7 @@ LabelLayout
     getTallestBoxHeight()::double
     getBounds()::double[xmin,ymin,xmax,ymax]
     hasRotation()::boolean
+    addOffset(addX::int, addY::int)
 
     innner:
     LetterBoxIter
@@ -141,6 +144,7 @@ Box
     getRightMid()
     getMid()
     getBounds()::double[xmin,ymin,xmax,ymax]
+    addOffset(addX::int, addY::int)
 
 Map
     new Map(westLon::double, northLat, eastLon, southLat)

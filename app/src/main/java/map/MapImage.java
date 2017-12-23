@@ -5,24 +5,24 @@ import java.io.IOException;
 /**
  * An image of a map with full specification of its labels
  * (letter-precise details). The image has a location on earth
- * and specified zoom.
+ * and specified zoom through a MapImageView-object.
  */
 public class MapImage extends BasicImage {
-    public/***/ Label[] labels;
-    private MapImageView viewportView;
-    private MapImageView imageView;
+    private Label[] labels;
+    private MapImageView view;
 
     /**
-     * Constructs a map-image from an image of a map with
-     * associated viewport, and additional auxilary images for
-     * detection of labels.
+     * Constructs a map-image from an image of a map and additional
+     * auxilary images for detection of labels. Given image is croped
+     * to fit inside specified viewport.
      *
-     * For creating this map-image, only local data and functions are
+     * For creating this map-image only local data and functions are
      * used (like image-analysis and ocr-method). No need for a server
      * connection. Therefore, label categories are unspecified (need
      * a server query). So use fetchAndSetLabelCategories() afterwords.
      *
-     * @param v Map image view.
+     * @param vv Viewport view, describing final viewport.
+     * @param iv Image view, describing images.
      * @param mapImg A basic image of a map.
      * @param labelImg Equal to the map-image except
      * that everying except labels are transparent. Label areas are
@@ -33,13 +33,14 @@ public class MapImage extends BasicImage {
      * for detecting where labels are located and their internal
      * layout.
      *
-     * @pre mapImg, labelImg, boxImg all correspond to the basic
-     * map image view and are equal except above described
-     * differences. That means, the view spec and images have same
-     * mid-point, zoom and quality(pixel density), and the images
-     * have equal or larger dims.
+     * @pre The viewport-view fits inside the image-view. Preferebly
+     * it's substantially smaller so that the cut trash-labels
+     * from image-sides doesn't show.
+     * @pre mapImg, labelImg, boxImg all correspond to the image-view
+     * (i.e same mid, dims, zoom, pixel-density) and are equal
+     * except above described differences.
      */
-    public MapImage(MapImageView v, BasicImage mapImg, BasicImage labelImg, BasicImage boxImg) {
+    public MapImage(MapImageView vv, MapImageView iv, BasicImage mapImg, BasicImage labelImg, BasicImage boxImg) {
         super(null);
     }
 
@@ -47,11 +48,12 @@ public class MapImage extends BasicImage {
      * Convenient constructor, same as above except that the three
      * images are represented in an array.
      *
-     * @param v Basic map image view.
+     * @param vv Viewport view.
+     * @param iw Image view.
      * @param imgs [mapImg, labelImg, boxImg]
      */
-    public MapImage(MapImageView v, BasicImage[] imgs) {
-        this(v, imgs[0], imgs[1], imgs[2]);
+    public MapImage(MapImageView vv, MapImageView iv, BasicImage[] imgs) {
+        this(vv, iv, imgs[0], imgs[1], imgs[2]);
     }
 
     /**

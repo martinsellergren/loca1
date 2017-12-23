@@ -39,7 +39,7 @@ import java.awt.Point;
  * label (i.e same font-size).
  */
 public class BoxImage {
-    public/***/ boolean[][] map;
+    private boolean[][] map;
 
     /**
      * Constructs the box-image representation from an rgba-image.
@@ -52,6 +52,19 @@ public class BoxImage {
      * over means box-point, under means non-box-point.
      */
     public BoxImage(MapImage boxImg, double alphaThreshold) {
+        // for (int y = 0; y < img.getHeight(); y++) {
+        //     for (int x = 0; x < img.getWidth(); x++) {
+        //         Color c = new Color(img.getRGB(x, y), true);
+        //         int alpha = c.getAlpha();
+        //         if (alpha > labelAlphaThreshold) {
+        //             img.setRGB(x, y, Color.black.getRGB());
+        //         }
+        //         else {
+        //             img.setRGB(x, y, new Color(0, 0, 0, 0).getRGB());
+        //         }
+        //     }
+        // }
+
     }
 
     /**
@@ -68,8 +81,8 @@ public class BoxImage {
      * Returns good and bad (e.g clipped, half outside of view) labels.
      */
     public class LabelLayoutIterator {
-        public/***/ boolean[][] copy;
-        public/***/ LabelLayout next = null;
+        private boolean[][] copy;
+        private LabelLayout next = null;
 
         /**
          * Constructs the iterator by making a copy of the boxImage-map
@@ -111,7 +124,7 @@ public class BoxImage {
          * @return A box-point in the map-copy, or NULL if no more
          * box-points.
          */
-        public/***/ Point findBoxPoint() {
+        private Point findBoxPoint() {
             return null;
         }
 
@@ -134,7 +147,7 @@ public class BoxImage {
          * @pre startRow a row in the map-copy (i.e horizontaly
          * adjacent boxes) with no rotation and a straight baseline.
          */
-        public/***/ Point findNeighborRowPoint(boolean up, Box[] startRow) {
+        private Point findNeighborRowPoint(boolean up, Box[] startRow) {
             return null;
         }
 
@@ -156,7 +169,7 @@ public class BoxImage {
          *
          * @pre startBox a box in the map-copy.
          */
-        public/***/ Point findNeghborBoxPoint(boolean left, Box startBox) {
+        private Point findNeghborBoxPoint(boolean left, Box startBox) {
             return null;
         }
 
@@ -170,7 +183,7 @@ public class BoxImage {
          *
          * @pre start is a box-point in the map-copy.
          */
-        public/***/ Box[] expandToRow(Point start) {
+        private Box[] expandToRow(Point start) {
             return null;
         }
 
@@ -183,7 +196,7 @@ public class BoxImage {
          *
          * @pre start is a box-point in the map-copy.
          */
-        public/***/ Box expandToBox(Point start) {
+        private Box expandToBox(Point start) {
             return null;
         }
 
@@ -193,7 +206,7 @@ public class BoxImage {
          *
          * @pre start is a box-point in the map-copy.
          */
-        public/***/ Point[] expandToBoxPoints(Point start) {
+        private Point[] expandToBoxPoints(Point start) {
             return null;
         }
 
@@ -206,7 +219,7 @@ public class BoxImage {
          *         corners[2] - bottom right
          *         corners[3] - bottom left
          */
-        public/***/ Point[] getCorners(Point[] points) {
+        private Point[] getCorners(Point[] points) {
             return null;
         }
 
@@ -215,7 +228,7 @@ public class BoxImage {
          * points in given array, or NULL if unclear which any of those
          * are.
          */
-        public/***/ Point[] findExtremes(Point[] points) {
+        private Point[] findExtremes(Point[] points) {
             return null;
         }
 
@@ -223,7 +236,7 @@ public class BoxImage {
          * @param deg Rotation if degrees, counterclockwise.
          * @return Same points but rotated around (0,0).
          */
-        public/***/ Point[] rotatePoints(Point[] points, double deg) {
+        private Point[] rotatePoints(Point[] points, double deg) {
             return null;
         }
 
@@ -240,7 +253,7 @@ public class BoxImage {
          * @pre startRow a row of some label in the map-copy, that has
          * no rotation and a straight base-line.
          */
-        public/***/ LabelLayout addRows(boolean up, Box[] startRow, LabelLayout layout) {
+        private LabelLayout addRows(boolean up, Box[] startRow, LabelLayout layout) {
             return null;
         }
 
@@ -257,7 +270,7 @@ public class BoxImage {
          *
          * @pre startBox a letter-box in the map-copy.
          */
-        public/***/ Box[] addBoxes(boolean left, Box startBox, Box[] bs) {
+        private Box[] addBoxes(boolean left, Box startBox, Box[] bs) {
             return null;
         }
 
@@ -270,7 +283,7 @@ public class BoxImage {
          *
          * @param layout Layout for the label to be removed.
          */
-        public/***/ void removeLabel(LabelLayout layout) {
+        private void removeLabel(LabelLayout layout) {
         }
     }
 }

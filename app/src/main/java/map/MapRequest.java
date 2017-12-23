@@ -19,17 +19,13 @@ public class MapRequest {
     public static final int IMAGE_REQUEST_WIDTH_HEIGHT_LIMIT = 1280;
     public static final int DEFAULT_TILE_SIZE = 512;
 
-    /** Added to dimensions so that all originally cut labels fit.
-     * Determined through experiments. */
-    private static final int EXTENSION_TERM = 100;
-
     /** Mid-point. */
     private double lon,lat;
 
     /** Dims in default tile-size. */
     private int width,height;
 
-    /** 0 to 22. */
+    /** 0 to 20. */
     private int zoom;
 
     /** Dense pixels. */
@@ -38,40 +34,13 @@ public class MapRequest {
     /** Show attribution. */
     private boolean attribution;
 
-    /** Extend dims before fetching so cut labels fit. */
-    private boolean extend;
-
-
-    /**
-     * Constructs the request from scratch. Dims in default quality.
-     *
-     * @param lon Center longitude.
-     * @param lat Center latitude.
-     * @param w Pixel-width. w > 0.
-     * @param h Pixel-height. h > 0.
-     * @param z Zoom. 0 <= z <= 22.
-     * @param doubleQ Request a high quality image.
-     * @param attrib Show attribution on fetched image.
-     * @param extend Fetch extended image where cut labels fit.
-     */
-    public MapRequest(double lon, double lat, int w, int h, int z, boolean doubleQ, boolean attrib, boolean extend) {
-        this.lon = lon;
-        this.lat = lat;
-        this.width = w;
-        this.height = h;
-        this.zoom = z;
-        this.doubleQuality = doubleQ;
-        this.attribution = attrib;
-        this.extend = extend;
-    }
 
     /**
      * Constructs the request from a defined map image view.
      * @param v Specifies the request; area, zoom, quality.
      * @param attrib Show attribution on fetched image.
-     * @param extend Fetch extended image where cut labels fit.
      */
-    public MapRequest(MapImageView v, boolean attrib, boolean extend) {
+    public MapRequest(MapImageView v, boolean attrib) {
         this.lon = v.lon;
         this.lat = v.lat;
         this.zoom = v.zoom;
@@ -90,11 +59,13 @@ public class MapRequest {
         else {
             throw new RuntimeException("Bad tile size");
         }
+    }
 
-        if (extend) {
-            this.width += EXTENSION_TERM;
-            this.height += EXTENSION_TERM;
-        }
+    /**
+     * No attribution-constructor.
+     */
+    public MapRequest(MapImageView v) {
+        this(v, false);
     }
 
     /**
@@ -117,11 +88,7 @@ public class MapRequest {
      * @throws IOException if failed to fetch image (bad internet-conn?)
      */
     public BasicImage fetch(String style) throws IOException {
-        MapRequest req = this;
-        if (this.extend) {
-            req = getExtendedRequest();
-        }
-        MapRequest[][] reqs = req.split(IMAGE_REQUEST_WIDTH_HEIGHT_LIMIT);
+        MapRequest[][] reqs = split(IMAGE_REQUEST_WIDTH_HEIGHT_LIMIT);
 
         int rows = reqs.length;
         int cols = reqs[0].length;
@@ -143,7 +110,6 @@ public class MapRequest {
      * @return A map image defined by this object and the style.
      * @pre Max with,height defined by IMAGE_REQUEST_WIDTH_HEIGHT_LIMIT.
      * @throws RuntimeError if dims too big.
-     * @throws RuntimeException if illegal bounds. (!)
      * @throws IOException if failed to fetch image (bad internet-conn?)
      */
     public BasicImage fetchRaw(String style) throws IOException {
@@ -187,43 +153,28 @@ public class MapRequest {
      * @return A 2d-layout of requests.
      */
     private MapRequest[][] split(int l) {
-        int rows = this.height / l;
-        int cols = this.width / l;
-        if (this.height % l != 0) rows += 1;
-        if (this.width % l != 0) cols += 1;
+        boolean doubleQ = false;
+        MapImageView[][] vs = new MapImageView(this.lon, this.lat, this.width, this.height, this.zoom, doubleQ).split(l);
 
-        boolean highQ = false;
-        MapImageView view = new MapImageView(this.lon, this.lat, this.width, this.height, this.zoom, highQ);
+        int rows = vs.length;
+        int cols = vs[0].length;
         MapRequest[][] reqs = new MapRequest[rows][cols];
 
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
-                int x0 = c * l;
-                int y0 = r * l;
-                int x1 = Math.min(x0 + l, this.width);
-                int y1 = Math.min(y0 + l, this.height);
-                double xMid = (x0 + x1) / 2d;
-                double yMid = (y0 + y1) / 2d;
-                double[] latlon = view.getGeoCoordinates(xMid, yMid);
-
+                MapImageView v = vs[r][c];
                 boolean attrib = false;
-                boolean ext = false;
-                reqs[r][c] = new MapRequest(latlon[0], latlon[1], x1-x0, y1-y0, this.zoom, this.doubleQuality, attrib, ext);
+                reqs[r][c] = new MapRequest(vs[r][c], attrib);
+                reqs[r][c].doubleQuality = this.doubleQuality;
             }
         }
 
         return reqs;
     }
 
-    /**
-     * @return A new request where dims are extended where
-     * originally cut labels fit.
-     */
-    private MapRequest getExtendedRequest() {
-        //check not outside world
-        int w = this.width + EXTENSION_TERM;
-        int h = this.height + EXTENSION_TERM;
-        boolean extend = false;
-        return new MapRequest(this.lon, this.lat, w, h, this.zoom, this.doubleQuality, this.attribution, extend);
+    @Override
+    public String toString() {
+        return String.format("lon(%s)_lat(%s)_w(%s)_h(%s)_z(%s)_2x(%s)",
+                             lon, lat, width, height, zoom, doubleQuality);
     }
 }
