@@ -5,15 +5,15 @@ import map.*;
 
 public class MapRequestTests {
 
-    @Test
-    public void fetch_whole() {
-        double west = -180;
-        double north = MapImageView.LATITUDE_BOUND;
-        double east = 179.999;
-        double south = -MapImageView.LATITUDE_BOUND;
-        int[] zs = new int[] {0,2};
-        fetchBoundsHelper(west, north, east, south, zs);
-    }
+    // @Test
+    // public void fetch_whole() {
+    //     double west = -180;
+    //     double north = MapImageView.LATITUDE_BOUND;
+    //     double east = 179.999;
+    //     double south = -MapImageView.LATITUDE_BOUND;
+    //     int[] zs = new int[] {0,2,3};
+    //     fetchBoundsHelper(west, north, east, south, zs);
+    // }
 
     @Test
     public void fetch_mid() {
@@ -21,7 +21,7 @@ public class MapRequestTests {
         double north = 60;
         double east = 50;
         double south = -60;
-        int[] zs = new int[] {3};
+        int[] zs = new int[] {0,2,4};
         fetchBoundsHelper(west, north, east, south, zs);
     }
 
@@ -94,13 +94,13 @@ public class MapRequestTests {
         }
     }
 
-    static int imgIndex = 0;
+    static char imgIndex = 'a';
     private void fetchHelper(MapRequest req) {
         try {
             BasicImage img = req.fetch(MapRequest.FULL_STYLE_ID);
             assertTrue(img != null);
 
-            img.save(imgIndex++ + "-" + req.toString() + ".png");
+            img.save(imgIndex++ + "." +req.toString() + ".png");
         }
         catch (IOException e) {
             assertTrue(false);

@@ -19,7 +19,7 @@ public class MapImageView {
      * Expressed in defult pixel density (MapRequest.DEFAULT_TILE_SIZE).
      * Determined through experiments.
      */
-    private static final int EXTENSION_TERM = 70;
+    private static final int EXTENSION_TERM = 100;
 
     /** Max/min value for latitude. */
     public static final double LATITUDE_BOUND =
@@ -56,14 +56,10 @@ public class MapImageView {
      * @param doubleQ A high quality image.
      */
     public MapImageView(double lon, double lat, int w, int h, int z, boolean doubleQ) {
-        this.lon = lon;
-        this.lat = lat;
-        this.width = w;
-        this.height = h;
-        this.zoom = z;
-        this.tileSize = doubleQ ? (MapRequest.DEFAULT_TILE_SIZE*2) : MapRequest.DEFAULT_TILE_SIZE;
-
-        assertLatitude(this.lat, this.height, this.zoom, this.tileSize);
+        this(lon, lat, w, h, z,
+             doubleQ ?
+             (MapRequest.DEFAULT_TILE_SIZE*2) :
+             MapRequest.DEFAULT_TILE_SIZE);
     }
 
     /**
@@ -76,6 +72,8 @@ public class MapImageView {
         this.height = h;
         this.zoom = z;
         this.tileSize = ts;
+
+        assertWidth(this.width, this.zoom, this.tileSize);
         assertLatitude(this.lat, this.height, this.zoom, this.tileSize);
     }
 
@@ -92,6 +90,9 @@ public class MapImageView {
         east = Math2.toUnitDegrees(east);
         if (north - south <= 0)
             throw new IllegalArgumentException("Bad latitude bounds");
+        if (north > LATITUDE_BOUND || south < -LATITUDE_BOUND) {
+            throw new IllegalArgumentException("Bad latitude bounds");
+        }
 
         this.tileSize = doubleQ ? (MapRequest.DEFAULT_TILE_SIZE*2) : MapRequest.DEFAULT_TILE_SIZE;
 
@@ -110,7 +111,21 @@ public class MapImageView {
         this.height = Math.round((float)height);
         this.zoom = z;
 
+        assertWidth(this.width, this.zoom, this.tileSize);
         assertLatitude(this.lat, this.height, this.zoom, this.tileSize);
+    }
+
+    /**
+     * Throws exception if requested map is wider then earth.
+     *
+     * @param w Width.
+     * @param z Zoom.
+     * @param q Tile size.
+     */
+    private static void assertWidth(int w, int z, int q) {
+        int yMax = getGlobalPixelMax(z, q)[1];
+        if (w > yMax)
+            throw new IllegalArgumentException("Bad width.");
     }
 
     /**
@@ -201,7 +216,8 @@ public class MapImageView {
 
     /**
      * Constructs a new view with extended dims so that all originally
-     * cut labels fit.
+     * cut labels fit. Only extends if not going outside bounds.
+     * Therefore, the mid-point of the view might change.
      *
      * @return An extended view.
      */
@@ -209,16 +225,16 @@ public class MapImageView {
         int ext = Math.round(EXTENSION_TERM * (float)this.tileSize / MapRequest.DEFAULT_TILE_SIZE);
 
         double[] midGlob = getPixelCoordinates_global(0, this.lat, this.zoom, this.tileSize);
-        double yGlobTop = midGlob[1] - this.height/2d;
-        double yGlobBot = midGlob[1] + this.height/2d;
-        int yGlobMax = getGlobalPixelMax(this.zoom, this.tileSize)[1];
-        double newYGlobTop = Math.max(0, yGlobTop-ext);
-        double newYGlobBot = Math.min(yGlobMax, yGlobBot+ext);
+        double yGlobTop = midGlob[1] - this.height / 2d;
+        double yGlobBot = midGlob[1] + this.height / 2d;
+        int[] globMax = getGlobalPixelMax(this.zoom, this.tileSize);
+        double newYGlobTop = Math.max(0, yGlobTop - ext);
+        double newYGlobBot = Math.min(globMax[1], yGlobBot + ext);
         double newYGlobMid = (newYGlobTop + newYGlobBot) / 2;
 
         double lon = this.lon;
         double lat = getGeoCoordinates_global(0, newYGlobMid, this.zoom, this.tileSize)[1];
-        int w = this.width + ext;
+        int w = Math.min(globMax[0], this.width + ext);
         int h = (int)(newYGlobBot - newYGlobTop);
 
         return new MapImageView(lon, lat, w, h, this.zoom, this.tileSize);
