@@ -11,8 +11,8 @@ import java.io.IOException;
  * Fetch map images from mapbox server.
  */
 public class MapRequest {
-    private static final String USER_NAME = "masel";
-    private static final String TOKEN = "pk.eyJ1IjoibWFzZWwiLCJhIjoiY2o0ZTR2NWtrMHZudDJ3cDQzdXRwZ29zZCJ9.VrI0NDIYaP_5ZAXqnpaD1A";
+    public/***/ static final String USER_NAME = "masel";
+    public/***/ static final String TOKEN = "pk.eyJ1IjoibWFzZWwiLCJhIjoiY2o0ZTR2NWtrMHZudDJ3cDQzdXRwZ29zZCJ9.VrI0NDIYaP_5ZAXqnpaD1A";
     public static final String FULL_STYLE_ID = "cj962wpa3p3g22spbnw89cisy";
     public static final String LABEL_STYLE_ID = "cj962xk828lks2svxh8s2ahed";
     public static final String BOX_STYLE_ID = "cj962xk828lks2svxh8s2ahed";
@@ -20,19 +20,19 @@ public class MapRequest {
     public static final int DEFAULT_TILE_SIZE = 512;
 
     /** Mid-point. */
-    private double lon,lat;
+    public/***/ double lon,lat;
 
     /** Dims in default tile-size. */
-    private int width,height;
+    public/***/ int width,height;
 
     /** 0 to 20. */
-    private int zoom;
+    public/***/ int zoom;
 
     /** Dense pixels. */
-    private boolean doubleQuality;
+    public/***/ boolean doubleQuality;
 
     /** Show attribution. */
-    private boolean attribution;
+    public/***/ boolean attribution;
 
 
     /**
@@ -152,7 +152,7 @@ public class MapRequest {
      * @param l Maximum side length.
      * @return A 2d-layout of requests.
      */
-    private MapRequest[][] split(int l) {
+    public/***/ MapRequest[][] split(int l) {
         boolean doubleQ = false;
         MapImageView[][] vs = new MapImageView(this.lon, this.lat, this.width, this.height, this.zoom, doubleQ).split(l);
 

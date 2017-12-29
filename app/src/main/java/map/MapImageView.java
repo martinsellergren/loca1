@@ -19,7 +19,7 @@ public class MapImageView {
      * Expressed in defult pixel density (MapRequest.DEFAULT_TILE_SIZE).
      * Determined through experiments.
      */
-    private static final int EXTENSION_TERM = 100;
+    public/***/ static final int EXTENSION_TERM = 100;
 
     /** Max/min value for latitude. */
     public static final double LATITUDE_BOUND =
@@ -65,7 +65,7 @@ public class MapImageView {
     /**
      * Constructor when tilesize is known.
      */
-    private MapImageView(double lon, double lat, int w, int h, int z, int ts) {
+    public/***/ MapImageView(double lon, double lat, int w, int h, int z, int ts) {
         this.lon = lon;
         this.lat = lat;
         this.width = w;
@@ -122,7 +122,7 @@ public class MapImageView {
      * @param z Zoom.
      * @param q Tile size.
      */
-    private static void assertWidth(int w, int z, int q) {
+    public/***/ static void assertWidth(int w, int z, int q) {
         int yMax = getGlobalPixelMax(z, q)[1];
         if (w > yMax)
             throw new IllegalArgumentException("Bad width.");
@@ -136,7 +136,7 @@ public class MapImageView {
      * @param z Zoom.
      * @param q Tile size.
      */
-    private static void assertLatitude(double lat, int h, int z, int q) {
+    public/***/ static void assertLatitude(double lat, int h, int z, int q) {
         if (!okLatitudeBound(lat, h, z, q)) {
             throw new IllegalArgumentException("Bad latitude bounds");
         }
@@ -149,7 +149,7 @@ public class MapImageView {
      * @param q Tile size.
      * @return False if latitude bound is ouside valid span.
      */
-    private static boolean okLatitudeBound(double lat, int h, int z, int q) {
+    public/***/ static boolean okLatitudeBound(double lat, int h, int z, int q) {
         double[] globMid = getPixelCoordinates_global(0, lat, z, q);
         int yMin = Math.round( (float)(globMid[1] - h/2d) );
         int yMax = Math.round( (float)(globMid[1] + h/2d) );
@@ -164,7 +164,7 @@ public class MapImageView {
      * @param q Tile size.
      * @return Max pixel coordinates [x,y].
      */
-    private static int[] getGlobalPixelMax(int z, int q) {
+    public/***/ static int[] getGlobalPixelMax(int z, int q) {
         double[] xy = getPixelCoordinates_global(179.9999999, -LATITUDE_BOUND, z, q);
         return new int[]{ Math.round((float)xy[0]), Math.round((float)xy[1]) };
     }
@@ -296,7 +296,7 @@ public class MapImageView {
      * @param q TileSize (img-quality).
      * @return [lon, lat]
      */
-    private static double[] getGeoCoordinates_global(double x, double y, int z, int q) {
+    public/***/ static double[] getGeoCoordinates_global(double x, double y, int z, int q) {
         double lon = 2*x*Math.PI / (q*Math.pow(2, z)) - Math.PI;
         double lat = 2*Math.atan(Math.exp(Math.PI - 2*Math.PI*y / (q*Math.pow(2, z)))) - Math.PI/2;
 
@@ -314,7 +314,7 @@ public class MapImageView {
      * @param q TileSize (img-quality).
      * @return Global [x, y]
      */
-    private static double[] getPixelCoordinates_global(double lon, double lat, int z, int q) {
+    public/***/ static double[] getPixelCoordinates_global(double lon, double lat, int z, int q) {
         lon = Math.toRadians(Math2.toUnitDegrees(lon));
         lat = Math.toRadians(Math2.toUnitDegrees(lat));
 

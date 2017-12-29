@@ -11,9 +11,9 @@ package map;
  * @inv length(text) > 0
  */
 public class Label {
-    private String text;
-    private Category category;
-    private LabelLayout layout;
+    public/***/ String text;
+    public/***/ Category category;
+    public/***/ LabelLayout layout;
 
     /**
      * Constructs a new label from a layout and the layout's

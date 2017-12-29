@@ -32,7 +32,7 @@
 //         //img.save("test_concatenateImages_2x2Layout_squares.png");
 //     }
 
-//     private void colorImg(BufferedImage img, Color c) {
+//     public/***/ void colorImg(BufferedImage img, Color c) {
 //         Graphics2D g = img.createGraphics();
 //         g.setPaint(c);
 //         g.fillRect(0, 0, img.getWidth(), img.getHeight());

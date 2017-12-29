@@ -2,6 +2,7 @@ package map;
 
 import java.awt.image.BufferedImage;
 import java.awt.Color;
+import java.awt.Graphics2D;
 
 import javax.swing.*;
 import java.awt.FlowLayout;
@@ -12,7 +13,7 @@ import java.io.File;
  * A basic image with some useful behavior. A wrapper of BufferedImage.
  */
 public class BasicImage {
-    private BufferedImage img;
+    public/***/ BufferedImage img;
 
     public BasicImage(BufferedImage img) {
         this.img = img;
@@ -49,7 +50,11 @@ public class BasicImage {
      * @return A deep copy of this image.
      */
     public BasicImage copy() {
-        return null;
+        BufferedImage b = new BufferedImage(img.getWidth(), img.getHeight(), img.getType());
+        Graphics2D g = b.createGraphics();
+        g.drawImage(img, 0, 0, null);
+        g.dispose();
+        return new BasicImage(b);
     }
 
     /**
@@ -58,7 +63,8 @@ public class BasicImage {
      * @pre mins < maxes.
      */
     public BasicImage crop(int xmin, int ymin, int xmax, int ymax) {
-        return null;
+        BufferedImage croped = img.getSubimage(xmin, ymin, xmax-xmin, ymax-ymin);
+        return new BasicImage(croped);
     }
 
     /**
@@ -105,8 +111,14 @@ public class BasicImage {
      * a straight line, returning the positions that are stepped on.
      */
     public class PixelWalk {
-        private int x, y;
-        private int endX, endY;
+        public/***/ int x, y;
+        public/***/ int endX, endY;
+
+        /**
+         * Diagonal decider. If angle is between 45+-DD go diagonal
+         * up-left. Same principal for the other four diagonals.
+         */
+        private final double DD = 15;
 
         public PixelWalk(int startX, int startY, int endX, int endY) {
             x = startX;
@@ -117,11 +129,7 @@ public class BasicImage {
          * @returns true if isn't there yet.
          */
         public boolean hasMore() {
-            if (x == endX && y == endY) {
-                return false;
-            }
-
-            return false;
+            return (x != endX || x != endY);
         }
 
         /**
@@ -130,8 +138,26 @@ public class BasicImage {
          * @return next position.
          */
         public int[] next() {
+            double ang = Math2.angle(new int[]{endX-x, endY-y});
 
-            return null;
+            if (ang >= -45 + DD && ang <= 45 - DD) //right
+                return new int[]{x+1, y};
+            if (ang >= 45 - DD && ang <= 45 + DD) //up-right
+                return new int[]{x+1, y-1};
+            if (ang >= 45 + DD && ang <= 135 - DD) //up
+                return new int[]{x, y-1};
+            if (ang >= 135 - DD && ang <= 135 + DD) // up-left
+                return new int[]{x-1, y-1};
+            if (ang >= 135 + DD && ang <= -135 - DD) //left
+                return new int[]{x-1, y};
+            if (ang >= -135 - DD && ang <= -135 + DD) //down-left
+                return new int[]{x-1, y+1};
+            if (ang >= -135 + DD && ang <= -45 - DD) //down
+                return new int[]{x, y+1};
+            if (ang >= -45 - DD && ang <= -45 + DD) //down-right
+                return new int[]{x+1, y+1};
+
+            throw new RuntimeException("Dead-end");
         }
     }
 

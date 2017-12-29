@@ -8,8 +8,8 @@ import java.io.IOException;
  * and specified zoom through a MapImageView-object.
  */
 public class MapImage extends BasicImage {
-    private Label[] labels;
-    private MapImageView view;
+    public/***/ Label[] labels;
+    public/***/ MapImageView view;
 
     /**
      * Constructs a map-image from an image of a map and additional

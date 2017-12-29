@@ -15,15 +15,15 @@ public class MapRequestTests {
     //     fetchBoundsHelper(west, north, east, south, zs);
     // }
 
-    @Test
-    public void fetch_mid() {
-        double west = -50;
-        double north = 60;
-        double east = 50;
-        double south = -60;
-        int[] zs = new int[] {0,2,4};
-        fetchBoundsHelper(west, north, east, south, zs);
-    }
+    // @Test
+    // public void fetch_mid() {
+    //     double west = -50;
+    //     double north = 60;
+    //     double east = 50;
+    //     double south = -60;
+    //     int[] zs = new int[] {0,2,4};
+    //     fetchBoundsHelper(west, north, east, south, zs);
+    // }
 
     // @Test
     // public void fetch_north() {
@@ -75,7 +75,7 @@ public class MapRequestTests {
     //     fetchBoundsHelper(west, north, east, south, zs);
     // }
 
-    private void fetchBoundsHelper(double west, double north, double east, double south, int[] zlevels) {
+    public/***/ void fetchBoundsHelper(double west, double north, double east, double south, int[] zlevels) {
         for (int z : zlevels) {
             MapImageView lowQ_noExt = new MapImageView(west, north, east, south, z, false);
             MapImageView lowQ_ext = lowQ_noExt.getExtendedView();
@@ -95,7 +95,7 @@ public class MapRequestTests {
     }
 
     static char imgIndex = 'a';
-    private void fetchHelper(MapRequest req) {
+    public/***/ void fetchHelper(MapRequest req) {
         try {
             BasicImage img = req.fetch(MapRequest.FULL_STYLE_ID);
             assertTrue(img != null);

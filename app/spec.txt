@@ -129,9 +129,10 @@ LabelLayout
 Box
     new Box(topLeft,topRight,bottomRight,bottomLeft)
     topLeft,topRight,height
-    containsPoint(x::int, y::int)
+    //containsPoint(x::int, y::int)
     getRotation()::double
-    isCentered(box::Box)::bool
+    getDirVector()::double[]
+    //isCentered(box::Box)::bool
     getWidth()::double
     getHeight()::double
     getTopLeft()::double[x,y]
