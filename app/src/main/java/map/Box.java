@@ -1,7 +1,10 @@
 package map;
 
+import java.util.Arrays;
+
 /**
  * A box located in an integer-grid, with some rotation.
+ * Low x is left, low y is up.
  *
  * @inv width,height > 0
  */
@@ -67,7 +70,7 @@ public class Box {
      * @return Box height.
      */
     public double getHeight() {
-        return height;
+        return this.height;
     }
 
     /**

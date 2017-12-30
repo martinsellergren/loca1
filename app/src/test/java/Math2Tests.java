@@ -41,17 +41,17 @@ public class Math2Tests {
     @Test
     public void angle_horizontal() {
         double[] v = new double[]{1, 0};
-        assertEquals(Math2.angle(v), 0, 0.0001);
+        assertEquals(0, Math2.angle(v), 0.0001);
         v = new double[]{5, 5};
-        assertEquals(Math2.angle(v), 45, 0.0001);
+        assertEquals(-45, Math2.angle(v), 0.0001);
         v = new double[]{0, 0};
         assertEquals(Math2.angle(v), 0, 0.0001);
         v = new double[]{-1, 1};
-        assertEquals(Math2.angle(v), 135, 0.0001);
+        assertEquals(Math2.angle(v), -135, 0.0001);
         v = new double[]{-1, 0};
         assertEquals(Math2.angle(v), -180, 0.0001);
         v = new double[]{0, -100000};
-        assertEquals(Math2.angle(v), -90, 0.0001);
+        assertEquals(Math2.angle(v), 90, 0.0001);
     }
 
     @Test
@@ -101,12 +101,39 @@ public class Math2Tests {
 
     @Test
     public void rotate() {
-        double[] v = new double[]{1,0};
+        double[] v = new double[]{1, 0};
         double[] r = Math2.rotate(v, 90);
         assertEquals(Math2.dot(v, r), 0, 0.0001);
+        assertEquals(0, r[0], 0.0001);
+        assertEquals(-1, r[1], 0.0001);
 
-        v = new double[]{-5435,223};
+        v = new double[]{1, 1};
+        r = Math2.rotate(v, 180);
+        assertEquals(-1, r[0], 0.0001);
+        assertEquals(-1, r[1], 0.0001);
+
+        v = new double[]{1, 1};
+        r = Math2.rotate(v, -180);
+        assertEquals(-1, r[0], 0.0001);
+        assertEquals(-1, r[1], 0.0001);
+
+        v = new double[]{1, 1};
+        r = Math2.rotate(v, 360);
+        assertEquals(1, r[0], 0.0001);
+        assertEquals(1, r[1], 0.0001);
+
+        v = new double[]{-5435, 223};
         r = Math2.rotate(v, -90);
         assertEquals(Math2.dot(v, r), 0, 0.0001);
+
+        v = new double[]{1, 1};
+        r = Math2.rotate(v, -90);
+        assertEquals(-1, r[0], 0.0001);
+        assertEquals(1, r[1], 0.0001);
+
+        v = new double[]{1, 1};
+        r = Math2.rotate(v, 90);
+        assertEquals(1, r[0], 0.0001);
+        assertEquals(-1, r[1], 0.0001);
     }
 }

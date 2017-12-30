@@ -2,7 +2,7 @@ package map;
 
 /**
  * Some additional math. 2D is assumed when applicable and angles
- * in degrees.
+ * in degrees. X grows right, (NOTE:) y grows down.
  */
 public class Math2 {
 
@@ -32,9 +32,11 @@ public class Math2 {
     public static double angle(double[] v) {
         if (length(v) == 0) return 0;
 
-        double a = Math.acos(v[0] / length(v));
+        double[] w = new double[]{v[0], v[1]};
+        w[1] = -w[1];
+        double a = Math.acos(w[0] / length(w));
 
-        if (Math.asin(v[1] / length(v)) >= 0)
+        if (Math.asin(w[1] / length(w)) >= 0)
             return Math2.toUnitDegrees(Math.toDegrees(a));
         else
             return Math2.toUnitDegrees(Math.toDegrees(-a));
@@ -100,8 +102,8 @@ public class Math2 {
     public static double[] rotate(double[] v, double deg) {
         double rad = Math.toRadians(deg);
         double A[][] = new double[][] {
-            new double[] { Math.cos(rad), -Math.sin(rad) },
-            new double[] { Math.sin(rad), Math.cos(rad) }};
+            new double[] { Math.cos(rad), Math.sin(rad) },
+            new double[] { -Math.sin(rad), Math.cos(rad) }};
 
         return new double[] {A[0][0]*v[0] + A[0][1]*v[1],
                              A[1][0]*v[0] + A[1][1]*v[1] };
@@ -133,14 +135,14 @@ public class Math2 {
     }
 
     /**
-     * @return Vector converted from int to double[].
+     * @return Vector converted from int[] to double[].
      */
     public static double[] toDouble(int[] v) {
         return new double[]{v[0], v[1]};
     }
 
     /**
-     * @return Vector converted from int to int[].
+     * @return Vector converted from double[] to int[].
      */
     public static int[] toInt(double[] v) {
         return new int[] { Math.round((float)v[0]),
