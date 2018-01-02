@@ -106,66 +106,63 @@ public class BasicImage {
         return new BasicImage(img);
     }
 
+
+    //*******************************FOR TESTING
+
     /**
-     * A pixel walk, i.e a walk from one position to another on
-     * a straight line, returning the positions that are stepped on.
+     * Constructor for empty image.
      */
-    public class PixelWalk {
-        public/***/ int x, y;
-        public/***/ int endX, endY;
-
-        /**
-         * Diagonal decider. If angle is between 45+-DD go diagonal
-         * up-left. Same principal for the other four diagonals.
-         */
-        private final double DD = 15;
-
-        public PixelWalk(int startX, int startY, int endX, int endY) {
-            x = startX;
-            y = startY;
-        }
-
-        /**
-         * @returns true if isn't there yet.
-         */
-        public boolean hasMore() {
-            return (x != endX || x != endY);
-        }
-
-        /**
-         * Returns next position. Also updates state.
-         *
-         * @return next position.
-         */
-        public int[] next() {
-            double ang = Math2.angle(new int[]{endX-x, endY-y});
-
-            if (ang >= -45 + DD && ang <= 45 - DD) //right
-                return new int[]{x+1, y};
-            if (ang >= 45 - DD && ang <= 45 + DD) //up-right
-                return new int[]{x+1, y-1};
-            if (ang >= 45 + DD && ang <= 135 - DD) //up
-                return new int[]{x, y-1};
-            if (ang >= 135 - DD && ang <= 135 + DD) // up-left
-                return new int[]{x-1, y-1};
-            if (ang >= 135 + DD && ang <= -135 - DD) //left
-                return new int[]{x-1, y};
-            if (ang >= -135 - DD && ang <= -135 + DD) //down-left
-                return new int[]{x-1, y+1};
-            if (ang >= -135 + DD && ang <= -45 - DD) //down
-                return new int[]{x, y+1};
-            if (ang >= -45 - DD && ang <= -45 + DD) //down-right
-                return new int[]{x+1, y+1};
-
-            throw new RuntimeException("Dead-end");
-        }
+    public BasicImage(int width, int height) {
+        this.img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
     }
 
+    /**
+     * Color image in one color.
+     */
+    public void color(Color c) {
+        Graphics2D g = img.createGraphics();
+        g.setPaint(c);
+        g.fillRect(0, 0, this.getWidth(), this.getHeight());
+    }
 
+    /**
+     * Return graphics for drawing on image etc.
+     */
+    public Graphics2D createGraphics() {
+        return this.img.createGraphics();
+    }
 
+    /**
+     *
+     */
+    public void drawBox(Box box) {
+        Graphics2D g = createGraphics();
+        int[] tl = box.getTopLeft();
+        int[] tr = box.getTopRight();
+        int[] bl = box.getBottomLeft();
+        int[] br = box.getBottomRight();
+        g.setPaint(Color.BLUE);
+        g.drawLine(tl[0], tl[1], tr[0], tr[1]);
+        g.setPaint(Color.PINK);
+        g.drawLine(tr[0], tr[1], br[0], br[1]);
+        g.setPaint(Color.GREEN);
+        g.drawLine(br[0], br[1], bl[0], bl[1]);
+        g.setPaint(Color.BLACK);
+        g.drawLine(bl[0], bl[1], tl[0], tl[1]);
 
-    /*******************************FOR TESTING
+        int[] tm = box.getTopMid();
+        int[] m = box.getMid();
+        int[] bm = box.getBottomMid();
+        g.setPaint(Color.ORANGE);
+        g.drawLine(tm[0], tm[1], m[0], m[1]);
+        g.setPaint(Color.GRAY);
+        g.drawLine(m[0], m[1], bm[0], bm[1]);
 
+        int[] lm = box.getLeftMid();
+        int[] rm = box.getRightMid();
+        g.setPaint(Color.CYAN);
+        g.drawLine(lm[0], lm[1], rm[0], rm[1]);
+    }
 
     /**
      * Draw img to screen.

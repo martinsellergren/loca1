@@ -1,5 +1,8 @@
 import org.junit.Test;
 import static org.junit.Assert.*;
+import java.awt.image.BufferedImage;
+import java.awt.Graphics2D;
+import java.awt.Color;
 import map.*;
 import java.util.Arrays;
 
@@ -55,16 +58,11 @@ public class BoxTests {
         assertEquals(20, bs[3]);
     }
 
-    // @Test
-    // public void getDirAndOrtoVector() {
-    //     int[] topL = new int[]{0,0};
-    //     int[] topR = new int[]{10,10};
-    //     double h = Math.sqrt(200);
-    //     Box bx = new Box(topL, topR, h);
-    //     double[] dirV = bx.getDirVector();
-    //     double[] ortoV = bx.getOrtoDirVector();
-
-    //     System.out.println(Arrays.toString(dirV));
-    //     System.out.println(Arrays.toString(ortoV));
-    // }
+    @Test
+    public void testGeneralBoxLayout_img() {
+        BasicImage img = new BasicImage(100, 100);
+        Box box = new Box(new int[]{10, 40}, new int[]{50, 10}, 60);
+        img.drawBox(box);
+        img.save("test_element.png");
+    }
 }
