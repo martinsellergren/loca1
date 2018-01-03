@@ -8,6 +8,7 @@ package map;
 public class PixelWalk {
     public/***/ int nextX, nextY;
     public/***/ int endX, endY;
+    private boolean done = false;
 
     /**
      * Diagonal decider. If angle is between 45+-DD go diagonal
@@ -26,46 +27,49 @@ public class PixelWalk {
     }
 
     /**
-     * Returns true if not there yet. Also sets next if there's more.
-     */
-    public boolean hasMore() {
-        boolean hasMore = nextX != endX || nextY != endY;
-
-        if (hasMore) {
-            double ang = Math2.angle(new int[]{endX-nextX, endY-nextY});
-
-            if (ang >= -45 + DD && ang <= 45 - DD) {//right
-                nextX += 1;
-            } else if (ang >= 45 - DD && ang <= 45 + DD) {//up-right
-                nextX += 1;
-                nextY -= 1;
-            } else if (ang >= 45 + DD && ang <= 135 - DD) {//up
-                nextY -= 1;
-            } else if (ang >= 135 - DD && ang <= 135 + DD) {// up-left
-                nextX -= 1;
-                nextY -= 1;
-            } else if (ang >= 135 + DD && ang <= -135 - DD) {//left
-                nextX -= 1;
-            } else if (ang >= -135 - DD && ang <= -135 + DD) {//down-left
-                nextX -= 1;
-                nextY += 1;
-            } else if (ang >= -135 + DD && ang <= -45 - DD) {//down
-                nextY += 1;
-            } else if (ang >= -45 - DD && ang <= -45 + DD) {//down-right
-                nextX += 1;
-                nextY += 1;
-            } else {
-                throw new RuntimeException("Dead-end");
-            }
-        }
-
-        return hasMore;
-    }
-
-    /**
-     * @return next position.
+     * Returns next pos if not there yet, otherwise null.
+     * Also updates state.
      */
     public int[] next() {
-        return new int[]{nextX, nextY};
+        if (this.done) return null;
+        else {
+            int currentX = this.nextX;
+            int currentY = this.nextY;
+            setDone();
+            updateState();
+            return new int[]{currentX, currentY};
+        }
+    }
+
+    private void setDone() {
+        this.done = nextX == endX && nextY == endY;
+    }
+
+    private void updateState() {
+        double ang = Math2.angle(new int[]{endX-nextX, endY-nextY});
+
+        if (ang >= -45 + DD && ang <= 45 - DD) {//right
+            this.nextX += 1;
+        } else if (ang >= 45 - DD && ang <= 45 + DD) {//up-right
+            this.nextX += 1;
+            this.nextY -= 1;
+        } else if (ang >= 45 + DD && ang <= 135 - DD) {//up
+            this.nextY -= 1;
+        } else if (ang >= 135 - DD && ang <= 135 + DD) {// up-left
+            this.nextX -= 1;
+            this.nextY -= 1;
+        } else if (ang >= 135 + DD || ang <= -135 - DD) {//left
+            this.nextX -= 1;
+        } else if (ang >= -135 - DD && ang <= -135 + DD) {//down-left
+            this.nextX -= 1;
+            this.nextY += 1;
+        } else if (ang >= -135 + DD && ang <= -45 - DD) {//down
+            this.nextY += 1;
+        } else if (ang >= -45 - DD && ang <= -45 + DD) {//down-right
+            this.nextX += 1;
+            this.nextY += 1;
+        } else {
+            throw new RuntimeException("Dead-end, ang=" + ang);
+        }
     }
 }
