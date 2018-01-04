@@ -63,6 +63,7 @@ public class BoxTests {
         BasicImage img = new BasicImage(100, 100);
         Box box = new Box(new int[]{10, 40}, new int[]{50, 10}, 60);
         img.drawBox(box);
-        img.save("test_element.png");
+        assertTrue(img != null);
+        //img.save("test_element.png");
     }
 }

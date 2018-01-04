@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.FlowLayout;
 import javax.imageio.ImageIO;
 import java.io.File;
+import java.util.Arrays;
 
 /**
  * A basic image with some useful behavior. A wrapper of BufferedImage.
@@ -18,6 +19,14 @@ public class BasicImage {
     public BasicImage(BufferedImage img) {
         this.img = img;
     }
+
+    /**
+     * Constructor for empty image.
+     */
+    public BasicImage(int width, int height) {
+        this.img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+    }
+
 
     /**
      * @return Img width, i.e no of pixels on width.
@@ -34,6 +43,13 @@ public class BasicImage {
     }
 
     /**
+     * Set pixel.
+     */
+    public void setRGB(int x, int y, Color c) {
+        img.setRGB(x, y, c.getRGB());
+    }
+
+    /**
      * Returns an element in the image contained inside a box.
      * The box (and element in image) may be rotated, but returned
      * element is not.
@@ -42,8 +58,30 @@ public class BasicImage {
      * @return A new image where non-rotated element fits perfectly,
      * i.e an un-rotated subsection of this image.
      */
-    public BasicImage extractElement(Box b) {
-        return null;
+    public BasicImage extractElement(Box box) {
+        double rot = -box.getRotation();
+        int[] tl = Math2.rotate(box.getTopLeft(), rot);
+        int[] br = Math2.rotate(box.getBottomRight(), rot);
+        BasicImage elemImg = new BasicImage(br[0]-tl[0], br[1]-tl[1]);
+
+        int[] bounds = box.getBounds();
+
+        for (int y = bounds[1]; y <= bounds[3]; y++) {
+            for (int x = bounds[0]; x <= bounds[2]; x++) {
+                int[] imgP = new int[]{x, y};
+                int[] elemP = Math2.minus(Math2.rotate(imgP, rot), tl);
+
+                if (elemP[0] >= 0 &&
+                    elemP[1] >= 0 &&
+                    elemP[0] < elemImg.getWidth() &&
+                    elemP[1] < elemImg.getHeight()) {
+                    boolean hasAlpha = true;
+                    Color clr = new Color(img.getRGB(imgP[0], imgP[1]), hasAlpha);
+                    elemImg.setRGB(elemP[0], elemP[1], clr);
+                }
+            }
+        }
+        return elemImg;
     }
 
     /**
@@ -110,13 +148,6 @@ public class BasicImage {
     //*******************************FOR TESTING
 
     /**
-     * Constructor for empty image.
-     */
-    public BasicImage(int width, int height) {
-        this.img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-    }
-
-    /**
      * Color image in one color.
      */
     public void color(Color c) {
@@ -155,7 +186,7 @@ public class BasicImage {
         int[] bm = box.getBottomMid();
         g.setPaint(Color.ORANGE);
         g.drawLine(tm[0], tm[1], m[0], m[1]);
-        g.setPaint(Color.GRAY);
+        g.setPaint(Color.RED);
         g.drawLine(m[0], m[1], bm[0], bm[1]);
 
         int[] lm = box.getLeftMid();

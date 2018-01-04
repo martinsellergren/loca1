@@ -14,7 +14,7 @@ public class PixelWalk {
      * Diagonal decider. If angle is between 45+-DD go diagonal
      * up-left. Same principal for the other four diagonals.
      */
-    private final double DD = 15;
+    private final double DD = 10;
 
     /**
      * Constructs the pixel-walk.
@@ -24,6 +24,10 @@ public class PixelWalk {
         this.nextY = startY;
         this.endX = endX;
         this.endY = endY;
+    }
+
+    public PixelWalk(int[] start, int[] end) {
+        this(start[0], start[1], end[0], end[1]);
     }
 
     /**

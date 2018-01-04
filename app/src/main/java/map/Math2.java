@@ -108,6 +108,9 @@ public class Math2 {
         return new double[] {A[0][0]*v[0] + A[0][1]*v[1],
                              A[1][0]*v[0] + A[1][1]*v[1] };
     }
+    public static int[] rotate(int[] v, double deg) {
+        return Math2.toInt(Math2.rotate(Math2.toDouble(v), deg));
+    }
 
     /**
      * @return Dot-product.

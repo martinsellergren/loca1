@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 /**
  * A box located in an integer-grid, with some rotation.
- * Low x is left, low y is up.
+ * Low x is left, low y is up, in [x,y].
  *
  * @inv width,height > 0
  */
@@ -154,4 +154,43 @@ public class Box {
             Math.max(Math.max(tl[0], tr[0]), Math.max(br[0], bl[0])),
             Math.max(Math.max(tl[1], tr[1]), Math.max(br[1], bl[1])) };
     }
+
+    // /**
+    //  * @return True if [x,y] is inside box.
+    //  */
+    // public boolean isInside(int x, int y) {
+    //     return true;
+    // }
+
+    // /**
+    //  * Iterator for points inside this box. Returned in no
+    //  * particular order.
+    //  */
+    // public class BoxPointIterator {
+    //     private int x;
+    //     private int y;
+    //     private int xMax;
+    //     private int yMax;
+
+    //     public BoxPointIterator() {
+    //         int[] bs = getBounds();
+    //         x = bs[0];
+    //         y = bs[1];
+    //         xMax = bs[2];
+    //         yMax = bs[3];
+    //     }
+
+    //     public int[] next() {
+    //         for ( ; y <= yMax; y++) {
+    //             for ( ; x <= xMax; x++) {
+    //                 if (isInside(x, y)) {
+    //                     return new int[]{x++, y};
+    //                 }
+    //             }
+    //             x = 0;
+    //         }
+
+    //         return null;
+    //     }
+    // }
 }
