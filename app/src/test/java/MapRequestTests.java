@@ -6,10 +6,36 @@ import map.*;
 public class MapRequestTests {
 
     // @Test
+    // public void fetch3() {
+    //     double west = 18.302567;
+    //     double east = 18.357844;
+    //     double north = 59.095697;
+    //     double south = 59.002776;
+    //     int zoom = 14;
+    //     boolean highQ = false;
+    //     MapImageView view = new MapImageView(west, north, east, south, zoom, highQ);
+    //     MapRequest req = new MapRequest(view);
+
+    //     try {
+    //         BasicImage[] imgs = req.fetch3();
+    //         assertTrue(imgs[0] != null);
+    //         assertTrue(imgs[1] != null);
+    //         assertTrue(imgs[2] != null);
+
+    //         imgs[0].save("test_full.png");
+    //         imgs[1].save("test_label.png");
+    //         imgs[2].save("test_box.png");
+    //     }
+    //     catch (IOException e) {
+    //         assertTrue(false);
+    //     }
+    // }
+
+    // @Test
     // public void fetch_whole() {
     //     double west = -180;
     //     double north = MapImageView.LATITUDE_BOUND;
-    //     double east = 179.999;
+    //     double east = 180;
     //     double south = -MapImageView.LATITUDE_BOUND;
     //     int[] zs = new int[] {0,2,3};
     //     fetchBoundsHelper(west, north, east, south, zs);

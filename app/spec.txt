@@ -63,6 +63,8 @@ MapImage<-BasicImage
 BoxImage
     new BoxImage(boxImg::BasicImage, alphaTreshold::int)
     (alphaTreshold: pixels alpha-value- over means show, under means hide)
+    getLabelLayouts()::LabelLayout[]
+    alt:
 
     inner:
     LabelLayoutIter
@@ -84,11 +86,11 @@ BoxImage
                 rotate(Point[], deg)::Point[]
 
 Label
-    new Label(text::String, layout::LabelLayout, category)
-    new Label(labelImg::BasicImage, layout::LabelLayout)
     text: String
     category: enum
     layout: LabelLayout
+    new Label(text::String, layout::LabelLayout, category)
+    new Label(labelImg::BasicImage, layout::LabelLayout)
     addOffset(addX::int, addY::int)
     setCategory(c::category enum)
     fetchCategory(double[wnes])::category enum (if place not found, returns undefined-category)
@@ -105,26 +107,30 @@ Labels(tied to a mapImage)
             c = label.fetchCategory(mapImageBasics)
             label.setCategory(c)
 
+OCR
+    detectChar(img::BasicImage)::char
+    detectString(img::BasicImage)::string
+
 LabelLayout
-    new LabelLayout(row::Box[])
     letterBoxes: Box[row][pos in row]
+    new LabelLayout(row::Box[])
     addRowFirst(row::Box[])
     addRowLast(row::Box[])
     getBoxes()::Box[] (1d)
-    getBox(x,y)
+    getBox(r,c)
     getTallestBoxHeight()::double
     getBounds()::double[xmin,ymin,xmax,ymax]
     hasRotation()::boolean
     addOffset(addX::int, addY::int)
 
-    innner:
-    LetterBoxIter
-        row = 0
-        pos = 0
-        next = null
-        new LetterBoxIter()
-        next()::Box
-        hasMore()::boolean(sets next)
+    // innner:
+    // LetterBoxIter
+    //     row = 0
+    //     pos = 0
+    //     next = null
+    //     new LetterBoxIter()
+    //     next()::Box
+    //     hasMore()::boolean(sets next)
 
 Box
     new Box(topLeft,topRight,bottomRight,bottomLeft)

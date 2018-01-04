@@ -164,7 +164,7 @@ public class BasicImage {
     }
 
     /**
-     *
+     * Draws a box on the image.
      */
     public void drawBox(Box box) {
         Graphics2D g = createGraphics();

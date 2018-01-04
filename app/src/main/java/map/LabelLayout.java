@@ -40,9 +40,9 @@ public class LabelLayout {
     }
 
     /**
-     * @return Letter-box at specified row and position in row. A copy.
+     * @return Letter-box at specified row and column. A copy.
      */
-    public Box getBox(int row, int pos) {
+    public Box getBox(int row, int col) {
         return null;
     }
 
@@ -75,30 +75,30 @@ public class LabelLayout {
     }
 
 
-    /**
-     * Iterator that returns letter-boxes of the label-layout.
-     * Usage: call hasMore() before getNext().
-     */
-    public class LetterBoxIterator {
-        public/***/ int row = 0;
-        public/***/ int pos = 0;
-        public/***/ Box next = null;
+    // /**
+    //  * Iterator that returns letter-boxes of the label-layout.
+    //  * Usage: call hasMore() before getNext().
+    //  */
+    // public class LetterBoxIterator {
+    //     public/***/ int row = 0;
+    //     public/***/ int pos = 0;
+    //     public/***/ Box next = null;
 
-        /**
-         * @return Next letter-box in iterator.
-         */
-        public Box next() {
-            return next;
-        }
+    //     /**
+    //      * @return Next letter-box in iterator.
+    //      */
+    //     public Box next() {
+    //         return next;
+    //     }
 
-        /**
-         * Indicates if more letter-boxes in iterator, and updates
-         * next if there is. Always call this before next().
-         *
-         * @return True if iter has more.
-         */
-        public boolean hasMore() {
-            return false;
-        }
-    }
+    //     /**
+    //      * Indicates if more letter-boxes in iterator, and updates
+    //      * next if there is. Always call this before next().
+    //      *
+    //      * @return True if iter has more.
+    //      */
+    //     public boolean hasMore() {
+    //         return false;
+    //     }
+    // }
 }
