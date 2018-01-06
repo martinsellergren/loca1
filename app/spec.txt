@@ -61,12 +61,15 @@ MapImage<-BasicImage
     removeUnspecifiedLabels()::void
 
 LabelLayoutIterator
+    map::boolean[][]
+    startRow::int
+    startCol::int
     new LabelLayoutIterator(boxImg::BasicImage, alphaTreshold::int)
     (alphaTreshold: pixels alpha-value- over means show, under means hide)
     next()::LabelLayout
     hasMore()::Boolean(sets next)
 
-    findBoxPoint()::Point/NULL
+    findBoxPoint()::Point/NULL (starts search at startRow/Col, and sets)
     findNeighborBoxPoint(LEFT/RIGHT, startBox::Box)::Point/NULL
     findNeighborRowPoint(UP/DOWN, startRow:Box[])::Point/NULL
     expandToRow(boxed-Point)::Box[]

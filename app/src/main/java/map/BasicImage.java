@@ -43,9 +43,17 @@ public class BasicImage {
     }
 
     /**
-     * Set pixel.
+     * @return Color of pixel.
      */
-    public void setRGB(int x, int y, Color c) {
+    public Color getColor(int x, int y) {
+        boolean hasAlpha = true;
+        return new Color(img.getRGB(x, y), hasAlpha);
+    }
+
+    /**
+     * Set color of pixel.
+     */
+    public void setColor(int x, int y, Color c) {
         img.setRGB(x, y, c.getRGB());
     }
 
@@ -77,7 +85,7 @@ public class BasicImage {
                     elemP[1] < elemImg.getHeight()) {
                     boolean hasAlpha = true;
                     Color clr = new Color(img.getRGB(imgP[0], imgP[1]), hasAlpha);
-                    elemImg.setRGB(elemP[0], elemP[1], clr);
+                    elemImg.setColor(elemP[0], elemP[1], clr);
                 }
             }
         }

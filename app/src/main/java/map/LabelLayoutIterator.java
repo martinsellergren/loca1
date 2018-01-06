@@ -1,6 +1,9 @@
 package map;
 
 import java.awt.Point;
+import java.awt.Color;
+import java.util.LinkedList;
+
 
 /**
  * Iterator that finds labels (clusters of boxes) in a box-image
@@ -44,7 +47,9 @@ import java.awt.Point;
  */
 public class LabelLayoutIterator {
     private static final int DEFAULT_ALPHA_THRESHOLD = 100;
-    public/***/ boolean[][] map;
+    private int startRow = 0;
+    private int startCol = 0;
+    private boolean[][] map;
 
     /**
      * Constructs the iterator from an rgba-image (box-image).
@@ -52,42 +57,54 @@ public class LabelLayoutIterator {
      * Lowest alpha value still counted as box-point is the
      * alpha-threshold.
      *
-     * @param img An rgb-image (box-image).
+     * @param img A box-image (an rgba-image).
      * @param alphaThreshold Pixels alpha-value-threshold where
      * over means box-point, under means non-box-point.
      */
-    public LabelLayoutIterator(BasicImage boxImg, int alphaThreshold) {
-        // for (int y = 0; y < img.getHeight(); y++) {
-        //     for (int x = 0; x < img.getWidth(); x++) {
-        //         Color c = new Color(img.getRGB(x, y), true);
-        //         int alpha = c.getAlpha();
-        //         if (alpha > labelAlphaThreshold) {
-        //             img.setRGB(x, y, Color.black.getRGB());
-        //         }
-        //         else {
-        //             img.setRGB(x, y, new Color(0, 0, 0, 0).getRGB());
-        //         }
-        //     }
-        // }
+    public LabelLayoutIterator(BasicImage img, int alphaThreshold) {
+        this.map = new boolean[img.getHeight()][img.getWidth()];
 
+        for (int y = 0; y < img.getHeight(); y++) {
+            for (int x = 0; x < img.getWidth(); x++) {
+                Color c = img.getColor(x, y);
+                int alpha = c.getAlpha();
+                if (alpha >= alphaThreshold) {
+                    this.map[y][x] = true;
+                }
+                else {
+                    this.map[y][x] = false;
+                }
+            }
+        }
     }
 
     /**
      * Constructor for using default value for alphaThreshold.
      */
-    public LabelLayoutIterator(BasicImage boxImg) {
-        this(boxImg, DEFAULT_ALPHA_THRESHOLD);
+    public LabelLayoutIterator(BasicImage img) {
+        this(img, DEFAULT_ALPHA_THRESHOLD);
     }
 
     /**
      * @return Iterator's next label layout. Null if no more.
      */
     public LabelLayout next() {
-        return null;
+        Point p = findBoxPoint();
+        if (p == null) return null;
+
+        LinkedList<Box> row = expandToRow(p);
+        LabelLayout lay = new LabelLayout(row);
+        boolean up = true;
+        addRows(up, row, lay);
+        up = false;
+        addRows(up, row, lay);
+        return lay;
     }
 
     /**
-     * Scans through the map, looking for a box-point.
+     * Scans through the map, looking for a box-point. Starts search
+     * at the iterators start-position (startRow, startCol).
+     * Also sets this start-position to found point.
      *
      * @return A box-point in the map, or NULL if no more
      * box-points.
@@ -115,7 +132,7 @@ public class LabelLayoutIterator {
      * @pre startRow a row in the map (i.e horizontaly
      * adjacent boxes) with no rotation and a straight baseline.
      */
-    public/***/ Point findNeighborRowPoint(boolean up, Box[] startRow) {
+    public/***/ Point findNeighborRowPoint(boolean up, LinkedList<Box> startRow) {
         return null;
     }
 
@@ -151,7 +168,7 @@ public class LabelLayoutIterator {
      *
      * @pre start is a box-point in the map.
      */
-    public/***/ Box[] expandToRow(Point start) {
+    public/***/ LinkedList<Box> expandToRow(Point start) {
         return null;
     }
 
@@ -221,7 +238,7 @@ public class LabelLayoutIterator {
      * @pre startRow a row of some label in the map, that has
      * no rotation and a straight base-line.
      */
-    public/***/ LabelLayout addRows(boolean up, Box[] startRow, LabelLayout layout) {
+    public/***/ LabelLayout addRows(boolean up, LinkedList<Box> startRow, LabelLayout layout) {
         return null;
     }
 
@@ -238,7 +255,7 @@ public class LabelLayoutIterator {
      *
      * @pre startBox a letter-box in the map.
      */
-    public/***/ Box[] addBoxes(boolean left, Box startBox, Box[] bs) {
+    public/***/ Box[] addBoxes(boolean left, Box startBox, LinkedList<Box> bs) {
         return null;
     }
 

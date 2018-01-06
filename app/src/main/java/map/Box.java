@@ -37,6 +37,10 @@ public class Box {
         this(topL, topR, (Math2.distance(topL, bottomL) + Math2.distance(topR, bottomR)) / 2);
     }
 
+    public Box copy() {
+        return new Box(topL, topR, height);
+    }
+
     /**
      * @return Rotation of box with horizontal axis, in degrees.
      */
