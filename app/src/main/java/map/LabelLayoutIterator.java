@@ -1,6 +1,5 @@
 package map;
 
-import java.awt.Point;
 import java.awt.Color;
 import java.util.LinkedList;
 
@@ -47,8 +46,12 @@ import java.util.LinkedList;
  */
 public class LabelLayoutIterator {
     private static final int DEFAULT_ALPHA_THRESHOLD = 100;
-    private int startRow = 0;
-    private int startCol = 0;
+
+    /** Start searching for next box-point at this pos in map. */
+    private int startX = 0;
+    private int startY = 0;
+
+    /** Representation of box-image: map[row][column]. */
     private boolean[][] map;
 
     /**
@@ -89,7 +92,7 @@ public class LabelLayoutIterator {
      * @return Iterator's next label layout. Null if no more.
      */
     public LabelLayout next() {
-        Point p = findBoxPoint();
+        int[] p = findBoxPoint();
         if (p == null) return null;
 
         LinkedList<Box> row = expandToRow(p);
@@ -103,13 +106,21 @@ public class LabelLayoutIterator {
 
     /**
      * Scans through the map, looking for a box-point. Starts search
-     * at the iterators start-position (startRow, startCol).
-     * Also sets this start-position to found point.
+     * at the iterators start-position (startX, startY).
+     * Also sets this start-position to point after found point.
      *
      * @return A box-point in the map, or NULL if no more
-     * box-points.
+     * box-points, as [x,y].
      */
-    public/***/ Point findBoxPoint() {
+    public/***/ int[] findBoxPoint() {
+        for (int y = this.startY; y < map.length; y++) {
+            for (int x = this.startX; x < map[y].length; x++) {
+                if (isBoxPoint(x, y)) {
+                    this.startX = x + 1;
+                    return new int[]{x, y};
+                }
+            }
+        }
         return null;
     }
 
@@ -132,7 +143,7 @@ public class LabelLayoutIterator {
      * @pre startRow a row in the map (i.e horizontaly
      * adjacent boxes) with no rotation and a straight baseline.
      */
-    public/***/ Point findNeighborRowPoint(boolean up, LinkedList<Box> startRow) {
+    public/***/ int[] findNeighborRowPoint(boolean up, LinkedList<Box> startRow) {
         return null;
     }
 
@@ -154,7 +165,25 @@ public class LabelLayoutIterator {
      *
      * @pre startBox a box in the map.
      */
-    public/***/ Point findNeghborBoxPoint(boolean left, Box startBox) {
+    public/***/ int[] findNeghborBoxPoint(boolean left, Box startBox) {
+        int[] start, end;
+        double searchLength = startBox.getWidth() * 1.3;
+
+        if (left) {
+            start = startBox.getLeftMid();
+            end = Math2.toInt(Math2.step(Math2.toDouble(start), startBox.getDirVector(), -searchLength));
+        }
+        else {
+            start = startBox.getRightMid();
+            end = Math2.toInt(Math2.step(Math2.toDouble(start), startBox.getDirVector(), searchLength));
+        }
+
+        PixelWalk pw = new PixelWalk(start, end);
+        int[] p;
+        while ((p = pw.next()) != null) {
+            if (isBoxPoint(p)) return new int[]{p[0], p[1]};
+        }
+
         return null;
     }
 
@@ -168,7 +197,7 @@ public class LabelLayoutIterator {
      *
      * @pre start is a box-point in the map.
      */
-    public/***/ LinkedList<Box> expandToRow(Point start) {
+    public/***/ LinkedList<Box> expandToRow(int[] start) {
         return null;
     }
 
@@ -181,8 +210,10 @@ public class LabelLayoutIterator {
      *
      * @pre start is a box-point in the map.
      */
-    public/***/ Box expandToBox(Point start) {
-        return null;
+    public/***/ Box expandToBox(int[] start) {
+        LinkedList<int[]> ps = expandToBoxPoints(start);
+        int[][] cs = getCorners(ps);
+        return new Box(cs[0], cs[1], cs[2], cs[3]);
     }
 
     /**
@@ -191,8 +222,65 @@ public class LabelLayoutIterator {
      *
      * @pre start is a box-point in the map.
      */
-    public/***/ Point[] expandToBoxPoints(Point start) {
-        return null;
+    public/***/ LinkedList<int[]> expandToBoxPoints(int[] start) {
+        LinkedList<int[]> open = new LinkedList<int[]>();
+        LinkedList<int[]> closed = new LinkedList<int[]>();
+        int[] current = start;
+        open.add(current);
+
+        while (open.size() > 0) {
+            LinkedList<int[]> ns = getNeighbors(current);
+            addUniquePoints(ns, open);
+            open.remove(current);
+            addUniquePoint(current, closed);
+            current = open.removeFirst();
+        }
+        return closed;
+    }
+
+    /**
+     * @return The box-point neighbors (left/up/right/down).
+     */
+    private LinkedList<int[]> getNeighbors(int[] p) {
+        int[] left = new int[]{ p[0]-1, p[1] };
+        int[] up = new int[]{ p[0], p[1]-1 };
+        int[] right = new int[]{ p[0]+1, p[1] };
+        int[] down = new int[]{ p[0], p[1]+1 };
+
+        LinkedList<int[]> ns = new LinkedList<int[]>();
+        if (isBoxPoint(left)) ns.add(left);
+        if (isBoxPoint(up)) ns.add(up);
+        if (isBoxPoint(right)) ns.add(right);
+        if (isBoxPoint(down)) ns.add(down);
+        return ns;
+    }
+
+    // /**
+    //  * Turn linkedList of points into array of points.
+    //  */
+    // private int[][] toArrayPoints(LinkedList<int[]> l) {
+    //     int[][] ps = new int[l.size()][2];
+    //     int i = 0;
+    //     for (int[] p : l) {
+    //         ps[i++] = p;
+    //     }
+    //     return ps;
+    // }
+
+    /**
+     * Add point to list if unique.
+     */
+    private void addUniquePoint(int[] p, LinkedList<int[]> l) {
+        if (!l.contains(p)) l.add(p);
+    }
+
+    /**
+     * Add unique points in given list, to other list.
+     */
+    private void addUniquePoints(LinkedList<int[]> ps, LinkedList<int[]> l) {
+        for (int[] p : ps) {
+            addUniquePoint(p, l);
+        }
     }
 
     /**
@@ -204,8 +292,14 @@ public class LabelLayoutIterator {
      *         corners[2] - bottom right
      *         corners[3] - bottom left
      */
-    public/***/ Point[] getCorners(Point[] points) {
-        return null;
+    public/***/ int[][] getCorners(LinkedList<int[]> ps) {
+        int[][] es = findExtremes(ps);
+        if (es == null) {
+            LinkedList<int[]> rps = rotatePoints(ps, 45);
+            es = findExtremes(rps);
+        }
+        if (es == null) throw new RuntimeException();
+        return es;
     }
 
     /**
@@ -213,7 +307,7 @@ public class LabelLayoutIterator {
      * points in given array, or NULL if unclear which any of those
      * are.
      */
-    public/***/ Point[] findExtremes(Point[] points) {
+    public/***/ int[][] findExtremes(LinkedList<int[]> ps) {
         return null;
     }
 
@@ -221,7 +315,7 @@ public class LabelLayoutIterator {
      * @param deg Rotation if degrees, counterclockwise.
      * @return Same points but rotated around (0,0).
      */
-    public/***/ Point[] rotatePoints(Point[] points, double deg) {
+    public/***/ LinkedList<int[]> rotatePoints(LinkedList<int[]> ps, double deg) {
         return null;
     }
 
@@ -269,5 +363,21 @@ public class LabelLayoutIterator {
      * @param layout Layout for the label to be removed.
      */
     public/***/ void removeLabel(LabelLayout layout) {
+        for (Box b : layout.getBoxes()) {
+            int[] boxP = b.getTopLeft();
+            LinkedList<int[]> ps = expandToBoxPoints(boxP);
+
+            for (int[] p : ps) map[ p[0] ][ p[1] ] = false;
+        }
+    }
+
+    /**
+     * @return True if [x,y] is a box-point.
+     */
+    private boolean isBoxPoint(int x, int y) {
+        return map[y][x];
+    }
+    private boolean isBoxPoint(int[] p) {
+        return map[ p[1] ][ p[0] ];
     }
 }
