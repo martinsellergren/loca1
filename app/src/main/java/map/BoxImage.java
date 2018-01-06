@@ -51,7 +51,7 @@ public class BoxImage {
      * @param alphaThreshold Pixels alpha-value-threshold where
      * over means box-point, under means non-box-point.
      */
-    public BoxImage(MapImage boxImg, double alphaThreshold) {
+    public BoxImage(BasicImage boxImg, int alphaThreshold) {
         // for (int y = 0; y < img.getHeight(); y++) {
         //     for (int x = 0; x < img.getWidth(); x++) {
         //         Color c = new Color(img.getRGB(x, y), true);
@@ -70,7 +70,7 @@ public class BoxImage {
     /**
      * Constructor for using default value for alphaThreshold.
      */
-    public BoxImage(MapImage boxImg) {
+    public BoxImage(BasicImage boxImg) {
         this(boxImg, 100);
     }
 

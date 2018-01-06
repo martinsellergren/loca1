@@ -60,30 +60,25 @@ MapImage<-BasicImage
     fetchAndSetLabelCategories()::void throws IOException
     removeUnspecifiedLabels()::void
 
-BoxImage
-    new BoxImage(boxImg::BasicImage, alphaTreshold::int)
+LabelLayoutIterator
+    new LabelLayoutIterator(boxImg::BasicImage, alphaTreshold::int)
     (alphaTreshold: pixels alpha-value- over means show, under means hide)
-    getLabelLayouts()::LabelLayout[]
-    alt:
+    next()::LabelLayout
+    hasMore()::Boolean(sets next)
 
-    inner:
-    LabelLayoutIter
-        next()::LabelLayout
-        hasMore()::Boolean(sets next)
+    findBoxPoint()::Point/NULL
+    findNeighborBoxPoint(LEFT/RIGHT, startBox::Box)::Point/NULL
+    findNeighborRowPoint(UP/DOWN, startRow:Box[])::Point/NULL
+    expandToRow(boxed-Point)::Box[]
+    addBoxes(LEFT/RIGHT, startBox::Box, accum(contains startBox)::Box[])::Box[]
+    addRows(UP/DOWN, startRow::Box[], labelLayout(accumulator, contains startRow))::LabelLayout
+    removeLabel(layout::LabelLayout)::Void
 
-        findBoxPoint()::Point/NULL
-        findNeighborBoxPoint(LEFT/RIGHT, startBox::Box)::Point/NULL
-        findNeighborRowPoint(UP/DOWN, startRow:Box[])::Point/NULL
-        expandToRow(boxed-Point)::Box[]
-        addBoxes(LEFT/RIGHT, startBox::Box, accum(contains startBox)::Box[])::Box[]
-        addRows(UP/DOWN, startRow::Box[], labelLayout(accumulator, contains startRow))::LabelLayout
-        removeLabel(layout::LabelLayout)::Void
-
-        expandToBox(boxed-Point)::Box
-            expandToBoxPoints(boxed-Point)::Point[]
-            getCorners(points::Point[])::Point[](0Left 1Up 2Right 3Down)
-                findExtremes(Point[])::Point[](0Left 1Up 2Right 3Down)
-                rotate(Point[], deg)::Point[]
+    expandToBox(boxed-Point)::Box
+        expandToBoxPoints(boxed-Point)::Point[]
+        getCorners(points::Point[])::Point[](0Left 1Up 2Right 3Down)
+            findExtremes(Point[])::Point[](0Left 1Up 2Right 3Down)
+            rotate(Point[], deg)::Point[]
 
 Label
     text: String
