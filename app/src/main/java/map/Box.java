@@ -159,6 +159,27 @@ public class Box {
             Math.max(Math.max(tl[1], tr[1]), Math.max(br[1], bl[1])) };
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) return true;
+        if (o instanceof Box == false) return false;
+        Box b = (Box) o;
+
+        return
+            Arrays.equals(this.getTopLeft(), b.getTopLeft()) &&
+            Arrays.equals(this.getTopRight(), b.getTopRight()) &&
+            this.getHeight() == b.getHeight();
+    }
+
+    @Override
+    public String toString() {
+        return
+            "topL: " + Arrays.toString(topL) + ", " +
+            "topR: " + Arrays.toString(topR) + ", " +
+            "height: " + height;
+    }
+
+
     // /**
     //  * @return True if [x,y] is inside box.
     //  */

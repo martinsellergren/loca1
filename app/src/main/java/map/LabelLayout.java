@@ -11,7 +11,7 @@ import java.util.LinkedList;
  * @inv Number of letters > 0
  */
 public class LabelLayout {
-    private LinkedList<LinkedList<Box>> letterBoxes;
+    private LinkedList<LinkedList<Box>> letterBoxes = new LinkedList<LinkedList<Box>>();
 
     /**
      * Constructs a LabelLayout from a label-row.
@@ -71,7 +71,7 @@ public class LabelLayout {
     /**
      * @return Number of rows.
      */
-    public int getRows() {
+    public int getNoRows() {
         return letterBoxes.size();
     }
 
@@ -90,10 +90,10 @@ public class LabelLayout {
      * @return [xmin, ymin, xmax, ymax]
      */
     public int[] getBounds() {
-        int xmin = 100000000; //(!)
-        int ymin = 100000000;
-        int xmax = -100000000;
-        int ymax = -100000000;
+        int xmin = Integer.MAX_VALUE;
+        int ymin = Integer.MAX_VALUE;
+        int xmax = Integer.MIN_VALUE;
+        int ymax = Integer.MIN_VALUE;
 
         for (Box b : getBoxes()) {
             int[] bb = b.getBounds();
@@ -127,6 +127,18 @@ public class LabelLayout {
         for (Box b : getBoxes()) {
             b.addOffset(addX, addY);
         }
+    }
+
+    @Override
+    public String toString() {
+        String s = "";
+        for (LinkedList<Box> row : letterBoxes) {
+            for (Box b : row) {
+                s += b.toString() + "\n";
+            }
+            s += "\n";
+        }
+        return s;
     }
 
 
