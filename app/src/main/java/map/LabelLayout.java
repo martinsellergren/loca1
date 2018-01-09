@@ -61,18 +61,18 @@ public class LabelLayout {
     }
 
     /**
+     * @return Number of rows.
+     */
+    public int getNoRows() {
+        return letterBoxes.size();
+    }
+
+    /**
      * @return Letter-box at specified row and column. A copy.
      */
     public Box getBox(int r, int c) {
         LinkedList<Box> row = letterBoxes.get(r);
         return row.get(c);
-    }
-
-    /**
-     * @return Number of rows.
-     */
-    public int getNoRows() {
-        return letterBoxes.size();
     }
 
     /**
@@ -124,8 +124,10 @@ public class LabelLayout {
      * Add offset to every position in layout.
      */
     public void addOffset(int addX, int addY) {
-        for (Box b : getBoxes()) {
-            b.addOffset(addX, addY);
+        for (LinkedList<Box> row : letterBoxes) {
+            for (Box b : row) {
+                b.addOffset(addX, addY);
+            }
         }
     }
 

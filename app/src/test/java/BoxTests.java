@@ -66,4 +66,58 @@ public class BoxTests {
         assertTrue(img != null);
         //img.save("test_element.png");
     }
+
+    @Test
+    public void addOffset() {
+        Box b = new Box(new int[]{0,0}, new int[]{1,0}, 1);
+        int[] bounds = b.getBounds();
+        assertEquals(0, bounds[0]);
+        assertEquals(0, bounds[1]);
+        assertEquals(1, bounds[2]);
+        assertEquals(1, bounds[3]);
+
+        b.addOffset(1, 1);
+        bounds = b.getBounds();
+        assertEquals(1, bounds[0]);
+        assertEquals(1, bounds[1]);
+        assertEquals(2, bounds[2]);
+        assertEquals(2, bounds[3]);
+
+        b.addOffset(-1, -1);
+        bounds = b.getBounds();
+        assertEquals(0, bounds[0]);
+        assertEquals(0, bounds[1]);
+        assertEquals(1, bounds[2]);
+        assertEquals(1, bounds[3]);
+
+        //new
+        b = new Box(new int[]{0,0}, new int[]{1,1}, 1);
+        bounds = b.getBounds();
+        assertEquals(-1, bounds[0]);
+        assertEquals(0, bounds[1]);
+        assertEquals(1, bounds[2]);
+        assertEquals(2, bounds[3]);
+
+        b.addOffset(1, 1);
+        bounds = b.getBounds();
+        assertEquals(0, bounds[0]);
+        assertEquals(1, bounds[1]);
+        assertEquals(2, bounds[2]);
+        assertEquals(3, bounds[3]);
+
+        //new
+        b = new Box(new int[]{0,0}, new int[]{-1,-1}, 1);
+        bounds = b.getBounds();
+        assertEquals(-1, bounds[0]);
+        assertEquals(-2, bounds[1]);
+        assertEquals(1, bounds[2]);
+        assertEquals(0, bounds[3]);
+
+        b.addOffset(1, 1);
+        bounds = b.getBounds();
+        assertEquals(0, bounds[0]);
+        assertEquals(-1, bounds[1]);
+        assertEquals(2, bounds[2]);
+        assertEquals(1, bounds[3]);
+    }
 }

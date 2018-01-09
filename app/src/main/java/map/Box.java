@@ -38,7 +38,9 @@ public class Box {
     }
 
     public Box copy() {
-        return new Box(topL, topR, height);
+        return new Box(new int[]{topL[0], topL[1]},
+                       new int[]{topR[0], topR[1]},
+                       height);
     }
 
     /**
