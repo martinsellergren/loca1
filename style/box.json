@@ -12514,7 +12514,7 @@
             }
         }
     ], 
-    "name": "Streets", 
+    "name": "box", 
     "created": "2017-10-24T20:41:29.877Z", 
     "metadata": {
         "mapbox:type": "default", 

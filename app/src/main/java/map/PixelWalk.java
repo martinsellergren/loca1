@@ -8,13 +8,13 @@ package map;
 public class PixelWalk {
     public/***/ int nextX, nextY;
     public/***/ int endX, endY;
-    private boolean done = false;
+    public/***/ boolean done = false;
 
     /**
      * Diagonal decider. If angle is between 45+-DD go diagonal
      * up-left. Same principal for the other four diagonals.
      */
-    private final double DD = 10;
+    public/***/ final double DD = 10;
 
     /**
      * Constructs the pixel-walk.
@@ -45,11 +45,11 @@ public class PixelWalk {
         }
     }
 
-    private void setDone() {
+    public/***/ void setDone() {
         this.done = nextX == endX && nextY == endY;
     }
 
-    private void updateState() {
+    public/***/ void updateState() {
         double ang = Math2.angle(new int[]{endX-nextX, endY-nextY});
 
         if (ang >= -45 + DD && ang <= 45 - DD) {//right

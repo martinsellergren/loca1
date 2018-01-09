@@ -11,7 +11,7 @@ import java.util.LinkedList;
  * @inv Number of letters > 0
  */
 public class LabelLayout {
-    private LinkedList<LinkedList<Box>> letterBoxes = new LinkedList<LinkedList<Box>>();
+    public/***/ LinkedList<LinkedList<Box>> letterBoxes = new LinkedList<LinkedList<Box>>();
 
     /**
      * Constructs a LabelLayout from a label-row.

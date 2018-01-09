@@ -3,6 +3,8 @@ package map;
 import java.awt.Color;
 import java.util.LinkedList;
 
+import java.awt.Color;
+
 
 /**
  * Iterator that finds labels (clusters of boxes) in a box-image
@@ -45,14 +47,14 @@ import java.util.LinkedList;
  * label (i.e same font-size).
  */
 public class LabelLayoutIterator {
-    private static final int DEFAULT_ALPHA_THRESHOLD = 100;
+    public/***/ static final int DEFAULT_ALPHA_THRESHOLD = 100;
 
     /** Start searching for next box-point at this pos in map. */
-    private int startX = 0;
-    private int startY = 0;
+    public/***/ int startX = 0;
+    public/***/ int startY = 0;
 
     /** Representation of box-image: map[row][column]. */
-    private boolean[][] map;
+    public/***/ boolean[][] map;
 
     /**
      * Constructs the iterator from an rgba-image (box-image).
@@ -63,6 +65,8 @@ public class LabelLayoutIterator {
      * @param img A box-image (an rgba-image).
      * @param alphaThreshold Pixels alpha-value-threshold where
      * over means box-point, under means non-box-point.
+     *
+     * @pre 0 <= alphaThreshold <= 255
      */
     public LabelLayoutIterator(BasicImage img, int alphaThreshold) {
         this.map = new boolean[img.getHeight()][img.getWidth()];
@@ -241,7 +245,7 @@ public class LabelLayoutIterator {
     /**
      * @return The box-point neighbors (left/up/right/down).
      */
-    private LinkedList<int[]> getNeighbors(int[] p) {
+    public/***/ LinkedList<int[]> getNeighbors(int[] p) {
         int[] left = new int[]{ p[0]-1, p[1] };
         int[] up = new int[]{ p[0], p[1]-1 };
         int[] right = new int[]{ p[0]+1, p[1] };
@@ -258,7 +262,7 @@ public class LabelLayoutIterator {
     // /**
     //  * Turn linkedList of points into array of points.
     //  */
-    // private int[][] toArrayPoints(LinkedList<int[]> l) {
+    // public/***/ int[][] toArrayPoints(LinkedList<int[]> l) {
     //     int[][] ps = new int[l.size()][2];
     //     int i = 0;
     //     for (int[] p : l) {
@@ -270,14 +274,14 @@ public class LabelLayoutIterator {
     /**
      * Add point to list if unique.
      */
-    private void addUniquePoint(int[] p, LinkedList<int[]> l) {
+    public/***/ void addUniquePoint(int[] p, LinkedList<int[]> l) {
         if (!l.contains(p)) l.add(p);
     }
 
     /**
      * Add unique points in given list, to other list.
      */
-    private void addUniquePoints(LinkedList<int[]> ps, LinkedList<int[]> l) {
+    public/***/ void addUniquePoints(LinkedList<int[]> ps, LinkedList<int[]> l) {
         for (int[] p : ps) {
             addUniquePoint(p, l);
         }
@@ -374,10 +378,25 @@ public class LabelLayoutIterator {
     /**
      * @return True if [x,y] is a box-point.
      */
-    private boolean isBoxPoint(int x, int y) {
+    public/***/ boolean isBoxPoint(int x, int y) {
         return map[y][x];
     }
-    private boolean isBoxPoint(int[] p) {
+    public/***/ boolean isBoxPoint(int[] p) {
         return map[ p[1] ][ p[0] ];
+    }
+
+
+    //*********************************FOR TESTING
+
+    public BasicImage toImg() {
+        BasicImage img = new BasicImage(map.length, map[0].length);
+
+        for (int y = 0; y < map.length; y++) {
+            for (int x = 0; x < map[y].length; x++) {
+                if (map[y][x])
+                    img.setColor(x, y, Color.BLACK);
+            }
+        }
+        return img;
     }
 }

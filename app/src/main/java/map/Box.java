@@ -194,10 +194,10 @@ public class Box {
     //  * particular order.
     //  */
     // public class BoxPointIterator {
-    //     private int x;
-    //     private int y;
-    //     private int xMax;
-    //     private int yMax;
+    //     public/***/ int x;
+    //     public/***/ int y;
+    //     public/***/ int xMax;
+    //     public/***/ int yMax;
 
     //     public BoxPointIterator() {
     //         int[] bs = getBounds();

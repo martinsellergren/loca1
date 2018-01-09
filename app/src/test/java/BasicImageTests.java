@@ -8,29 +8,29 @@ import java.util.Arrays;
 
 public class BasicImageTests {
 
-    @Test
-    public void extractElement() {
-        BasicImage img = new BasicImage(100, 100);
-        Box box = new Box(new int[]{10, 40}, new int[]{50, 10}, 60);
-        img.drawBox(box);
-        img.save("1before.png");
-        BasicImage elem = img.extractElement(box);
-        elem.save("1extracted.png");
+    // @Test
+    // public void extractElement() {
+    //     BasicImage img = new BasicImage(100, 100);
+    //     Box box = new Box(new int[]{10, 40}, new int[]{50, 10}, 60);
+    //     img.drawBox(box);
+    //     img.save("1before.png");
+    //     BasicImage elem = img.extractElement(box);
+    //     elem.save("1extracted.png");
 
-        // img = new BasicImage(100, 100);
-        // box = new Box(new int[]{30, 10}, new int[]{60, 20}, 60);
-        // img.drawBox(box);
-        // img.save("2before.png");
-        // elem = img.extractElement(box);
-        // elem.save("2extracted.png");
+    //     // img = new BasicImage(100, 100);
+    //     // box = new Box(new int[]{30, 10}, new int[]{60, 20}, 60);
+    //     // img.drawBox(box);
+    //     // img.save("2before.png");
+    //     // elem = img.extractElement(box);
+    //     // elem.save("2extracted.png");
 
-        // img = new BasicImage(100, 100);
-        // box = new Box(new int[]{30, 80}, new int[]{10, 50}, 60);
-        // img.drawBox(box);
-        // img.save("3before.png");
-        // elem = img.extractElement(box);
-        // elem.save("3extracted.png");
-    }
+    //     // img = new BasicImage(100, 100);
+    //     // box = new Box(new int[]{30, 80}, new int[]{10, 50}, 60);
+    //     // img.drawBox(box);
+    //     // img.save("3before.png");
+    //     // elem = img.extractElement(box);
+    //     // elem.save("3extracted.png");
+    // }
 
     @Test
     public void concatenateImages_2x2Layout_squares() {

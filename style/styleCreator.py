@@ -1,6 +1,9 @@
 import json
 import sys
 
+def setName(data, name):
+    data['name'] = name
+
 def getLayers(data, types):
     filtered = []
     for layer in data['layers']:
@@ -41,7 +44,7 @@ def hideGraphics(data):
         layer['layout']['visibility'] = 'none'
 
 def dumpStyle(data, fileName):
-    f = open(fileName, 'w')
+    f = open(fileName + ".json", 'w')
     f.write(json.dumps(data, indent=4))
     f.close()
 
@@ -50,8 +53,10 @@ font = 'Cousine Regular'
 font_box = font + '-Box'
 extraLetterSpace = 0.1
 
-fileName_full = "full.json"
-fileName_labels = "labels.json"
+fileName_full = "full"
+fileName_label = "label"
+fileName_box = "box"
+
 f = open(sys.argv[1], 'r')
 data = json.load(f)
 
@@ -61,9 +66,14 @@ setLetterSpacing(data, extraLetterSpace)
 #noRoadSigns()
 #noJunkLabels()
 #setLanguage(data)
+setName(data, fileName_full)
 dumpStyle(data, fileName_full)
 
-setFont(data, font_box)
 undecorateText(data)
 hideGraphics(data)
-dumpStyle(data, fileName_labels)
+setName(data, fileName_label)
+dumpStyle(data, fileName_label)
+
+setFont(data, font_box)
+setName(data, fileName_box)
+dumpStyle(data, fileName_box)

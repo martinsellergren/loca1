@@ -92,6 +92,16 @@ public class MapRequestTests {
     // }
 
     // @Test
+    // public void fetch_Lidingo() {
+    //     double west = 18.08246612548828;
+    //     double east = 18.27404022216797;
+    //     double north = 59.39407306645033;
+    //     double south = 59.33564087770051;
+    //     int[] zs = new int[] {14};
+    //     fetchBoundsHelper(west, north, east, south, zs);
+    // }
+
+    // @Test
     // public void fetch_mefjard() {
     //     double west = 18.472567;
     //     double east = 18.487844;
@@ -102,6 +112,9 @@ public class MapRequestTests {
     // }
 
     public/***/ void fetchBoundsHelper(double west, double north, double east, double south, int[] zlevels) {
+        fetchBoundsHelper(west, north, east, south, zlevels, false, false);
+    }
+    public/***/ void fetchBoundsHelper(double west, double north, double east, double south, int[] zlevels, boolean highQ, boolean extend) {
         for (int z : zlevels) {
             MapImageView lowQ_noExt = new MapImageView(west, north, east, south, z, false);
             MapImageView lowQ_ext = lowQ_noExt.getExtendedView();
@@ -113,10 +126,10 @@ public class MapRequestTests {
             MapRequest r3 = new MapRequest(lowQ_ext);
             MapRequest r4 = new MapRequest(highQ_ext);
 
-            fetchHelper(r1);
-            //fetchHelper(r2);
-            fetchHelper(r3);
-            //fetchHelper(r4);
+            if (!highQ) fetchHelper(r1);
+            if (highQ) fetchHelper(r2);
+            if (extend && !highQ) fetchHelper(r3);
+            if (extend && highQ) fetchHelper(r4);
         }
     }
 
