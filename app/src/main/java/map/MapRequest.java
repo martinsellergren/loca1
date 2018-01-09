@@ -13,9 +13,9 @@ import java.io.IOException;
 public class MapRequest {
     public/***/ static final String USER_NAME = "masel";
     public/***/ static final String TOKEN = "pk.eyJ1IjoibWFzZWwiLCJhIjoiY2o0ZTR2NWtrMHZudDJ3cDQzdXRwZ29zZCJ9.VrI0NDIYaP_5ZAXqnpaD1A";
-    public static final String FULL_STYLE_ID = "cj962wpa3p3g22spbnw89cisy";
-    public static final String LABEL_STYLE_ID = "cj962xk828lks2svxh8s2ahed";
-    public static final String BOX_STYLE_ID = "cj962xk828lks2svxh8s2ahed";
+    public static final String FULL_STYLE_ID = "cjc7q8j1f5vyd2smesx2rhwyp";
+    public static final String LABEL_STYLE_ID = "cjc7q8ulb3odu2sm8yrau7bys";
+    public static final String BOX_STYLE_ID = "cjc7q9a3r69lf2splh55r1e9g";
     public static final int IMAGE_REQUEST_WIDTH_HEIGHT_LIMIT = 1280;
     public static final int DEFAULT_TILE_SIZE = 512;
 

@@ -7,10 +7,10 @@ public class MapRequestTests {
 
     // @Test
     // public void fetch3() {
-    //     double west = 18.302567;
-    //     double east = 18.357844;
-    //     double north = 59.095697;
-    //     double south = 59.002776;
+    //     double west = 18.08246612548828;
+    //     double east = 18.27404022216797;
+    //     double north = 59.39407306645033;
+    //     double south = 59.33564087770051;
     //     int zoom = 14;
     //     boolean highQ = false;
     //     MapImageView view = new MapImageView(west, north, east, south, zoom, highQ);

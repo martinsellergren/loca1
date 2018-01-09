@@ -226,4 +226,20 @@ public class BasicImage {
             System.exit(-1);
         }
     }
+
+    /**
+     * Load from file.
+     */
+    public static BasicImage load(String file) {
+        BufferedImage img = null;
+
+        try {
+            img = ImageIO.read(new File(file));
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return new BasicImage(img);
+    }
 }

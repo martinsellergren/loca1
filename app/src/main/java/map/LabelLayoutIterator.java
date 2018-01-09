@@ -389,7 +389,7 @@ public class LabelLayoutIterator {
     //*********************************FOR TESTING
 
     public BasicImage toImg() {
-        BasicImage img = new BasicImage(map.length, map[0].length);
+        BasicImage img = new BasicImage(map[0].length, map.length);
 
         for (int y = 0; y < map.length; y++) {
             for (int x = 0; x < map[y].length; x++) {

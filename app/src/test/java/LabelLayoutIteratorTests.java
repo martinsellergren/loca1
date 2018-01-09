@@ -10,12 +10,9 @@ public class LabelLayoutIteratorTests {
 
     @Test
     public void constructor() {
-        BasicImage img = new BasicImage(100, 100);
-        Graphics2D g = img.createGraphics();
-        g.setPaint(Color.BLACK);
-        g.fillRect(10, 10, 80, 80);
-        //img.save("test_LabelLayoutIterator_before.png");
+        BasicImage img = BasicImage.load("../test_label.png");
+        img.save("test_LabelLayoutIterator_before.png");
         LabelLayoutIterator iter = new LabelLayoutIterator(img);
-        //iter.toImg().save("test_LabelLayoutIterator_after.png");
+        iter.toImg().save("test_LabelLayoutIterator_after.png");
     }
 }
