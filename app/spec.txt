@@ -82,6 +82,10 @@ LabelLayoutIterator
         getCorners(points::Point[])::Point[](0Left 1Up 2Right 3Down)
             findExtremes(Point[])::Point[](0Left 1Up 2Right 3Down)
             rotate(Point[], deg)::Point[]
+        orderByDirection(cornerPoints::Point[4st], boxPoints::Point[])::Point[left,up,right,down]
+            orderConsecutively(cornerPoints::Point[4st])::Point[orderd consecutively]
+            getBetweenSpace(p1::Point, p2::Point)::int
+                (start in middle between p1,p2, walk nesw, how long til box-point?)
 
 Label
     text: String
