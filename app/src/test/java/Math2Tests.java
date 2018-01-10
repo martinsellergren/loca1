@@ -136,4 +136,13 @@ public class Math2Tests {
         assertEquals(1, r[0], 0.0001);
         assertEquals(-1, r[1], 0.0001);
     }
+
+    @Test
+    public void angleDiff() {
+        assertEquals(20, Math2.angleDiff(170, 150), 0.0001);
+        assertEquals(20, Math2.angleDiff(10, -10), 0.0001);
+        assertEquals(20, Math2.angleDiff(-70, -90), 0.0001);
+        assertEquals(20, Math2.angleDiff(170, -170), 0.0001);
+        assertEquals(0, Math2.angleDiff(180, -180), 0.0001);
+    }
 }

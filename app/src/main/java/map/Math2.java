@@ -56,6 +56,20 @@ public class Math2 {
     }
 
     /**
+     * Return absolute difference between two angles, in degrees.
+     */
+    public static double angleDiff(double a1, double a2) {
+        a1 = toUnitDegrees(a1);
+        a2 = toUnitDegrees(a2);
+        double r1 = Math.abs(a1 - a2);
+        double d1 = Math.min(Math.abs(a1 - 180), Math.abs(a1 + 180));
+        double d2 = Math.min(Math.abs(a2 - 180), Math.abs(a2 + 180));
+        double r2 = d1 + d2;
+        return Math.min(r1, r2);
+    }
+
+
+    /**
      * Ands/removes 360 to an angle to make it inside [-180, 180).
      */
     public static double toUnitDegrees(double deg) {
@@ -135,6 +149,9 @@ public class Math2 {
     public static double[] step(double[] start, double[] dir, double l) {
         dir = normalize(dir);
         return plus(start, scale(dir, l));
+    }
+    public static int[] step(int[] start, double[] dir, double l) {
+        return toInt(step(toDouble(start), dir, l));
     }
 
     /**

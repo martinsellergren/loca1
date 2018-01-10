@@ -69,9 +69,12 @@ LabelLayoutIterator
     next()::LabelLayout
     hasMore()::Boolean(sets next)
 
-    findBoxPoint()::Point/NULL (starts search at startRow/Col, and sets)
-    findNeighborBoxPoint(LEFT/RIGHT, startBox::Box)::Point/NULL
-    findNeighborRowPoint(UP/DOWN, startRow:Box[])::Point/NULL
+    findBox()::Point/NULL
+        findBoxPoint()::Point/NULL (starts search at startRow/Col, and sets)
+    findNeighborBox(LEFT/RIGHT, startBox::Box)::Box/NULL
+        findNeighborBoxPoint(LEFT/RIGHT, startBox::Box)::Point/NULL
+    findNeighborRow(UP/DOWN, startRow:Box[])::Box[]
+        findNeighborRowPoint(UP/DOWN, startRow:Box[])::Point/NULL
     expandToRow(boxed-Point)::Box[]
     addBoxes(LEFT/RIGHT, startBox::Box, accum(contains startBox)::Box[])::Box[]
     addRows(UP/DOWN, startRow::Box[], labelLayout(accumulator, contains startRow))::LabelLayout

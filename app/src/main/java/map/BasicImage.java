@@ -109,7 +109,7 @@ public class BasicImage {
      * @pre mins < maxes.
      */
     public BasicImage crop(int xmin, int ymin, int xmax, int ymax) {
-        BufferedImage croped = img.getSubimage(xmin, ymin, xmax-xmin, ymax-ymin);
+        BufferedImage croped = this.img.getSubimage(xmin, ymin, xmax-xmin, ymax-ymin);
         return new BasicImage(croped);
     }
 

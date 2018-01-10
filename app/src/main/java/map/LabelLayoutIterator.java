@@ -163,29 +163,40 @@ public class LabelLayoutIterator {
      *  -At about same size as start-box (~height*2)
      *
      * @param left Search left, otherwise right.
-     * @param startBox Start box.
+     * @param sb Start box.
      * @return A box-point of a left/right neighbor-box, or NULL
      * if such a neighbor-box doesn't exist.
      *
      * @pre startBox a box in the map.
      */
-    public/***/ int[] findNeghborBoxPoint(boolean left, Box startBox) {
+    public Box findNeighborBox(boolean left, Box sb) {
+        int[] bp = findNeighborBoxPoint(left, sb);
+        Box b = expandToBox(bp);
+        if (Math2.angleDiff(b.getRotation(), sb.getRotation()) <= 40
+            && sb.getHeight() < 2 * b.getHeight()
+            && sb.getHeight() > 0.5 * b.getHeight()) {
+            return b;
+        }
+        return null;
+    }
+
+    public/***/ int[] findNeighborBoxPoint(boolean left, Box startBox) {
         int[] start, end;
         double searchLength = startBox.getWidth() * 1.3;
 
         if (left) {
             start = startBox.getLeftMid();
-            end = Math2.toInt(Math2.step(Math2.toDouble(start), startBox.getDirVector(), -searchLength));
+            end = Math2.step(start, startBox.getDirVector(), -searchLength);
         }
         else {
             start = startBox.getRightMid();
-            end = Math2.toInt(Math2.step(Math2.toDouble(start), startBox.getDirVector(), searchLength));
+            end = Math2.step(start, startBox.getDirVector(), searchLength);
         }
 
         PixelWalk pw = new PixelWalk(start, end);
         int[] p;
         while ((p = pw.next()) != null) {
-            if (isBoxPoint(p)) return new int[]{p[0], p[1]};
+            if (isBoxPoint(p)) return p;
         }
 
         return null;
@@ -217,6 +228,7 @@ public class LabelLayoutIterator {
     public/***/ Box expandToBox(int[] start) {
         LinkedList<int[]> ps = expandToBoxPoints(start);
         int[][] cs = getCorners(ps);
+        cs = orderByDirection(cs, ps);
         return new Box(cs[0], cs[1], cs[2], cs[3]);
     }
 
@@ -258,18 +270,6 @@ public class LabelLayoutIterator {
         if (isBoxPoint(down)) ns.add(down);
         return ns;
     }
-
-    // /**
-    //  * Turn linkedList of points into array of points.
-    //  */
-    // public/***/ int[][] toArrayPoints(LinkedList<int[]> l) {
-    //     int[][] ps = new int[l.size()][2];
-    //     int i = 0;
-    //     for (int[] p : l) {
-    //         ps[i++] = p;
-    //     }
-    //     return ps;
-    // }
 
     /**
      * Add point to list if unique.
@@ -321,6 +321,35 @@ public class LabelLayoutIterator {
      */
     public/***/ LinkedList<int[]> rotatePoints(LinkedList<int[]> ps, double deg) {
         return null;
+    }
+
+    /**
+     * Order given cornerpoints by direction determined from all
+     * box-points (the opening in the C).
+     *
+     * @param cs The four corner-points of the box in random order.
+     * @param bps All box-points (including cs).
+     * @return [topL, topR, bottomR, bottomL]
+     */
+    private int[][] orderByDirection(int[][] cs, LinkedList<int[]> bps) {
+        return null;
+    }
+
+    /**
+     * @param cs Random-ordered corner-points.
+     * @return cs ordered consecutively (start somewhere and walk
+     * whole way round..walk forwards or backwards).
+     */
+    private int[][] orderConsecutively(int[][] cs) {
+        return null;
+    }
+
+    /**
+     * Start in middle between p1,p2, walk NESW, how long is minimum
+     * til box-point?
+     */
+    private int getBetweenSpace(int[] p1, int[] p2) {
+        return 0;
     }
 
     /**
