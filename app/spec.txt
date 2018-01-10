@@ -106,7 +106,7 @@ Labels(tied to a mapImage)
             label.setCategory(c)
 
 OCR
-    detectChar(img::BasicImage)::char
+    //detectChar(img::BasicImage)::char
     detectString(img::BasicImage)::string
 
 LabelLayout

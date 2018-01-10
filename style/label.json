@@ -2797,7 +2797,7 @@
         {
             "layout": {
                 "text-letter-spacing": 0.1, 
-                "symbol-placement": "line", 
+                "symbol-placement": "point", 
                 "icon-padding": 2, 
                 "text-font": [
                     "Cousine Regular"
@@ -2815,6 +2815,7 @@
                         ]
                     ]
                 }, 
+                "text-max-width": 1000000, 
                 "symbol-spacing": 200
             }, 
             "paint": {
@@ -2871,7 +2872,7 @@
         {
             "layout": {
                 "text-letter-spacing": 0.1, 
-                "symbol-placement": "line", 
+                "symbol-placement": "point", 
                 "icon-padding": 2, 
                 "text-font": [
                     "Cousine Regular"
@@ -2889,6 +2890,7 @@
                         ]
                     ]
                 }, 
+                "text-max-width": 1000000, 
                 "symbol-spacing": 200
             }, 
             "paint": {
@@ -3055,7 +3057,7 @@
         {
             "layout": {
                 "text-letter-spacing": 0.1, 
-                "symbol-placement": "line", 
+                "symbol-placement": "point", 
                 "icon-padding": 2, 
                 "text-font": [
                     "Cousine Regular"
@@ -3073,6 +3075,7 @@
                         ]
                     ]
                 }, 
+                "text-max-width": 1000000, 
                 "symbol-spacing": 200
             }, 
             "paint": {
@@ -3478,6 +3481,7 @@
             "layout": {
                 "text-letter-spacing": 0.1, 
                 "icon-allow-overlap": true, 
+                "symbol-placement": "point", 
                 "icon-size": {
                     "base": 1.5, 
                     "stops": [
@@ -3501,7 +3505,8 @@
                 ], 
                 "icon-image": "turning-circle-outline", 
                 "icon-rotation-alignment": "map", 
-                "icon-ignore-placement": true
+                "icon-ignore-placement": true, 
+                "text-max-width": 1000000
             }, 
             "paint": {
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
@@ -5585,7 +5590,7 @@
         {
             "layout": {
                 "text-letter-spacing": 0.1, 
-                "symbol-placement": "line", 
+                "symbol-placement": "point", 
                 "icon-padding": 2, 
                 "text-font": [
                     "Cousine Regular"
@@ -5604,6 +5609,7 @@
                     ]
                 }, 
                 "icon-rotation-alignment": "map", 
+                "text-max-width": 1000000, 
                 "symbol-spacing": 200
             }, 
             "paint": {
@@ -5661,7 +5667,7 @@
         {
             "layout": {
                 "text-letter-spacing": 0.1, 
-                "symbol-placement": "line", 
+                "symbol-placement": "point", 
                 "icon-padding": 2, 
                 "text-font": [
                     "Cousine Regular"
@@ -5680,6 +5686,7 @@
                     ]
                 }, 
                 "icon-rotation-alignment": "map", 
+                "text-max-width": 1000000, 
                 "symbol-spacing": 200
             }, 
             "paint": {
@@ -6017,13 +6024,15 @@
         }, 
         {
             "layout": {
-                "icon-image": "level-crossing", 
+                "text-letter-spacing": 0.1, 
                 "icon-allow-overlap": true, 
+                "symbol-placement": "point", 
+                "icon-size": 1, 
                 "text-font": [
                     "Cousine Regular"
                 ], 
-                "icon-size": 1, 
-                "text-letter-spacing": 0.1
+                "icon-image": "level-crossing", 
+                "text-max-width": 1000000
             }, 
             "paint": {
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
@@ -6057,7 +6066,7 @@
         {
             "layout": {
                 "text-letter-spacing": 0.1, 
-                "symbol-placement": "line", 
+                "symbol-placement": "point", 
                 "icon-padding": 2, 
                 "text-font": [
                     "Cousine Regular"
@@ -6075,6 +6084,7 @@
                         ]
                     ]
                 }, 
+                "text-max-width": 1000000, 
                 "symbol-spacing": 200
             }, 
             "paint": {
@@ -6134,6 +6144,7 @@
             "layout": {
                 "text-letter-spacing": 0.1, 
                 "icon-allow-overlap": true, 
+                "symbol-placement": "point", 
                 "icon-size": {
                     "base": 1.5, 
                     "stops": [
@@ -6153,7 +6164,8 @@
                 ], 
                 "icon-image": "turning-circle", 
                 "icon-rotation-alignment": "map", 
-                "icon-ignore-placement": true
+                "icon-ignore-placement": true, 
+                "text-max-width": 1000000
             }, 
             "paint": {
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
@@ -8075,7 +8087,7 @@
         {
             "layout": {
                 "text-letter-spacing": 0.1, 
-                "symbol-placement": "line", 
+                "symbol-placement": "point", 
                 "icon-padding": 2, 
                 "text-font": [
                     "Cousine Regular"
@@ -8094,6 +8106,7 @@
                     ]
                 }, 
                 "icon-rotation-alignment": "map", 
+                "text-max-width": 1000000, 
                 "symbol-spacing": 200
             }, 
             "paint": {
@@ -8145,7 +8158,7 @@
         {
             "layout": {
                 "text-letter-spacing": 0.1, 
-                "symbol-placement": "line", 
+                "symbol-placement": "point", 
                 "icon-padding": 2, 
                 "text-font": [
                     "Cousine Regular"
@@ -8164,6 +8177,7 @@
                     ]
                 }, 
                 "icon-rotation-alignment": "map", 
+                "text-max-width": 1000000, 
                 "symbol-spacing": 200
             }, 
             "paint": {
@@ -9018,7 +9032,7 @@
         {
             "layout": {
                 "text-letter-spacing": 0.1, 
-                "symbol-placement": "line", 
+                "symbol-placement": "point", 
                 "icon-padding": 2, 
                 "text-font": [
                     "Cousine Regular"
@@ -9036,6 +9050,7 @@
                         ]
                     ]
                 }, 
+                "text-max-width": 1000000, 
                 "symbol-spacing": 200
             }, 
             "paint": {
@@ -9502,13 +9517,14 @@
         {
             "layout": {
                 "text-letter-spacing": 0.1, 
+                "symbol-placement": "point", 
                 "text-padding": 4, 
                 "text-font": [
                     "Cousine Regular"
                 ], 
                 "text-field": "{house_num}", 
                 "text-size": 9.5, 
-                "text-max-width": 7
+                "text-max-width": 1000000
             }, 
             "paint": {
                 "text-opacity": 1, 
@@ -9529,7 +9545,7 @@
             "layout": {
                 "text-letter-spacing": 0.1, 
                 "text-max-angle": 30, 
-                "symbol-placement": "line", 
+                "symbol-placement": "point", 
                 "text-font": [
                     "Cousine Regular"
                 ], 
@@ -9547,7 +9563,8 @@
                             16
                         ]
                     ]
-                }
+                }, 
+                "text-max-width": 1000000
             }, 
             "paint": {
                 "text-opacity": 1, 
@@ -9574,6 +9591,7 @@
             "layout": {
                 "text-letter-spacing": 0.11, 
                 "text-max-angle": 38, 
+                "symbol-placement": "point", 
                 "text-line-height": 1.1, 
                 "text-font": [
                     "Cousine Regular"
@@ -9600,7 +9618,7 @@
                         ]
                     ]
                 }, 
-                "text-max-width": 8, 
+                "text-max-width": 1000000, 
                 "symbol-spacing": 250
             }, 
             "paint": {
@@ -9651,6 +9669,7 @@
             "layout": {
                 "text-letter-spacing": 0.11, 
                 "text-max-angle": 38, 
+                "symbol-placement": "point", 
                 "text-line-height": 1.1, 
                 "text-font": [
                     "Cousine Regular"
@@ -9677,7 +9696,7 @@
                         ]
                     ]
                 }, 
-                "text-max-width": 8, 
+                "text-max-width": 1000000, 
                 "symbol-spacing": 250
             }, 
             "paint": {
@@ -9728,6 +9747,7 @@
             "layout": {
                 "text-letter-spacing": 0.11, 
                 "text-max-angle": 38, 
+                "symbol-placement": "point", 
                 "text-line-height": 1.1, 
                 "text-font": [
                     "Cousine Regular"
@@ -9754,7 +9774,7 @@
                         ]
                     ]
                 }, 
-                "text-max-width": 8, 
+                "text-max-width": 1000000, 
                 "symbol-spacing": 250
             }, 
             "paint": {
@@ -9800,6 +9820,7 @@
             "layout": {
                 "text-letter-spacing": 0.11, 
                 "text-max-angle": 38, 
+                "symbol-placement": "point", 
                 "text-line-height": 1.1, 
                 "text-font": [
                     "Cousine Regular"
@@ -9826,7 +9847,7 @@
                         ]
                     ]
                 }, 
-                "text-max-width": 8, 
+                "text-max-width": 1000000, 
                 "symbol-spacing": 250
             }, 
             "paint": {
@@ -9871,6 +9892,7 @@
             "layout": {
                 "text-letter-spacing": 0.11, 
                 "text-max-angle": 38, 
+                "symbol-placement": "point", 
                 "text-line-height": 1.1, 
                 "text-font": [
                     "Cousine Regular"
@@ -9897,7 +9919,7 @@
                         ]
                     ]
                 }, 
-                "text-max-width": 8, 
+                "text-max-width": 1000000, 
                 "symbol-spacing": 250
             }, 
             "paint": {
@@ -9942,7 +9964,7 @@
             "layout": {
                 "text-letter-spacing": 0.11, 
                 "text-max-angle": 30, 
-                "symbol-placement": "line", 
+                "symbol-placement": "point", 
                 "text-padding": 1, 
                 "text-font": [
                     "Cousine Regular"
@@ -9963,6 +9985,7 @@
                         ]
                     ]
                 }, 
+                "text-max-width": 1000000, 
                 "symbol-spacing": 250
             }, 
             "paint": {
@@ -10009,7 +10032,7 @@
             "layout": {
                 "text-letter-spacing": 0.11, 
                 "text-max-angle": 30, 
-                "symbol-placement": "line", 
+                "symbol-placement": "point", 
                 "text-padding": 1, 
                 "text-font": [
                     "Cousine Regular"
@@ -10030,6 +10053,7 @@
                         ]
                     ]
                 }, 
+                "text-max-width": 1000000, 
                 "symbol-spacing": 250
             }, 
             "paint": {
@@ -10069,7 +10093,7 @@
             "layout": {
                 "text-letter-spacing": 0.11, 
                 "text-max-angle": 30, 
-                "symbol-placement": "line", 
+                "symbol-placement": "point", 
                 "text-padding": 1, 
                 "text-font": [
                     "Cousine Regular"
@@ -10090,6 +10114,7 @@
                         ]
                     ]
                 }, 
+                "text-max-width": 1000000, 
                 "symbol-spacing": 250
             }, 
             "paint": {
@@ -10122,19 +10147,7 @@
             "layout": {
                 "text-letter-spacing": 0.15000000000000002, 
                 "text-max-angle": 38, 
-                "symbol-placement": {
-                    "base": 1, 
-                    "stops": [
-                        [
-                            10, 
-                            "point"
-                        ], 
-                        [
-                            11, 
-                            "line"
-                        ]
-                    ]
-                }, 
+                "symbol-placement": "point", 
                 "icon-padding": 2, 
                 "text-padding": 2, 
                 "text-font": [
@@ -10145,6 +10158,7 @@
                 "icon-rotation-alignment": "viewport", 
                 "text-rotation-alignment": "viewport", 
                 "text-size": 9, 
+                "text-max-width": 1000000, 
                 "symbol-spacing": {
                     "base": 1, 
                     "stops": [
@@ -10234,19 +10248,7 @@
             "layout": {
                 "text-letter-spacing": 0.15000000000000002, 
                 "text-max-angle": 38, 
-                "symbol-placement": {
-                    "base": 1, 
-                    "stops": [
-                        [
-                            10, 
-                            "point"
-                        ], 
-                        [
-                            11, 
-                            "line"
-                        ]
-                    ]
-                }, 
+                "symbol-placement": "point", 
                 "icon-padding": 2, 
                 "text-padding": 2, 
                 "text-font": [
@@ -10257,6 +10259,7 @@
                 "icon-rotation-alignment": "viewport", 
                 "text-rotation-alignment": "viewport", 
                 "text-size": 9, 
+                "text-max-width": 1000000, 
                 "symbol-spacing": {
                     "base": 1, 
                     "stops": [
@@ -10344,13 +10347,15 @@
         }, 
         {
             "layout": {
+                "text-letter-spacing": 0.1, 
+                "symbol-placement": "point", 
                 "text-font": [
                     "Cousine Regular"
                 ], 
-                "text-size": 9, 
-                "text-letter-spacing": 0.1, 
+                "icon-image": "motorway-exit-{reflen}", 
                 "text-field": "{ref}", 
-                "icon-image": "motorway-exit-{reflen}"
+                "text-size": 9, 
+                "text-max-width": 1000000
             }, 
             "paint": {
                 "text-color": "hsla(0, 0%, 0%, 1)", 
@@ -10389,6 +10394,7 @@
             "layout": {
                 "text-letter-spacing": 0.11, 
                 "text-max-angle": 38, 
+                "symbol-placement": "point", 
                 "text-line-height": 1.1, 
                 "text-font": [
                     "Cousine Regular"
@@ -10426,7 +10432,7 @@
                         ]
                     ]
                 }, 
-                "text-max-width": 8, 
+                "text-max-width": 1000000, 
                 "symbol-spacing": 250
             }, 
             "paint": {
@@ -10471,6 +10477,7 @@
             "layout": {
                 "text-letter-spacing": 0.11, 
                 "text-max-angle": 38, 
+                "symbol-placement": "point", 
                 "text-line-height": 1.1, 
                 "text-font": [
                     "Cousine Regular"
@@ -10508,7 +10515,7 @@
                         ]
                     ]
                 }, 
-                "text-max-width": 8, 
+                "text-max-width": 1000000, 
                 "symbol-spacing": 250
             }, 
             "paint": {
@@ -10552,6 +10559,7 @@
         {
             "layout": {
                 "text-letter-spacing": 0.11, 
+                "symbol-placement": "point", 
                 "icon-padding": 0, 
                 "text-line-height": 1.1, 
                 "text-font": [
@@ -10590,7 +10598,7 @@
                         ]
                     ]
                 }, 
-                "text-max-width": 7, 
+                "text-max-width": 1000000, 
                 "symbol-spacing": 250
             }, 
             "paint": {
@@ -10617,9 +10625,12 @@
         }, 
         {
             "layout": {
+                "text-letter-spacing": 0.1, 
+                "symbol-placement": "point", 
                 "text-font": [
                     "Cousine Regular"
                 ], 
+                "text-field": "{name_en}", 
                 "text-size": {
                     "base": 1, 
                     "stops": [
@@ -10633,9 +10644,7 @@
                         ]
                     ]
                 }, 
-                "text-field": "{name_en}", 
-                "text-max-width": 7, 
-                "text-letter-spacing": 0.1
+                "text-max-width": 1000000
             }, 
             "paint": {
                 "text-color": "hsla(0, 0%, 0%, 1)", 
@@ -10660,9 +10669,12 @@
         }, 
         {
             "layout": {
+                "text-letter-spacing": 0.1, 
+                "symbol-placement": "point", 
                 "text-font": [
                     "Cousine Regular"
                 ], 
+                "text-field": "{name_en}", 
                 "text-size": {
                     "base": 1, 
                     "stops": [
@@ -10676,9 +10688,7 @@
                         ]
                     ]
                 }, 
-                "text-field": "{name_en}", 
-                "text-max-width": 7, 
-                "text-letter-spacing": 0.1
+                "text-max-width": 1000000
             }, 
             "paint": {
                 "text-color": "hsla(0, 0%, 0%, 1)", 
@@ -10705,6 +10715,7 @@
             "layout": {
                 "text-letter-spacing": 0.1, 
                 "text-max-angle": 38, 
+                "symbol-placement": "point", 
                 "text-line-height": 1.2, 
                 "text-font": [
                     "Cousine Regular"
@@ -10729,7 +10740,7 @@
                         ]
                     ]
                 }, 
-                "text-max-width": 7, 
+                "text-max-width": 1000000, 
                 "symbol-spacing": 250
             }, 
             "paint": {
@@ -10774,6 +10785,7 @@
             "layout": {
                 "text-letter-spacing": 0.11, 
                 "text-max-angle": 38, 
+                "symbol-placement": "point", 
                 "text-line-height": 1.1, 
                 "text-font": [
                     "Cousine Regular"
@@ -10811,7 +10823,7 @@
                         ]
                     ]
                 }, 
-                "text-max-width": 8, 
+                "text-max-width": 1000000, 
                 "symbol-spacing": 250
             }, 
             "paint": {
@@ -10856,6 +10868,7 @@
             "layout": {
                 "text-letter-spacing": 0.11, 
                 "text-max-angle": 38, 
+                "symbol-placement": "point", 
                 "text-line-height": 1.1, 
                 "text-font": [
                     "Cousine Regular"
@@ -10893,7 +10906,7 @@
                         ]
                     ]
                 }, 
-                "text-max-width": 8, 
+                "text-max-width": 1000000, 
                 "symbol-spacing": 250
             }, 
             "paint": {
@@ -10937,6 +10950,7 @@
         {
             "layout": {
                 "text-letter-spacing": 0.11, 
+                "symbol-placement": "point", 
                 "text-padding": 2, 
                 "text-font": [
                     "Cousine Regular"
@@ -10985,7 +10999,7 @@
                         ]
                     ]
                 }, 
-                "text-max-width": 9, 
+                "text-max-width": 1000000, 
                 "symbol-spacing": 250
             }, 
             "paint": {
@@ -11012,6 +11026,7 @@
             "layout": {
                 "text-letter-spacing": 0.11, 
                 "text-max-angle": 38, 
+                "symbol-placement": "point", 
                 "text-line-height": 1.2, 
                 "text-font": [
                     "Cousine Regular"
@@ -11036,7 +11051,7 @@
                         ]
                     ]
                 }, 
-                "text-max-width": 8, 
+                "text-max-width": 1000000, 
                 "symbol-spacing": 250
             }, 
             "paint": {
@@ -11063,6 +11078,7 @@
         {
             "layout": {
                 "text-letter-spacing": 0.2, 
+                "symbol-placement": "point", 
                 "text-padding": 3, 
                 "text-font": [
                     "Cousine Regular"
@@ -11082,7 +11098,7 @@
                 }, 
                 "text-field": "{name_en}", 
                 "text-transform": "uppercase", 
-                "text-max-width": 7
+                "text-max-width": 1000000
             }, 
             "paint": {
                 "text-opacity": 1, 
@@ -11108,6 +11124,7 @@
         {
             "layout": {
                 "text-letter-spacing": 0.25, 
+                "symbol-placement": "point", 
                 "text-padding": 3, 
                 "text-font": [
                     "Cousine Regular"
@@ -11127,7 +11144,7 @@
                 }, 
                 "text-field": "{name_en}", 
                 "text-transform": "uppercase", 
-                "text-max-width": 7
+                "text-max-width": 1000000
             }, 
             "paint": {
                 "text-opacity": 1, 
@@ -11152,9 +11169,12 @@
         }, 
         {
             "layout": {
+                "text-letter-spacing": 0.1, 
+                "symbol-placement": "point", 
                 "text-font": [
                     "Cousine Regular"
                 ], 
+                "text-field": "{name_en}", 
                 "text-size": {
                     "base": 1, 
                     "stops": [
@@ -11168,8 +11188,7 @@
                         ]
                     ]
                 }, 
-                "text-field": "{name_en}", 
-                "text-letter-spacing": 0.1
+                "text-max-width": 1000000
             }, 
             "paint": {
                 "text-color": "hsla(0, 0%, 0%, 1)", 
@@ -11193,9 +11212,12 @@
         }, 
         {
             "layout": {
+                "text-letter-spacing": 0.1, 
+                "symbol-placement": "point", 
                 "text-font": [
                     "Cousine Regular"
                 ], 
+                "text-field": "{name_en}", 
                 "text-size": {
                     "base": 1, 
                     "stops": [
@@ -11209,9 +11231,7 @@
                         ]
                     ]
                 }, 
-                "text-field": "{name_en}", 
-                "text-max-width": 7, 
-                "text-letter-spacing": 0.1
+                "text-max-width": 1000000
             }, 
             "paint": {
                 "text-color": "hsla(0, 0%, 0%, 1)", 
@@ -11236,6 +11256,7 @@
         {
             "layout": {
                 "text-letter-spacing": 0.1, 
+                "symbol-placement": "point", 
                 "text-font": [
                     "Cousine Regular"
                 ], 
@@ -11286,7 +11307,7 @@
                         ]
                     ]
                 }, 
-                "text-max-width": 7
+                "text-max-width": 1000000
             }, 
             "paint": {
                 "text-color": "hsla(0, 0%, 0%, 1)", 
@@ -11312,6 +11333,7 @@
             "layout": {
                 "text-letter-spacing": 0.11, 
                 "text-max-angle": 38, 
+                "symbol-placement": "point", 
                 "text-line-height": 1.2, 
                 "text-font": [
                     "Cousine Regular"
@@ -11336,7 +11358,7 @@
                         ]
                     ]
                 }, 
-                "text-max-width": 7, 
+                "text-max-width": 1000000, 
                 "symbol-spacing": 250
             }, 
             "paint": {
@@ -11361,6 +11383,7 @@
         {
             "layout": {
                 "text-letter-spacing": 0.1, 
+                "symbol-placement": "point", 
                 "text-font": [
                     "Cousine Regular"
                 ], 
@@ -11411,7 +11434,7 @@
                         ]
                     ]
                 }, 
-                "text-max-width": 7
+                "text-max-width": 1000000
             }, 
             "paint": {
                 "text-color": "hsla(0, 0%, 0%, 1)", 
@@ -11451,6 +11474,7 @@
         {
             "layout": {
                 "text-letter-spacing": 0.1, 
+                "symbol-placement": "point", 
                 "text-font": [
                     "Cousine Regular"
                 ], 
@@ -11500,7 +11524,8 @@
                             22
                         ]
                     ]
-                }
+                }, 
+                "text-max-width": 1000000
             }, 
             "paint": {
                 "text-opacity": 1, 
@@ -11546,6 +11571,7 @@
         {
             "layout": {
                 "text-letter-spacing": 0.1, 
+                "symbol-placement": "point", 
                 "text-font": [
                     "Cousine Regular"
                 ], 
@@ -11596,7 +11622,7 @@
                         ]
                     ]
                 }, 
-                "text-max-width": 7
+                "text-max-width": 1000000
             }, 
             "paint": {
                 "text-opacity": 1, 
@@ -11642,6 +11668,7 @@
         {
             "layout": {
                 "text-letter-spacing": 0.1, 
+                "symbol-placement": "point", 
                 "text-font": [
                     "Cousine Regular"
                 ], 
@@ -11692,7 +11719,7 @@
                         ]
                     ]
                 }, 
-                "text-max-width": 7
+                "text-max-width": 1000000
             }, 
             "paint": {
                 "text-opacity": 1, 
@@ -11737,6 +11764,7 @@
         {
             "layout": {
                 "text-letter-spacing": 0.1, 
+                "symbol-placement": "point", 
                 "text-font": [
                     "Cousine Regular"
                 ], 
@@ -11787,7 +11815,7 @@
                         ]
                     ]
                 }, 
-                "text-max-width": 7
+                "text-max-width": 1000000
             }, 
             "paint": {
                 "text-opacity": 1, 
@@ -11832,7 +11860,7 @@
         {
             "layout": {
                 "text-letter-spacing": 0.2, 
-                "symbol-placement": "line", 
+                "symbol-placement": "point", 
                 "text-line-height": 1.1, 
                 "text-font": [
                     "Cousine Regular"
@@ -11852,7 +11880,7 @@
                         ]
                     ]
                 }, 
-                "text-max-width": 5, 
+                "text-max-width": 1000000, 
                 "symbol-spacing": {
                     "base": 1, 
                     "stops": [
@@ -11900,6 +11928,7 @@
         {
             "layout": {
                 "text-letter-spacing": 0.2, 
+                "symbol-placement": "point", 
                 "text-line-height": 1.5, 
                 "text-font": [
                     "Cousine Regular"
@@ -11918,7 +11947,7 @@
                         ]
                     ]
                 }, 
-                "text-max-width": 5
+                "text-max-width": 1000000
             }, 
             "paint": {
                 "text-color": "hsla(0, 0%, 0%, 1)", 
@@ -11953,7 +11982,7 @@
         {
             "layout": {
                 "text-letter-spacing": 0.25, 
-                "symbol-placement": "line", 
+                "symbol-placement": "point", 
                 "text-line-height": 1.1, 
                 "text-font": [
                     "Cousine Regular"
@@ -11973,7 +12002,7 @@
                         ]
                     ]
                 }, 
-                "text-max-width": 5, 
+                "text-max-width": 1000000, 
                 "symbol-spacing": 250
             }, 
             "paint": {
@@ -12010,6 +12039,7 @@
         {
             "layout": {
                 "text-letter-spacing": 0.25, 
+                "symbol-placement": "point", 
                 "text-line-height": 1.5, 
                 "text-font": [
                     "Cousine Regular"
@@ -12028,7 +12058,7 @@
                         ]
                     ]
                 }, 
-                "text-max-width": 5
+                "text-max-width": 1000000
             }, 
             "paint": {
                 "text-color": "hsla(0, 0%, 0%, 1)", 
@@ -12064,7 +12094,7 @@
         {
             "layout": {
                 "text-letter-spacing": 0.35, 
-                "symbol-placement": "line", 
+                "symbol-placement": "point", 
                 "text-size": {
                     "base": 1, 
                     "stops": [
@@ -12084,7 +12114,7 @@
                 "text-pitch-alignment": "viewport", 
                 "text-field": "{name_en}", 
                 "text-line-height": 1.1, 
-                "text-max-width": 4
+                "text-max-width": 1000000
             }, 
             "paint": {
                 "text-color": "hsla(0, 0%, 0%, 1)", 
@@ -12119,6 +12149,7 @@
         {
             "layout": {
                 "text-letter-spacing": 0.35, 
+                "symbol-placement": "point", 
                 "text-line-height": 1.5, 
                 "text-font": [
                     "Cousine Regular"
@@ -12137,7 +12168,7 @@
                         ]
                     ]
                 }, 
-                "text-max-width": 4
+                "text-max-width": 1000000
             }, 
             "paint": {
                 "text-color": "hsla(0, 0%, 0%, 1)", 
@@ -12172,6 +12203,7 @@
         {
             "layout": {
                 "text-letter-spacing": 0.25, 
+                "symbol-placement": "point", 
                 "text-size": {
                     "base": 1, 
                     "stops": [
@@ -12202,7 +12234,7 @@
                     ]
                 }, 
                 "text-transform": "uppercase", 
-                "text-max-width": 5
+                "text-max-width": 1000000
             }, 
             "paint": {
                 "text-opacity": 1, 
@@ -12230,6 +12262,7 @@
         {
             "layout": {
                 "text-letter-spacing": 0.25, 
+                "symbol-placement": "point", 
                 "text-size": {
                     "base": 1, 
                     "stops": [
@@ -12260,7 +12293,7 @@
                     ]
                 }, 
                 "text-transform": "uppercase", 
-                "text-max-width": 6
+                "text-max-width": 1000000
             }, 
             "paint": {
                 "text-opacity": 1, 
@@ -12296,6 +12329,7 @@
         {
             "layout": {
                 "text-letter-spacing": 0.25, 
+                "symbol-placement": "point", 
                 "text-size": {
                     "base": 1, 
                     "stops": [
@@ -12327,7 +12361,7 @@
                 }, 
                 "text-padding": 1, 
                 "text-transform": "uppercase", 
-                "text-max-width": 6
+                "text-max-width": 1000000
             }, 
             "paint": {
                 "text-opacity": 1, 
@@ -12354,9 +12388,12 @@
         }, 
         {
             "layout": {
+                "text-letter-spacing": 0.1, 
+                "symbol-placement": "point", 
                 "text-font": [
                     "Cousine Regular"
                 ], 
+                "text-field": "{name_en}", 
                 "text-size": {
                     "base": 0.9, 
                     "stops": [
@@ -12370,9 +12407,7 @@
                         ]
                     ]
                 }, 
-                "text-field": "{name_en}", 
-                "text-max-width": 6, 
-                "text-letter-spacing": 0.1
+                "text-max-width": 1000000
             }, 
             "paint": {
                 "text-color": "hsla(0, 0%, 0%, 1)", 
@@ -12399,22 +12434,11 @@
         }, 
         {
             "layout": {
+                "text-letter-spacing": 0.1, 
+                "symbol-placement": "point", 
                 "text-font": [
                     "Cousine Regular"
                 ], 
-                "text-size": {
-                    "base": 1, 
-                    "stops": [
-                        [
-                            3, 
-                            10
-                        ], 
-                        [
-                            8, 
-                            24
-                        ]
-                    ]
-                }, 
                 "text-field": {
                     "base": 1, 
                     "stops": [
@@ -12428,8 +12452,20 @@
                         ]
                     ]
                 }, 
-                "text-max-width": 6, 
-                "text-letter-spacing": 0.1
+                "text-size": {
+                    "base": 1, 
+                    "stops": [
+                        [
+                            3, 
+                            10
+                        ], 
+                        [
+                            8, 
+                            24
+                        ]
+                    ]
+                }, 
+                "text-max-width": 1000000
             }, 
             "paint": {
                 "text-color": "hsla(0, 0%, 0%, 1)", 
@@ -12457,9 +12493,12 @@
         }, 
         {
             "layout": {
+                "text-letter-spacing": 0.1, 
+                "symbol-placement": "point", 
                 "text-font": [
                     "Cousine Regular"
                 ], 
+                "text-field": "{name_en}", 
                 "text-size": {
                     "base": 1, 
                     "stops": [
@@ -12473,21 +12512,7 @@
                         ]
                     ]
                 }, 
-                "text-field": "{name_en}", 
-                "text-max-width": {
-                    "base": 1, 
-                    "stops": [
-                        [
-                            0, 
-                            5
-                        ], 
-                        [
-                            3, 
-                            6
-                        ]
-                    ]
-                }, 
-                "text-letter-spacing": 0.1
+                "text-max-width": 1000000
             }, 
             "paint": {
                 "text-color": "hsla(0, 0%, 0%, 1)", 
@@ -12514,7 +12539,7 @@
             }
         }
     ], 
-    "name": "label", 
+    "name": "label_noWrap", 
     "created": "2017-10-24T20:41:29.877Z", 
     "metadata": {
         "mapbox:type": "default", 

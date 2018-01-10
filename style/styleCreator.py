@@ -2,6 +2,8 @@ import json
 import sys
 
 def setName(data, name):
+    if noWrapping: name += '_noWrap'
+    if noRotation: name += '_noRot'
     data['name'] = name
 
 def getLayers(data, types):
@@ -31,6 +33,14 @@ def setLetterSpacing(data, extraSpace=0):
             space += layer['layout']['text-letter-spacing']
         layer['layout']['text-letter-spacing'] = space
 
+def setNoLabelWrapping(data):
+    for layer in getSymbolLayers(data):
+        layer['layout']['text-max-width'] = 1000000
+
+def setNoLabelRotation(data):
+    for layer in getSymbolLayers(data):
+        layer['layout']['symbol-placement'] = 'point'
+
 def undecorateText(data):
     for layer in getSymbolLayers(data):
         paint = layer['paint']
@@ -57,6 +67,9 @@ fileName_full = "full"
 fileName_label = "label"
 fileName_box = "box"
 
+noWrapping = False
+noRotation = False
+
 f = open(sys.argv[1], 'r')
 data = json.load(f)
 
@@ -66,6 +79,11 @@ setLetterSpacing(data, extraLetterSpace)
 #noRoadSigns()
 #noJunkLabels()
 #setLanguage(data)
+
+#experiment
+setNoLabelWrapping(data)
+setNoLabelRotation(data)
+
 setName(data, fileName_full)
 dumpStyle(data, fileName_full)
 

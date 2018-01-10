@@ -12,7 +12,7 @@ public class MapRequestTests {
     //     double north = 59.39407306645033;
     //     double south = 59.33564087770051;
     //     int zoom = 14;
-    //     boolean highQ = false;
+    //     boolean highQ = true;
     //     MapImageView view = new MapImageView(west, north, east, south, zoom, highQ);
     //     MapRequest req = new MapRequest(view);
 

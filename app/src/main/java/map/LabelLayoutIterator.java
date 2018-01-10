@@ -47,7 +47,7 @@ import java.awt.Color;
  * label (i.e same font-size).
  */
 public class LabelLayoutIterator {
-    public/***/ static final int DEFAULT_ALPHA_THRESHOLD = 100;
+    public/***/ static final int DEFAULT_ALPHA_THRESHOLD = 130;
 
     /** Start searching for next box-point at this pos in map. */
     public/***/ int startX = 0;
