@@ -51,6 +51,7 @@ BasicImage
         hasMore()::Bool(sets next)
         next()::int[x,y]
 
+
 MapImage<-BasicImage
     labels::Label[]
     view::MapImageView
@@ -66,29 +67,28 @@ LabelLayoutIterator
     startCol::int
     new LabelLayoutIterator(boxImg::BasicImage, alphaTreshold::int)
     (alphaTreshold: pixels alpha-value- over means show, under means hide)
-    next()::LabelLayout
-    hasMore()::Boolean(sets next)
+    next()::LabelLayout/NULL (starts search at startX/Y, and sets)
 
-    findBox()::Point/NULL
-        findBoxPoint()::Point/NULL (starts search at startRow/Col, and sets)
-    findNeighborBox(LEFT/RIGHT, startBox::Box)::Box/NULL
-        findNeighborBoxPoint(LEFT/RIGHT, startBox::Box)::Point/NULL
-    findNeighborRow(UP/DOWN, startRow:Box[])::Box[]
-        findNeighborRowPoint(UP/DOWN, startRow:Box[])::Point/NULL
-    expandToRow(boxed-Point)::Box[]
-    addBoxes(LEFT/RIGHT, startBox::Box, accum(contains startBox)::Box[])::Box[]
+    findBoxPoint(startX::int, startY::int)::Point/NULL
+    expandToRow(box-point::Point)::Box[]
     addRows(UP/DOWN, startRow::Box[], labelLayout(accumulator, contains startRow))::LabelLayout
-    removeLabel(layout::LabelLayout)::Void
+    removeLabel(lay::LabelLayout)::Void
 
-    expandToBox(boxed-Point)::Box
-        expandToBoxPoints(boxed-Point)::Point[]
-        getCorners(points::Point[])::Point[](0Left 1Up 2Right 3Down)
-            findExtremes(Point[])::Point[](0Left 1Up 2Right 3Down)
-            rotate(Point[], deg)::Point[]
-        orderByDirection(cornerPoints::Point[4st], boxPoints::Point[])::Point[left,up,right,down]
-            orderConsecutively(cornerPoints::Point[4st])::Point[orderd consecutively]
-            getBetweenSpace(p1::Point, p2::Point)::int
-                (start in middle between p1,p2, walk nesw, how long til box-point?)
+    expandToBox(box-point::Point)::Box
+    addBoxes(LEFT/RIGHT, startBox::Box, accum(contains startBox)::Box[])::Box[]
+
+    findNeighborRow(UP/DOWN, startRow:Box[])::Box[]/NULL
+    findNeighborBox(LEFT/RIGHT, startBox::Box)::Box/NULL
+
+    expandToBoxPoints(boxed-Point)::Point[]
+    getCorners(points::Point[])::Point[](0Left 1Up 2Right 3Down)
+    findExtremes(Point[])::Point[](0Left 1Up 2Right 3Down)
+    rotate(Point[], deg)::Point[]
+    orderByDirection(cornerPoints::Point[4st], boxPoints::Point[])::Point[left,up,right,down]
+    orderConsecutively(cornerPoints::Point[4st])::Point[orderd consecutively]
+    getBetweenSpace(p1::Point, p2::Point)::int
+    (start in middle between p1,p2, walk nesw, how long til box-point?)
+
 
 Label
     text: String

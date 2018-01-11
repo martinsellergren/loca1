@@ -2,7 +2,7 @@ package map;
 
 import java.awt.Color;
 import java.util.LinkedList;
-
+import java.util.Arrays;
 import java.awt.Color;
 
 
@@ -93,10 +93,14 @@ public class LabelLayoutIterator {
     }
 
     /**
+     * Finds and returns next layout. Starts searching at startX
+     * startY, and sets this to found box-point. Removes
+     * found label from map so it's not found again.
+     *
      * @return Iterator's next label layout. Null if no more.
      */
     public LabelLayout next() {
-        int[] p = findBoxPoint();
+        int[] p = findBoxPoint(this.startX, this.startY);
         if (p == null) return null;
 
         LinkedList<Box> row = expandToRow(p);
@@ -105,31 +109,114 @@ public class LabelLayoutIterator {
         addRows(up, row, lay);
         up = false;
         addRows(up, row, lay);
+
+        removeLabel(lay);
+        this.startX = p[0];
+        this.startY = p[1];
+
         return lay;
     }
 
     /**
-     * Scans through the map, looking for a box-point. Starts search
-     * at the iterators start-position (startX, startY).
-     * Also sets this start-position to point after found point.
+     * Scans through the map, looking for a box-point.
      *
      * @return A box-point in the map, or NULL if no more
      * box-points, as [x,y].
      */
-    public/***/ int[] findBoxPoint() {
-        for (int y = this.startY; y < map.length; y++) {
-            for (int x = this.startX; x < map[y].length; x++) {
-                if (isBoxPoint(x, y)) {
-                    this.startX = x + 1;
+    public/***/ int[] findBoxPoint(int startX, int startY) {
+        for (int y = startY; y < map.length; y++) {
+            for (int x = startX; x < map[y].length; x++) {
+                if (isBoxPoint(x, y))
                     return new int[]{x, y};
-                }
             }
         }
         return null;
     }
 
     /**
-     * Finds a single point of a neighboring row of a start row.
+     * Expand one box-point to a box and the box to a horizontal
+     * row of boxes.
+     *
+     * @param start Start-point.
+     * @return A row in the map (i.e horizontaly
+     * adjacent boxes).
+     *
+     * @pre start is a box-point in the map.
+     */
+    public/***/ LinkedList<Box> expandToRow(int[] start) {
+        return null;
+    }
+
+    /**
+     * Adds, to a label-layout, all rows above or below some
+     * start-row in same label in the map.
+     *
+     * @param up If true, adds rows above startRow, otherwise below.
+     * @param startRow Start-row.
+     * @param layout Accumulator for the new rows.
+     * @return The provided label-layout, prepended/appended
+     * with all rows above/below in same label as start-row.
+     *
+     * @pre startRow a row of some label in the map, that has
+     * no rotation and a straight base-line.
+     */
+    public/***/ LabelLayout addRows(boolean up, LinkedList<Box> startRow, LabelLayout layout) {
+        return null;
+    }
+
+    /**
+     * Removes a label from the map, i.e deactivates all its
+     * points. Goes through the label-layout and deactivates every
+     * point of every letter-box in the layout. Extends the size of
+     * the letter-box-area slightly to ensure that no point is
+     * missed.
+     *
+     * @param layout Layout for the label to be removed.
+     */
+    public/***/ void removeLabel(LabelLayout layout) {
+        for (Box b : layout.getBoxes()) {
+            int[] boxP = b.getTopLeft();
+            LinkedList<int[]> ps = expandToBoxPoints(boxP);
+
+            for (int[] p : ps) map[ p[0] ][ p[1] ] = false;
+        }
+    }
+
+    /**
+     * Finds all boxed-points connected to the start-point and
+     * created a box from these points.
+     *
+     * @param start Start-point.
+     * @return The box containing start-point.
+     *
+     * @pre start is a box-point in the map.
+     */
+    public/***/ Box expandToBox(int[] start) {
+        LinkedList<int[]> ps = expandToBoxPoints(start);
+        int[][] cs = getCorners(ps);
+        cs = orderByDirection(cs, ps);
+        return new Box(cs[0], cs[1], cs[2], cs[3]);
+    }
+
+    /**
+     * Adds, to an array, all boxes to the left or right of some
+     * start-box, in same row of some label in the map.
+     *
+     * @param left If true, adds boxes to the left of startBox,
+     * otherwise to the right.
+     * @param startBox Start-box.
+     * @param bs Accumulator for the new boxes.
+     * @return The provided box-array (bs) prepended/appended
+     * with all boxes to left/right of that box (in same label).
+     *
+     * @pre startBox a letter-box in the map.
+     */
+    public/***/ Box[] addBoxes(boolean left, Box startBox, LinkedList<Box> bs) {
+        return null;
+    }
+
+    /**
+     * Finds a neighboring row of a start row.
      * Looks either up or down from the start row. A neighboring
      * row is an adjacent row in same label as the start-row.
      *
@@ -141,18 +228,19 @@ public class LabelLayoutIterator {
      *
      * @param up Search up, otherwise down.
      * @param startRow Start row.
-     * @return A box-point of an up/down neighbor-row, or NULL
-     * if such a neighbor-row doesn't exist.
+     * @return A neighbor-row either up or down of startRow,
+     * or NULL if such a neighbor-row doesn't exist.
      *
      * @pre startRow a row in the map (i.e horizontaly
-     * adjacent boxes) with no rotation and a straight baseline.
+     * adjacent boxes) with no apparent rotation and a straight
+     * baseline.
      */
-    public/***/ int[] findNeighborRowPoint(boolean up, LinkedList<Box> startRow) {
+    public/***/ int[] findNeighborRow(boolean up, LinkedList<Box> startRow) {
         return null;
     }
 
     /**
-     * Finds a single point of a neighboring box of a start-box.
+     * Finds a neighboring box of a start-box.
      * Looks to either left or right side of the start box.
      * A neighboring box is an adjacent box in same label as
      * the start-box.
@@ -164,7 +252,7 @@ public class LabelLayoutIterator {
      *
      * @param left Search left, otherwise right.
      * @param sb Start box.
-     * @return A box-point of a left/right neighbor-box, or NULL
+     * @return A left/right neighbor-box, or NULL
      * if such a neighbor-box doesn't exist.
      *
      * @pre startBox a box in the map.
@@ -202,35 +290,6 @@ public class LabelLayoutIterator {
         return null;
     }
 
-    /**
-     * Expand one box-point to a box and the box to a horizontal
-     * row of boxes.
-     *
-     * @param start Start-point.
-     * @return A row in the map (i.e horizontaly
-     * adjacent boxes).
-     *
-     * @pre start is a box-point in the map.
-     */
-    public/***/ LinkedList<Box> expandToRow(int[] start) {
-        return null;
-    }
-
-    /**
-     * Finds all boxed-points connected to the start-point and
-     * created a box from these points.
-     *
-     * @param start Start-point.
-     * @return The box containing start-point.
-     *
-     * @pre start is a box-point in the map.
-     */
-    public/***/ Box expandToBox(int[] start) {
-        LinkedList<int[]> ps = expandToBoxPoints(start);
-        int[][] cs = getCorners(ps);
-        cs = orderByDirection(cs, ps);
-        return new Box(cs[0], cs[1], cs[2], cs[3]);
-    }
 
     /**
      * @param start Start-point.
@@ -239,25 +298,34 @@ public class LabelLayoutIterator {
      * @pre start is a box-point in the map.
      */
     public/***/ LinkedList<int[]> expandToBoxPoints(int[] start) {
+        if (!isBoxPoint(start)) throw new RuntimeException();
+
         LinkedList<int[]> open = new LinkedList<int[]>();
         LinkedList<int[]> closed = new LinkedList<int[]>();
-        int[] current = start;
-        open.add(current);
+        open.add(start);
 
         while (open.size() > 0) {
-            LinkedList<int[]> ns = getNeighbors(current);
-            addUniquePoints(ns, open);
-            open.remove(current);
-            addUniquePoint(current, closed);
-            current = open.removeFirst();
+            int[] current = open.removeFirst();
+            LinkedList<int[]> ns = getBoxPointNeighbors(current);
+            LinkedList<int[]> uns = getUniquePoints(ns, open, closed);
+            //System.out.println(ns.size() + ", " + uns.size());
+            open.addAll(uns);
+            closed.add(current);
+
+            // System.out.println(Arrays.toString(current));
+            // System.out.println(open.toString());
+            // System.out.println(closed.toString() + "\n");
         }
         return closed;
     }
 
     /**
      * @return The box-point neighbors (left/up/right/down).
+     * @pre p is box-point.
      */
-    public/***/ LinkedList<int[]> getNeighbors(int[] p) {
+    public/***/ LinkedList<int[]> getBoxPointNeighbors(int[] p) {
+        if (!isBoxPoint(p)) throw new RuntimeException();
+
         int[] left = new int[]{ p[0]-1, p[1] };
         int[] up = new int[]{ p[0], p[1]-1 };
         int[] right = new int[]{ p[0]+1, p[1] };
@@ -272,19 +340,27 @@ public class LabelLayoutIterator {
     }
 
     /**
-     * Add point to list if unique.
+     * @return List of points in ps not in the other lists.
      */
-    public/***/ void addUniquePoint(int[] p, LinkedList<int[]> l) {
-        if (!l.contains(p)) l.add(p);
+    public/***/ LinkedList<int[]> getUniquePoints(LinkedList<int[]> ps, LinkedList<int[]> notIn1, LinkedList<int[]> notIn2) {
+        LinkedList<int[]> rs = new LinkedList<int[]>();
+
+        for (int[] p : ps) {
+            if (!containsPoint(p, notIn1) && !containsPoint(p, notIn2)) {
+                rs.add(p);
+            }
+        }
+        return rs;
     }
 
     /**
-     * Add unique points in given list, to other list.
+     * @return true if ps contains p (by value)
      */
-    public/***/ void addUniquePoints(LinkedList<int[]> ps, LinkedList<int[]> l) {
-        for (int[] p : ps) {
-            addUniquePoint(p, l);
+    public boolean containsPoint(int[] p, LinkedList<int[]> ps) {
+        for (int[] pp : ps) {
+            if (p[0] == pp[0] && p[1] == pp[1]) return true;
         }
+        return false;
     }
 
     /**
@@ -352,62 +428,14 @@ public class LabelLayoutIterator {
         return 0;
     }
 
-    /**
-     * Adds, to a label-layout, all rows above or below some
-     * start-row in same label in the map.
-     *
-     * @param up If true, adds rows above startRow, otherwise below.
-     * @param startRow Start-row.
-     * @param layout Accumulator for the new rows.
-     * @return The provided label-layout, prepended/appended
-     * with all rows above/below in same label as start-row.
-     *
-     * @pre startRow a row of some label in the map, that has
-     * no rotation and a straight base-line.
-     */
-    public/***/ LabelLayout addRows(boolean up, LinkedList<Box> startRow, LabelLayout layout) {
-        return null;
-    }
-
-    /**
-     * Adds, to an array, all boxes to the left or right of some
-     * start-box, in same row of some label in the map.
-     *
-     * @param left If true, adds boxes to the left of startBox,
-     * otherwise to the right.
-     * @param startBox Start-box.
-     * @param bs Accumulator for the new boxes.
-     * @return The provided box-array (bs) prepended/appended
-     * with all boxes to left/right of that box (in same label).
-     *
-     * @pre startBox a letter-box in the map.
-     */
-    public/***/ Box[] addBoxes(boolean left, Box startBox, LinkedList<Box> bs) {
-        return null;
-    }
-
-    /**
-     * Removes a label from the map, i.e deactivates all its
-     * points. Goes through the label-layout and deactivates every
-     * point of every letter-box in the layout. Extends the size of
-     * the letter-box-area slightly to ensure that no point is
-     * missed.
-     *
-     * @param layout Layout for the label to be removed.
-     */
-    public/***/ void removeLabel(LabelLayout layout) {
-        for (Box b : layout.getBoxes()) {
-            int[] boxP = b.getTopLeft();
-            LinkedList<int[]> ps = expandToBoxPoints(boxP);
-
-            for (int[] p : ps) map[ p[0] ][ p[1] ] = false;
-        }
-    }
 
     /**
      * @return True if [x,y] is a box-point.
      */
     public/***/ boolean isBoxPoint(int x, int y) {
+        if (y < 0 || y > map.length) return false;
+        if (x < 0 || x > map[0].length) return false;
+
         return map[y][x];
     }
     public/***/ boolean isBoxPoint(int[] p) {
@@ -426,6 +454,28 @@ public class LabelLayoutIterator {
                     img.setColor(x, y, Color.BLACK);
             }
         }
+        return img;
+    }
+
+    /**
+     * Color points in ps black.
+     */
+    public static BasicImage toImg(LinkedList<int[]> ps) {
+        int xmin = Integer.MAX_VALUE;
+        int ymin = Integer.MAX_VALUE;
+        int xmax = 0;
+        int ymax = 0;
+        for (int[] p : ps) {
+            if (p[0] < xmin) xmin = p[0];
+            if (p[1] < ymin) ymin = p[1];
+            if (p[0] > xmax) xmax = p[0];
+            if (p[1] > ymax) ymax = p[1];
+        }
+
+        BasicImage img = new BasicImage(xmax+1-xmin, ymax+1-ymin);
+        for (int[] p : ps)
+            img.setColor(p[0]-xmin, p[1]-ymin, Color.BLUE);
+
         return img;
     }
 }

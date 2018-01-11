@@ -11,22 +11,23 @@ public class LabelLayoutIteratorTests {
     // @Test
     // public void constructor() {
     //     BasicImage img = BasicImage.load("../test_box.png");
-    //     img.save("test_LabelLayoutIterator_before.png");
     //     LabelLayoutIterator iter = new LabelLayoutIterator(img);
-    //     iter.toImg().save("test_LabelLayoutIterator_after.png");
+    //     iter.toImg().save("test_LabelLayoutIterator_constructor.png");
+    // }
+
+    // @Test
+    // public void isBoxPoint() {
+    //     BasicImage img = BasicImage.load("../test_box_small.png");
+    //     int[] bp = new int[]{854, 492};
+    //     LabelLayoutIterator iter = new LabelLayoutIterator(img);
     // }
 
     @Test
-    public void findBoxPoint() {
-        BasicImage img = new BasicImage(100, 100);
+    public void expandToBoxPoints() {
+        BasicImage img = BasicImage.load("../test_box.png");
+        int[] bp = new int[]{75, 121};
         LabelLayoutIterator iter = new LabelLayoutIterator(img);
-        assertEquals(null, iter.findBoxPoint());
-
-        // full = BasicImage.load("../test_box.png");
-        // BasicImage part = full.crop(367, 1773,
-        // iter = new LabelLayoutIterator(img);
-        // assertNotEquals(null, iter.findBoxPoint());
+        LinkedList<int[]> bps = iter.expandToBoxPoints(bp);
+        LabelLayoutIterator.toImg(bps).save("test_LabelLayoutIterator_expandToBoxPoints.png");
     }
-
-
 }

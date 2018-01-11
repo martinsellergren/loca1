@@ -56,6 +56,9 @@ public class BasicImage {
     public void setColor(int x, int y, Color c) {
         img.setRGB(x, y, c.getRGB());
     }
+   public void setColor(int[] xy, Color c) {
+       setColor(xy[0], xy[1], c);
+    }
 
     /**
      * Returns an element in the image contained inside a box.
