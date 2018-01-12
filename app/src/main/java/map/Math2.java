@@ -1,5 +1,7 @@
 package map;
 
+import java.util.LinkedList;
+
 /**
  * Some additional math. 2D is assumed when applicable and angles
  * in degrees. X grows right, (NOTE:) y grows down.
@@ -155,17 +157,111 @@ public class Math2 {
     }
 
     /**
-     * @return Vector converted from int[] to double[].
+     * @return True if p1 and p2 equal (within delta-distance).
+     */
+    public static boolean same(double[] p1, double[] p2, double delta) {
+        return distance(p1, p2) <= delta;
+    }
+    public static boolean same(int[] p1, int[] p2, double delta) {
+        return distance(p1, p2) <= delta;
+    }
+
+    /**
+     * @return True if ps1 and ps2 contains same points, where same
+     * points mean they are within the delta-distance.
+     */
+    public static boolean same(double[][] ps1, double[][] ps2, double delta) {
+        if (ps1.length != ps2.length) return false;
+        for (double[] p : ps1) {
+            if (!contains(p, ps2, delta)) return false;
+        }
+        return true;
+    }
+
+    /**
+     * @return True if p is in ps, i.e same x/y-value (within
+     * delta distance).
+     */
+    public static boolean contains(double[] p, double[][] ps, double delta) {
+        for (double[] q : ps) {
+            if (same(p, q, delta)) return true;
+        }
+        return false;
+    }
+
+
+
+    //****************************************CONVERSIONS
+
+    /**
+     * @return Point converted from int[] to double[].
      */
     public static double[] toDouble(int[] v) {
         return new double[]{v[0], v[1]};
     }
 
     /**
-     * @return Vector converted from double[] to int[].
+     * @return Point converted from double[] to int[] (by rounding).
      */
     public static int[] toInt(double[] v) {
         return new int[] { Math.round((float)v[0]),
                            Math.round((float)v[1])};
     }
+
+    /*
+     * Turn array of int-point into double-point.
+     */
+    public static double[][] toDouble(int[][] vs) {
+        double[][] vsD = new double[vs.length][2];
+        int i = 0;
+        for (int[] v : vs) vsD[i++] = toDouble(v);
+        return vsD;
+    }
+
+    /**
+     * Turn list of int-points to list of doubles.
+     */
+    public static LinkedList<double[]> toDouble(LinkedList<int[]> l) {
+        LinkedList<double[]> l2 = new LinkedList<double[]>();
+        for (int[] p : l) l2.add(toDouble(p));
+        return l2;
+    }
+
+    /*
+     * Turn array of double-points into int-points (by rounding).
+     */
+    public static int[][] toInt(double[][] vs) {
+        int[][] vsI = new int[vs.length][2];
+        int i = 0;
+        for (double[] v : vs) vsI[i++] = toInt(v);
+        return vsI;
+    }
+
+    /**
+     * Turn list of double-points to list of ints (by rounding).
+     */
+    public static LinkedList<int[]> toInt(LinkedList<double[]> l) {
+        LinkedList<int[]> l2 = new LinkedList<int[]>();
+        for (double[] p : l) l2.add(toInt(p));
+        return l2;
+    }
+
+    // /*
+    //  * Turn list of int-points into array.
+    //  */
+    // public static int[][] toArray_int(LinkedList<int[]> l) {
+    //     int[][] vs = new int[l.size()][2];
+    //     int i = 0;
+    //     for (int[] v : l) vs[i++] = v;
+    //     return vs;
+    // }
+
+    // /*
+    //  * Turn array of int-points into list.
+    //  */
+    // public static LinkedList<int[]> toList_int(int[][] a) {
+    //     LinkedList<int[]> l = new LinkedList<int[]>();
+    //     for (int[] v : a) l.add(v);
+    //     return l;
+    // }
 }

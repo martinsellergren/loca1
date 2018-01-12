@@ -145,4 +145,30 @@ public class Math2Tests {
         assertEquals(20, Math2.angleDiff(170, -170), 0.0001);
         assertEquals(0, Math2.angleDiff(180, -180), 0.0001);
     }
+
+    @Test
+    public void same_contains() {
+        double delta = 0.1;
+        assertTrue(Math2.same(new double[]{0, 0}, new double[]{0, 0}, delta));
+        assertFalse(Math2.same(new double[]{0, 0}, new double[]{0, 1}, delta));
+        assertTrue(Math2.same(new double[]{0, 0}, new double[]{0, 0.1}, delta));
+
+        delta = 1;
+        assertTrue(Math2.same(new int[]{0, 0}, new int[]{0, 0}, delta));
+        assertFalse(Math2.same(new int[]{0, 0}, new int[]{1, 1}, delta));
+        assertTrue(Math2.same(new int[]{0, 0}, new int[]{1, 0}, delta));
+
+        delta = 0.1;
+        double[][] ps = new double[][]{new double[]{0, 0},
+                                       new double[]{1, 1},
+                                       new double[]{2, 1}};
+        assertTrue(Math2.contains(new double[]{1, 1}, ps, delta));
+        assertFalse(Math2.contains(new double[]{1, 2}, ps, delta));
+
+        double[][] qs = new double[][]{new double[]{1.01, 1},
+                                       new double[]{2, 1},
+                                       new double[]{0, 0}};
+        assertTrue(Math2.same(ps, qs, delta));
+        assertTrue(Math2.same(qs, ps, delta));
+    }
 }

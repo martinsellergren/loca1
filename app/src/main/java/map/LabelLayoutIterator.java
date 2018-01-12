@@ -183,22 +183,6 @@ public class LabelLayoutIterator {
     }
 
     /**
-     * Finds all boxed-points connected to the start-point and
-     * created a box from these points.
-     *
-     * @param start Start-point.
-     * @return The box containing start-point.
-     *
-     * @pre start is a box-point in the map.
-     */
-    public/***/ Box expandToBox(int[] start) {
-        LinkedList<int[]> ps = expandToBoxPoints(start);
-        int[][] cs = getCorners(ps);
-        cs = orderByDirection(cs, ps);
-        return new Box(cs[0], cs[1], cs[2], cs[3]);
-    }
-
-    /**
      * Adds, to an array, all boxes to the left or right of some
      * start-box, in same row of some label in the map.
      *
@@ -290,6 +274,21 @@ public class LabelLayoutIterator {
         return null;
     }
 
+    /**
+     * Finds all boxed-points connected to the start-point and
+     * created a box from these points.
+     *
+     * @param start Start-point.
+     * @return The box containing start-point.
+     *
+     * @pre start is a box-point in the map.
+     */
+    public/***/ Box expandToBox(int[] start) {
+        LinkedList<int[]> ps = expandToBoxPoints(start);
+        int[][] cs = getCorners(ps);
+        cs = orderByDirection(cs, ps);
+        return new Box(cs[0], cs[1], cs[2], cs[3]);
+    }
 
     /**
      * @param start Start-point.
@@ -308,13 +307,8 @@ public class LabelLayoutIterator {
             int[] current = open.removeFirst();
             LinkedList<int[]> ns = getBoxPointNeighbors(current);
             LinkedList<int[]> uns = getUniquePoints(ns, open, closed);
-            //System.out.println(ns.size() + ", " + uns.size());
             open.addAll(uns);
             closed.add(current);
-
-            // System.out.println(Arrays.toString(current));
-            // System.out.println(open.toString());
-            // System.out.println(closed.toString() + "\n");
         }
         return closed;
     }
@@ -354,7 +348,7 @@ public class LabelLayoutIterator {
     }
 
     /**
-     * @return true if ps contains p (by value)
+     * @return true if ps contains p (by value).
      */
     public boolean containsPoint(int[] p, LinkedList<int[]> ps) {
         for (int[] pp : ps) {
@@ -372,22 +366,32 @@ public class LabelLayoutIterator {
      *         corners[2] - bottom right
      *         corners[3] - bottom left
      */
-    public/***/ int[][] getCorners(LinkedList<int[]> ps) {
-        int[][] es = findExtremes(ps);
-        if (es == null) {
-            LinkedList<int[]> rps = rotatePoints(ps, 45);
-            es = findExtremes(rps);
+    public/***/ int[][] getCorners(LinkedList<int[]> psI) {
+        int DELTA = 1;
+
+        LinkedList<double[]> ps = Math2.toDouble(psI);
+        double[][] es = findExtremes(ps);
+        double[][] es30 = findExtremes(rotatePoints(ps, 30));
+        if (Math2.same(es, rotatePoints(es30, -30), DELTA)) {
+            return Math2.toInt(es);
         }
-        if (es == null) throw new RuntimeException();
-        return es;
+
+        double[][] es45 = findExtremes(rotatePoints(ps, 45));
+        double[][] es135 = findExtremes(rotatePoints(ps, 135));
+
+        if (Math2.same(rotatePoints(es45, -45), rotatePoints(es135, -135), DELTA)) {
+            return Math2.toInt(rotatePoints(es45, -45));
+        }
+
+        throw new RuntimeException();
     }
 
     /**
      * @return [0]Leftmost, [1]upmost, [2]rightmost and [3]downmost
-     * points in given array, or NULL if unclear which any of those
+     * points in given list, or NULL if unclear which any of those
      * are.
      */
-    public/***/ int[][] findExtremes(LinkedList<int[]> ps) {
+    public/***/ double[][] findExtremes(LinkedList<double[]> ps) {
         return null;
     }
 
@@ -395,7 +399,10 @@ public class LabelLayoutIterator {
      * @param deg Rotation if degrees, counterclockwise.
      * @return Same points but rotated around (0,0).
      */
-    public/***/ LinkedList<int[]> rotatePoints(LinkedList<int[]> ps, double deg) {
+    public/***/ LinkedList<double[]> rotatePoints(LinkedList<double[]> ps, double deg) {
+        return null;
+    }
+    public double[][] rotatePoints(double[][] ps, double deg) {
         return null;
     }
 
