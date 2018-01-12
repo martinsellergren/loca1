@@ -74,12 +74,12 @@ LabelLayoutIterator
     addRows(UP/DOWN, startRow::Box[], labelLayout(accumulator, contains startRow))::LabelLayout
     removeLabel(lay::LabelLayout)::Void
 
-    expandToBox(box-point::Point)::Box
     addBoxes(LEFT/RIGHT, startBox::Box, accum(contains startBox)::Box[])::Box[]
 
     findNeighborRow(UP/DOWN, startRow:Box[])::Box[]/NULL
     findNeighborBox(LEFT/RIGHT, startBox::Box)::Box/NULL
 
+    expandToBox(box-point::Point)::Box
     expandToBoxPoints(boxed-Point)::Point[]
     getCorners(points::Point[])::Point[](0Left 1Up 2Right 3Down)
     findExtremes(Point[])::Point[](0Left 1Up 2Right 3Down)

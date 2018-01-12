@@ -369,15 +369,32 @@ public class LabelLayoutIterator {
     public/***/ int[][] getCorners(LinkedList<int[]> psI) {
         int DELTA = 1;
 
+
         LinkedList<double[]> ps = Math2.toDouble(psI);
         double[][] es = findExtremes(ps);
         double[][] es30 = findExtremes(rotatePoints(ps, 30));
+
         if (Math2.same(es, rotatePoints(es30, -30), DELTA)) {
             return Math2.toInt(es);
         }
 
         double[][] es45 = findExtremes(rotatePoints(ps, 45));
+
+        // BasicImage img = toImg();
+        // drawCorners(Math2.toInt(rotatePoints(es45, -45)), img);
+        // img.save("1.png");
+
         double[][] es135 = findExtremes(rotatePoints(ps, 135));
+
+        // img = toImg();
+        // drawCorners(Math2.toInt(rotatePoints(es135, -135)), img);
+        // img.save("2.png");
+
+        //System.out.println(Math2.toString(rotatePoints(es45,-45)));
+        // System.out.println(Math2.toString(es135));
+        // System.out.println(Math2.toString(rotatePoints(es135,-135)));
+        // System.out.println(Integer.MAX_VALUE);
+        // System.out.println(Integer.MIN_VALUE);
 
         if (Math2.same(rotatePoints(es45, -45), rotatePoints(es135, -135), DELTA)) {
             return Math2.toInt(rotatePoints(es45, -45));
@@ -392,18 +409,34 @@ public class LabelLayoutIterator {
      * are.
      */
     public/***/ double[][] findExtremes(LinkedList<double[]> ps) {
-        return null;
+        double[] l = new double[]{Integer.MAX_VALUE, 0};
+        double[] u = new double[]{0, Integer.MAX_VALUE};
+        double[] r = new double[]{Integer.MIN_VALUE, 0};
+        double[] d = new double[]{0, Integer.MIN_VALUE};
+
+        for (double[] p : ps) {
+            if (p[0] < l[0]) l = p;
+            if (p[1] < u[1]) u = p;
+            if (p[0] > r[0]) r = p;
+            if (p[1] > d[1]) d = p;
+        }
+        return new double[][]{l,u,r,d};
     }
 
     /**
      * @param deg Rotation if degrees, counterclockwise.
-     * @return Same points but rotated around (0,0).
+     * @return Points rotated.
      */
     public/***/ LinkedList<double[]> rotatePoints(LinkedList<double[]> ps, double deg) {
-        return null;
+        LinkedList<double[]> rps = new LinkedList<double[]>();
+        for (double[] p : ps) rps.add(Math2.rotate(p, deg));
+        return rps;
     }
     public double[][] rotatePoints(double[][] ps, double deg) {
-        return null;
+        double[][] rps = new double[ps.length][2];
+        int i = 0;
+        for (double[] p : ps) rps[i++] = Math2.rotate(p, deg);
+        return rps;
     }
 
     /**
@@ -484,5 +517,11 @@ public class LabelLayoutIterator {
             img.setColor(p[0]-xmin, p[1]-ymin, Color.BLUE);
 
         return img;
+    }
+
+    public static void drawCorners(int[][] cs, BasicImage img) {
+        for (int[] c : cs) {
+            img.setColor(c, Color.RED);
+        }
     }
 }

@@ -189,6 +189,30 @@ public class Math2 {
         return false;
     }
 
+    /**
+     * Prints point.
+     */
+    public static String toString(int[] p) {
+        return String.format("[%s,%s]", p[0], p[1]);
+    }
+    public static String toString(double[] p) {
+        return String.format("[%s,%s]", p[0], p[1]);
+    }
+
+    /**
+     * Print array of points.
+     */
+    public static String toString(int[][] ps) {
+        String s = "";
+        for (int[] p : ps) s += toString(p) + "\n";
+        return s;
+    }
+    public static String toString(double[][] ps) {
+        String s = "";
+        for (double[] p : ps) s += toString(p) + "\n";
+        return s;
+    }
+
 
 
     //****************************************CONVERSIONS

@@ -22,12 +22,16 @@ public class LabelLayoutIteratorTests {
     //     LabelLayoutIterator iter = new LabelLayoutIterator(img);
     // }
 
-    // @Test
-    // public void expandToBoxPoints() {
-    //     BasicImage img = BasicImage.load("../test_box.png");
-    //     int[] bp = new int[]{75, 121};
-    //     LabelLayoutIterator iter = new LabelLayoutIterator(img);
-    //     LinkedList<int[]> bps = iter.expandToBoxPoints(bp);
-    //     LabelLayoutIterator.toImg(bps).save("test_LabelLayoutIterator_expandToBoxPoints.png");
-    // }
+    @Test
+    public void expandToBoxPoints_getCorners() {
+        BasicImage img = BasicImage.load("../test_box.png");
+        int[] bp = new int[]{817, 188};
+        LabelLayoutIterator iter = new LabelLayoutIterator(img);
+        LinkedList<int[]> bps = iter.expandToBoxPoints(bp);
+        //LabelLayoutIterator.toImg(bps).save("test_LabelLayoutIterator_expandToBoxPoints.png");
+
+        int[][] cs = iter.getCorners(bps);
+        LabelLayoutIterator.drawCorners(cs, img);
+        img.save("test_LabelLayoutIterator_getCorners.png");
+    }
 }
