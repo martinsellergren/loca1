@@ -1,5 +1,6 @@
 package map;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 
 /**
@@ -32,13 +33,13 @@ public class Math2 {
      * @return Angle with the horizontal axis, in degrees.
      */
     public static double angle(double[] v) {
+        v = new double[]{v[0], v[1]};
         if (length(v) == 0) return 0;
 
-        double[] w = new double[]{v[0], v[1]};
-        w[1] = -w[1];
-        double a = Math.acos(w[0] / length(w));
+        v[1] = -v[1];
+        double a = Math.acos(v[0] / length(v));
 
-        if (Math.asin(w[1] / length(w)) >= 0)
+        if (Math.asin(v[1] / length(v)) >= 0)
             return Math2.toUnitDegrees(Math.toDegrees(a));
         else
             return Math2.toUnitDegrees(Math.toDegrees(-a));
@@ -48,10 +49,11 @@ public class Math2 {
     }
 
     /**
-     * @return Angle between two vectors, in degrees.
+     * @return Angle between two vectors, in degrees. Walk from
+     * v1 to v2 counterclockwise - how many degrees? Always >= 0.
      */
     public static double angle(double[] v1, double[] v2) {
-        return 0;
+        return toPositiveDegrees(angle(v2) - angle(v1));
     }
     public static double angle(int[] v1, int[] v2) {
         return angle(toDouble(v1), toDouble(v2));
@@ -77,6 +79,14 @@ public class Math2 {
     public static double toUnitDegrees(double deg) {
         while (deg < -180) deg += 360;
         while (deg >= 180) deg -= 360;
+        return deg;
+    }
+
+    /**
+     * Add 360 until positive.
+     */
+    public static double toPositiveDegrees(double deg) {
+        while (deg < 0) deg += 360;
         return deg;
     }
 
@@ -129,6 +139,21 @@ public class Math2 {
     }
 
     /**
+     * Rotate every point in list/array.
+     */
+    public static LinkedList<double[]> rotate(LinkedList<double[]> ps, double deg) {
+        LinkedList<double[]> rps = new LinkedList<double[]>();
+        for (double[] p : ps) rps.add(Math2.rotate(p, deg));
+        return rps;
+    }
+    public static double[][] rotate(double[][] ps, double deg) {
+        double[][] rps = new double[ps.length][2];
+        int i = 0;
+        for (double[] p : ps) rps[i++] = Math2.rotate(p, deg);
+        return rps;
+    }
+
+    /**
      * @return Dot-product.
      */
     public static double dot(double[] v, double[] w) {
@@ -162,8 +187,12 @@ public class Math2 {
     public static boolean same(double[] p1, double[] p2, double delta) {
         return distance(p1, p2) <= delta;
     }
-    public static boolean same(int[] p1, int[] p2, double delta) {
-        return distance(p1, p2) <= delta;
+
+    /**
+     * @return True if p1 and p2 are same (by value).
+     */
+    public static boolean same(int[] p1, int[] p2) {
+        return p1[0] == p2[0] && p1[1] == p2[1];
     }
 
     /**
@@ -190,6 +219,16 @@ public class Math2 {
     }
 
     /**
+     * @return True if p in ps (by value).
+     */
+    public static boolean contains(int[] p, int[][] ps) {
+        for (int[] q : ps) {
+            if (same(p, q)) return true;
+        }
+        return false;
+    }
+
+    /**
      * Prints point.
      */
     public static String toString(int[] p) {
@@ -211,6 +250,64 @@ public class Math2 {
         String s = "";
         for (double[] p : ps) s += toString(p) + "\n";
         return s;
+    }
+
+    /**
+     * @return Index in ps of point furthest from p.
+     */
+    public static int getFurthest(int[] p, int[][] ps) {
+        double maxd = Integer.MIN_VALUE;
+        int maxi = -1;
+
+        for (int i = 0; i < ps.length; i++) {
+            if (distance(p, ps[i]) > maxd) {
+                maxd = distance(p, ps[i]);
+                maxi = i;
+            }
+        }
+        return maxi;
+    }
+
+    /**
+     * @return All points in space not in set (indexes).
+     * Compares by value.
+     */
+    public static int[] getComplement(int[][] set, int[][] space) {
+        int[] comp = new int[space.length];
+        int compI = 0;
+
+        for (int i = 0; i < space.length; i++) {
+            int[] p = space[i];
+            if (!contains(p, set)) comp[ compI++ ] = i;
+        }
+
+        return Arrays.copyOf(comp, compI);
+    }
+
+    /**
+     * @return Mean-value of points.
+     */
+    public static double[] mean(LinkedList<int[]> ps) {
+        int[] sum = sum(ps);
+        double sx = sum[0];
+        double sy = sum[1];
+        return new double[]{ sx/ps.size(), sy/ps.size() };
+    }
+    public static double[] mean(int[][] ps) {
+        return mean(toList(ps));
+    }
+
+    /**
+     * @return All points added together.
+     */
+    public static int[] sum(LinkedList<int[]> ps) {
+        int sumx = 0;
+        int sumy = 0;
+        for (int[] p : ps) {
+            sumx += p[0];
+            sumy += p[1];
+        }
+        return new int[]{sumx, sumy};
     }
 
 
@@ -270,22 +367,22 @@ public class Math2 {
         return l2;
     }
 
-    // /*
-    //  * Turn list of int-points into array.
-    //  */
-    // public static int[][] toArray_int(LinkedList<int[]> l) {
-    //     int[][] vs = new int[l.size()][2];
-    //     int i = 0;
-    //     for (int[] v : l) vs[i++] = v;
-    //     return vs;
-    // }
+    /*
+     * Turn list of int-points into array.
+     */
+    public static int[][] toArray(LinkedList<int[]> l) {
+        int[][] vs = new int[l.size()][2];
+        int i = 0;
+        for (int[] v : l) vs[i++] = v;
+        return vs;
+    }
 
-    // /*
-    //  * Turn array of int-points into list.
-    //  */
-    // public static LinkedList<int[]> toList_int(int[][] a) {
-    //     LinkedList<int[]> l = new LinkedList<int[]>();
-    //     for (int[] v : a) l.add(v);
-    //     return l;
-    // }
+    /*
+     * Turn array of int-points into list.
+     */
+    public static LinkedList<int[]> toList(int[][] a) {
+        LinkedList<int[]> l = new LinkedList<int[]>();
+        for (int[] v : a) l.add(v);
+        return l;
+    }
 }

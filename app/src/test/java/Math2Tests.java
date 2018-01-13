@@ -1,6 +1,7 @@
 import org.junit.Test;
 import static org.junit.Assert.*;
 import map.*;
+import java.util.LinkedList;
 
 public class Math2Tests {
 
@@ -52,6 +53,29 @@ public class Math2Tests {
         assertEquals(Math2.angle(v), -180, 0.0001);
         v = new double[]{0, -100000};
         assertEquals(Math2.angle(v), 90, 0.0001);
+    }
+
+    @Test
+    public void angle_between() {
+        double[] v1 = new double[]{1, 0};
+        double[] v2 = new double[]{0, 1};
+        assertEquals(270, Math2.angle(v1, v2), 0.0001);
+        assertEquals(90, Math2.angle(v2, v1), 0.0001);
+
+        v1 = new double[]{1, 0};
+        v2 = new double[]{-1, 0};
+        assertEquals(180, Math2.angle(v1, v2), 0.0001);
+        assertEquals(180, Math2.angle(v2, v1), 0.0001);
+
+        v1 = new double[]{1, 0};
+        v2 = new double[]{0, -1};
+        assertEquals(90, Math2.angle(v1, v2), 0.0001);
+        assertEquals(270, Math2.angle(v2, v1), 0.0001);
+
+        v1 = new double[]{1, 0};
+        v2 = new double[]{1, 0};
+        assertEquals(0, Math2.angle(v1, v2), 0.0001);
+        assertEquals(0, Math2.angle(v2, v1), 0.0001);
     }
 
     @Test
@@ -154,9 +178,9 @@ public class Math2Tests {
         assertTrue(Math2.same(new double[]{0, 0}, new double[]{0, 0.1}, delta));
 
         delta = 1;
-        assertTrue(Math2.same(new int[]{0, 0}, new int[]{0, 0}, delta));
-        assertFalse(Math2.same(new int[]{0, 0}, new int[]{1, 1}, delta));
-        assertTrue(Math2.same(new int[]{0, 0}, new int[]{1, 0}, delta));
+        assertTrue(Math2.same(new int[]{0, 0}, new int[]{0, 0}));
+        assertFalse(Math2.same(new int[]{0, 0}, new int[]{1, 1}));
+        assertTrue(Math2.same(new int[]{0, 0}, new int[]{0, 0}));
 
         delta = 0.1;
         double[][] ps = new double[][]{new double[]{0, 0},
@@ -170,5 +194,46 @@ public class Math2Tests {
                                        new double[]{0, 0}};
         assertTrue(Math2.same(ps, qs, delta));
         assertTrue(Math2.same(qs, ps, delta));
+
+        assertTrue(Math2.contains(new int[]{0, 0}, new int[][]{new int[]{2, 1}, new int[]{0, 0}, new int[]{1, 0}}));
+        assertFalse(Math2.contains(new int[]{0, 0}, new int[][]{new int[]{2, 1}, new int[]{0, 1}, new int[]{1, 0}}));
+    }
+
+    @Test
+    public void getFurthest() {
+        int[] p = new int[]{0, 0};
+        int[] p0 = new int[]{1, 1};
+        int[] p1 = new int[]{0, 2};
+        int[] p2 = new int[]{1, 0};
+        assertEquals(1, Math2.getFurthest(p, new int[][]{p0,p1,p2}));
+    }
+
+    @Test
+    public void getComplement() {
+        int[] p0 = new int[]{0, 0};
+        int[] p1 = new int[]{1, 0};
+        int[] p2 = new int[]{0, 1};
+        int[] p3 = new int[]{1, 1};
+        assertArrayEquals(new int[]{0,3}, Math2.getComplement(new int[][]{p1,p2}, new int[][]{p0,p1,p2,p3}));
+    }
+
+    @Test
+    public void sum_mean() {
+        int[] p0 = new int[]{0, 0};
+        int[] p1 = new int[]{1, 0};
+        int[] p2 = new int[]{0, 1};
+        int[] p3 = new int[]{1, 2};
+        int[][] ps = new int[][]{p0, p1, p2, p3};
+        LinkedList<int[]> l = new LinkedList<int[]>();
+        l.add(p0); l.add(p1); l.add(p2); l.add(p3);
+
+        assertEquals(2, Math2.sum(l)[0]);
+        assertEquals(3, Math2.sum(l)[1]);
+
+        double[] mean = new double[]{2/4d, 3/4d};
+        assertEquals(mean[0], Math2.mean(ps)[0], 0.0001);
+        assertEquals(mean[1], Math2.mean(ps)[1], 0.0001);
+        assertEquals(mean[0], Math2.mean(l)[0], 0.0001);
+        assertEquals(mean[1], Math2.mean(l)[1], 0.0001);
     }
 }

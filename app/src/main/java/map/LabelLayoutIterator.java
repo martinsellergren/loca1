@@ -369,35 +369,19 @@ public class LabelLayoutIterator {
     public/***/ int[][] getCorners(LinkedList<int[]> psI) {
         int DELTA = 1;
 
-
         LinkedList<double[]> ps = Math2.toDouble(psI);
         double[][] es = findExtremes(ps);
-        double[][] es30 = findExtremes(rotatePoints(ps, 30));
+        double[][] es30 = findExtremes(Math2.rotate(ps, 30));
 
-        if (Math2.same(es, rotatePoints(es30, -30), DELTA)) {
+        if (Math2.same(es, Math2.rotate(es30, -30), DELTA)) {
             return Math2.toInt(es);
         }
 
-        double[][] es45 = findExtremes(rotatePoints(ps, 45));
+        double[][] es45 = findExtremes(Math2.rotate(ps, 45));
+        double[][] es135 = findExtremes(Math2.rotate(ps, 135));
 
-        // BasicImage img = toImg();
-        // drawCorners(Math2.toInt(rotatePoints(es45, -45)), img);
-        // img.save("1.png");
-
-        double[][] es135 = findExtremes(rotatePoints(ps, 135));
-
-        // img = toImg();
-        // drawCorners(Math2.toInt(rotatePoints(es135, -135)), img);
-        // img.save("2.png");
-
-        //System.out.println(Math2.toString(rotatePoints(es45,-45)));
-        // System.out.println(Math2.toString(es135));
-        // System.out.println(Math2.toString(rotatePoints(es135,-135)));
-        // System.out.println(Integer.MAX_VALUE);
-        // System.out.println(Integer.MIN_VALUE);
-
-        if (Math2.same(rotatePoints(es45, -45), rotatePoints(es135, -135), DELTA)) {
-            return Math2.toInt(rotatePoints(es45, -45));
+        if (Math2.same(Math2.rotate(es45, -45), Math2.rotate(es135, -135), DELTA)) {
+            return Math2.toInt(Math2.rotate(es45, -45));
         }
 
         throw new RuntimeException();
@@ -424,22 +408,6 @@ public class LabelLayoutIterator {
     }
 
     /**
-     * @param deg Rotation if degrees, counterclockwise.
-     * @return Points rotated.
-     */
-    public/***/ LinkedList<double[]> rotatePoints(LinkedList<double[]> ps, double deg) {
-        LinkedList<double[]> rps = new LinkedList<double[]>();
-        for (double[] p : ps) rps.add(Math2.rotate(p, deg));
-        return rps;
-    }
-    public double[][] rotatePoints(double[][] ps, double deg) {
-        double[][] rps = new double[ps.length][2];
-        int i = 0;
-        for (double[] p : ps) rps[i++] = Math2.rotate(p, deg);
-        return rps;
-    }
-
-    /**
      * Order given cornerpoints by direction determined from all
      * box-points (the opening in the C).
      *
@@ -448,24 +416,78 @@ public class LabelLayoutIterator {
      * @return [topL, topR, bottomR, bottomL]
      */
     private int[][] orderByDirection(int[][] cs, LinkedList<int[]> bps) {
-        return null;
+        cs = orderConsecutively(cs);
+        int[][][] legs = new int[][][]{new int[][]{cs[0], cs[1]},
+                                       new int[][]{cs[1], cs[2]},
+                                       new int[][]{cs[2], cs[3]},
+                                       new int[][]{cs[3], cs[0]}};
+        int maxS = Integer.MIN_VALUE;
+        int maxS_index = -1;
+        int i = 0;
+
+        for (int[][] leg : legs) {
+            int[] p1 = leg[0];
+            int[] p2 = leg[1];
+            int s = getBetweenSpace(p1, p2, bps);
+
+            if (s > maxS) {
+                maxS = s;
+                maxS_index = i;
+            }
+            i++;
+        }
+
+        int[][] rightLeg = legs[maxS_index];
+        int[] topR = rightLeg[0];
+        int[] bottomR = rightLeg[1];
+
+        int[][] leftLeg = legs[(maxS_index + 2) % 4];
+        int[] topL = leftLeg[1];
+        int[] bottomL = leftLeg[0];
+
+        return new int[][]{topL, topR, bottomR, bottomL};
     }
 
     /**
      * @param cs Random-ordered corner-points.
      * @return cs ordered consecutively (start somewhere and walk
-     * whole way round..walk forwards or backwards).
+     * whole way round in CLOCKWISE direction).
      */
     private int[][] orderConsecutively(int[][] cs) {
-        return null;
+        int oppositeI = Math2.getFurthest(cs[0], cs);
+        int neighborIs[] = Math2.getComplement(new int[][]{cs[0], cs[oppositeI]}, cs);
+
+        int[] p0 = cs[ neighborIs[0] ];
+        int[] p1 = cs[0];
+        int[] p2 = cs[ neighborIs[1] ];
+        int[] p3 = cs[oppositeI];
+
+        if (rightTurn(p0, p1, p2))
+            return new int[][]{p0, p1, p2, p3};
+        else
+            return new int[][]{p3, p2, p1, p0};
+    }
+
+    private boolean rightTurn(int[] p0, int[] p1, int[] p2) {
+        int[] v0 = Math2.minus(p1, p0);
+        int[] v1 = Math2.minus(p2, p1);
+        return Math2.angle(v0, v1) < 0;
     }
 
     /**
-     * Start in middle between p1,p2, walk NESW, how long is minimum
-     * til box-point?
+     * Start in middle between p1,p2, walk towards box-points' center,
+     * how long til box-point?
      */
-    private int getBetweenSpace(int[] p1, int[] p2) {
-        return 0;
+    private int getBetweenSpace(int[] p1, int[] p2, LinkedList<int[]> bps) {
+        int[] start = Math2.toInt(Math2.mean(new int[][]{p1, p2}));
+        int[] end = Math2.toInt(Math2.mean(bps));
+        PixelWalk pw = new PixelWalk(start, end);
+        int[] p;
+
+        for (int d = 0; (p = pw.next()) != null; d++) {
+            if (isBoxPoint(p)) return d;
+        }
+        throw new RuntimeException();
     }
 
 
