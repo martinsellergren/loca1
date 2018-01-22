@@ -2,6 +2,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import map.*;
 import java.util.LinkedList;
+import java.util.Arrays;
 
 public class Math2Tests {
 
@@ -215,6 +216,8 @@ public class Math2Tests {
         int[] p2 = new int[]{0, 1};
         int[] p3 = new int[]{1, 1};
         assertArrayEquals(new int[]{0,3}, Math2.getComplement(new int[][]{p1,p2}, new int[][]{p0,p1,p2,p3}));
+
+        assertArrayEquals(new int[]{1,3,5}, Math2.getComplement(new int[]{0,2,4}, new int[]{0,1,2,3,4,5}));
     }
 
     @Test
@@ -235,5 +238,44 @@ public class Math2Tests {
         assertEquals(mean[1], Math2.mean(ps)[1], 0.0001);
         assertEquals(mean[0], Math2.mean(l)[0], 0.0001);
         assertEquals(mean[1], Math2.mean(l)[1], 0.0001);
+    }
+
+    @Test
+    public void getMostOccuring() {
+        LinkedList<int[]> ps = new LinkedList<int[]>();
+        ps.add(new int[]{0, 1});
+        ps.add(new int[]{1, 2});
+        ps.add(new int[]{0, 1});
+        ps.add(new int[]{2, 3});
+
+        int[] actual = Math2.getMostOccuring(ps);
+        assertEquals(0, actual[0]);
+        assertEquals(1, actual[1]);
+
+        ps.add(new int[]{2, 3});
+        ps.add(new int[]{2, 3});
+        actual = Math2.getMostOccuring(ps);
+        assertEquals(2, actual[0]);
+        assertEquals(3, actual[1]);
+    }
+
+    @Test
+    public void getCrossLength() {
+        assertEquals(Math.sqrt(2)*2, Math2.getCrossLength(new int[][]{
+                    new int[]{0,0},
+                    new int[]{1,0},
+                    new int[]{0,1},
+                    new int[]{1,1}}),
+            0.0001);
+    }
+
+    @Test
+    public void removeIndexes() {
+        LinkedList<Integer> l = new LinkedList<Integer>();
+        l.add(0); l.add(1); l.add(2); l.add(3); l.add(4); l.add(5);
+        Math2.removeIndexes(new int[]{1,3,5}, l);
+        assertEquals(0, (int)l.get(0));
+        assertEquals(2, (int)l.get(1));
+        assertEquals(4, (int)l.get(2));
     }
 }

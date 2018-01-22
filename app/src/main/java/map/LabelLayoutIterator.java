@@ -47,7 +47,11 @@ import java.awt.Color;
  * label (i.e same font-size).
  */
 public class LabelLayoutIterator {
-    public/***/ static final int DEFAULT_ALPHA_THRESHOLD = 130;
+    /** Pixels alpha-value-threshold where over means box-point. */
+    public/***/ static final int DEFAULT_ALPHA_THRESHOLD = 100;
+
+    /** Value used when finding corners. Min distance between corners.*/
+    public/**/ static final double MIN_CORNER_PADDING = 3;
 
     /** Start searching for next box-point at this pos in map. */
     public/***/ int startX = 0;
@@ -97,11 +101,20 @@ public class LabelLayoutIterator {
      * startY, and sets this to found box-point. Removes
      * found label from map so it's not found again.
      *
-     * @return Iterator's next label layout. Null if no more.
+     * @return Iterator's next label layout. NULL if no more.
      */
     public LabelLayout next() {
         int[] p = findBoxPoint(this.startX, this.startY);
         if (p == null) return null;
+
+        this.startX = p[0];
+        this.startY = p[1];
+
+        Box box = expandToBox(p);
+        if (box == null) {
+            expandAndRemove(p);
+            return next();
+        }
 
         LinkedList<Box> row = expandToRow(p);
         LabelLayout lay = new LabelLayout(row);
@@ -111,9 +124,6 @@ public class LabelLayoutIterator {
         addRows(up, row, lay);
 
         removeLabel(lay);
-        this.startX = p[0];
-        this.startY = p[1];
-
         return lay;
     }
 
@@ -176,10 +186,16 @@ public class LabelLayoutIterator {
     public/***/ void removeLabel(LabelLayout layout) {
         for (Box b : layout.getBoxes()) {
             int[] boxP = b.getTopLeft();
-            LinkedList<int[]> ps = expandToBoxPoints(boxP);
-
-            for (int[] p : ps) map[ p[0] ][ p[1] ] = false;
+            expandAndRemove(boxP);
         }
+    }
+
+    /**
+     * Expands point to all connecting box-points, and removes them.
+     */
+    public/***/ void expandAndRemove(int[] p) {
+        LinkedList<int[]> ps = expandToBoxPoints(p);
+        for (int[] q : ps) map[ q[1] ][ q[0] ] = false;
     }
 
     /**
@@ -244,6 +260,8 @@ public class LabelLayoutIterator {
     public Box findNeighborBox(boolean left, Box sb) {
         int[] bp = findNeighborBoxPoint(left, sb);
         Box b = expandToBox(bp);
+        if (b == null) return null;
+
         if (Math2.angleDiff(b.getRotation(), sb.getRotation()) <= 40
             && sb.getHeight() < 2 * b.getHeight()
             && sb.getHeight() > 0.5 * b.getHeight()) {
@@ -279,13 +297,16 @@ public class LabelLayoutIterator {
      * created a box from these points.
      *
      * @param start Start-point.
-     * @return The box containing start-point.
+     * @return The box containing start-point, or NULL if start-point
+     * isn't part of a rectangular shape of box-points.
      *
      * @pre start is a box-point in the map.
      */
     public/***/ Box expandToBox(int[] start) {
         LinkedList<int[]> ps = expandToBoxPoints(start);
-        int[][] cs = getCorners(ps);
+        int[][] cs = findCorners(ps);
+        if (cs == null) return null;
+
         cs = orderByDirection(cs, ps);
         return new Box(cs[0], cs[1], cs[2], cs[3]);
     }
@@ -297,7 +318,7 @@ public class LabelLayoutIterator {
      * @pre start is a box-point in the map.
      */
     public/***/ LinkedList<int[]> expandToBoxPoints(int[] start) {
-        if (!isBoxPoint(start)) throw new RuntimeException();
+        if (!isBoxPoint(start)) throw new RuntimeException("Not bp");
 
         LinkedList<int[]> open = new LinkedList<int[]>();
         LinkedList<int[]> closed = new LinkedList<int[]>();
@@ -340,7 +361,7 @@ public class LabelLayoutIterator {
         LinkedList<int[]> rs = new LinkedList<int[]>();
 
         for (int[] p : ps) {
-            if (!containsPoint(p, notIn1) && !containsPoint(p, notIn2)) {
+            if (!Math2.contains(p, notIn1) && !Math2.contains(p, notIn2)) {
                 rs.add(p);
             }
         }
@@ -348,51 +369,169 @@ public class LabelLayoutIterator {
     }
 
     /**
-     * @return true if ps contains p (by value).
+     * From an array of points (making up something like a box),
+     * finds the corner-points. Always returns four corner-points.
+     * If the shape is a triangle or something, returns NULL.
+     *
+     * @param bps Complete set of box-points.
+     * @return The 4 corner-points in random order.
      */
-    public boolean containsPoint(int[] p, LinkedList<int[]> ps) {
-        for (int[] pp : ps) {
-            if (p[0] == pp[0] && p[1] == pp[1]) return true;
-        }
-        return false;
+    public/***/ int[][] findCorners(LinkedList<int[]> bps) {
+        LinkedList<int[]> sps = getSidePoints(bps);
+        if (sps.size() < 4) return null;
+
+        int[] diag0 = Math2.getFurthest(sps);
+        int[] c0 = sps.get( diag0[0] );
+        int[] c1 = sps.get( diag0[1] );
+        Math2.removeIndexes(diag0, sps);
+
+        Math2.removeClose(c0, sps, MIN_CORNER_PADDING);
+        Math2.removeClose(c1, sps, MIN_CORNER_PADDING);
+        if (sps.size() < 2) return null;
+
+        int[] diag1 = Math2.getFurthest(sps);
+        int[] c2 = sps.get( diag1[0] );
+        int[] c3 = sps.get( diag1[1] );
+
+        int[][] cs = new int[][]{c0, c1, c2, c3};
+        if (resemblesRectangleCorners(cs)) return cs;
+        else return null;
     }
 
     /**
-     * From an array of points (making up something like a box),
-     * finds the corner-points.
-     *
-     * @return corners[0] - top left
-     *         corners[1] - top right
-     *         corners[2] - bottom right
-     *         corners[3] - bottom left
+     * @param Complete box-points.
+     * @return Points in bps with at least one side "free".
      */
-    public/***/ int[][] getCorners(LinkedList<int[]> psI) {
-        int DELTA = 1;
+    private LinkedList<int[]> getSidePoints(LinkedList<int[]> bps) {
+        LinkedList<int[]> sps = new LinkedList<int[]>();
 
-        LinkedList<double[]> ps = Math2.toDouble(psI);
-        double[][] es = findExtremes(ps);
-        double[][] es30 = findExtremes(Math2.rotate(ps, 30));
-
-        if (Math2.same(es, Math2.rotate(es30, -30), DELTA)) {
-            return Math2.toInt(es);
+        for (int[] p : bps) {
+            if (getBoxPointNeighbors(p).size() > 0)
+                sps.add(p);
         }
-
-        double[][] es45 = findExtremes(Math2.rotate(ps, 45));
-        double[][] es135 = findExtremes(Math2.rotate(ps, 135));
-
-        if (Math2.same(Math2.rotate(es45, -45), Math2.rotate(es135, -135), DELTA)) {
-            return Math2.toInt(Math2.rotate(es45, -45));
-        }
-
-        throw new RuntimeException();
+        return sps;
     }
+
+    // public/***/ int[][] findCorners(LinkedList<int[]> ps) {
+    //     int R = 27;
+
+    //     LinkedList<double[]> cands = Math2.toDouble(getCornerCandidates(ps));
+    //     if (cands.size() < 4) return null;
+    //     else if (cands.size() == 4)
+    //         return Math2.toInt(new double[][]{cands.get(0),
+    //                                           cands.get(1),
+    //                                           cands.get(2),
+    //                                           cands.get(3)});
+
+    //     int[][] es0 = Math2.toInt(getExtremes(cands));
+    //     int[][] es1 = Math2.toInt(Math2.rotate(getExtremes(Math2.rotate(cands, R*1)), -R*1));
+    //     int[][] es2 = Math2.toInt(Math2.rotate(getExtremes(Math2.rotate(cands, R*2)), -R*2));
+
+    //     double cl0 = Math2.getCrossLength(es0);
+    //     double cl1 = Math2.getCrossLength(es1);
+    //     double cl2 = Math2.getCrossLength(es2);
+
+    //     int[][] cs;
+    //     if (cl0 > cl1 && cl0 > cl2)
+    //         cs = es0;
+    //     else if (cl1 > cl0 && cl1 > cl2)
+    //         cs = es1;
+    //     else
+    //         cs = es2;
+
+    //     if (resemblesRectangleCorners(cs)) return es0;
+    //     else return null;
+    // }
+
+    // /**
+    //  * @param bps Box-points.
+    //  * @return All box-points in bps that has exactly two sides "free".
+    //  */
+    // private LinkedList<int[]> getCornerCandidates(LinkedList<int[]> bps) {
+    //     LinkedList<int[]> cands = new LinkedList<int[]>();
+
+    //     for (int[] p : bps) {
+    //         if (getBoxPointNeighbors(p).size() == 2)
+    //             cands.add(p);
+    //     }
+
+    //     return cands;
+    // }
+
+    // public/***/ int[][] findCorners(LinkedList<int[]> ps) {
+    //     int STEP = 15;
+
+    //     LinkedList<double[]> ps_d = Math2.toDouble(ps);
+    //     LinkedList<int[]> cs0 = new LinkedList<int[]>();
+    //     LinkedList<int[]> cs1 = new LinkedList<int[]>();
+    //     LinkedList<int[]> cs2 = new LinkedList<int[]>();
+    //     LinkedList<int[]> cs3 = new LinkedList<int[]>();
+    //     LinkedList[] css = new LinkedList[]{cs0, cs1, cs2, cs3};
+    //     initializeCorners(css);
+
+    //     for (int r = 0; r < 360; r += STEP) {
+    //         LinkedList<double[]> ps_ = Math2.rotate(ps_d, r);
+    //         int[][] cs = Math2.toInt(Math2.rotate(findExtremes(ps_), -r));
+    //         addToNearestCorner(cs[0], css);
+    //         addToNearestCorner(cs[1], css);
+    //         addToNearestCorner(cs[2], css);
+    //         addToNearestCorner(cs[3], css);
+    //             // Math2.getClosest(Math2.toDouble(cs[0]), new double[][]{
+    //             //         Math2.mean(cs0),
+    //             //         Math2.mean(cs1),
+    //             //         Math2.mean(cs2),
+    //             //         Math2.mean(cs3)});
+
+    //     }
+
+    //     int[][] cs = new int[][]{Math2.getMostOccuring(cs0),
+    //                              Math2.getMostOccuring(cs1),
+    //                              Math2.getMostOccuring(cs2),
+    //                              Math2.getMostOccuring(cs3)};
+
+    //     if (resemblesRectangleCorners(cs)) return cs;
+    //     else return null;
+    // }
+    // public/***/ int[][] findCorners(LinkedList<int[]> psI) {
+    //     double SAME_MAX_DISTANCE = 1.5;
+    //     int STEP = 1;
+    //     int MAX = 1000;
+
+    //     LinkedList<double[]> ps = Math2.toDouble(psI);
+
+    //     for (int r = 0; r <= MAX; r += STEP) {
+    //         ps = Math2.rotate(ps, r);
+
+    //         double[][] es = findExtremes(ps);
+    //         double[][] es90 = findExtremes(Math2.rotate(ps, 33));
+    //         double[][] es180 = findExtremes(Math2.rotate(ps, 44));
+    //         double[][] es270 = findExtremes(Math2.rotate(ps, 55));
+
+    //         double[][] es1 = Math2.rotate(es90, -33);
+    //         double[][] es2 = Math2.rotate(es180, -44);
+    //         double[][] es3 = Math2.rotate(es270, -55);
+
+    //         if (Math2.same(es, es1, SAME_MAX_DISTANCE) &&
+    //             Math2.same(es, es2, SAME_MAX_DISTANCE) &&
+    //             Math2.same(es, es3, SAME_MAX_DISTANCE)) {
+
+    //             int[][] cs = Math2.toInt(Math2.rotate(es, -r));
+    //             //cs = forcePointsInside(cs);
+
+    //             if (resemblesRectangleCorners(cs))
+    //                 return cs;
+    //             else
+    //                 return null;
+    //         }
+    //     }
+    //     throw new RuntimeException("Failed to make sence of box.");
+    // }
 
     /**
      * @return [0]Leftmost, [1]upmost, [2]rightmost and [3]downmost
-     * points in given list, or NULL if unclear which any of those
-     * are.
+     * points in given list.
      */
-    public/***/ double[][] findExtremes(LinkedList<double[]> ps) {
+    public/***/ double[][] getExtremes(LinkedList<double[]> ps) {
         double[] l = new double[]{Integer.MAX_VALUE, 0};
         double[] u = new double[]{0, Integer.MAX_VALUE};
         double[] r = new double[]{Integer.MIN_VALUE, 0};
@@ -407,6 +546,14 @@ public class LabelLayoutIterator {
         return new double[][]{l,u,r,d};
     }
 
+    /**!
+     * @param cs [left,upp,right,down]-corners
+     * @return True if corners resemble those of a rectangle.
+     */
+    public static boolean resemblesRectangleCorners(int[][] cs) {
+        return !Math2.hasDuplicates(cs);
+    }
+
     /**
      * Order given cornerpoints by direction determined from all
      * box-points (the opening in the C).
@@ -415,7 +562,7 @@ public class LabelLayoutIterator {
      * @param bps All box-points (including cs).
      * @return [topL, topR, bottomR, bottomL]
      */
-    private int[][] orderByDirection(int[][] cs, LinkedList<int[]> bps) {
+    public/***/ int[][] orderByDirection(int[][] cs, LinkedList<int[]> bps) {
         cs = orderConsecutively(cs);
         int[][][] legs = new int[][][]{new int[][]{cs[0], cs[1]},
                                        new int[][]{cs[1], cs[2]},
@@ -453,14 +600,22 @@ public class LabelLayoutIterator {
      * @return cs ordered consecutively (start somewhere and walk
      * whole way round in CLOCKWISE direction).
      */
-    private int[][] orderConsecutively(int[][] cs) {
-        int oppositeI = Math2.getFurthest(cs[0], cs);
-        int neighborIs[] = Math2.getComplement(new int[][]{cs[0], cs[oppositeI]}, cs);
+    public/***/ int[][] orderConsecutively(int[][] cs) {
+        int[] diag = Math2.getFurthest(cs);
+        int headI = diag[0];
+        int oppositeI = diag[1];
+
+        int neighborIs[] = Math2.getComplement(new int[][]{cs[ headI ], cs[ oppositeI ]}, cs);
+
+        // System.out.println(Arrays.deepToString(cs));
+        // System.out.println(cs.length);
+        // System.out.println(neighborIs.length);
+        // System.out.println("");
 
         int[] p0 = cs[ neighborIs[0] ];
-        int[] p1 = cs[0];
+        int[] p1 = cs[ headI ];
         int[] p2 = cs[ neighborIs[1] ];
-        int[] p3 = cs[oppositeI];
+        int[] p3 = cs[ oppositeI ];
 
         if (rightTurn(p0, p1, p2))
             return new int[][]{p0, p1, p2, p3};
@@ -468,7 +623,7 @@ public class LabelLayoutIterator {
             return new int[][]{p3, p2, p1, p0};
     }
 
-    private boolean rightTurn(int[] p0, int[] p1, int[] p2) {
+    public/***/ boolean rightTurn(int[] p0, int[] p1, int[] p2) {
         int[] v0 = Math2.minus(p1, p0);
         int[] v1 = Math2.minus(p2, p1);
         return Math2.angle(v0, v1) < 0;
@@ -478,15 +633,20 @@ public class LabelLayoutIterator {
      * Start in middle between p1,p2, walk towards box-points' center,
      * how long til box-point?
      */
-    private int getBetweenSpace(int[] p1, int[] p2, LinkedList<int[]> bps) {
+    public/***/ int getBetweenSpace(int[] p1, int[] p2, LinkedList<int[]> bps) {
         int[] start = Math2.toInt(Math2.mean(new int[][]{p1, p2}));
-        int[] end = Math2.toInt(Math2.mean(bps));
+        int[] mid = Math2.toInt(Math2.mean(bps));
+        double[] dir = Math2.toDouble(Math2.minus(mid, start));
+        double length = Math2.distance(start, mid) * 2;
+        int[] end = Math2.step(start, dir, length);
+
         PixelWalk pw = new PixelWalk(start, end);
         int[] p;
 
         for (int d = 0; (p = pw.next()) != null; d++) {
             if (isBoxPoint(p)) return d;
         }
+
         throw new RuntimeException();
     }
 
@@ -495,13 +655,13 @@ public class LabelLayoutIterator {
      * @return True if [x,y] is a box-point.
      */
     public/***/ boolean isBoxPoint(int x, int y) {
-        if (y < 0 || y > map.length) return false;
-        if (x < 0 || x > map[0].length) return false;
+        if (y < 0 || y >= map.length) return false;
+        if (x < 0 || x >= map[0].length) return false;
 
         return map[y][x];
     }
     public/***/ boolean isBoxPoint(int[] p) {
-        return map[ p[1] ][ p[0] ];
+        return isBoxPoint(p[0], p[1]);
     }
 
 
@@ -539,11 +699,5 @@ public class LabelLayoutIterator {
             img.setColor(p[0]-xmin, p[1]-ymin, Color.BLUE);
 
         return img;
-    }
-
-    public static void drawCorners(int[][] cs, BasicImage img) {
-        for (int[] c : cs) {
-            img.setColor(c, Color.RED);
-        }
     }
 }

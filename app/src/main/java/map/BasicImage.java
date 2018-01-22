@@ -189,7 +189,7 @@ public class BasicImage {
         g.drawLine(tr[0], tr[1], br[0], br[1]);
         g.setPaint(Color.GREEN);
         g.drawLine(br[0], br[1], bl[0], bl[1]);
-        g.setPaint(Color.BLACK);
+        g.setPaint(Color.YELLOW);
         g.drawLine(bl[0], bl[1], tl[0], tl[1]);
 
         int[] tm = box.getTopMid();
@@ -197,13 +197,27 @@ public class BasicImage {
         int[] bm = box.getBottomMid();
         g.setPaint(Color.ORANGE);
         g.drawLine(tm[0], tm[1], m[0], m[1]);
-        g.setPaint(Color.RED);
+        g.setPaint(Color.WHITE);
         g.drawLine(m[0], m[1], bm[0], bm[1]);
 
         int[] lm = box.getLeftMid();
         int[] rm = box.getRightMid();
         g.setPaint(Color.CYAN);
         g.drawLine(lm[0], lm[1], rm[0], rm[1]);
+
+        setColor(rm, Color.RED);
+    }
+
+    /**
+     * Put colored dots on points.
+     */
+    public void drawPoints(int[][] cs) {
+        Color[] cols = new Color[]{Color.RED, Color.GREEN, Color.CYAN, Color.YELLOW};
+        int ci = 0;
+
+        for (int[] c : cs) {
+            this.setColor(c, cols[ci++ % 4]);
+        }
     }
 
     /**

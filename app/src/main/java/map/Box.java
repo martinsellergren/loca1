@@ -34,7 +34,7 @@ public class Box {
      * rectangular box.
      */
     public Box(int[] topL, int[] topR, int[] bottomR, int[] bottomL) {
-        this(topL, topR, (Math2.distance(topL, bottomL) + Math2.distance(topR, bottomR)) / 2);
+        this(topL, topR, (Math2.distance(topL, bottomL) + Math2.distance(topR, bottomR)) / 2d);
     }
 
     public Box copy() {

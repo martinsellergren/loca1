@@ -2,6 +2,8 @@ package map;
 
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Collections;
 
 /**
  * Some additional math. 2D is assumed when applicable and angles
@@ -219,6 +221,16 @@ public class Math2 {
     }
 
     /**
+     * @return true if ps contains p (by value).
+     */
+    public static boolean contains(int[] p, LinkedList<int[]> ps) {
+        for (int[] q : ps) {
+            if (same(p, q)) return true;
+        }
+        return false;
+    }
+
+    /**
      * @return True if p in ps (by value).
      */
     public static boolean contains(int[] p, int[][] ps) {
@@ -227,6 +239,86 @@ public class Math2 {
         }
         return false;
     }
+
+    /**
+     * @return True if scalar in list.
+     */
+    public static boolean contains(int x, int[] xs) {
+        for (int y : xs) {
+            if (x == y) return true;
+        }
+        return false;
+    }
+
+    /**
+     * @return True if list contains two equal (by value) points.
+     */
+    public static boolean hasDuplicates(LinkedList<int[]> ps) {
+        for (int[] p : ps) {
+            for (int[] q : ps) {
+                if (p != q) {
+                    if (same(p, q)) return true;
+                }
+            }
+        }
+        return false;
+    }
+    public static boolean hasDuplicates(int[][] ps) {
+        return hasDuplicates(Math2.toList(ps));
+    }
+
+    /**
+     * @return The point occuring most times in ps. If ties, return
+     * random.
+     */
+    public static int[] getMostOccuring(LinkedList<int[]> ps) {
+        int[] cardins = getCardinalities(ps);
+        int maxi = getMaxIndex(cardins);
+        return ps.get(maxi);
+    }
+
+    /**
+     * @return Array, same as ps, except each element is the number
+     * of occurences in ps.
+     */
+    public static int[] getCardinalities(LinkedList<int[]> ps) {
+        int[] cs = new int[ps.size()];
+        int i = 0;
+
+        for (int[] p : ps) {
+            cs[i++] = getNoOccurences(p, ps);
+        }
+        return cs;
+    }
+
+    /**
+     * @return Number of times p occures in ps (by value).
+     */
+    public static int getNoOccurences(int[] p, LinkedList<int[]> ps) {
+        int n = 0;
+        for (int[] q : ps) {
+            if (same(p, q)) n++;
+        }
+        return n;
+    }
+
+    /**
+     * @return The index of the max-element in xs. Returns last index
+     * if all equal.
+     */
+    public static int getMaxIndex(int[] xs) {
+        int maxX = Integer.MIN_VALUE;
+        int maxI = -1;
+
+        for (int i = 0; i < xs.length; i++) {
+            if (xs[i] > maxX) {
+                maxX = xs[i];
+                maxI = i;
+            }
+        }
+        return maxI;
+    }
+
 
     /**
      * Prints point.
@@ -256,7 +348,7 @@ public class Math2 {
      * @return Index in ps of point furthest from p.
      */
     public static int getFurthest(int[] p, int[][] ps) {
-        double maxd = Integer.MIN_VALUE;
+        double maxd = Double.MIN_VALUE;
         int maxi = -1;
 
         for (int i = 0; i < ps.length; i++) {
@@ -267,6 +359,52 @@ public class Math2 {
         }
         return maxi;
     }
+    public static int getFurthest(int[] p, LinkedList<int[]> ps) {
+        return getFurthest(p, toArray(ps));
+    }
+
+    /**
+     * @return [p1_index, p2_index] where p1, p2 is the two points
+     * in ps with greatest distance between them.
+     */
+    public static int[] getFurthest(int[][] ps) {
+        if (ps.length < 2) throw new IllegalArgumentException();
+
+        double maxd = -1;
+        int i0 = -1;
+        int i1 = -1;
+
+        for (int i = 0; i < ps.length; i++) {
+            int j = getFurthest(ps[i], ps);
+
+            if (distance(ps[i], ps[j]) > maxd) {
+                maxd = distance(ps[i], ps[j]);
+                i0 = i;
+                i1 = j;
+            }
+        }
+        return new int[]{i0, i1};
+    }
+    public static int[] getFurthest(LinkedList<int[]> ps) {
+        return getFurthest(toArray(ps));
+    }
+
+    /**
+     * @return Index in ps of point closest to p.
+     */
+    public static int getClosest(double[] p, double[][] ps) {
+        double mind = Double.MAX_VALUE;
+        int mini = -1;
+
+        for (int i = 0; i < ps.length; i++) {
+            if (distance(p, ps[i]) < mind) {
+                mind = distance(p, ps[i]);
+                mini = i;
+            }
+        }
+        return mini;
+    }
+
 
     /**
      * @return All points in space not in set (indexes).
@@ -279,6 +417,18 @@ public class Math2 {
         for (int i = 0; i < space.length; i++) {
             int[] p = space[i];
             if (!contains(p, set)) comp[ compI++ ] = i;
+        }
+
+        return Arrays.copyOf(comp, compI);
+    }
+
+    public static int[] getComplement(int[] set, int[] space) {
+        int[] comp = new int[space.length];
+        int compI = 0;
+
+        for (int i = 0; i < space.length; i++) {
+            int x = space[i];
+            if (!contains(x, set)) comp[ compI++ ] = i;
         }
 
         return Arrays.copyOf(comp, compI);
@@ -310,7 +460,43 @@ public class Math2 {
         return new int[]{sumx, sumy};
     }
 
+    /**
+     * @param cs Corner-points, random order.
+     * @return Length of diagonal1+diagonal2.
+     */
+    public static double getCrossLength(int[][] cs) {
+        int[] diag1 = getFurthest(cs);
+        int[] diag2 = getComplement(diag1, new int[]{0,1,2,3});
 
+        return
+            distance(cs[diag1[0]], cs[diag1[1]]) +
+            distance(cs[diag2[0]], cs[diag2[1]]);
+    }
+
+    /**
+     * Removes indexes from list.
+     */
+    public static void removeIndexes(List<Integer> rms, List l) {
+        Collections.sort(rms, Collections.reverseOrder());
+        for (int i : rms) l.remove(i);
+    }
+    public static void removeIndexes(int[] rms, LinkedList l) {
+        removeIndexes(toList(rms), l);
+    }
+
+    /**
+     * Removes points in ps close to p (within distance D).
+     */
+    public static void removeClose(int[] p, LinkedList<int[]> ps, double D) {
+        LinkedList<Integer> rms = new LinkedList<Integer>();
+
+        for (int i = 0; i < ps.size(); i++) {
+            int[] q = ps.get(i);
+            if (distance(p, q) <= D) rms.add(i);
+        }
+
+        removeIndexes(rms, ps);
+    }
 
     //****************************************CONVERSIONS
 
@@ -383,6 +569,11 @@ public class Math2 {
     public static LinkedList<int[]> toList(int[][] a) {
         LinkedList<int[]> l = new LinkedList<int[]>();
         for (int[] v : a) l.add(v);
+        return l;
+    }
+    public static LinkedList<Integer> toList(int[] xs) {
+        LinkedList<Integer> l = new LinkedList<Integer>();
+        for (int x : xs) l.add(x);
         return l;
     }
 }
