@@ -178,7 +178,7 @@ public class BasicImage {
      * Draws a box on the image.
      */
     public void drawBox(Box box) {
-        float alpha = 0.5f;
+        float alpha = 1f;
 
         Color red = new Color(1, 0, 0, alpha);
         Color green = new Color(0, 1, 0, alpha);
@@ -217,15 +217,23 @@ public class BasicImage {
         // g.drawLine(lm[0], lm[1], rm[0], rm[1]);
     }
 
+    public void drawBoxBounds(Box b) {
+        drawPoints(new int[][] {
+                Math2.toInt(b.getTopLeft()),
+                Math2.toInt(b.getTopRight()),
+                Math2.toInt(b.getBottomRight()),
+                Math2.toInt(b.getBottomLeft())});
+    }
+
     /**
      * Put colored dots on points.
      */
     public void drawPoints(int[][] cs) {
-        float alpha = 0.5f;
-        Color red = new Color(255, 0, 0, alpha);
-        Color green = new Color(0, 255, 0, alpha);
-        Color blue = new Color(0, 0, 255, alpha);
-        Color yellow = new Color(255, 255, 0, alpha);
+        float alpha = 1f;
+        Color red = new Color(1, 0, 0, alpha);
+        Color green = new Color(0, 1, 0, alpha);
+        Color blue = new Color(0, 0, 1, alpha);
+        Color yellow = new Color(1, 1, 0, alpha);
 
         Color[] cols = new Color[]{red, green, blue, yellow};
         int ci = 0;

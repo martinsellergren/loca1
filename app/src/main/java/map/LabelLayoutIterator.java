@@ -304,10 +304,33 @@ public class LabelLayoutIterator {
      */
     public/***/ Box expandToBox(int[] start) {
         LinkedList<int[]> ps = expandToBoxPoints(start);
+        if (containsSidePoint(ps)) return null;
+
         int[][] cs = findCorners(ps);
         if (cs == null) return null;
 
         return new Box(cs[0], cs[1], cs[2], cs[3]);
+    }
+
+    /**
+     * @return True if any point in ps is a side-point.
+     */
+    private boolean containsSidePoint(LinkedList<int[]> ps) {
+        for (int[] p : ps) {
+            if (isSidePoint(p)) return true;
+        }
+        return false;
+    }
+
+    /**
+     * @return True if p is a side-point.
+     */
+    private boolean isSidePoint(int[] p) {
+        return
+            p[0] == 0 ||
+            p[0] == map[0].length-1 ||
+            p[1] == 0 ||
+            p[1] == map.length-1;
     }
 
     /**

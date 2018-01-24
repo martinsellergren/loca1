@@ -619,7 +619,7 @@ public class Math2 {
      */
     public static double[] intersectDistance(double[] p0, double[] p1, double[] q0, double[] q1) {
         double[] pv = normalize(minus(p1, p0));
-        double[] qv = normalize(minus(q1, q0));
+        double[] qv = Math2.scale(normalize(minus(q1, q0)), -1);
         double[][] A = transpose(new double[][]{pv, qv});
         double[] b = minus(q0, p0);
         return solve(A, b);
@@ -627,7 +627,7 @@ public class Math2 {
 
     public static double[] intersectPoint(double[] p0, double[] p1, double[] q0, double[] q1) {
         double[] d = intersectDistance(p0, p1, q0, q1);
-        return step(p0, minus(p1, p0), d[0]);
+        return step(q0, minus(q1, q0), d[1]);
     }
 
     /**

@@ -33,7 +33,7 @@ public class Box {
      * These corner-points will all fit inside the box.
      */
     public Box(double[] topL, double[] topR, double[] bottomR, double[] bottomL) {
-        //this(Math2.toDouble(topL), Math2.toDouble(topR), (Math2.distance(topL, bottomL) + Math2.distance(topR, bottomR)) / 2);
+        //this(topL, topR, (Math2.distance(topL, bottomL) + Math2.distance(topR, bottomR)) / 2);
 
         double rotLR1 = (Math2.angle( Math2.minus(topR, topL) ) +
                         Math2.angle( Math2.minus(bottomR, bottomL) )) / 2;
@@ -53,10 +53,36 @@ public class Box {
         double[] lr = Math2.getDirVector(rotLR);
         double[] ud = Math2.rotate(lr, -90);
 
-        double[] upperBound_p = topL;
-        if (Math2.intersectDistance(topL, lr, topR, Math2.minus(mid, topR))[1] > 0)
-            upperBound_p = topR;
+        double[] leftP = topL;
+        double[] topP = topL;
+        double[] rightP = topR;
+        double[] botP = bottomL;
+        if (Math2.intersectDistance(topL, Math2.step(topL, ud, 1), bottomL, mid)[1] > 0)
+            leftP = bottomL;
+        if (Math2.intersectDistance(topL, Math2.step(topL, lr, 1), topR, mid)[1] > 0)
+            topP = topR;
+        if (Math2.intersectDistance(topR, Math2.step(topR, ud, 1), bottomR, mid)[1] > 0)
+            rightP = bottomR;
+        if (Math2.intersectDistance(bottomL, Math2.step(bottomL, lr, 1), bottomR, mid)[1] > 0)
+            botP = bottomR;
 
+        double[] leftP_ = Math2.step(leftP, ud, 1);
+        double[] topP_ = Math2.step(topP, lr, 1);
+        double[] rightP_ = Math2.step(rightP, ud, 1);
+        double[] botP_ = Math2.step(botP, lr, 1);
+
+        topL = Math2.intersectPoint(leftP, leftP_, topP, topP_);
+        topR = Math2.intersectPoint(topP, topP_, rightP, rightP_);
+        bottomR = Math2.intersectPoint(rightP, rightP_, botP, botP_);
+        bottomL = Math2.intersectPoint(botP, botP_, leftP, leftP_);
+        double h = Math2.distance(topL, bottomL);
+
+        if (!Math2.same(h, Math2.distance(topR, bottomR)))
+            throw new RuntimeException();
+
+        this.topL = topL;
+        this.topR = topR;
+        this.height = h;
     }
     public Box(int[] topL, int[] topR, int[] bottomR, int[] bottomL) {
         this(Math2.toDouble(topL), Math2.toDouble(topR), Math2.toDouble(bottomR), Math2.toDouble(bottomL));
