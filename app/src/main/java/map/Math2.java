@@ -189,6 +189,20 @@ public class Math2 {
     public static boolean same(double[] p1, double[] p2, double delta) {
         return distance(p1, p2) <= delta;
     }
+    public static boolean same(double[] p1, double[] p2) {
+        return same(p1, p2, 0.000001);
+    }
+
+    /**
+     * @return True if x and y (scalars) are equal
+     * (within delta-distance).
+     */
+    public static boolean same(double x, double y, double delta) {
+        return Math.abs(x - y) <= delta;
+    }
+    public static boolean same(double x, double y) {
+        return same(x, y, 0.000001);
+    }
 
     /**
      * @return True if p1 and p2 are same (by value).
@@ -446,6 +460,12 @@ public class Math2 {
     public static double[] mean(int[][] ps) {
         return mean(toList(ps));
     }
+    public static double[] mean(double[][] ps) {
+        double[] sum = sum(ps);
+        double sx = sum[0];
+        double sy = sum[1];
+        return new double[]{ sx/ps.length, sy/ps.length };
+    }
 
     /**
      * @return All points added together.
@@ -458,6 +478,15 @@ public class Math2 {
             sumy += p[1];
         }
         return new int[]{sumx, sumy};
+    }
+    public static double[] sum(double[][] ps) {
+        double sumx = 0;
+        double sumy = 0;
+        for (double[] p : ps) {
+            sumx += p[0];
+            sumy += p[1];
+        }
+        return new double[]{sumx, sumy};
     }
 
     /**
@@ -498,21 +527,143 @@ public class Math2 {
         removeIndexes(rms, ps);
     }
 
-    //****************************************CONVERSIONS
-
     /**
-     * @return Point converted from int[] to double[].
+     * @return List of points in ps not in the other lists.
      */
-    public static double[] toDouble(int[] v) {
-        return new double[]{v[0], v[1]};
+    public/***/ static LinkedList<int[]> getUniquePoints(LinkedList<int[]> ps, LinkedList<int[]> notIn1, LinkedList<int[]> notIn2) {
+        LinkedList<int[]> rs = new LinkedList<int[]>();
+
+        for (int[] p : ps) {
+            if (!Math2.contains(p, notIn1) && !Math2.contains(p, notIn2)) {
+                rs.add(p);
+            }
+        }
+        return rs;
     }
 
     /**
-     * @return Point converted from double[] to int[] (by rounding).
+     * @return [0]Leftmost, [1]upmost, [2]rightmost and [3]downmost
+     * points in given list.
      */
-    public static int[] toInt(double[] v) {
-        return new int[] { Math.round((float)v[0]),
-                           Math.round((float)v[1])};
+    public static double[][] getExtremes(LinkedList<double[]> ps) {
+        double[] l = new double[]{Double.MAX_VALUE, 0};
+        double[] u = new double[]{0, Double.MAX_VALUE};
+        double[] r = new double[]{Double.MIN_VALUE, 0};
+        double[] d = new double[]{0, Double.MIN_VALUE};
+
+        for (double[] p : ps) {
+            if (p[0] < l[0]) l = p;
+            if (p[1] < u[1]) u = p;
+            if (p[0] > r[0]) r = p;
+            if (p[1] > d[1]) d = p;
+        }
+        return new double[][]{l,u,r,d};
+    }
+
+    /**
+     * @return True if you turn right at p1 when walking p0-p1-p2.
+     */
+    public static boolean rightTurn(int[] p0, int[] p1, int[] p2) {
+        int[] v0 = Math2.minus(p1, p0);
+        int[] v1 = Math2.minus(p2, p1);
+        return Math2.angle(v0, v1) > 180;
+    }
+
+    /**
+     * @return A normalized directional vector at specified angle
+     * with horizontal plane.
+     */
+    public static double[] getDirVector(double deg) {
+        double rad = Math.toRadians(deg);
+        return new double[]{Math.cos(rad), -Math.sin(rad)};
+    }
+
+    /**
+     * Solves equation Ax=b.
+     *
+     * @param A 2*2 matrix.
+     * @param b Length-2-vector.
+     * @return Vector x (length 2), or null if no solution.
+     */
+    public static double[] solve(double[][] A, double[] b) {
+        double[][] Ainv = inverse(A);
+        if (Ainv == null) return null;
+        return multiply(Ainv, b);
+    }
+
+    /**
+     * @return Inverse of A, or null if no inverse.
+     */
+    public static double[][] inverse(double[][] A) {
+        double det = 1 / (A[0][0]*A[1][1] - A[0][1]*A[1][0]);
+        return new double[][]{
+            scale(new double[]{ A[1][1], -A[0][1] }, det),
+            scale(new double[]{ -A[1][0], A[0][0] }, det) };
+    }
+
+    /**
+     * @param A 2*2.
+     * @param b 2*1.
+     * @return A*b (2*1).
+     */
+    public static double[] multiply(double[][] A, double[] b) {
+        return new double[]{ A[0][0]*b[0] + A[0][1]*b[1],
+                             A[1][0]*b[0] + A[1][1]*b[1] };
+    }
+
+    /**
+     * How long walk from point p0 towards p1 (pDist), and q0 towards
+     * q1 (qDist) until they intersect.
+     *
+     * @return [pDist, qDist]
+     */
+    public static double[] intersectDistance(double[] p0, double[] p1, double[] q0, double[] q1) {
+        double[] pv = normalize(minus(p1, p0));
+        double[] qv = normalize(minus(q1, q0));
+        double[][] A = transpose(new double[][]{pv, qv});
+        double[] b = minus(q0, p0);
+        return solve(A, b);
+    }
+
+    public static double[] intersectPoint(double[] p0, double[] p1, double[] q0, double[] q1) {
+        double[] d = intersectDistance(p0, p1, q0, q1);
+        return step(p0, minus(p1, p0), d[0]);
+    }
+
+    /**
+     * @param A 2*2 matrix.
+     * @return A transposed.
+     */
+    public static double[][] transpose(double[][] A) {
+        return new double[][]{
+            new double[]{ A[0][0], A[1][0] },
+            new double[]{ A[0][1], A[1][1] }};
+    }
+
+
+
+    //****************************************CONVERSIONS
+
+    /**
+     * @return Array converted from int[] to double[].
+     */
+    public static double[] toDouble(int[] xs) {
+        double[] ys = new double[xs.length];
+        for (int i = 0; i < xs.length; i++) {
+            ys[i] = (double)xs[i];
+        }
+        return ys;
+    }
+
+    /**
+     * @return Array converted from double[] to int[] (by rounding).
+     */
+    public static int[] toInt(double[] xs) {
+        int[] ys = new int[xs.length];
+        for (int i = 0; i < xs.length; i++) {
+            ys[i] = Math.round((float)xs[i]);
+        }
+        return ys;
     }
 
     /*

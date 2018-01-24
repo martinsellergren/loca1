@@ -71,11 +71,11 @@ public class BasicImage {
      */
     public BasicImage extractElement(Box box) {
         double rot = -box.getRotation();
-        int[] tl = Math2.rotate(box.getTopLeft(), rot);
-        int[] br = Math2.rotate(box.getBottomRight(), rot);
+        int[] tl = Math2.toInt(Math2.rotate(box.getTopLeft(), rot));
+        int[] br = Math2.toInt(Math2.rotate(box.getBottomRight(), rot));
         BasicImage elemImg = new BasicImage(br[0]-tl[0], br[1]-tl[1]);
 
-        int[] bounds = box.getBounds();
+        int[] bounds = Math2.toInt(box.getBounds());
 
         for (int y = bounds[1]; y <= bounds[3]; y++) {
             for (int x = bounds[0]; x <= bounds[2]; x++) {
@@ -178,41 +178,56 @@ public class BasicImage {
      * Draws a box on the image.
      */
     public void drawBox(Box box) {
+        float alpha = 0.5f;
+
+        Color red = new Color(1, 0, 0, alpha);
+        Color green = new Color(0, 1, 0, alpha);
+        Color blue = new Color(0, 0, 1, alpha);
+        Color yellow = new Color(1, 1, 0, alpha);
+        Color orange = new Color(1, 165/255f, 0, alpha);
+        Color white = new Color(1, 1, 1, alpha);
+        Color cyan = new Color(0, 1, 1, alpha);
+        Color pink = new Color(1, 192/255f, 203/255f, alpha);
+
         Graphics2D g = createGraphics();
-        int[] tl = box.getTopLeft();
-        int[] tr = box.getTopRight();
-        int[] bl = box.getBottomLeft();
-        int[] br = box.getBottomRight();
-        g.setPaint(Color.BLUE);
+        int[] tl = Math2.toInt(box.getTopLeft());
+        int[] tr = Math2.toInt(box.getTopRight());
+        int[] bl = Math2.toInt(box.getBottomLeft());
+        int[] br = Math2.toInt(box.getBottomRight());
+        g.setPaint(red);
         g.drawLine(tl[0], tl[1], tr[0], tr[1]);
-        g.setPaint(Color.PINK);
+        g.setPaint(green);
         g.drawLine(tr[0], tr[1], br[0], br[1]);
-        g.setPaint(Color.GREEN);
+        g.setPaint(blue);
         g.drawLine(br[0], br[1], bl[0], bl[1]);
-        g.setPaint(Color.YELLOW);
+        g.setPaint(yellow);
         g.drawLine(bl[0], bl[1], tl[0], tl[1]);
 
-        int[] tm = box.getTopMid();
-        int[] m = box.getMid();
-        int[] bm = box.getBottomMid();
-        g.setPaint(Color.ORANGE);
-        g.drawLine(tm[0], tm[1], m[0], m[1]);
-        g.setPaint(Color.WHITE);
-        g.drawLine(m[0], m[1], bm[0], bm[1]);
+        // int[] tm = Math2.toInt(box.getTopMid());
+        // int[] m = Math2.toInt(box.getMid());
+        // int[] bm = Math2.toInt(box.getBottomMid());
+        // g.setPaint(orange);
+        // g.drawLine(tm[0], tm[1], m[0], m[1]);
+        // g.setPaint(white);
+        // g.drawLine(m[0], m[1], bm[0], bm[1]);
 
-        int[] lm = box.getLeftMid();
-        int[] rm = box.getRightMid();
-        g.setPaint(Color.CYAN);
-        g.drawLine(lm[0], lm[1], rm[0], rm[1]);
-
-        setColor(rm, Color.RED);
+        // int[] lm = Math2.toInt(box.getLeftMid());
+        // int[] rm = Math2.toInt(box.getRightMid());
+        // g.setPaint(cyan);
+        // g.drawLine(lm[0], lm[1], rm[0], rm[1]);
     }
 
     /**
      * Put colored dots on points.
      */
     public void drawPoints(int[][] cs) {
-        Color[] cols = new Color[]{Color.RED, Color.GREEN, Color.CYAN, Color.YELLOW};
+        float alpha = 0.5f;
+        Color red = new Color(255, 0, 0, alpha);
+        Color green = new Color(0, 255, 0, alpha);
+        Color blue = new Color(0, 0, 255, alpha);
+        Color yellow = new Color(255, 255, 0, alpha);
+
+        Color[] cols = new Color[]{red, green, blue, yellow};
         int ci = 0;
 
         for (int[] c : cs) {

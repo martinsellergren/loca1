@@ -96,7 +96,7 @@ public class LabelLayout {
         int ymax = Integer.MIN_VALUE;
 
         for (Box b : getBoxes()) {
-            int[] bb = b.getBounds();
+            int[] bb = Math2.toInt(b.getBounds());
             if (bb[0] < xmin) xmin = bb[0];
             if (bb[1] < ymin) ymin = bb[1];
             if (bb[2] > xmax) xmax = bb[2];

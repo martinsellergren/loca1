@@ -9,7 +9,7 @@ public class LabelLayoutTests {
 
     @Before
     public void setUp() {
-        Box b1 = new Box(new int[]{0,0}, new int[]{1,1}, 1);
+        Box b1 = new Box(new double[]{0,0}, new double[]{1,1}, 1);
         Box b2 = b1.copy();
         Box b3 = b1.copy();
         LinkedList<Box> r1 = new LinkedList<Box>();
@@ -17,7 +17,7 @@ public class LabelLayoutTests {
         r1.add(b2);
         r1.add(b3);
 
-        b1 = new Box(new int[]{0,0}, new int[]{-1,-1}, 1);
+        b1 = new Box(new double[]{0,0}, new double[]{-1,-1}, 1);
         b2 = b1.copy();
         b3 = b1.copy();
         LinkedList<Box> r0 = new LinkedList<Box>();
@@ -25,7 +25,7 @@ public class LabelLayoutTests {
         r0.add(b2);
         r0.add(b3);
 
-        b1 = new Box(new int[]{0,0}, new int[]{10,10}, 1);
+        b1 = new Box(new double[]{0,0}, new double[]{10,10}, 1);
         b2 = b1.copy();
         b3 = b1.copy();
         LinkedList<Box> r2 = new LinkedList<Box>();
@@ -42,9 +42,9 @@ public class LabelLayoutTests {
         assertEquals(8, lay.getNoBoxes());
         assertEquals(3, lay.getNoRows());
 
-        Box b_r0 = new Box(new int[]{0,0}, new int[]{-1,-1}, 1);
-        Box b_r1 = new Box(new int[]{0,0}, new int[]{1,1}, 1);
-        Box b_r2 = new Box(new int[]{0,0}, new int[]{10,10}, 1);
+        Box b_r0 = new Box(new double[]{0,0}, new double[]{-1,-1}, 1);
+        Box b_r1 = new Box(new double[]{0,0}, new double[]{1,1}, 1);
+        Box b_r2 = new Box(new double[]{0,0}, new double[]{10,10}, 1);
         Box[] bs = lay.getBoxes();
 
         //getBoxes
@@ -70,9 +70,9 @@ public class LabelLayoutTests {
 
     @Test
     public void addRows_getNoRows() {
-        Box b1 = new Box(new int[]{0,0}, new int[]{1,1}, 1);
-        Box b2 = new Box(new int[]{0,0}, new int[]{1,1}, 1);
-        Box b3 = new Box(new int[]{0,0}, new int[]{1,1}, 1);
+        Box b1 = new Box(new double[]{0,0}, new double[]{1,1}, 1);
+        Box b2 = new Box(new double[]{0,0}, new double[]{1,1}, 1);
+        Box b3 = new Box(new double[]{0,0}, new double[]{1,1}, 1);
 
         LinkedList<Box> r1 = new LinkedList<Box>();
         r1.add(b1);

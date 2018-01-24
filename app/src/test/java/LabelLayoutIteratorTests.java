@@ -8,12 +8,12 @@ import java.awt.Color;
 
 public class LabelLayoutIteratorTests {
 
-    @Test
-    public void constructor() {
-        BasicImage img = BasicImage.load("../test_box.png");
-        LabelLayoutIterator iter = new LabelLayoutIterator(img);
-        iter.toImg().save("test_LabelLayoutIterator_constructor.png");
-    }
+    // @Test
+    // public void constructor() {
+    //     BasicImage img = BasicImage.load("../test_box.png");
+    //     LabelLayoutIterator iter = new LabelLayoutIterator(img);
+    //     iter.toImg().save("test_LabelLayoutIterator_constructor.png");
+    // }
 
     // @Test
     // public void isBoxPoint() {
@@ -36,56 +36,73 @@ public class LabelLayoutIteratorTests {
     //     img.save("test_LabelLayoutIterator_findCorners.png");
     // }
 
-    @Test
-    public void displayAllCorners() {
-        BasicImage img = BasicImage.load("../test_box.png");
-        LabelLayoutIterator iter = new LabelLayoutIterator(img);
+    // @Test
+    // public void displayAllCorners() {
+    //     BasicImage img = BasicImage.load("../test_box.png");
+    //     LabelLayoutIterator iter = new LabelLayoutIterator(img);
 
-        for (int y = 0; y < img.getHeight()-1; y++) {
-            for (int x = 0; x < img.getWidth()-1; x++) {
-                try {
-                    if (iter.isBoxPoint(x, y)) {
-                        LinkedList<int[]> bps = iter.expandToBoxPoints(new int[]{x,y});
+    //     for (int y = 0; y < img.getHeight()-1; y++) {
+    //         for (int x = 0; x < img.getWidth()-1; x++) {
+    //             try {
+    //                 if (iter.isBoxPoint(x, y)) {
+    //                     LinkedList<int[]> bps = iter.expandToBoxPoints(new int[]{x,y});
 
-                        int[][] cs = iter.findCorners(bps);
-                        if (cs != null) {
+    //                     int[][] cs = iter.findCorners(bps);
+    //                     if (cs != null) {
+    //                         //cs = iter.orderByDirection(cs, bps);
+    //                         img.drawPoints(cs);
+    //                     }
 
-                            // cs = iter.orderByDirection(cs, bps);
-                            // System.out.println(Arrays.deepToString(cs));
-                            // System.out.println("");
-
-                            img.drawPoints(cs);
-                        }
-
-                        iter.expandAndRemove(new int[]{x,y});
-                    }
-                }
-                catch (Exception e) {
-                    System.out.println(x + ", " + y);
-                    throw e;
-                }
-            }
-        }
-        img.save("test_LabelLayoutIterator_displayAllCorners.png");
-    }
+    //                     iter.expandAndRemove(new int[]{x,y});
+    //                 }
+    //             }
+    //             catch (Exception e) {
+    //                 System.out.println(x + ", " + y);
+    //                 throw e;
+    //             }
+    //         }
+    //     }
+    //     img.save("test_LabelLayoutIterator_displayAllCorners.png");
+    // }
 
     // @Test
     // public void expandToBox() {
     //     BasicImage img = BasicImage.load("../test_box.png");
     //     LabelLayoutIterator iter = new LabelLayoutIterator(img);
 
-    //     int[] bp = new int[]{227, 2};
+    //     int[] bp = new int[]{583, 413};
     //     Box box = iter.expandToBox(bp);
-    //     //img.drawBox(box);
+    //     img.drawBox(box);
 
-    //     LinkedList<int[]> ps = iter.expandToBoxPoints(bp);
-    //     int[][] cs = iter.orderByDirection(iter.findCorners(ps), ps);
-    //     img.drawPoints(cs);
+    //     // LinkedList<int[]> ps = iter.expandToBoxPoints(bp);
+    //     // int[][] cs = iter.orderByDirection(iter.findCorners(ps), ps);
+    //     // img.drawPoints(cs);
 
-    //     img.save("test_LabelLayoutIterator_expandToBox_1.png");
+    //     img.save("test_LabelLayoutIterator_expandToBox.png");
+    // }
 
-    //     // BasicImage img2 = iter.toImg();
-    //     // img2.drawBox(b);
-    //     // img2.save("test_LabelLayoutIterator_expandToBox_2.png");
+    // @Test
+    // public void expandToBox_all() {
+    //     BasicImage img = BasicImage.load("../test_box.png");
+    //     LabelLayoutIterator iter = new LabelLayoutIterator(img);
+
+    //     for (int y = 0; y < img.getHeight()-1; y++) {
+    //         for (int x = 0; x < img.getWidth()-1; x++) {
+    //             try {
+    //                 if (iter.isBoxPoint(x, y)) {
+    //                     Box bx = iter.expandToBox(new int[]{x,y});
+    //                     if (bx != null)
+    //                         img.drawBox(bx);
+
+    //                     iter.expandAndRemove(new int[]{x,y});
+    //                 }
+    //             }
+    //             catch (Exception e) {
+    //                 System.out.println(x + ", " + y);
+    //                 throw e;
+    //             }
+    //         }
+    //     }
+    //     img.save("test_LabelLayoutIterator_expandToBox_all.png");
     // }
 }

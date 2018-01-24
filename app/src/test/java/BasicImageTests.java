@@ -11,21 +11,21 @@ public class BasicImageTests {
     // @Test
     // public void extractElement() {
     //     BasicImage img = new BasicImage(100, 100);
-    //     Box box = new Box(new int[]{10, 40}, new int[]{50, 10}, 60);
+    //     Box box = new Box(new double[]{10, 40}, new double[]{50, 10}, 60);
     //     img.drawBox(box);
     //     img.save("1before.png");
     //     BasicImage elem = img.extractElement(box);
     //     elem.save("1extracted.png");
 
     //     // img = new BasicImage(100, 100);
-    //     // box = new Box(new int[]{30, 10}, new int[]{60, 20}, 60);
+    //     // box = new Box(new double[]{30, 10}, new double[]{60, 20}, 60);
     //     // img.drawBox(box);
     //     // img.save("2before.png");
     //     // elem = img.extractElement(box);
     //     // elem.save("2extracted.png");
 
     //     // img = new BasicImage(100, 100);
-    //     // box = new Box(new int[]{30, 80}, new int[]{10, 50}, 60);
+    //     // box = new Box(new double[]{30, 80}, new double[]{10, 50}, 60);
     //     // img.drawBox(box);
     //     // img.save("3before.png");
     //     // elem = img.extractElement(box);

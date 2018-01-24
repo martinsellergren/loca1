@@ -9,18 +9,18 @@ import java.util.Arrays;
  * @inv width,height > 0
  */
 public class Box {
-    public/***/ int[] topL;
-    public/***/ int[] topR;
+    public/***/ double[] topL;
+    public/***/ double[] topR;
     public/***/ double height;
 
 
     /**
-     * Constructs a box with known height.
+     * Constructs a box from known data.
      */
-    public Box(int[] topL, int[] topR, double height) {
-        if (Math2.distance(topL, topR) <= 0)
+    public Box(double[] topL, double[] topR, double height) {
+        if (Math2.distance(topL, topR) == 0)
             throw new IllegalArgumentException("Zero box width");
-        if (height <= 0)
+        if (height == 0)
             throw new IllegalArgumentException("Zero box height");
 
         this.topL = topL;
@@ -30,16 +30,41 @@ public class Box {
 
     /**
      * Constructs a Box from four corner points [x,y].
-     * Top points are final. Rest is calculated to create an actual
-     * rectangular box.
+     * These corner-points will all fit inside the box.
      */
+    public Box(double[] topL, double[] topR, double[] bottomR, double[] bottomL) {
+        //this(Math2.toDouble(topL), Math2.toDouble(topR), (Math2.distance(topL, bottomL) + Math2.distance(topR, bottomR)) / 2);
+
+        double rotLR1 = (Math2.angle( Math2.minus(topR, topL) ) +
+                        Math2.angle( Math2.minus(bottomR, bottomL) )) / 2;
+        double rotTB = (Math2.angle( Math2.minus(bottomL, topL) ) +
+                        Math2.angle( Math2.minus(bottomR, topR) )) / 2;
+
+        double rotLR2 =
+            (Math.abs(Math2.toUnitDegrees(rotTB + 90) - rotLR1) <
+             Math.abs(Math2.toUnitDegrees(rotTB - 90) - rotLR1)) ?
+            Math2.toUnitDegrees(rotTB + 90) :
+            Math2.toUnitDegrees(rotTB - 90);
+
+        double rotLR = (rotLR1 + rotLR2) / 2;
+        //System.out.format("%s, %s, %s\n", rotLR1, rotLR2, rotLR);
+
+        double[] mid = Math2.mean(new double[][]{topL, topR, bottomR, bottomL});
+        double[] lr = Math2.getDirVector(rotLR);
+        double[] ud = Math2.rotate(lr, -90);
+
+        double[] upperBound_p = topL;
+        if (Math2.intersectDistance(topL, lr, topR, Math2.minus(mid, topR))[1] > 0)
+            upperBound_p = topR;
+
+    }
     public Box(int[] topL, int[] topR, int[] bottomR, int[] bottomL) {
-        this(topL, topR, (Math2.distance(topL, bottomL) + Math2.distance(topR, bottomR)) / 2d);
+        this(Math2.toDouble(topL), Math2.toDouble(topR), Math2.toDouble(bottomR), Math2.toDouble(bottomL));
     }
 
     public Box copy() {
-        return new Box(new int[]{topL[0], topL[1]},
-                       new int[]{topR[0], topR[1]},
+        return new Box(new double[]{topL[0], topL[1]},
+                       new double[]{topR[0], topR[1]},
                        height);
     }
 
@@ -54,7 +79,7 @@ public class Box {
      * @return Normalized directional vector (from left to right).
      */
     public double[] getDirVector() {
-        int[] r = Math2.minus(topR, topL);
+        double[] r = Math2.minus(topR, topL);
         return Math2.normalize(r);
     }
 
@@ -82,7 +107,7 @@ public class Box {
     /**
      * Add offset box position.
      */
-    public void addOffset(int addX, int addY) {
+    public void addOffset(double addX, double addY) {
         this.topL[0] += addX;
         this.topL[1] += addY;
         this.topR[0] += addX;
@@ -94,67 +119,53 @@ public class Box {
      * and the similar below, note that e.g "top-left" is relative to
      * the box, not screen. Rounds to whole pixels by standard method.
      */
-    public int[] getTopLeft() {
+    public double[] getTopLeft() {
         return this.topL;
     }
 
-    public int[] getTopRight() {
+    public double[] getTopRight() {
         return this.topR;
     }
 
-    public int[] getBottomLeft() {
-        double[] tl = Math2.toDouble(topL);
-        double[] bl = Math2.step(tl, getOrtoDirVector(), this.height);
-        return Math2.toInt(bl);
+    public double[] getBottomLeft() {
+        return Math2.step(this.topL, getOrtoDirVector(), this.height);
     }
 
-    public int[] getBottomRight() {
-        double[] tr = Math2.toDouble(topR);
-        double[] br = Math2.step(tr, getOrtoDirVector(), this.height);
-        return Math2.toInt(br);
+    public double[] getBottomRight() {
+        return Math2.step(this.topR, getOrtoDirVector(), this.height);
     }
 
-    public int[] getTopMid() {
-        return new int[]{ Math.round((topL[0]+topR[0]) / 2f),
-                          Math.round((topL[1]+topR[1]) / 2f) };
+    public double[] getTopMid() {
+        return new double[]{ (topL[0] + topR[0]) / 2,
+                             (topL[1] + topR[1]) / 2 };
     }
 
-    public int[] getBottomMid() {
-        double[] tm = new double[]{ (topL[0]+topR[0]) / 2d,
-                                    (topL[1]+topR[1]) / 2d };
-        double[] bm = Math2.step(tm, getOrtoDirVector(), this.height);
-        return Math2.toInt(bm);
+    public double[] getBottomMid() {
+        return Math2.step(getTopMid(), getOrtoDirVector(), this.height);
     }
 
-    public int[] getLeftMid() {
-        double[] tl = Math2.toDouble(topL);
-        double[] ml = Math2.step(tl, getOrtoDirVector(), this.height/2);
-        return Math2.toInt(ml);
+    public double[] getLeftMid() {
+        return Math2.step(this.topL, getOrtoDirVector(), this.height/2);
     }
 
-    public int[] getRightMid() {
-        double[] tr = Math2.toDouble(topR);
-        double[] mr = Math2.step(tr, getOrtoDirVector(), this.height/2);
-        return Math2.toInt(mr);
+    public double[] getRightMid() {
+        return Math2.step(this.topR, getOrtoDirVector(), this.height/2);
     }
 
-    public int[] getMid() {
-        double[] tm = new double[]{ (topL[0]+topR[0]) / 2,
-                                    (topL[1]+topR[1]) / 2 };
-        double[] m = Math2.step(tm, getOrtoDirVector(), this.height/2);
-        return Math2.toInt(m);
+    public double[] getMid() {
+        return Math2.step(getTopMid(), getOrtoDirVector(), this.height/2);
     }
 
     /**
      * @return [xmin, ymin, xmax, ymax]
      */
-    public int[] getBounds() {
-        int[] tl = getTopLeft();
-        int[] tr = getTopRight();
-        int[] br = getBottomRight();
-        int[] bl = getBottomLeft();
+    public double[] getBounds() {
+        double[] tl = getTopLeft();
+        double[] tr = getTopRight();
+        double[] br = getBottomRight();
+        double[] bl = getBottomLeft();
 
-        return new int[] {
+        return new double[] {
             Math.min(Math.min(tl[0], tr[0]), Math.min(br[0], bl[0])),
             Math.min(Math.min(tl[1], tr[1]), Math.min(br[1], bl[1])),
             Math.max(Math.max(tl[0], tr[0]), Math.max(br[0], bl[0])),
@@ -168,9 +179,9 @@ public class Box {
         Box b = (Box) o;
 
         return
-            Arrays.equals(this.getTopLeft(), b.getTopLeft()) &&
-            Arrays.equals(this.getTopRight(), b.getTopRight()) &&
-            this.getHeight() == b.getHeight();
+            Math2.same(this.getTopLeft(), b.getTopLeft()) &&
+            Math2.same(this.getTopRight(), b.getTopRight()) &&
+            Math2.same(this.getHeight(), b.getHeight());
     }
 
     @Override

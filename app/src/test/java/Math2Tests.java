@@ -278,4 +278,81 @@ public class Math2Tests {
         assertEquals(2, (int)l.get(1));
         assertEquals(4, (int)l.get(2));
     }
+
+    @Test
+    public void rightTurn() {
+        int[] p0 = new int[]{0,0};
+        int[] p1 = new int[]{1,0};
+        int[] p2 = new int[]{1,1};
+        assertTrue(Math2.rightTurn(p0, p1, p2));
+    }
+
+    @Test
+    public void getDirVector() {
+        double deg = 37;
+        double[] v = Math2.getDirVector(deg);
+        assertEquals(deg, Math2.angle(v), 0.000001);
+        assertEquals(1, Math2.length(v), 0.000001);
+
+        deg = 179;
+        v = Math2.getDirVector(deg);
+        assertEquals(deg, Math2.angle(v), 0.000001);
+        assertEquals(1, Math2.length(v), 0.000001);
+
+        deg = -90;
+        v = Math2.getDirVector(deg);
+        assertEquals(deg, Math2.angle(v), 0.000001);
+        assertEquals(1, Math2.length(v), 0.000001);
+
+        deg = 0;
+        v = Math2.getDirVector(deg);
+        assertEquals(deg, Math2.angle(v), 0.000001);
+        assertEquals(1, Math2.length(v), 0.000001);
+    }
+
+    @Test
+    public void intersectPoint() {
+        double[] p0 = new double[]{0, 0};
+        double[] p1 = new double[]{1, 0};
+        double[] q0 = new double[]{1, 1};
+        double[] q1 = new double[]{1, -1};
+        double[] ip = Math2.intersectPoint(p0, p1, q0, q1);
+        assertEquals(1, ip[0], 0.000001);
+        assertEquals(0, ip[1], 0.000001);
+
+        p0 = new double[]{123.321, 321.123};
+        p1 = new double[]{567.765, 678.876};
+        q0 = new double[]{987.789, 876.678};
+        q1 = new double[]{765.567, 654.456};
+        ip = Math2.intersectPoint(p0, p1, q0, q1);
+        assertEquals(1707.04, ip[0], 0.01);
+        assertEquals(1595.93, ip[1], 0.01);
+
+        p0 = new double[]{1, 3};
+        p1 = new double[]{-1, 5};
+        q0 = new double[]{11, 31};
+        q1 = new double[]{-11, 51};
+        ip = Math2.intersectPoint(p0, p1, q0, q1);
+        assertEquals(-407, ip[0], 0.0000001);
+        assertEquals(411, ip[1], 0.0000001);
+    }
+
+    @Test
+    public void solve() {
+        double[][] A = new double[][]{
+            new double[]{1,3},
+            new double[]{5,7}};
+        double[] b = new double[]{1,2};
+        double[] x = Math2.solve(A, b);
+        assertEquals(-1/8d, x[0], 0.00001);
+        assertEquals(3/8d, x[1], 0.00001);
+
+        A = new double[][]{
+            new double[]{123.321, -234.432},
+            new double[]{-345.543, 456.654}};
+        b = new double[]{123,-321};
+        x = Math2.solve(A, b);
+        assertEquals(0.772913, x[0], 0.00001);
+        assertEquals(-0.118088, x[1], 0.00001);
+    }
 }
