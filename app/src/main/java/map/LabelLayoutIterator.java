@@ -14,9 +14,9 @@ import java.awt.Color;
  *
  * A box-image is an image where only labels are showing and instead
  * of letters in the labels, there are boxes. Each box is formed like
- * the letter C (with straight lines) with the opening towards right
- * -to provide direction. The space-character is also represented as
- * a box. The box is sized and positioned so that corresponding letter
+ * the symbol [ with the opening towards right -to provide direction.
+ * The space-character is also represented as a box.
+ * The box is sized and positioned so that corresponding letter
  * precisely fits inside. If the character is very short/thin the
  * box is given a min-width/height (which doesn't affect the
  * letter-spacing/box-spacing relationship).
@@ -297,40 +297,19 @@ public class LabelLayoutIterator {
      * created a box from these points.
      *
      * @param start Start-point.
-     * @return The box containing start-point, or NULL if start-point
-     * isn't part of a rectangular shape of box-points.
+     * @return A box encapsulating start-point and all connceted
+     * box-points, or NULL if resulting box is outside or on the
+     * box-image edge.
      *
      * @pre start is a box-point in the map.
      */
     public/***/ Box expandToBox(int[] start) {
         LinkedList<int[]> ps = expandToBoxPoints(start);
-        if (containsSidePoint(ps)) return null;
+        if (containsEdgePoint(ps)) return null;
 
-        int[][] cs = findCorners(ps);
-        if (cs == null) return null;
-
-        return new Box(cs[0], cs[1], cs[2], cs[3]);
-    }
-
-    /**
-     * @return True if any point in ps is a side-point.
-     */
-    private boolean containsSidePoint(LinkedList<int[]> ps) {
-        for (int[] p : ps) {
-            if (isSidePoint(p)) return true;
-        }
-        return false;
-    }
-
-    /**
-     * @return True if p is a side-point.
-     */
-    private boolean isSidePoint(int[] p) {
-        return
-            p[0] == 0 ||
-            p[0] == map[0].length-1 ||
-            p[1] == 0 ||
-            p[1] == map.length-1;
+        Box b = new Box(ps);
+        if (isInside(b)) return b;
+        else return null;
     }
 
     /**
@@ -377,51 +356,82 @@ public class LabelLayoutIterator {
     }
 
     /**
-     * From an array of points (making up something like a box),
-     * finds the corner-points.
-     *
-     * @param bps Complete set of box-points.
-     * @return [topL, topR, bottomR, bottomL], or NULL is shape
-     * isn't rectangle-like.
+     * @return True if any point in ps is an edge-point.
      */
-    public/***/ int[][] findCorners(LinkedList<int[]> bps) {
-        LinkedList<int[]> sps = getSidePoints(bps);
-        if (sps.size() < 4) return null;
-
-        int[] diag0 = Math2.getFurthest(sps);
-        int[] c0 = sps.get( diag0[0] );
-        int[] c1 = sps.get( diag0[1] );
-        Math2.removeIndexes(diag0, sps);
-
-        Math2.removeClose(c0, sps, MIN_CORNER_PADDING);
-        Math2.removeClose(c1, sps, MIN_CORNER_PADDING);
-        if (sps.size() < 2) return null;
-
-        int[] diag1 = Math2.getFurthest(sps);
-        int[] c2 = sps.get( diag1[0] );
-        int[] c3 = sps.get( diag1[1] );
-
-        int[][] cs = new int[][]{c0, c1, c2, c3};
-
-        if (resemblesRectangleCorners(cs))
-            return orderByDirection(cs, bps);
-        else
-            return null;
+    private boolean containsEdgePoint(LinkedList<int[]> ps) {
+        for (int[] p : ps) {
+            if (isEdgePoint(p)) return true;
+        }
+        return false;
     }
 
     /**
-     * @param Complete box-points.
-     * @return Points in bps with at least one side "free".
+     * @return True if p is an edge-point, i.e a point at the
+     * edge of the box-image.
      */
-    private LinkedList<int[]> getSidePoints(LinkedList<int[]> bps) {
-        LinkedList<int[]> sps = new LinkedList<int[]>();
-
-        for (int[] p : bps) {
-            if (getBoxPointNeighbors(p).size() > 0)
-                sps.add(p);
-        }
-        return sps;
+    private boolean isEdgePoint(int[] p) {
+        return
+            p[0] == 0 ||
+            p[0] == map[0].length-1 ||
+            p[1] == 0 ||
+            p[1] == map.length-1;
     }
+
+    /**
+     * @return True if box is inside box-image.
+     */
+    private boolean isInside(Box b) {
+        int[][] cs = Math2.toInt(b.getCorners());
+        return isBoxPoint(cs[0]) && isBoxPoint(cs[1]) &&
+            isBoxPoint(cs[2]) && isBoxPoint(cs[3]);
+    }
+
+    // /**
+    //  * From an array of points (making up something like a box),
+    //  * finds the corner-points.
+    //  *
+    //  * @param bps Complete set of box-points.
+    //  * @return [topL, topR, bottomR, bottomL], or NULL is shape
+    //  * isn't rectangle-like.
+    //  */
+    // public/***/ int[][] findCorners(LinkedList<int[]> bps) {
+    //     LinkedList<int[]> sps = getSidePoints(bps);
+    //     if (sps.size() < 4) return null;
+
+    //     int[] diag0 = Math2.getFurthest(sps);
+    //     int[] c0 = sps.get( diag0[0] );
+    //     int[] c1 = sps.get( diag0[1] );
+    //     Math2.removeIndexes(diag0, sps);
+
+    //     Math2.removeClose(c0, sps, MIN_CORNER_PADDING);
+    //     Math2.removeClose(c1, sps, MIN_CORNER_PADDING);
+    //     if (sps.size() < 2) return null;
+
+    //     int[] diag1 = Math2.getFurthest(sps);
+    //     int[] c2 = sps.get( diag1[0] );
+    //     int[] c3 = sps.get( diag1[1] );
+
+    //     int[][] cs = new int[][]{c0, c1, c2, c3};
+
+    //     if (resemblesRectangleCorners(cs))
+    //         return orderByDirection(cs, bps);
+    //     else
+    //         return null;
+    // }
+
+    // /**
+    //  * @param Complete set of  box-points.
+    //  * @return Points in bps with at least one side "free".
+    //  */
+    // private LinkedList<int[]> getOuterBoxPoints(LinkedList<int[]> bps) {
+    //     LinkedList<int[]> sps = new LinkedList<int[]>();
+
+    //     for (int[] p : bps) {
+    //         if (getBoxPointNeighbors(p).size() > 0)
+    //             sps.add(p);
+    //     }
+    //     return sps;
+    // }
 
     // public/***/ int[][] findCorners(LinkedList<int[]> ps) {
     //     int R = 27;
@@ -538,13 +548,13 @@ public class LabelLayoutIterator {
     //     throw new RuntimeException("Failed to make sence of box.");
     // }
 
-    /**!
-     * @param cs [left,upp,right,down]-corners
-     * @return True if corners resemble those of a rectangle.
-     */
-    public static boolean resemblesRectangleCorners(int[][] cs) {
-        return !Math2.hasDuplicates(cs);
-    }
+    // /**!
+    //  * @param cs [left,upp,right,down]-corners
+    //  * @return True if corners resemble those of a rectangle.
+    //  */
+    // public static boolean resemblesRectangleCorners(int[][] cs) {
+    //     return !Math2.hasDuplicates(cs);
+    // }
 
     /**
      * Order given cornerpoints by direction determined from all
@@ -556,7 +566,7 @@ public class LabelLayoutIterator {
      * order (weird appearance).
      */
     public/***/ int[][] orderByDirection(int[][] cs, LinkedList<int[]> bps) {
-        cs = orderConsecutively(cs);
+        //cs = orderConsecutively(cs);
         int[][][] legs = new int[][][]{new int[][]{cs[0], cs[1]},
                                        new int[][]{cs[1], cs[2]},
                                        new int[][]{cs[2], cs[3]},
@@ -590,33 +600,33 @@ public class LabelLayoutIterator {
         return new int[][]{topL, topR, bottomR, bottomL};
     }
 
-    /**
-     * @param cs Random-ordered corner-points.
-     * @return cs ordered consecutively (start somewhere and walk
-     * whole way round in CLOCKWISE direction).
-     */
-    public/***/ int[][] orderConsecutively(int[][] cs) {
-        int[] diag = Math2.getFurthest(cs);
-        int headI = diag[0];
-        int oppositeI = diag[1];
+    // /**
+    //  * @param cs Random-ordered corner-points.
+    //  * @return cs ordered consecutively (start somewhere and walk
+    //  * whole way round in CLOCKWISE direction).
+    //  */
+    // public/***/ int[][] orderConsecutively(int[][] cs) {
+    //     int[] diag = Math2.getFurthest(cs);
+    //     int headI = diag[0];
+    //     int oppositeI = diag[1];
 
-        int neighborIs[] = Math2.getComplement(diag, new int[]{0,1,2,3});
+    //     int neighborIs[] = Math2.getComplement(diag, new int[]{0,1,2,3});
 
-        // System.out.println(Arrays.deepToString(cs));
-        // System.out.println(cs.length);
-        // System.out.println(neighborIs.length);
-        // System.out.println("");
+    //     // System.out.println(Arrays.deepToString(cs));
+    //     // System.out.println(cs.length);
+    //     // System.out.println(neighborIs.length);
+    //     // System.out.println("");
 
-        int[] p0 = cs[ neighborIs[0] ];
-        int[] p1 = cs[ headI ];
-        int[] p2 = cs[ neighborIs[1] ];
-        int[] p3 = cs[ oppositeI ];
+    //     int[] p0 = cs[ neighborIs[0] ];
+    //     int[] p1 = cs[ headI ];
+    //     int[] p2 = cs[ neighborIs[1] ];
+    //     int[] p3 = cs[ oppositeI ];
 
-        if (Math2.rightTurn(p0, p1, p2))
-            return new int[][]{p0, p1, p2, p3};
-        else
-            return new int[][]{p3, p2, p1, p0};
-    }
+    //     if (Math2.rightTurn(p0, p1, p2))
+    //         return new int[][]{p0, p1, p2, p3};
+    //     else
+    //         return new int[][]{p3, p2, p1, p0};
+    // }
 
     /**
      * Start in middle between p1,p2, walk towards box-points' center,

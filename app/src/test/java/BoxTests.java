@@ -9,14 +9,14 @@ import java.util.Arrays;
 public class BoxTests {
 
 
-    @Test
-    public void constructor_cornerPoints() {
-        int[] tl = new int[]{0, 0};
-        int[] tr = new int[]{1, 1};
-        int[] br = new int[]{0, 2};
-        int[] bl = new int[]{-1, 1};
-        new Box(tl, tr, br, bl);
-    }
+    // @Test
+    // public void constructor_cornerPoints() {
+    //     int[] tl = new int[]{0, 0};
+    //     int[] tr = new int[]{1, 1};
+    //     int[] br = new int[]{0, 2};
+    //     int[] bl = new int[]{-1, 1};
+    //     new Box(tl, tr, br, bl);
+    // }
 
     @Test
     public void getRotation() {

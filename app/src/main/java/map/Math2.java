@@ -32,6 +32,25 @@ public class Math2 {
     }
 
     /**
+     * @param p Point.
+     * @param pv Point on line.
+     * @param v Vector of line. line=pv+t*v, t<-R.
+     * @return Distance between point and line (min distance, i.e
+     * length of orthogonal vector from point to line). NEGATIVE if
+     * left turn while walking along line, POSITIVE if right turn.
+     */
+    public static double distance(double[] p, double[] pv, double[] v) {
+        double[] ortov = rotate(v, -90);
+        double[] ip = intersectPoint(pv, v, p, ortov);
+
+        if (rightTurn(pv, ip, p)) return distance(p, ip);
+        else return -distance(p, ip);
+    }
+    public static double distance(int[] p, double[] pv, double[] v) {
+        return distance(toDouble(p), pv, v);
+    }
+
+    /**
      * @return Angle with the horizontal axis, in degrees.
      */
     public static double angle(double[] v) {
@@ -563,10 +582,13 @@ public class Math2 {
     /**
      * @return True if you turn right at p1 when walking p0-p1-p2.
      */
-    public static boolean rightTurn(int[] p0, int[] p1, int[] p2) {
-        int[] v0 = Math2.minus(p1, p0);
-        int[] v1 = Math2.minus(p2, p1);
+    public static boolean rightTurn(double[] p0, double[] p1, double[] p2) {
+        double[] v0 = Math2.minus(p1, p0);
+        double[] v1 = Math2.minus(p2, p1);
         return Math2.angle(v0, v1) > 180;
+    }
+    public static boolean rightTurn(int[] p0, int[] p1, int[] p2) {
+        return rightTurn(Math2.toDouble(p0), Math2.toDouble(p1), Math2.toDouble(p2));
     }
 
     /**
@@ -611,23 +633,34 @@ public class Math2 {
                              A[1][0]*b[0] + A[1][1]*b[1] };
     }
 
-    /**
-     * How long walk from point p0 towards p1 (pDist), and q0 towards
-     * q1 (qDist) until they intersect.
-     *
-     * @return [pDist, qDist]
-     */
-    public static double[] intersectDistance(double[] p0, double[] p1, double[] q0, double[] q1) {
-        double[] pv = normalize(minus(p1, p0));
-        double[] qv = Math2.scale(normalize(minus(q1, q0)), -1);
-        double[][] A = transpose(new double[][]{pv, qv});
-        double[] b = minus(q0, p0);
-        return solve(A, b);
-    }
+    // /**
+    //  * How long walk from point p0 along v0 (pDist), and from p1 along
+    //  * v1 (qDist) until they intersect.
+    //  *
+    //  * @return [pDist, qDist]
+    //  */
+    // public static double[] intersectDistance(double[] p0, double[] v0, double[] p1, double[] v1) {
+    //     double[] pv = normalize(minus(p1, p0));
+    //     double[] qv = Math2.scale(normalize(minus(q1, q0)), -1);
+    //     double[][] A = transpose(new double[][]{pv, qv});
+    //     double[] b = minus(q0, p0);
+    //     return solve(A, b);
+    // }
 
-    public static double[] intersectPoint(double[] p0, double[] p1, double[] q0, double[] q1) {
-        double[] d = intersectDistance(p0, p1, q0, q1);
-        return step(q0, minus(q1, q0), d[1]);
+    /**
+     * @prarm p0,v0 Line0 = p0 + t*v0, t<-R
+     * @param p1,v1 Line1 = p1 + t*v1, t<-R
+     * @return Point where lines intersect.
+     */
+    public static double[] intersectPoint(double[] p0, double[] v0, double[] p1, double[] v1) {
+        v0 = normalize(v0);
+        v1 = normalize(Math2.scale(v1, -1));
+        double[][] A = transpose(new double[][]{v0, v1});
+        double[] b = minus(p1, p0);
+        double[] xs = solve(A, b);
+        double d0 = xs[0];
+        double d1 = xs[1];
+        return step(p0, v0, d0);
     }
 
     /**
