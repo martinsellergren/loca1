@@ -30,14 +30,15 @@ public class Box {
     }
 
     /**
-     * Constructs a box by fitting a rectangle to points.
+     * Constructs a box by fitting a rotated rectangle to points.
      * Every point will fit inside the resulting box.
      *
      * @paran ps Points making up something like a the symbol [
      * (at any rotation).
      */
     public Box(LinkedList<int[]> ps) {
-        double[][] cs = orderByDirection(fitRectangle(ps), ps);
+        double[][] cs = fitRectangle(ps);
+        cs = orderByDirection(cs, ps);
 
         this.topL = cs[0];
         this.topR = cs[1];
@@ -243,8 +244,8 @@ public class Box {
     @Override
     public String toString() {
         return
-            "topL: " + Arrays.toString(topL) + ", " +
-            "topR: " + Arrays.toString(topR) + ", " +
+            "topL: " + Arrays.toString(topL) + "\n" +
+            "topR: " + Arrays.toString(topR) + "\n" +
             "height: " + height;
     }
 
@@ -300,18 +301,37 @@ public class Box {
      * (i.e start somewhere and walk whole way round in CLOCKWISE
      * direction).
      */
-    private static double[][] fitRectangle(LinkedList<int[]> ps) {
+    public/***/ static double[][] fitRectangle(LinkedList<int[]> ps) {
         ps = getOuterPoints(ps);
 
-        double bestFitness = Double.MIN_VALUE;
+        double step = 10;
+        double r = -step;
+        double fact = 0.25;
+        double lastArea = Double.MAX_VALUE;
+        double[][] cs = null;
+
+        for (int i = 0; i < 15; i++) {
+            r += step;
+            cs = fitFromRotation(r, ps);
+            double a = Math2.area(cs);
+            if (a > lastArea) step *= -fact;
+            lastArea = a;
+        }
+
+        return cs;
+    }
+    public/***/ static double[][] fitRectangle_(LinkedList<int[]> ps) {
+        ps = getOuterPoints(ps);
+
+        double minArea = Double.MAX_VALUE;
         double[][] bestCs = null;
 
-        for (double r = 0; r < 45; r+=1) {
+        for (double r = 0; r < 90; r+=5) {
             double[][] cs = fitFromRotation(r, ps);
-            double fitness = evaluateFit(cs, ps);
+            double area = Math2.area(cs);
 
-            if (fitness > bestFitness) {
-                bestFitness = fitness;
+            if (area < minArea) {
+                minArea = area;
                 bestCs = cs;
             }
         }
@@ -323,7 +343,7 @@ public class Box {
      * @param ps Points.
      * @return Points in ps with at least one side "free".
      */
-    private static LinkedList<int[]> getOuterPoints(LinkedList<int[]> ps) {
+    public/***/ static LinkedList<int[]> getOuterPoints(LinkedList<int[]> ps) {
         LinkedList<int[]> outer = new LinkedList<int[]>();
 
         for (int[] p : ps) {
@@ -348,15 +368,15 @@ public class Box {
      * @param ps Points inside fit rectangle.
      * @return [c0,c1,c2,c3] of fit rectangle ordered consecutively.
      */
-    private static double[][] fitFromRotation(double rot, LinkedList<int[]> ps) {
+    public/***/ static double[][] fitFromRotation(double rot, LinkedList<int[]> ps) {
         double[] lr = Math2.getDirVector(rot);
         double[] ud = Math2.rotate(lr, -90);
         double[] mid = Math2.mean(ps);
 
         int[][] lrExtremes = furthestFromLine(mid, ud, ps);
         int[][] udExtremes = furthestFromLine(mid, lr, ps);
-        double[] left = Math2.toDouble(lrExtremes[0]);
-        double[] right = Math2.toDouble(lrExtremes[1]);
+        double[] left = Math2.toDouble(lrExtremes[1]);
+        double[] right = Math2.toDouble(lrExtremes[0]);
         double[] top = Math2.toDouble(udExtremes[0]);
         double[] bot = Math2.toDouble(udExtremes[1]);
 
@@ -374,12 +394,15 @@ public class Box {
      * If no point is located on one of the sides, returns the closest
      * point (and the futhest) on the other side.
      *
+     * Walk along provided line, turn left (any angle) towards pLeft
+     * and right (any angle) towards pRight.
+     *
      * @param p Point.
      * @param v Vector. p+t*v='the line', (t<-R)
      * @param ps List of points.
-     * @return [p0, p1]
+     * @return [pLeft, pRight]
      */
-    private static int[][] furthestFromLine(double[] p, double[] v, LinkedList<int[]> ps) {
+    public/***/ static int[][] furthestFromLine(double[] p, double[] v, LinkedList<int[]> ps) {
         double minD = Double.MAX_VALUE;
         double maxD = Double.MIN_VALUE;
         int minI = -1;
@@ -395,37 +418,37 @@ public class Box {
             }
             if (d > maxD) {
                 maxD = d;
-                minI = i;
+                maxI = i;
             }
         }
 
         return new int[][]{ ps.get(minI), ps.get(maxI) };
     }
 
-    /**
-     * How good fits rectangle to points?
-     *
-     * @param cs [c0,c1,c2,c3] of rectangle ordered consecutively.
-     * @param ps Points used for the rectangle-fit.
-     * @return Goodness of fit, a value >=0 where low is good.
-     * Implemented as sum of distances from every point to "distance to
-     * nearest rectangle-side".
-     */
-    private static double evaluateFit(double[][] cs, LinkedList<int[]> ps) {
-        double sum = 0;
-        double[] lr = Math2.minus(cs[1], cs[0]);
-        double[] ud = Math2.minus(cs[2], cs[1]);
+    // /**
+    //  * How good fits rectangle to points?
+    //  *
+    //  * @param cs [c0,c1,c2,c3] of rectangle ordered consecutively.
+    //  * @param ps Points used for the rectangle-fit.
+    //  * @return Goodness of fit, a value >=0 where LOW IS GOOD.
+    //  * Implemented as sum of distances from every point to "distance to
+    //  * nearest rectangle-side".
+    //  */
+    // public/***/ static double evaluateFit(double[][] cs, LinkedList<int[]> ps) {
+    //     double sum = 0;
+    //     double[] lr = Math2.minus(cs[1], cs[0]);
+    //     double[] ud = Math2.minus(cs[2], cs[1]);
 
-        for (int[] p : ps) {
-            double d0 = Math.abs(Math2.distance(p, cs[0], ud));
-            double d1 = Math.abs(Math2.distance(p, cs[0], lr));
-            double d2 = Math.abs(Math2.distance(p, cs[2], ud));
-            double d3 = Math.abs(Math2.distance(p, cs[2], lr));
-            sum += Math.min( Math.min(d0, d1), Math.min(d2, d3) );
-        }
+    //     for (int[] p : ps) {
+    //         double d0 = Math.abs(Math2.distance(p, cs[0], ud));
+    //         double d1 = Math.abs(Math2.distance(p, cs[0], lr));
+    //         double d2 = Math.abs(Math2.distance(p, cs[2], ud));
+    //         double d3 = Math.abs(Math2.distance(p, cs[2], lr));
+    //         sum += Math.min( Math.min(d0, d1), Math.min(d2, d3) );
+    //     }
 
-        return sum;
-    }
+    //     return sum;
+    // }
 
     /**
      * Order given cornerpoints by direction determined from the
@@ -435,27 +458,30 @@ public class Box {
      * @param bps Box-points.
      * @return [topL, topR, bottomR, bottomL]
      */
-    private static double[][] orderByDirection(double[][] cs, LinkedList<int[]> ps) {
-        double SUFFICIENT_SPACE = 5;
+    public/***/ static double[][] orderByDirection(double[][] cs, LinkedList<int[]> ps) {
+        double SUFFICIENT_OPENING_SIZE = 1.5;
 
-        double maxS = Double.MIN_VALUE;
-        int maxI = -1;
+        int shortSideI = 0;
+        if (Math2.distance(cs[0], cs[1]) > Math2.distance(cs[1], cs[2]))
+            shortSideI = 1;
 
-        for (int i = 0; i <= 3; i++) {
-            double[] c0 = cs[ i ];
-            double[] c1 = cs[ (i+1)%4 ];
-            double s = findBetweenSpace(c0, c1, ps);
+        double os0 = openingSize(cs[ shortSideI ], cs[ shortSideI+1 ], ps);
+        double os2 = openingSize(cs[ shortSideI+2 ], cs[ (shortSideI+3)%4 ], ps);
+        int trI = shortSideI;
+        if (os0 < os2) trI = shortSideI+2;
 
-            if (s > maxS) {
-                maxS = s;
-                maxI = i;
-            }
+        if (Math.max(os0, os2) < SUFFICIENT_OPENING_SIZE) {
+            int longSideI = shortSideI+1;
+            double os1 = openingSize(cs[ longSideI ], cs[ longSideI+1 ], ps);
+            double os3 = openingSize(cs[ (longSideI+2)%4 ], cs[ (longSideI+3)%4 ], ps);
+            trI = longSideI;
+            if (os1 < os3) trI = (longSideI+2) % 4;
         }
 
-        double[] tr = cs[ maxI ];
-        double[] br = cs[ (maxI+1)%4 ];
-        double[] bl = cs[ (maxI+2)%4 ];
-        double[] tl = cs[ (maxI+3)%4 ];
+        double[] tr = cs[ trI ];
+        double[] br = cs[ (trI+1)%4 ];
+        double[] bl = cs[ (trI+2)%4 ];
+        double[] tl = cs[ (trI+3)%4 ];
 
         return new double[][]{tl, tr, br, bl};
     }
@@ -467,9 +493,11 @@ public class Box {
      * @param ps Points making up something like the symbol [.
      * @return "Opening-size indicator"
      */
-    private static double findBetweenSpace(double[] p0, double[] p1, LinkedList<int[]> ps) {
+    public/***/ static double openingSize(double[] p0, double[] p1, LinkedList<int[]> ps) {
         int[] start = Math2.toInt(Math2.mean(new double[][]{p0, p1}));
-        int[] end = Math2.toInt(Math2.mean(ps));
+        int[] mid = Math2.toInt(Math2.mean(ps));
+        double length = Math2.distance(start, mid) * 1.5;
+        int[] end = Math2.step(start, Math2.toDouble(Math2.minus(mid, start)), length);
 
         PixelWalk pw = new PixelWalk(start, end);
         int[] p;
@@ -478,6 +506,7 @@ public class Box {
             if (Math2.contains(p, ps)) return Math2.distance(p, start);
         }
 
-        throw new RuntimeException();
+        return 0;
+        //throw new RuntimeException();
     }
 }

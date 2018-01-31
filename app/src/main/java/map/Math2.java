@@ -37,13 +37,15 @@ public class Math2 {
      * @param v Vector of line. line=pv+t*v, t<-R.
      * @return Distance between point and line (min distance, i.e
      * length of orthogonal vector from point to line). NEGATIVE if
-     * left turn while walking along line, POSITIVE if right turn.
+     * left turn while walking along line, POSITIVE if right turn
+     * (i.e walk from p along pv in positive direction and turn
+     * left/right towards point..walk any length, turn any angle).
      */
     public static double distance(double[] p, double[] pv, double[] v) {
         double[] ortov = rotate(v, -90);
         double[] ip = intersectPoint(pv, v, p, ortov);
 
-        if (rightTurn(pv, ip, p)) return distance(p, ip);
+        if (rightTurn(pv, step(pv, v), p)) return distance(p, ip);
         else return -distance(p, ip);
     }
     public static double distance(int[] p, double[] pv, double[] v) {
@@ -200,6 +202,16 @@ public class Math2 {
     }
     public static int[] step(int[] start, double[] dir, double l) {
         return toInt(step(toDouble(start), dir, l));
+    }
+
+    /**
+     * Step length=1 along dir.
+     */
+    public static double[] step(double[] start, double[] dir) {
+        return step(start, dir, 1);
+    }
+    public static int[] step(int[] start, double[] dir) {
+        return step(start, dir, 1);
     }
 
     /**
@@ -673,6 +685,13 @@ public class Math2 {
             new double[]{ A[0][1], A[1][1] }};
     }
 
+    /**
+     * @param cs Corner-points of a rectangle.
+     * @return Area of rectangle.
+     */
+    public static double area(double[][] cs) {
+        return distance(cs[0], cs[2]) * distance(cs[1], cs[3]);
+    }
 
 
     //****************************************CONVERSIONS

@@ -358,7 +358,7 @@ public class LabelLayoutIterator {
     /**
      * @return True if any point in ps is an edge-point.
      */
-    private boolean containsEdgePoint(LinkedList<int[]> ps) {
+    public/***/ boolean containsEdgePoint(LinkedList<int[]> ps) {
         for (int[] p : ps) {
             if (isEdgePoint(p)) return true;
         }
@@ -369,7 +369,7 @@ public class LabelLayoutIterator {
      * @return True if p is an edge-point, i.e a point at the
      * edge of the box-image.
      */
-    private boolean isEdgePoint(int[] p) {
+    public/***/ boolean isEdgePoint(int[] p) {
         return
             p[0] == 0 ||
             p[0] == map[0].length-1 ||
@@ -380,10 +380,20 @@ public class LabelLayoutIterator {
     /**
      * @return True if box is inside box-image.
      */
-    private boolean isInside(Box b) {
+    public/***/ boolean isInside(Box b) {
         int[][] cs = Math2.toInt(b.getCorners());
-        return isBoxPoint(cs[0]) && isBoxPoint(cs[1]) &&
-            isBoxPoint(cs[2]) && isBoxPoint(cs[3]);
+        return
+            isInside(cs[0]) && isInside(cs[1]) &&
+            isInside(cs[2]) && isInside(cs[3]);
+    }
+
+    /**
+     * @return True if point p is inside box-image.
+     */
+    public/***/ boolean isInside(int[] p) {
+        return
+            p[0] >= 0 && p[0] < map[0].length &&
+            p[1] >= 0 && p[1] < map.length;
     }
 
     // /**
@@ -423,7 +433,7 @@ public class LabelLayoutIterator {
     //  * @param Complete set of  box-points.
     //  * @return Points in bps with at least one side "free".
     //  */
-    // private LinkedList<int[]> getOuterBoxPoints(LinkedList<int[]> bps) {
+    // public/***/ LinkedList<int[]> getOuterBoxPoints(LinkedList<int[]> bps) {
     //     LinkedList<int[]> sps = new LinkedList<int[]>();
 
     //     for (int[] p : bps) {
@@ -468,7 +478,7 @@ public class LabelLayoutIterator {
     //  * @param bps Box-points.
     //  * @return All box-points in bps that has exactly two sides "free".
     //  */
-    // private LinkedList<int[]> getCornerCandidates(LinkedList<int[]> bps) {
+    // public/***/ LinkedList<int[]> getCornerCandidates(LinkedList<int[]> bps) {
     //     LinkedList<int[]> cands = new LinkedList<int[]>();
 
     //     for (int[] p : bps) {
@@ -556,49 +566,49 @@ public class LabelLayoutIterator {
     //     return !Math2.hasDuplicates(cs);
     // }
 
-    /**
-     * Order given cornerpoints by direction determined from all
-     * box-points (the opening in the C).
-     *
-     * @param cs The four corner-points of the box in random order.
-     * @param bps All box-points (including cs).
-     * @return [topL, topR, bottomR, bottomL] or NULL if failed to
-     * order (weird appearance).
-     */
-    public/***/ int[][] orderByDirection(int[][] cs, LinkedList<int[]> bps) {
-        //cs = orderConsecutively(cs);
-        int[][][] legs = new int[][][]{new int[][]{cs[0], cs[1]},
-                                       new int[][]{cs[1], cs[2]},
-                                       new int[][]{cs[2], cs[3]},
-                                       new int[][]{cs[3], cs[0]}};
-        int maxS = Integer.MIN_VALUE;
-        int maxS_index = -1;
-        int i = -1;
+    // /**
+    //  * Order given cornerpoints by direction determined from all
+    //  * box-points (the opening in the C).
+    //  *
+    //  * @param cs The four corner-points of the box in random order.
+    //  * @param bps All box-points (including cs).
+    //  * @return [topL, topR, bottomR, bottomL] or NULL if failed to
+    //  * order (weird appearance).
+    //  */
+    // public/***/ int[][] orderByDirection(int[][] cs, LinkedList<int[]> bps) {
+    //     //cs = orderConsecutively(cs);
+    //     int[][][] legs = new int[][][]{new int[][]{cs[0], cs[1]},
+    //                                    new int[][]{cs[1], cs[2]},
+    //                                    new int[][]{cs[2], cs[3]},
+    //                                    new int[][]{cs[3], cs[0]}};
+    //     int maxS = Integer.MIN_VALUE;
+    //     int maxS_index = -1;
+    //     int i = -1;
 
-        for (int[][] leg : legs) {
-            i++;
-            int[] p1 = leg[0];
-            int[] p2 = leg[1];
-            int s = findBetweenSpace(p1, p2, bps);
+    //     for (int[][] leg : legs) {
+    //         i++;
+    //         int[] p1 = leg[0];
+    //         int[] p2 = leg[1];
+    //         int s = findBetweenSpace(p1, p2, bps);
 
-            if (s == -1) return null;
+    //         if (s == -1) return null;
 
-            if (s > maxS) {
-                maxS = s;
-                maxS_index = i;
-            }
-        }
+    //         if (s > maxS) {
+    //             maxS = s;
+    //             maxS_index = i;
+    //         }
+    //     }
 
-        int[][] rightLeg = legs[maxS_index];
-        int[] topR = rightLeg[0];
-        int[] bottomR = rightLeg[1];
+    //     int[][] rightLeg = legs[maxS_index];
+    //     int[] topR = rightLeg[0];
+    //     int[] bottomR = rightLeg[1];
 
-        int[][] leftLeg = legs[(maxS_index + 2) % 4];
-        int[] topL = leftLeg[1];
-        int[] bottomL = leftLeg[0];
+    //     int[][] leftLeg = legs[(maxS_index + 2) % 4];
+    //     int[] topL = leftLeg[1];
+    //     int[] bottomL = leftLeg[0];
 
-        return new int[][]{topL, topR, bottomR, bottomL};
-    }
+    //     return new int[][]{topL, topR, bottomR, bottomL};
+    // }
 
     // /**
     //  * @param cs Random-ordered corner-points.
@@ -628,29 +638,29 @@ public class LabelLayoutIterator {
     //         return new int[][]{p3, p2, p1, p0};
     // }
 
-    /**
-     * Start in middle between p1,p2, walk towards box-points' center,
-     * how long til box-point?
-     *
-     * @return Box-point distance, or -1 if no between-space..
-     */
-    public/***/ int findBetweenSpace(int[] p1, int[] p2, LinkedList<int[]> bps) {
-        int[] start = Math2.toInt(Math2.mean(new int[][]{p1, p2}));
-        int[] mid = Math2.toInt(Math2.mean(bps));
-        double[] dir = Math2.toDouble(Math2.minus(mid, start));
-        double length = Math2.distance(start, mid) * 2;
-        int[] end = Math2.step(start, dir, length);
+    // /**
+    //  * Start in middle between p1,p2, walk towards box-points' center,
+    //  * how long til box-point?
+    //  *
+    //  * @return Box-point distance, or -1 if no between-space..
+    //  */
+    // public/***/ int findBetweenSpace(int[] p1, int[] p2, LinkedList<int[]> bps) {
+    //     int[] start = Math2.toInt(Math2.mean(new int[][]{p1, p2}));
+    //     int[] mid = Math2.toInt(Math2.mean(bps));
+    //     double[] dir = Math2.toDouble(Math2.minus(mid, start));
+    //     double length = Math2.distance(start, mid) * 2;
+    //     int[] end = Math2.step(start, dir, length);
 
-        PixelWalk pw = new PixelWalk(start, end);
-        int[] p;
+    //     PixelWalk pw = new PixelWalk(start, end);
+    //     int[] p;
 
-        for (int d = 0; (p = pw.next()) != null; d++) {
-            if (isBoxPoint(p)) return d;
-        }
+    //     for (int d = 0; (p = pw.next()) != null; d++) {
+    //         if (isBoxPoint(p)) return d;
+    //     }
 
-        return -1;
-        //throw new RuntimeException();
-    }
+    //     return -1;
+    //     //throw new RuntimeException();
+    // }
 
 
     /**

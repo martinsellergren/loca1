@@ -28,7 +28,7 @@ public class Math2Tests {
     }
 
     @Test
-    public void distance() {
+    public void distance_points() {
         double[] p1 = new double[]{1,1};
         double[] p2 = new double[]{-1,-1};
         assertEquals(Math2.distance(p1,p2), Math.sqrt(8), 0.0001);
@@ -38,6 +38,19 @@ public class Math2Tests {
         assertEquals(Math2.distance(p1,p2), 1, 0.0001);
         p2 = new double[]{2,1};
         assertEquals(Math2.distance(p1,p2), 1, 0.0001);
+    }
+
+    @Test
+    public void distance_pointLine() {
+        double[] p = new double[]{0, 0};
+        double[] pv = new double[]{1, 1};
+        double[] v = new double[]{1, 1};
+        assertEquals(0, Math2.distance(p, pv, v), 0.00001);
+
+        p = new double[]{31, 13};
+        pv = new double[]{0, 0};
+        v = new double[]{1, 1};
+        assertEquals(-12.727922061357855, Math2.distance(p, pv, v), 0.00001);
     }
 
     @Test
