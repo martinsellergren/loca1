@@ -7,12 +7,12 @@ public class MapRequestTests {
 
     // @Test
     // public void fetch3() {
-    //     double west = 18.08246612548828;
-    //     double east = 18.27404022216797;
-    //     double north = 59.39407306645033;
-    //     double south = 59.33564087770051;
-    //     int zoom = 14;
-    //     boolean highQ = true;
+    //     double west = 18.146238;
+    //     double east = 18.191557;
+    //     double north = 59.383059;
+    //     double south = 59.371692;
+    //     int zoom = 17;
+    //     boolean highQ = false;
     //     MapImageView view = new MapImageView(west, north, east, south, zoom, highQ);
     //     MapRequest req = new MapRequest(view);
 
@@ -92,12 +92,22 @@ public class MapRequestTests {
     // }
 
     // @Test
-    // public void fetch_Lidingo() {
+    // public void fetch_lidingo() {
     //     double west = 18.08246612548828;
     //     double east = 18.27404022216797;
     //     double north = 59.39407306645033;
     //     double south = 59.33564087770051;
     //     int[] zs = new int[] {14};
+    //     fetchBoundsHelper(west, north, east, south, zs);
+    // }
+
+    // @Test
+    // public void fetch_rudboda() {
+    //     double west = 18.146238;
+    //     double east = 18.191557;
+    //     double north = 59.383059;
+    //     double south = 59.371692;
+    //     int[] zs = new int[] {17};
     //     fetchBoundsHelper(west, north, east, south, zs);
     // }
 

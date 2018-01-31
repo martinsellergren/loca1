@@ -301,12 +301,12 @@ public class Box {
      * (i.e start somewhere and walk whole way round in CLOCKWISE
      * direction).
      */
-    public/***/ static double[][] fitRectangle(LinkedList<int[]> ps) {
+    public/***/ static double[][] fitRectangle_(LinkedList<int[]> ps) {
         ps = getOuterPoints(ps);
 
         double step = 10;
         double r = -step;
-        double fact = 0.25;
+        double fact = 0.3;
         double lastArea = Double.MAX_VALUE;
         double[][] cs = null;
 
@@ -320,7 +320,7 @@ public class Box {
 
         return cs;
     }
-    public/***/ static double[][] fitRectangle_(LinkedList<int[]> ps) {
+    public/***/ static double[][] fitRectangle(LinkedList<int[]> ps) {
         ps = getOuterPoints(ps);
 
         double minArea = Double.MAX_VALUE;
@@ -506,7 +506,6 @@ public class Box {
             if (Math2.contains(p, ps)) return Math2.distance(p, start);
         }
 
-        return 0;
-        //throw new RuntimeException();
+        throw new RuntimeException("Boxes overlapping?");
     }
 }
