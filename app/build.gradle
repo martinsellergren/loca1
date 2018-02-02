@@ -35,6 +35,10 @@ task ptest(type: GradleBuild) {
     tasks = ['makePublic', 'test', 'backToDefaults']
 }
 
+task b(type: GradleBuild) {
+     tasks = ['clean', 'installDist']
+}
+
 task t(type: GradleBuild) {
      tasks = ['clean', 'installDist', 'test']
 }

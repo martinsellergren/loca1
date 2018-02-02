@@ -69,25 +69,44 @@ LabelLayoutIterator
     (alphaTreshold: pixels alpha-value- over means show, under means hide)
     next()::LabelLayout/NULL (starts search at startX/Y, and sets)
 
-    findBoxPoint(startX::int, startY::int)::Point/NULL
-    expandToRow(box-point::Point)::Box[]
-    addRows(UP/DOWN, startRow::Box[], labelLayout(accumulator, contains startRow))::LabelLayout
+    findBoxPoint(startX::int, startY::int)::Point/NULL(if no more box-points)
+    expandToRow(box-point)::Box[]/NULL(if box-point not expandable at all)
+        (if nothing there, edge or edge-box(null): stops looking in that dir)
+    addRows(UP/DOWN, startRow::Box[], lay(accumulator, contains startRow)::LabelLayout)::LabelLayout
+        (done if nothing neighbor-row-like there)
     removeLabel(lay::LabelLayout)::Void
+    expandAndRemove(Point)::Void
+    isEdgeLabel(labelLayout)::boolean
 
+    expandToBox(box-point)::Box/NULL(if at box-image-edge)
     addBoxes(LEFT/RIGHT, startBox::Box, accum(contains startBox)::Box[])::Box[]
+        (done if nothing neighbor-box-like there)
 
-    findNeighborRow(UP/DOWN, startRow:Box[])::Box[]/NULL
-    findNeighborBox(LEFT/RIGHT, startBox::Box)::Box/NULL
+    findNeighborRow(UP/DOWN, startRow::Box[])::Box[]/NULL(if nothing neighbor-row-like there)
+    findNeighborBox(LEFT/RIGHT, startBox)::Box/NULL(if nothing neighbor-box-like there)
 
-    expandToBox(box-point::Point)::Box
-    expandToBoxPoints(boxed-Point)::Point[]
-    getCorners(points::Point[])::Point[](0Left 1Up 2Right 3Down)
-    findExtremes(Point[])::Point[](0Left 1Up 2Right 3Down)
-    rotate(Point[], deg)::Point[]
-    orderByDirection(cornerPoints::Point[4st], boxPoints::Point[])::Point[left,up,right,down]
-    orderConsecutively(cornerPoints::Point[4st])::Point[orderd consecutively]
-    getBetweenSpace(p1::Point, p2::Point)::int
-    (start in middle between p1,p2, walk nesw, how long til box-point?)
+
+
+    # findBoxPoint(startX::int, startY::int)::Point/NULL
+    # expandToRow(box-point::Point)::Box[]
+    #     (result may start/end in null: outside of box-image. [null] possible)
+    # addRows(UP/DOWN, startRow::Box[], lay(accumulator, contains startRow)::Box[][])::Box[][]
+    #     (done if nothing there OR startRow has(/finds row with) null start/end)
+    #     (always adds found row to accum, even if null start/end..)
+    # removeLabel(lay::LabelLayout)::Void
+    #     (ignores null-start/ends)
+    # expandAndRemove(p::int[])::Void
+
+    # expandToBox(box-point::Point)::Box/NULL (null if at box-image-edge)
+    # addBoxes(LEFT/RIGHT, startBox::Box, accum(contains startBox)::Box[])::Box[]
+    #     (done if nothing there OR startBox is null)
+
+    # findNeighborRow(UP/DOWN, startRow:Box[])::Box[]/NULL
+    #     (nothing there::null, something that failed to expand to box::[null],
+    #     first boxes then edge::[(null),b,b,(null)], all good::[b,b,b])
+    # findNeighborBox(LEFT/RIGHT, startBox::Box)::Box/NULL
+    #     (returns null if 1.nothing there. 2.box-image-edge there. 3.bp expanded to null(because edge))
+    # somethingThere(LEFT/RIGHT, startBox::Box, searchLength::double)::boolean
 
 
 Label
@@ -138,7 +157,7 @@ LabelLayout
     //     hasMore()::boolean(sets next)
 
 Box
-    new Box(topLeft,topRight,bottomRight,bottomLeft)
+    new Box(ps::list) (fit from points, symbol [)
     topLeft,topRight,height
     //containsPoint(x::int, y::int)
     getRotation()::double
