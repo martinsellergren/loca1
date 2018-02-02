@@ -4,7 +4,7 @@ python fontBoxer.py fontName.ttf
 
 Creates a font called fontName-Box.ttf.
 Each letter in src becomes a "box" in dest. The box is formed like
-the letter C(with straight lines).
+the symbol [.
 The box is sized and positioned so that corresponding letter
 just barely fits inside. If a character is very short/thin the
 box is given a min-width/height. If a character is very wide the

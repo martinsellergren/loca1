@@ -70,8 +70,9 @@ LabelLayoutIterator
     next()::LabelLayout/NULL (starts search at startX/Y, and sets)
 
     findBoxPoint(startX::int, startY::int)::Point/NULL(if no more box-points)
-    expandToRow(box-point)::Box[]/NULL(if box-point not expandable at all)
-        (if nothing there, edge or edge-box(null): stops looking in that dir)
+    expandToLabel(box-point)::LabelLayout/NULL(if bp wont expand)
+    expandToRow(Box b)::Box[]
+        (if nothing there, bad rot/size, edge or edge-box(null): stops looking in that dir)
     addRows(UP/DOWN, startRow::Box[], lay(accumulator, contains startRow)::LabelLayout)::LabelLayout
         (done if nothing neighbor-row-like there)
     removeLabel(lay::LabelLayout)::Void

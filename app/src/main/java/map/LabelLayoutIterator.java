@@ -40,16 +40,43 @@ import java.awt.Color;
  *
  * @pre No letter-boxes touch!
  * @pre Horizontal space between boxes of same row is always less
- * than the width of any box in the label.
- * @pre Hight of a box is always shorter than 2*any box in same
- * label (i.e same font-size) (and higher than 0.5*any box in label).
+ * than the width of any box in the label. (...!)
+ * @pre Hight of a box is always shorter than 2*height of any box in
+ * same label (i.e same font-size) (and higher than 0.5*any box
+ * in label).
  * @pre Rotation change between adjacent letters in a label is <=15deg.
  * @pre Vertical space between boxes of neighboring rows is always
- * less than the heigh of any box in the label (...).
+ * less than the heigh of any box in the label. (...!)
  */
 public class LabelLayoutIterator {
-    /** Pixels alpha-value-threshold where over means box-point. */
+    /**
+     * Pixels alpha-value-threshold where over means box-point. */
     public/***/ static final int DEFAULT_ALPHA_THRESHOLD = 100;
+
+    /**
+     * Max search length from left/right edge of a box to
+     * a neighbor-box (same label) is length(box)*this. */
+    private static final double BOX_SEARCH_LENGTH_FACTOR = 1.5;
+
+    /**
+     * Max search length from top/botten edge of a box to a
+     * neighbor-row-box (same label) is height(box)*this. */
+    private static final double ROW_SEARCH_LENGTH_FACTOR = 1.5;
+
+    /**
+     * sb/hb >= this, where sb is shortest, tb tallest box, in
+     * any label. */
+    private static final double MAX_BOX_HEIGHT_DIFFERENCE_FACTOR = 0.5;
+
+    /**
+     * The maximum change in angle between two adjacent boxes. */
+    private static final double MAX_ANGLE_CHANGE = 15;
+
+    /**
+     * Rows with x-positions matching within this value are
+     * considered centered. */
+    private static final double CENTERED_LAXNESS = 5;
+
 
     /** Start searching for next box-point at this pos in map. */
     public/***/ int startX = 0;
@@ -103,26 +130,19 @@ public class LabelLayoutIterator {
      */
     public LabelLayout next() {
         int[] p = findBoxPoint(this.startX, this.startY);
-        if (p == null) {
-            if (!mapIsEmpty()) throw new RuntimeException();
-            return null;
-        }
+        if (p == null) return null;
 
         this.startX = p[0];
         this.startY = p[1];
 
-        LinkedList<Box> row = expandToRow(p);
-        LabelLayout lay = new LabelLayout(row);
-
-        boolean up = true;
-        addRows(up, row, lay);
-        up = false;
-        addRows(up, row, lay);
+        LabelLayout lay = expandToLabelLayout(p);
+        if (lay == null) {
+            expandAndRemove(p);
+            return next();
+        }
 
         removeLabel(lay);
-        expandAndRemove(p);
-
-        if (!isEdgeLabel(lay)) lay;
+        if (!isEdgeLabel(lay)) return lay;
         else return next();
     }
 
@@ -143,21 +163,50 @@ public class LabelLayoutIterator {
     }
 
     /**
-     * Expand one box-point to a box and the box to a horizontal
+     * Expands box-point to label-layout.
+     *
+     * 1.Box-point expands to box.
+     * 2.Looks left/right for more boxes -> row.
+     * 3.Looks up/down for more rows -> layout.
+     *
+     * @param bp Box-point.
+     * @return The layout of the label that contains bp, or NULL
+     * if bp wont expand to a box.
+     */
+    private LabelLayout expandToLabelLayout(int[] bp) {
+        Box b = expandToBox(bp);
+        if (b == null) return null;
+
+        LinkedList<Box> row = expandToRow(b);
+        LabelLayout lay = new LabelLayout(row);
+
+        if (lay.hasObviousRotation()) return lay;
+
+        boolean up = true;
+        addRows(up, row, lay);
+        up = false;
+        addRows(up, row, lay);
+
+        return lay;
+    }
+
+    /**
+     * Expand a box-point to a box and the box to a horizontal
      * row of boxes.
      *
-     * @param start Start-point.
-     * @return A row in the map (i.e horizontaly adjacent boxes).
-     * Row may start/end with null meaning continues outside of
-     * box-image (this means, may return the list [null]).
+     * Looks left/right to expanded box (at certain distance..).
+     * Stops looking when finding:
+     *  - Nothing.
+     *  - A box at wrong size/rotation.
+     *  - The box-image-edge.
+     *  - An edge-box (expanded to null).
      *
-     * @pre start is a box-point in the map.
+     * @return A row in the map (i.e horizontaly adjacent boxes).
+     * As a minumum [startBox].
      */
-    public/***/ LinkedList<Box> expandToRow(int[] start) {
+    public/***/ LinkedList<Box> expandToRow(Box startBox) {
         LinkedList<Box> row = new LinkedList<Box>();
-        Box startBox = expandToBox(start);
         row.add(startBox);
-        if (startBox == null) return row;
 
         boolean left = true;
         addBoxes(left, startBox, row);
@@ -168,10 +217,9 @@ public class LabelLayoutIterator {
     }
 
     /**
-     * Adds, to a list of rows, all rows above or below some
-     * start-row in same label in the map. If previously added row has
-     * a null start/end (meaning something is here but clipped;
-     * outside of box-image) - doesn't add more rows.
+     * Adds, to a LabelLayout, all rows above or below some
+     * start-row in same label in the map. Done when nothing
+     * neighbor-row-like there.
      *
      * @param up If true, adds rows above startRow, otherwise below.
      * @param startRow Start-row.
@@ -179,31 +227,29 @@ public class LabelLayoutIterator {
      * @return The provided label-layout, prepended/appended
      * with all rows above/below in same label as start-row.
      *
-     * @pre startRow a row of some label in the map, that has
-     * no rotation and a straight base-line.
+     * @pre startRow has no rotation and a straight base-line.
      */
-    public/***/ LabelLayout addRows(boolean up, LinkedList<Box> startRow, LinkedList<LinkedList<Box>> lay) {
-        return null;
+    public/***/ LabelLayout addRows(boolean up, LinkedList<Box> startRow, LabelLayout lay) {
+        LinkedList<Box> neigh = findNeighborRow(up, startRow);
+        if (neigh == null) return lay;
+
+        if (up) lay.addRowFirst(neigh);
+        else lay.addRowLast(neigh);
+
+        return addRows(up, neigh, lay);
     }
 
     /**
      * Removes a label from the map, i.e deactivates all its
      * points. Goes through the label-layout and deactivates every
-     * point of every letter-box in the layout.
+     * point of every letter-box.
      *
-     * @param lay Layout for the label to be removed. The layout
-     * has rows of boxes. A box may be null, meaning something is here
-     * but clipped because outside of box-image. Only first/last box
-     * of first/last row may be null.
+     * @param lay LabelLayout for the label to be removed.
      */
-    public/***/ void removeLabel(LinkedList<LinkedList<Box>> lay) {
-        for (LinkedList<Box> row : lay) {
-            for (Box b : row) {
-                if (b != null) {
-                    int[] boxP = getInsideBoxPoint(b);
-                    expandAndRemove(boxP);
-                }
-            }
+    public/***/ void removeLabel(LabelLayout lay) {
+        for (Box b : lay.getBoxes()) {
+            int[] bp = getInsideBoxPoint(b);
+            expandAndRemove(bp);
         }
     }
 
@@ -263,6 +309,8 @@ public class LabelLayoutIterator {
     /**
      * @param b A box extracted from this box-image.
      * @return A box-point inside this box.
+     *
+     * @pre b a box that contains box-points.
      */
     private int[] getInsideBoxPoint(Box b) {
         int[] start = Math2.toInt(b.getTopLeft());
@@ -279,9 +327,8 @@ public class LabelLayoutIterator {
 
     /**
      * Adds, to a list, all boxes to the left or right of some
-     * start-box, in same row of some label in the map.
-     *
-     * If comes across the end of
+     * start-box, in same row of some label in the map. Done when
+     * nothing neighbor-box-like there.
      *
      * @param left If true, adds boxes to the left of startBox,
      * otherwise to the right.
@@ -290,48 +337,122 @@ public class LabelLayoutIterator {
      * @return The provided box-array (bs) prepended/appended
      * with all boxes to left/right of that box (in same label).
      */
-    public/***/ Box[] addBoxes(boolean left, Box start, LinkedList<Box> bs) {
-        return null;
+    public/***/ LinkedList<Box> addBoxes(boolean left, Box start, LinkedList<Box> bs) {
+        Box neigh = findNeighborBox(left, start);
+        if (neigh == null) return bs;
+
+        if (left) bs.addFirst(neigh);
+        else bs.addLast(neigh);
+
+        return addBoxes(left, neigh, bs);
     }
 
     /**
-     * Finds a neighboring row of a start row.
-     * Looks either up or down from the start row. A neighboring
-     * row is an adjacent row in same label as the start-row.
+     * Finds a neighbor-row of a start row.
+     * Looks either up or down from the start row. A neighbor-row
+     * is an adjacent row in same label as the start-row.
      *
-     * Conditions for beeing a neighboring row:
+     * Conditions for beeing a neighbor-row:
      *  -No rotation (like start-row).
-     *  -In close proximity (up/down) to start-row (~box-height).
+     *  -In close proximity (up/down) to start-row.
      *  -Generally same line-height as start-row.
      *  -Centered in relation to start-row.
-     *
-     * If start-row contains a null-box (something there but clipped),
-     * no neighbor-row exists.
      *
      * @param up Search up, otherwise down.
      * @param sr Start-row.
      * @return A neighbor-row either up or down of startRow,
-     * or NULL if such a neighbor-row doesn't exist.
+     * or NULL if such a row doesn't exist.
      *
-     * @pre sr a row in the map (i.e horizontaly
-     * adjacent boxes) with no apparent rotation and a straight
-     * baseline.
+     * @pre sr has no obvious rotation and a straight baseline.
      */
-    public/***/ int[] findNeighborRow(boolean up, LinkedList<Box> sr) {
-        return null;
+    public/***/ LinkedList<Box> findNeighborRow(boolean up, LinkedList<Box> sr) {
+        if (new LabelLayout(sr).hasObviousRotation())
+            throw new RuntimeException();
+
+        int[] np = findPotentialNeighborRowPoint(up, sr);
+        Box nb = expandToBox(np);
+        if (nb == null) return null;
+
+        LinkedList<Box> nr = expandToRow(nb);
+        LabelLayout sl = new LabelLayout(sr);
+        LabelLayout nl = new LabelLayout(nr);
+
+        if (nl.hasObviousRotation()) return null;
+        if (sl.getShortestBoxHeight() / nl.getTallestBoxHeight() < MAX_BOX_HEIGHT_DIFFERENCE_FACTOR) return null;
+        if (nl.getShortestBoxHeight() / sl.getTallestBoxHeight() < MAX_BOX_HEIGHT_DIFFERENCE_FACTOR) return null;
+        if (!rowsCentered(sr, nr)) return null;
+
+        return nr;
     }
 
     /**
-     * Finds a neighboring box of a start-box.
+     * @param up If true searches up, otherwise down.
+     * @param sr Start-row.
+     * @return Point in potential neighbor-row.
+     */
+    private int[] findPotentialNeighborRowPoint(boolean up, LinkedList<Box> sr) {
+        double dist = new LabelLayout(sr).getAverageBoxHeight() * ROW_SEARCH_LENGTH_FACTOR;
+        Box midB = sr.get(sr.size() / 2);
+
+        double[] start0 = midB.getTopLeft();
+        double[] start1 = midB.getTopRight();
+        double[] end0 = Math2.step(start0, new double[]{0,-1}, dist);
+        double[] end1 = Math2.step(start1, new double[]{0,-1}, dist);
+        if (!up) {
+            start0 = midB.getBottomLeft();
+            start1 = midB.getBottomRight();
+            end0 = Math2.step(start0, new double[]{0,1}, dist);
+            end1 = Math2.step(start0, new double[]{0,1}, dist);
+        }
+
+        int[] np = findBoxPointOnPath(start0, end0);
+        if (np == null)
+            np = findBoxPointOnPath(start1, end1);
+
+        return np;
+    }
+
+    /**
+     * @return First box-point you come across when walking from start
+     * till end, or NULL if none/edge.
+     */
+    private int[] findBoxPointOnPath(int[] start, int[] end) {
+        PixelWalk pw = new PixelWalk(start, end);
+
+        int[] p;
+        while ((p=pw.next()) != null) {
+            if (isBoxPoint(p)) return p;
+        }
+
+        return null;
+    }
+    private int[] findBoxPointOnPath(double[] start, double[] end) {
+        return findBoxPointOnPath(Math2.toInt(start), Math2.toInt(end));
+    }
+
+    /**
+     * @return True if rows are centered above/below eachother.
+     * @pre Non-rotated rows.
+     */
+    private boolean rowsCentered(LinkedList<Box> r0, LinkedList<Box> r1) {
+        double[] bs0 = new LabelLayout(r0).getBounds();
+        double[] bs1 = new LabelLayout(r1).getBounds();
+
+        double deltaLeft = bs0[0] - bs1[0];
+        double deltaRight = bs1[2] - bs0[2];
+
+        return Math2.same(deltaLeft, deltaRight, CENTERED_LAXNESS);
+    }
+
+    /**
+     * Finds a neighbor-box to a start-box.
      * Looks to either left or right side of the start box.
-     * A neighboring box is an adjacent box in same label as
-     * the start-box.
+     * A neighbor-box is an adjacent box in same label.
      *
      * Conditions for beeing a neighboring box:
-     *  -In close proximity to left/right of start-box
-     *   (horizontal space < box-width).
-     *  -At about same height as start-box (<height*2)
-     *  -At about the same rotation as start-box (<=15deg).
+     *  -In close proximity to left/right of start-box.
+     *  -At about same height as start-box.
+     *  -At about the same rotation as start-box.
      *
      * @param left Search left, otherwise right.
      * @param sb Start-box.
@@ -339,31 +460,34 @@ public class LabelLayoutIterator {
      * neighbor-box doesn't exist.
      */
     public Box findNeighborBox(boolean left, Box sb) {
-        int[] bp = findNeighborBoxPoint(left, sb);
-        if (bp == null) return null;
+        int[] np = findPotentialNeighborBoxPoint(left, sb);
+        if (np == null) return null;
 
-        Box b = expandToBox(bp);
-        if (b == null) return null;
+        Box nb = expandToBox(np);
+        if (nb == null) return null;
 
-        if (sb.getHeight() < 2 * b.getHeight() &&
-            sb.getHeight() > 0.5 * b.getHeight() &&
-            Math2.angleDiff(b.getRotation(), sb.getRotation()) <= 15) {
-            return b;
-        }
-        return null;
+        if (nb.getHeight() / sb.getHeight() < MAX_BOX_HEIGHT_DIFFERENCE_FACTOR)
+            return null;
+        if (sb.getHeight() / nb.getHeight() < MAX_BOX_HEIGHT_DIFFERENCE_FACTOR)
+            return null;
+        if (Math2.angleDiff(sb.getRotation(), nb.getRotation()) > MAX_ANGLE_CHANGE)
+            return null;
+
+        return nb;
     }
 
     /**
-     * Finds a point in neighboring box, or NULL if no neighbor within
-     * the distance ~start-box-width. Looks either left or right.
+     * Finds a point in a neighboring box, or NULL if no neighbor
+     * there. Looks either left or right.
      *
      * @param left Search left, otherwise right.
      * @param sb Start-box.
      */
-    public/***/ int[] findNeighborBoxPoint(boolean left, Box sb) {
+    public/***/ int[] findPotentialNeighborBoxPoint(boolean left, Box sb) {
         int[] start, end;
         double maxD = sb.getWidth() * 1.1;
 
+        //first try: mid
         if (left) {
             start = Math2.toInt(sb.getLeftMid());
             end = Math2.step(start, sb.getDirVector(), -maxD);
@@ -372,12 +496,8 @@ public class LabelLayoutIterator {
             start = Math2.toInt(sb.getRightMid());
             end = Math2.step(start, sb.getDirVector(), maxD);
         }
-
-        PixelWalk pw = new PixelWalk(start, end);
-        int[] p;
-        while ((p = pw.next()) != null) {
-            if (isBoxPoint(p)) return p;
-        }
+        int[] np = findBoxPointOnPath(start, end);
+        if (np != null) return np;
 
         //one more try: top
         if (left) {
@@ -388,8 +508,8 @@ public class LabelLayoutIterator {
             start = Math2.toInt(sb.getTopRight());
             end = Math2.step(start, sb.getDirVector(), maxD);
         }
-        pw = new PixelWalk(start, end);
-        while ((p = pw.next()) != null) if (isBoxPoint(p)) return p;
+        np = findBoxPointOnPath(start, end);
+        if (np != null) return np;
 
         //last try: bottom
         if (left) {
@@ -400,11 +520,7 @@ public class LabelLayoutIterator {
             start = Math2.toInt(sb.getBottomRight());
             end = Math2.step(start, sb.getDirVector(), maxD);
         }
-        pw = new PixelWalk(start, end);
-        while ((p = pw.next()) != null) if (isBoxPoint(p)) return p;
-
-        //nothing there
-        return null;
+        return findBoxPointOnPath(start, end);
     }
 
     /**
@@ -490,6 +606,9 @@ public class LabelLayoutIterator {
             p[1] == 0 ||
             p[1] == map.length-1;
     }
+    private boolean isEdgePoint(double[] p) {
+        return isEdgePoint(Math2.toInt(p));
+    }
 
     /**
      * @return True if box is inside box-image.
@@ -535,6 +654,37 @@ public class LabelLayoutIterator {
         return true;
     }
 
+    /**
+     * @return True if layout might continue outside of box-image.
+     */
+    private boolean isEdgeLabel(LabelLayout l) {
+        return
+            isEdgeBox(l.getBox(0,0)) ||
+            isEdgeBox(l.getBox(0,-1)) ||
+            isEdgeBox(l.getBox(-1,0)) ||
+            isEdgeBox(l.getBox(-1,-1));
+    }
+
+    /**
+     * @return True if box might have a neighbor outside of box-image
+     * (box-neighbor or row-neighbor).
+     */
+    private boolean isEdgeBox(Box b) {
+        double hl = b.getWidth() * BOX_SEARCH_LENGTH_FACTOR;
+        double vl = b.getHeight() * ROW_SEARCH_LENGTH_FACTOR;
+        double[] dv = b.getDirVector();
+        double[] ov = b.getOrtoDirVector();
+
+        return
+            isEdgePoint(Math2.step(b.getTopLeft(), dv, -hl)) ||
+            isEdgePoint(Math2.step(b.getTopLeft(), ov, -vl)) ||
+            isEdgePoint(Math2.step(b.getTopRight(), dv, hl)) ||
+            isEdgePoint(Math2.step(b.getTopRight(), ov, -vl)) ||
+            isEdgePoint(Math2.step(b.getBottomRight(), dv, hl)) ||
+            isEdgePoint(Math2.step(b.getBottomRight(), ov, vl)) ||
+            isEdgePoint(Math2.step(b.getBottomLeft(), dv, -hl)) ||
+            isEdgePoint(Math2.step(b.getBottomLeft(), ov, vl));
+    }
 
     //*********************************FOR TESTING
 

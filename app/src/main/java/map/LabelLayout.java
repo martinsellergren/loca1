@@ -4,7 +4,7 @@ import java.util.LinkedList;
 
 /**
  * A layout specification of a label, describing where each letter
- * in the label is located in some a integer-coordinate system.
+ * in the label is located in some a float-precise-coordinate system.
  * Represented as a 2d-array of Box-objects where each box represents
  * a letter in the label, like: letterBoxes[ row ][ pos in row ].
  *
@@ -71,7 +71,9 @@ public class LabelLayout {
      * @return Letter-box at specified row and column. A copy.
      */
     public Box getBox(int r, int c) {
+        if (r < 0) r = getNoRows() - r;
         LinkedList<Box> row = letterBoxes.get(r);
+        if (c < 0) c = row.size() - c;
         return row.get(c);
     }
 
@@ -79,30 +81,52 @@ public class LabelLayout {
     * @return The height of the tallest box.
     */
     public double getTallestBoxHeight() {
-        double h = -1;
+        double max = -1;
         for (Box b : getBoxes()) {
-            if (b.getHeight() > h) h = b.getHeight();
+            if (b.getHeight() > max) max = b.getHeight();
         }
-        return h;
+        return max;
+    }
+
+    /**
+    * @return The height of the shortest box.
+    */
+    public double getShortestBoxHeight() {
+        double min = -1;
+        for (Box b : getBoxes()) {
+            if (b.getHeight() < min) min = b.getHeight();
+        }
+        return min;
+    }
+
+    /**
+     * @return Avg box height.
+     */
+    public double getAverageBoxHeight() {
+        double sum = 0;
+        for (Box b : getBoxes()) {
+            sum += b.getHeight();
+        }
+        return sum / getNoBoxes();
     }
 
     /**
      * @return [xmin, ymin, xmax, ymax]
      */
-    public int[] getBounds() {
-        int xmin = Integer.MAX_VALUE;
-        int ymin = Integer.MAX_VALUE;
-        int xmax = Integer.MIN_VALUE;
-        int ymax = Integer.MIN_VALUE;
+    public double[] getBounds() {
+        double xmin = Double.MAX_VALUE;
+        double ymin = Double.MAX_VALUE;
+        double xmax = Double.MIN_VALUE;
+        double ymax = Double.MIN_VALUE;
 
         for (Box b : getBoxes()) {
-            int[] bb = Math2.toInt(b.getBounds());
+            double[] bb = b.getBounds();
             if (bb[0] < xmin) xmin = bb[0];
             if (bb[1] < ymin) ymin = bb[1];
             if (bb[2] > xmax) xmax = bb[2];
             if (bb[3] > ymax) ymax = bb[3];
         }
-        return new int[]{xmin, ymin, xmax, ymax};
+        return new double[]{xmin, ymin, xmax, ymax};
     }
 
     /**
@@ -123,7 +147,7 @@ public class LabelLayout {
     /**
      * Add offset to every position in layout.
      */
-    public void addOffset(int addX, int addY) {
+    public void addOffset(double addX, double addY) {
         for (LinkedList<Box> row : letterBoxes) {
             for (Box b : row) {
                 b.addOffset(addX, addY);

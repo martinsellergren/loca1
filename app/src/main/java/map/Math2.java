@@ -718,6 +718,13 @@ public class Math2 {
         return ys;
     }
 
+    /**
+     * @return Converted to int.
+     */
+    public static int toInt(double x) {
+        return Math.round((float)x);
+    }
+
     /*
      * Turn array of int-point into double-point.
      */
