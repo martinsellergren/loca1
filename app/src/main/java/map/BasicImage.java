@@ -244,6 +244,27 @@ public class BasicImage {
     }
 
     /**
+     * Draw a LabelLayout on the image.
+     */
+    public void drawLabelLayout(LabelLayout lay) {
+        Graphics2D g = createGraphics();
+
+        for (Box b : lay.getBoxes())
+            drawBox(b);
+
+        int[] tl = Math2.toInt(lay.getBox(0,0).getTopLeft());
+        int[] tr = Math2.toInt(lay.getBox(0,-1).getTopRight());
+        int[] br = Math2.toInt(lay.getBox(-1,-1).getBottomRight());
+        int[] bl = Math2.toInt(lay.getBox(-1,0).getBottomLeft());
+
+        g.setPaint(Color.BLUE);
+        g.drawLine(tl[0], tl[1], tr[0], tr[1]);
+        g.drawLine(tr[0], tr[1], br[0], br[1]);
+        g.drawLine(br[0], br[1], bl[0], bl[1]);
+        g.drawLine(bl[0], bl[1], tl[0], tl[1]);
+    }
+
+    /**
      * Draw img to screen.
      */
     public void display() {

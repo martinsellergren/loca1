@@ -11,7 +11,7 @@ public class MapRequestTests {
     //     double east = 18.191557;
     //     double north = 59.383059;
     //     double south = 59.371692;
-    //     int zoom = 17;
+    //     int zoom = 14;
     //     boolean highQ = false;
     //     MapImageView view = new MapImageView(west, north, east, south, zoom, highQ);
     //     MapRequest req = new MapRequest(view);
@@ -27,6 +27,7 @@ public class MapRequestTests {
     //         imgs[2].save("test_box.png");
     //     }
     //     catch (IOException e) {
+    //         System.out.println(e);
     //         assertTrue(false);
     //     }
     // }

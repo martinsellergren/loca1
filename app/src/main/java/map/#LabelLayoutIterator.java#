@@ -182,10 +182,10 @@ public class LabelLayoutIterator {
 
         if (lay.hasObviousRotation()) return lay;
 
-        // boolean up = true;
-        // addRows(up, row, lay);
-        // up = false;
-        // addRows(up, row, lay);
+        boolean up = true;
+        //addRows(up, row, lay);
+        up = false;
+        //addRows(up, row, lay);
 
         return lay;
     }
@@ -297,6 +297,7 @@ public class LabelLayoutIterator {
      */
     public/***/ LinkedList<Box> addBoxes(boolean left, Box start, LinkedList<Box> bs) {
         Box neigh = findNeighborBox(left, start);
+        System.out.println(neigh);
         if (neigh == null) return bs;
 
         if (left) bs.addFirst(neigh);
@@ -350,25 +351,18 @@ public class LabelLayoutIterator {
      * found within probable distance.
      */
     private int[] findPotentialNeighborRowPoint(boolean up, LinkedList<Box> sr) {
-        double INIT_JUMP_LENGTH_OUT_OF_STARTBOX = 3;
-
-        double d = new LabelLayout(sr).getAverageBoxHeight() * ROW_SEARCH_LENGTH_FACTOR;
+        double dist = new LabelLayout(sr).getAverageBoxHeight() * ROW_SEARCH_LENGTH_FACTOR;
         Box midB = sr.get(sr.size() / 2);
 
         double[] start0 = midB.getTopLeft();
         double[] start1 = midB.getTopRight();
-        double[] end0 = Math2.step(start0, new double[]{0,-1}, d);
-        double[] end1 = Math2.step(start1, new double[]{0,-1}, d);
-        start0 = Math2.step(start0, new double[]{0,-1}, INIT_JUMP_LENGTH_OUT_OF_STARTBOX);
-        start1 = Math2.step(start1, new double[]{0,-1}, INIT_JUMP_LENGTH_OUT_OF_STARTBOX);
-
+        double[] end0 = Math2.step(start0, new double[]{0,-1}, dist);
+        double[] end1 = Math2.step(start1, new double[]{0,-1}, dist);
         if (!up) {
             start0 = midB.getBottomLeft();
             start1 = midB.getBottomRight();
-            end0 = Math2.step(start0, new double[]{0,1}, d);
-            end1 = Math2.step(start0, new double[]{0,1}, d);
-            start0 = Math2.step(start0, new double[]{0,1}, INIT_JUMP_LENGTH_OUT_OF_STARTBOX);
-            start1 = Math2.step(start1, new double[]{0,1}, INIT_JUMP_LENGTH_OUT_OF_STARTBOX);
+            end0 = Math2.step(start0, new double[]{0,1}, dist);
+            end1 = Math2.step(start0, new double[]{0,1}, dist);
         }
 
         int[] np = findBoxPointOnPath(start0, end0);
@@ -450,33 +444,59 @@ public class LabelLayoutIterator {
      * @return Neighbor-box-point, or NULL if none there.
      */
     public/***/ int[] findPotentialNeighborBoxPoint(boolean left, Box sb) {
-        double INIT_JUMP_LENGTH_OUT_OF_STARTBOX = 3;
-        double d = sb.getWidth() * BOX_SEARCH_LENGTH_FACTOR;
+        double INIT_JUMP_LENGTH_OUT_OF_STARTBOX = -3;
 
         double[] start0 = sb.getTopLeft();
         double[] start1 = sb.getLeftMid();
         double[] start2 = sb.getBottomLeft();
-        int dir = -1;
+        double d = -sb.getWidth() * BOX_SEARCH_LENGTH_FACTOR;
 
         if (!left) {
-            start0 = sb.getTopRight();
+            start0 = Math2.stepsb.getTopRight();
             start1 = sb.getRightMid();
             start2 = sb.getBottomRight();
-            dir = 1;
+            d *= -1;
+            INIT_JUMP_LENGTH_OUT_OF_STARTBOX *= -1;
         }
 
-        double[] end0 = Math2.step(start0, sb.getDirVector(), dir*d);
-        double[] end1 = Math2.step(start1, sb.getDirVector(), dir*d);
-        double[] end2 = Math2.step(start2, sb.getDirVector(), dir*d);
-        start0 = Math2.step(start0, sb.getDirVector(), dir*INIT_JUMP_LENGTH_OUT_OF_STARTBOX);
-        start1 = Math2.step(start1, sb.getDirVector(), dir*INIT_JUMP_LENGTH_OUT_OF_STARTBOX);
-        start2 = Math2.step(start2, sb.getDirVector(), dir*INIT_JUMP_LENGTH_OUT_OF_STARTBOX);
+        start0 = Math2.step(start0, sb.getDirVector(), INIT_JUMP_LENGTH_OUT_OF_STARTBOX);
+        start1 = Math2.step(start1, sb.getDirVector(), INIT_JUMP_LENGTH_OUT_OF_STARTBOX);
+        start2 = Math2.step(start2, sb.getDirVector(), INIT_JUMP_LENGTH_OUT_OF_STARTBOX);
+        double[] end0 = Math2.step(start0, sb.getDirVector(), d);
+        double[] end1 = Math2.step(start1, sb.getDirVector(), d);
+        double[] end2 = Math2.step(start2, sb.getDirVector(), d);
 
-        int[] bp0 = findBoxPointOnPath(start0, end0);
-        int[] bp1 = findBoxPointOnPath(start1, end1);
-        int[] bp2 = findBoxPointOnPath(start2, end2);
 
-        return bp0 != null ? bp0 : (bp1 != null ? bp1 : bp2);
+        else {
+            start = Math2.toInt(sb.getRightMid());
+            end = Math2.step(start, sb.getDirVector(), maxD);
+        }
+        start = Math2.step(start, Math2.minus(end,start), INIT_JUMP_LENGTH_OUT_OF_STARTBOX);
+        int[] np = findBoxPointOnPath(start, end);
+        if (np != null) return np;
+
+        //one more try: top
+        if (left) {
+            start = Math2.toInt(sb.getTopLeft());
+            end = Math2.step(start, sb.getDirVector(), -maxD);
+        }
+        else {
+            start = Math2.toInt(sb.getTopRight());
+            end = Math2.step(start, sb.getDirVector(), maxD);
+        }
+        np = findBoxPointOnPath(start, end);
+        if (np != null) return np;
+
+        //last try: bottom
+        if (left) {
+            start = Math2.toInt(sb.getBottomLeft());
+            end = Math2.step(start, sb.getDirVector(), -maxD);
+        }
+        else {
+            start = Math2.toInt(sb.getBottomRight());
+            end = Math2.step(start, sb.getDirVector(), maxD);
+        }
+        return findBoxPointOnPath(start, end);
     }
 
     /**

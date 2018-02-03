@@ -108,14 +108,14 @@ public class LabelLayoutTests {
 
     @Test
     public void getBounds_addOffset() {
-        int[] bs = lay.getBounds();
+        int[] bs = Math2.toInt(lay.getBounds());
         assertEquals(-1, bs[0]);
         assertEquals(-2, bs[1]);
         assertEquals(10, bs[2]);
         assertEquals(11, bs[3]);
 
         lay.addOffset(1, 1);
-        bs = lay.getBounds();
+        bs = Math2.toInt(lay.getBounds());
         assertEquals(0, bs[0]);
         assertEquals(-1, bs[1]);
         assertEquals(11, bs[2]);

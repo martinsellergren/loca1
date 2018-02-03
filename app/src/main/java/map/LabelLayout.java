@@ -71,9 +71,9 @@ public class LabelLayout {
      * @return Letter-box at specified row and column. A copy.
      */
     public Box getBox(int r, int c) {
-        if (r < 0) r = getNoRows() - r;
+        if (r < 0) r = getNoRows() + r;
         LinkedList<Box> row = letterBoxes.get(r);
-        if (c < 0) c = row.size() - c;
+        if (c < 0) c = row.size() + c;
         return row.get(c);
     }
 
@@ -135,7 +135,7 @@ public class LabelLayout {
      * Rather claims 'no rotation' than rotation.
      */
     public boolean hasObviousRotation() {
-        int LIMIT = 20;
+        int LIMIT = 15;
         for (Box b : getBoxes()) {
             if (Math.abs(b.getRotation()) >= LIMIT) {
                 return true;
