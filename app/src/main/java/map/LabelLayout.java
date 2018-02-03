@@ -92,7 +92,7 @@ public class LabelLayout {
     * @return The height of the shortest box.
     */
     public double getShortestBoxHeight() {
-        double min = -1;
+        double min = Double.MAX_VALUE;
         for (Box b : getBoxes()) {
             if (b.getHeight() < min) min = b.getHeight();
         }

@@ -7,24 +7,26 @@ import java.awt.Graphics2D;
 import java.awt.Color;
 
 public class LabelLayoutIteratorTests {
+    BasicImage img = BasicImage.load("../test_box.png");
 
-    @Test
-    public void constructor() {
-        BasicImage img = BasicImage.load("../test_box_small.png");
-        LabelLayoutIterator iter = new LabelLayoutIterator(img);
-        iter.toImg().save("test_LabelLayoutIterator_constructor.png");
-    }
+
+    // @Test
+    // public void constructor() {
+    //     //BasicImage img = BasicImage.load("../test_box_small.png");
+    //     LabelLayoutIterator iter = new LabelLayoutIterator(img);
+    //     iter.toImg().save("test_LabelLayoutIterator_constructor.png");
+    // }
 
     // @Test
     // public void isBoxPoint() {
-    //     BasicImage img = BasicImage.load("../test_box_small.png");
+    //     //BasicImage img = BasicImage.load("../test_box_small.png");
     //     int[] bp = new int[]{2136, 1156};
     //     LabelLayoutIterator iter = new LabelLayoutIterator(img);
     // }
 
     // @Test
     // public void expandToBoxPoints() {
-    //     BasicImage img = BasicImage.load("../test_box.png");
+    //     //BasicImage img = BasicImage.load("../test_box.png");
     //     int[] bp = new int[]{858, 261};
     //     LabelLayoutIterator iter = new LabelLayoutIterator(img);
     //     img = iter.toImg();
@@ -35,7 +37,7 @@ public class LabelLayoutIteratorTests {
 
     // @Test
     // public void expandToBox() {
-    //     BasicImage img = BasicImage.load("../test_box.png");
+    //     //BasicImage img = BasicImage.load("../test_box.png");
     //     LabelLayoutIterator iter = new LabelLayoutIterator(img);
 
     //     int[] bp = new int[]{583, 413};
@@ -47,7 +49,7 @@ public class LabelLayoutIteratorTests {
 
     // @Test
     // public void expandToBox_all() {
-    //     BasicImage img = BasicImage.load("../test_box_small.png");
+    //     //BasicImage img = BasicImage.load("../test_box_small.png");
     //     LabelLayoutIterator iter = new LabelLayoutIterator(img);
 
     //     for (int y = 0; y < img.getHeight()-1; y++) {
@@ -72,7 +74,7 @@ public class LabelLayoutIteratorTests {
 
     @Test
     public void findLabelLayouts() {
-        BasicImage img = BasicImage.load("../test_box_small.png");
+        //BasicImage img = BasicImage.load("../test_box_small.png");
         LabelLayoutIterator iter = new LabelLayoutIterator(img);
 
         LabelLayout lay;
