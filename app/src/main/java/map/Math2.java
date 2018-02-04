@@ -693,7 +693,6 @@ public class Math2 {
         return distance(cs[0], cs[2]) * distance(cs[1], cs[3]);
     }
 
-
     //****************************************CONVERSIONS
 
     /**

@@ -2490,6 +2490,7 @@
                         ]
                     ]
                 }, 
+                "text-line-height": 1.4, 
                 "symbol-spacing": 200
             }, 
             "paint": {
@@ -2564,6 +2565,7 @@
                         ]
                     ]
                 }, 
+                "text-line-height": 1.4, 
                 "symbol-spacing": 200
             }, 
             "paint": {
@@ -2718,6 +2720,7 @@
                         ]
                     ]
                 }, 
+                "text-line-height": 1.4, 
                 "symbol-spacing": 200
             }, 
             "paint": {
@@ -3141,7 +3144,8 @@
                 ], 
                 "icon-image": "turning-circle-outline", 
                 "icon-rotation-alignment": "map", 
-                "icon-ignore-placement": true
+                "icon-ignore-placement": true, 
+                "text-line-height": 1.4
             }, 
             "paint": {
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
@@ -4796,6 +4800,7 @@
                     ]
                 }, 
                 "icon-rotation-alignment": "map", 
+                "text-line-height": 1.4, 
                 "symbol-spacing": 200
             }, 
             "paint": {
@@ -4872,6 +4877,7 @@
                     ]
                 }, 
                 "icon-rotation-alignment": "map", 
+                "text-line-height": 1.4, 
                 "symbol-spacing": 200
             }, 
             "paint": {
@@ -5123,7 +5129,8 @@
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
-                "icon-image": "level-crossing"
+                "icon-image": "level-crossing", 
+                "text-line-height": 1.4
             }, 
             "paint": {
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
@@ -5175,6 +5182,7 @@
                         ]
                     ]
                 }, 
+                "text-line-height": 1.4, 
                 "symbol-spacing": 200
             }, 
             "paint": {
@@ -5253,7 +5261,8 @@
                 ], 
                 "icon-image": "turning-circle", 
                 "icon-rotation-alignment": "map", 
-                "icon-ignore-placement": true
+                "icon-ignore-placement": true, 
+                "text-line-height": 1.4
             }, 
             "paint": {
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
@@ -7056,6 +7065,7 @@
                     ]
                 }, 
                 "icon-rotation-alignment": "map", 
+                "text-line-height": 1.4, 
                 "symbol-spacing": 200
             }, 
             "paint": {
@@ -7126,6 +7136,7 @@
                     ]
                 }, 
                 "icon-rotation-alignment": "map", 
+                "text-line-height": 1.4, 
                 "symbol-spacing": 200
             }, 
             "paint": {
@@ -7957,6 +7968,7 @@
                         ]
                     ]
                 }, 
+                "text-line-height": 1.4, 
                 "symbol-spacing": 200
             }, 
             "paint": {
@@ -8422,6 +8434,7 @@
                     "Cousine Regular-Box"
                 ], 
                 "text-field": "{house_num}", 
+                "text-line-height": 1.4, 
                 "text-size": 9.5, 
                 "text-max-width": 7
             }, 
@@ -8444,6 +8457,7 @@
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
                 "symbol-placement": "line", 
+                "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -8487,7 +8501,7 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
-                "text-line-height": 1.1, 
+                "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -8563,7 +8577,7 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
-                "text-line-height": 1.1, 
+                "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -8639,7 +8653,7 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
-                "text-line-height": 1.1, 
+                "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -8710,7 +8724,7 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
-                "text-line-height": 1.1, 
+                "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -8780,7 +8794,7 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
-                "text-line-height": 1.1, 
+                "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -8857,6 +8871,7 @@
                 ], 
                 "text-pitch-alignment": "viewport", 
                 "text-field": "{name_en}", 
+                "text-line-height": 1.4, 
                 "text-rotation-alignment": "map", 
                 "text-size": {
                     "base": 1, 
@@ -8923,6 +8938,7 @@
                 ], 
                 "text-pitch-alignment": "viewport", 
                 "text-field": "{name_en}", 
+                "text-line-height": 1.4, 
                 "text-rotation-alignment": "map", 
                 "text-size": {
                     "base": 1, 
@@ -8982,6 +8998,7 @@
                 ], 
                 "text-pitch-alignment": "viewport", 
                 "text-field": "{name_en}", 
+                "text-line-height": 1.4, 
                 "text-rotation-alignment": "map", 
                 "text-size": {
                     "base": 1, 
@@ -9048,6 +9065,7 @@
                 "icon-image": "{shield}-{reflen}", 
                 "text-field": "{ref}", 
                 "icon-rotation-alignment": "viewport", 
+                "text-line-height": 1.4, 
                 "text-rotation-alignment": "viewport", 
                 "text-size": 9, 
                 "symbol-spacing": {
@@ -9159,6 +9177,7 @@
                 "icon-image": "{shield}-{reflen}", 
                 "text-field": "{ref}", 
                 "icon-rotation-alignment": "viewport", 
+                "text-line-height": 1.4, 
                 "text-rotation-alignment": "viewport", 
                 "text-size": 9, 
                 "symbol-spacing": {
@@ -9249,6 +9268,7 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
+                "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -9292,7 +9312,7 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
-                "text-line-height": 1.1, 
+                "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -9373,7 +9393,7 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
-                "text-line-height": 1.1, 
+                "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -9455,7 +9475,7 @@
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
                 "icon-padding": 0, 
-                "text-line-height": 1.1, 
+                "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -9520,10 +9540,6 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
-                "text-font": [
-                    "Cousine Regular-Box"
-                ], 
-                "text-field": "{name_en}", 
                 "text-size": {
                     "base": 1, 
                     "stops": [
@@ -9537,6 +9553,11 @@
                         ]
                     ]
                 }, 
+                "text-font": [
+                    "Cousine Regular-Box"
+                ], 
+                "text-field": "{name_en}", 
+                "text-line-height": 1.4, 
                 "text-max-width": 7
             }, 
             "paint": {
@@ -9563,10 +9584,6 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
-                "text-font": [
-                    "Cousine Regular-Box"
-                ], 
-                "text-field": "{name_en}", 
                 "text-size": {
                     "base": 1, 
                     "stops": [
@@ -9580,6 +9597,11 @@
                         ]
                     ]
                 }, 
+                "text-font": [
+                    "Cousine Regular-Box"
+                ], 
+                "text-field": "{name_en}", 
+                "text-line-height": 1.4, 
                 "text-max-width": 7
             }, 
             "paint": {
@@ -9606,7 +9628,7 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
-                "text-line-height": 1.2, 
+                "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -9674,7 +9696,7 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
-                "text-line-height": 1.1, 
+                "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -9755,7 +9777,7 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
-                "text-line-height": 1.1, 
+                "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -9865,7 +9887,7 @@
                         ]
                     ]
                 }, 
-                "text-line-height": 1.1, 
+                "text-line-height": 1.4, 
                 "text-offset": [
                     0, 
                     0.75
@@ -9910,7 +9932,7 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
-                "text-line-height": 1.2, 
+                "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -9979,6 +10001,7 @@
                     ]
                 }, 
                 "text-field": "{name_en}", 
+                "text-line-height": 1.4, 
                 "text-transform": "uppercase", 
                 "text-max-width": 7
             }, 
@@ -10024,6 +10047,7 @@
                     ]
                 }, 
                 "text-field": "{name_en}", 
+                "text-line-height": 1.4, 
                 "text-transform": "uppercase", 
                 "text-max-width": 7
             }, 
@@ -10049,9 +10073,8 @@
         }, 
         {
             "layout": {
-                "text-font": [
-                    "Cousine Regular-Box"
-                ], 
+                "text-letter-spacing": 0.2, 
+                "text-max-angle": 15, 
                 "text-size": {
                     "base": 1, 
                     "stops": [
@@ -10065,9 +10088,11 @@
                         ]
                     ]
                 }, 
+                "text-font": [
+                    "Cousine Regular-Box"
+                ], 
                 "text-field": "{name_en}", 
-                "text-max-angle": 15, 
-                "text-letter-spacing": 0.2
+                "text-line-height": 1.4
             }, 
             "paint": {
                 "text-color": "hsla(0, 0%, 0%, 1)", 
@@ -10092,10 +10117,6 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
-                "text-font": [
-                    "Cousine Regular-Box"
-                ], 
-                "text-field": "{name_en}", 
                 "text-size": {
                     "base": 1, 
                     "stops": [
@@ -10109,6 +10130,11 @@
                         ]
                     ]
                 }, 
+                "text-font": [
+                    "Cousine Regular-Box"
+                ], 
+                "text-field": "{name_en}", 
+                "text-line-height": 1.4, 
                 "text-max-width": 7
             }, 
             "paint": {
@@ -10134,6 +10160,7 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
+                "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -10209,7 +10236,7 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
-                "text-line-height": 1.2, 
+                "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -10258,6 +10285,7 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
+                "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -10348,6 +10376,7 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
+                "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -10443,6 +10472,7 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
+                "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -10539,6 +10569,7 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
+                "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -10634,6 +10665,7 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
+                "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -10730,7 +10762,7 @@
                 "text-letter-spacing": 0.30000000000000004, 
                 "text-max-angle": 15, 
                 "symbol-placement": "line", 
-                "text-line-height": 1.1, 
+                "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -10797,7 +10829,7 @@
             "layout": {
                 "text-letter-spacing": 0.30000000000000004, 
                 "text-max-angle": 15, 
-                "text-line-height": 1.5, 
+                "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -10851,7 +10883,7 @@
                 "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
                 "symbol-placement": "line", 
-                "text-line-height": 1.1, 
+                "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -10907,7 +10939,7 @@
             "layout": {
                 "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
-                "text-line-height": 1.5, 
+                "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -10980,7 +11012,7 @@
                 ], 
                 "text-pitch-alignment": "viewport", 
                 "text-field": "{name_en}", 
-                "text-line-height": 1.1, 
+                "text-line-height": 1.4, 
                 "text-max-width": 4
             }, 
             "paint": {
@@ -11016,7 +11048,7 @@
             "layout": {
                 "text-letter-spacing": 0.45, 
                 "text-max-angle": 15, 
-                "text-line-height": 1.5, 
+                "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -11098,6 +11130,7 @@
                         ]
                     ]
                 }, 
+                "text-line-height": 1.4, 
                 "text-transform": "uppercase", 
                 "text-max-width": 5
             }, 
@@ -11156,6 +11189,7 @@
                         ]
                     ]
                 }, 
+                "text-line-height": 1.4, 
                 "text-transform": "uppercase", 
                 "text-max-width": 6
             }, 
@@ -11206,6 +11240,7 @@
                         ]
                     ]
                 }, 
+                "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -11252,10 +11287,6 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
-                "text-font": [
-                    "Cousine Regular-Box"
-                ], 
-                "text-field": "{name_en}", 
                 "text-size": {
                     "base": 0.9, 
                     "stops": [
@@ -11269,6 +11300,11 @@
                         ]
                     ]
                 }, 
+                "text-font": [
+                    "Cousine Regular-Box"
+                ], 
+                "text-field": "{name_en}", 
+                "text-line-height": 1.4, 
                 "text-max-width": 6
             }, 
             "paint": {
@@ -11297,6 +11333,19 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
+                "text-size": {
+                    "base": 1, 
+                    "stops": [
+                        [
+                            3, 
+                            10
+                        ], 
+                        [
+                            8, 
+                            24
+                        ]
+                    ]
+                }, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -11313,19 +11362,7 @@
                         ]
                     ]
                 }, 
-                "text-size": {
-                    "base": 1, 
-                    "stops": [
-                        [
-                            3, 
-                            10
-                        ], 
-                        [
-                            8, 
-                            24
-                        ]
-                    ]
-                }, 
+                "text-line-height": 1.4, 
                 "text-max-width": 6
             }, 
             "paint": {
@@ -11355,10 +11392,6 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
-                "text-font": [
-                    "Cousine Regular-Box"
-                ], 
-                "text-field": "{name_en}", 
                 "text-size": {
                     "base": 1, 
                     "stops": [
@@ -11372,6 +11405,11 @@
                         ]
                     ]
                 }, 
+                "text-font": [
+                    "Cousine Regular-Box"
+                ], 
+                "text-field": "{name_en}", 
+                "text-line-height": 1.4, 
                 "text-max-width": {
                     "base": 1, 
                     "stops": [

@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Color;
 
 public class LabelLayoutIteratorTests {
-    BasicImage img = BasicImage.load("../test_box.png");
+    BasicImage img = BasicImage.load("../test_world_box.png");
 
 
     // @Test
@@ -72,22 +72,36 @@ public class LabelLayoutIteratorTests {
     //     img.save("test_LabelLayoutIterator_expandToBox_all.png");
     // }
 
-    @Test
-    public void findLabelLayouts() {
-        //BasicImage img = BasicImage.load("../test_box_small.png");
-        LabelLayoutIterator iter = new LabelLayoutIterator(img);
+    // @Test
+    // public void findLabelLayouts() {
+    //     //BasicImage img = BasicImage.load("../test_box_small.png");
+    //     LabelLayoutIterator iter = new LabelLayoutIterator(img);
 
-        LabelLayout lay;
-        while ((lay=iter.next()) != null) {
-            try {
-                img.drawLabelLayout(lay);
-            }
-            catch (Exception e) {
-                System.out.println(lay);
-                throw e;
-            }
-        }
+    //     LabelLayout lay;
+    //     while ((lay=iter.next()) != null) {
+    //         try {
+    //             img.drawLabelLayout(lay);
+    //         }
+    //         catch (Exception e) {
+    //             System.out.println(lay);
+    //             throw e;
+    //         }
+    //     }
 
-        img.save("test_LabelLayoutIterator_findLabelLayouts.png");
-    }
+    //     img.save("test_LabelLayoutIterator_findLabelLayouts.png");
+    // }
+
+    // @Test
+    // public void expandToLabelLayout() {
+    //     LabelLayoutIterator iter = new LabelLayoutIterator(img);
+
+    //     LabelLayout l = iter.expandToLabelLayout(new int[]{1022, 1532});
+    //     img.drawLabelLayout(l);
+
+    //     //l = iter.expandToLabelLayout(new int[]{1037, 1543});
+    //     l = iter.expandToLabelLayout(new int[]{1093, 1540});
+    //     img.drawLabelLayout(l);
+
+    //     img.save("test_LabelLayoutIterator_expandToLabelLayout.png");
+    // }
 }

@@ -20,8 +20,9 @@ Properties of dest when the font is used:
 import fontforge
 import sys
 import pdb
+from random import randint
 
-def getCharExtremes(font):
+def getCharExtremeDims(font):
     wMax = -1
     hMax = -1
     for glyph in font.glyphs():
@@ -33,6 +34,20 @@ def getCharExtremes(font):
         if h > hMax:
             hMax = h
     return (wMax, hMax)
+
+def getCharExtremePos(font):
+    xmin = 999999999
+    ymin = 999999999
+    xmax = -999999999
+    ymax = -999999999
+    for glyph in font.glyphs():
+        (x1,y1,x2,y2) = glyph.boundingBox()
+        if x1 < xmin: xmin = x1
+        if x2 > xmax: xmax = x2
+        if y1 < ymin: ymin = y1
+        if y2 > ymax: ymax = y2
+    return xmin,ymin,xmax,ymax
+
 
 def expandW(x1,x2):
     if (x1,x2) == (0,0):
@@ -75,9 +90,11 @@ ext = x[1]
 
 font = fontforge.open(fname)
 fontW, fontH = next(font.glyphs()).width, font.ascent
-maxCharW, maxCharH = getCharExtremes(font)
+maxCharW, maxCharH = getCharExtremeDims(font)
 maxBoxW, maxBoxH = round(fontW*0.9), maxCharH
 minBoxW, minBoxH = round(fontW/2 * 1.3), round(maxBoxH*0.7)
+xmin,ymin,xmax,ymax = getCharExtremePos(font)
+fixedHeightMinimizingFactor = 0
 
 for glyph in font.glyphs():
     glyphW = glyph.width
@@ -88,6 +105,10 @@ for glyph in font.glyphs():
     elif boxW > maxBoxW: x1,x2 = shrinkW(x1,x2)
     if boxH < minBoxH: y1,y2 = expandH(y1,y2)
     elif boxH > maxBoxH: sys.exit(-1) #never happens
+
+    #fixed height!
+    y1 = ymin + maxCharH*fixedHeightMinimizingFactor
+    y2 = ymax - maxCharH*fixedHeightMinimizingFactor
 
     x12 = x1 + (x2-x1) / 2
     y11 = y1 + (y2-y1) / 3
@@ -107,5 +128,5 @@ for glyph in font.glyphs():
     pen = None
     glyph.width = glyphW
 
-font.fontname = name + "-Box"
+font.fontname = name + "-Box"# + str(randint(0,1000000))
 font.generate(name + "-Box." + ext)

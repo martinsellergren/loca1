@@ -249,8 +249,8 @@ public class BasicImage {
     public void drawLabelLayout(LabelLayout lay) {
         Graphics2D g = createGraphics();
 
-        for (Box b : lay.getBoxes())
-            drawBox(b);
+        // for (Box b : lay.getBoxes())
+        //     drawBox(b);
 
         int[] tl = Math2.toInt(lay.getBox(0,0).getTopLeft());
         int[] tr = Math2.toInt(lay.getBox(0,-1).getTopRight());

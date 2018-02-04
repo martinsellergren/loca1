@@ -56,26 +56,31 @@ public class LabelLayoutIterator {
     /**
      * Max search length from left/right edge of a box to
      * a neighbor-box (same label) is length(box)*this. */
-    private static final double BOX_SEARCH_LENGTH_FACTOR = 2;
+    public/***/ static final double BOX_SEARCH_LENGTH_FACTOR = 2.2;
 
     /**
      * Max search length from top/botten edge of a box to a
      * neighbor-row-box (same label) is height(box)*this. */
-    private static final double ROW_SEARCH_LENGTH_FACTOR = 1.7;
+    public/***/ static final double ROW_SEARCH_LENGTH_FACTOR = 1;
 
     /**
      * sb/hb >= this, where sb is shortest, tb tallest box, in
      * any label. */
-    private static final double MAX_BOX_HEIGHT_DIFFERENCE_FACTOR = 0.5;
+    public/***/ static final double MAX_BOX_HEIGHT_DIFFERENCE_FACTOR = 0.9;
 
     /**
      * The maximum change in angle between two adjacent boxes. */
-    private static final double MAX_ANGLE_CHANGE = 20;
+    public/***/ static final double MAX_ANGLE_CHANGE = 20;
 
     /**
-     * Rows with x-positions matching within this value are
-     * considered centered. */
-    private static final double CENTERED_LAXNESS = 10;
+     * abs(by - nby) / bh <= this, where by is any box's y-value
+     * and nby is neighbor-box's y-value. */
+    private static final double MULTI_ROW_MAX_Y_DIFF_FACTOR = 0.05;
+
+    /** w0 = (xL + w1 + xR) where w0 is width of longest line, w1
+     * width of shortest, and xL, xR are distances next to shortest
+     * "under" longest. abs(xL - xR) / w1 = this. */
+    public/***/ static final double CENTERED_LAXNESS_FACTOR = 0.15;
 
 
     /** Start searching for next box-point at this pos in map. */
@@ -173,7 +178,7 @@ public class LabelLayoutIterator {
      * @return The layout of the label that contains bp, or NULL
      * if bp wont expand to a box.
      */
-    private LabelLayout expandToLabelLayout(int[] bp) {
+    public/***/ LabelLayout expandToLabelLayout(int[] bp) {
         Box b = expandToBox(bp);
         if (b == null) return null;
 
@@ -270,7 +275,7 @@ public class LabelLayoutIterator {
      *
      * @pre b a box that contains box-points.
      */
-    private int[] getInsideBoxPoint(Box b) {
+    public/***/ int[] getInsideBoxPoint(Box b) {
         int[] start = Math2.toInt(b.getTopLeft());
         int[] end = Math2.toInt(b.getBottomRight());
         PixelWalk pw = new PixelWalk(start, end);
@@ -341,6 +346,7 @@ public class LabelLayoutIterator {
         if (sl.getShortestBoxHeight() / nl.getTallestBoxHeight() < MAX_BOX_HEIGHT_DIFFERENCE_FACTOR) return null;
         if (nl.getShortestBoxHeight() / sl.getTallestBoxHeight() < MAX_BOX_HEIGHT_DIFFERENCE_FACTOR) return null;
         if (!rowsCentered(sr, nr)) return null;
+        if (!sameYPos(sr)) return null;
 
         return nr;
     }
@@ -351,44 +357,75 @@ public class LabelLayoutIterator {
      * @return Point in potential neighbor-row, or NULL if none
      * found within probable distance.
      */
-    private int[] findPotentialNeighborRowPoint(boolean up, LinkedList<Box> sr) {
-        double INIT_JUMP_LENGTH_OUT_OF_STARTBOX = 3;
-        double d = new LabelLayout(sr).getAverageBoxHeight() * ROW_SEARCH_LENGTH_FACTOR;
-
+    public/***/ int[] findPotentialNeighborRowPoint(boolean up, LinkedList<Box> sr) {
         Box midB = sr.get(sr.size() / 2);
 
-        double[] start0 = midB.getTopLeft();
-        double[] start1 = midB.getTopMid();
-        double[] start2 = midB.getTopRight();
-        double[] v = new double[]{0,1};
-        int dir = -1;
+        double[] start = up ? midB.getTopMid() : midB.getBottomMid();
+        double verticalD = new LabelLayout(sr).getAverageBoxHeight() * ROW_SEARCH_LENGTH_FACTOR;
+        double[] verticalV = new double[]{0,1};
+        int dir = up ? -1 : 1;
+        start = Math2.step(start, verticalV, dir*verticalD);
 
-        if (!up) {
-            start0 = midB.getBottomLeft();
-            start1 = midB.getBottomMid();
-            start2 = midB.getBottomRight();
-            dir = 1;
-        }
+        double horizontalD = new LabelLayout(sr).getAverageBoxWidth();
+        double[] horizontalV = new double[]{1,0};
+        double[] end0 = Math2.step(start, horizontalV, horizontalD);
+        double[] end1 = Math2.step(start, horizontalV, -horizontalD);
 
-        double[] end0 = Math2.step(start0, v, dir*d);
-        double[] end1 = Math2.step(start1, v, dir*d);
-        double[] end2 = Math2.step(start2, v, dir*d);
-        start0 = Math2.step(start0, v, dir*INIT_JUMP_LENGTH_OUT_OF_STARTBOX);
-        start1 = Math2.step(start1, v, dir*INIT_JUMP_LENGTH_OUT_OF_STARTBOX);
-        start2 = Math2.step(start2, v, dir*INIT_JUMP_LENGTH_OUT_OF_STARTBOX);
+        int[] bp0 = findBoxPointOnPath(start, end0);
+        int[] bp1 = findBoxPointOnPath(start, end1);
 
-        int[] bp0 = findBoxPointOnPath(start0, end0);
-        int[] bp1 = findBoxPointOnPath(start1, end1);
-        int[] bp2 = findBoxPointOnPath(start2, end2);
-
-        return bp0 != null ? bp0 : (bp1 != null ? bp1 : bp2);
+        return bp0 != null ? bp0 : bp1;
     }
+    // public/***/ int[] findPotentialNeighborRowPoint(boolean up, LinkedList<Box> sr) {
+    //     double INIT_JUMP_LENGTH_OUT_OF_STARTBOX = 3;
+    //     Box midB = sr.get(sr.size() / 2);
+
+    //     //vertical
+    //     double d = new LabelLayout(sr).getAverageBoxHeight() * ROW_SEARCH_LENGTH_FACTOR;
+    //     double[] v = new double[]{0,1};
+    //     double[] start0 = midB.getTopLeft();
+    //     double[] start1 = midB.getTopMid();
+    //     double[] start2 = midB.getTopRight();
+    //     int dir = -1;
+
+    //     if (!up) {
+    //         start0 = midB.getBottomLeft();
+    //         start1 = midB.getBottomMid();
+    //         start2 = midB.getBottomRight();
+    //         dir = 1;
+    //     }
+
+    //     double[] end0 = Math2.step(start0, v, dir*d);
+    //     double[] end1 = Math2.step(start1, v, dir*d);
+    //     double[] end2 = Math2.step(start2, v, dir*d);
+    //     start0 = Math2.step(start0, v, dir*INIT_JUMP_LENGTH_OUT_OF_STARTBOX);
+    //     start1 = Math2.step(start1, v, dir*INIT_JUMP_LENGTH_OUT_OF_STARTBOX);
+    //     start2 = Math2.step(start2, v, dir*INIT_JUMP_LENGTH_OUT_OF_STARTBOX);
+    //     int[] bp0 = findBoxPointOnPath(start0, end0);
+    //     int[] bp1 = findBoxPointOnPath(start1, end1);
+    //     int[] bp2 = findBoxPointOnPath(start2, end2);
+
+    //     //horizontal
+    //     d = new LabelLayout(sr).getAverageBoxWidth() * BOX_SEARCH_LENGTH_FACTOR;
+    //     start0 = Math2.step(start0, v, midB.getHeight());
+    //     v = new double[]{1,0};
+    //     end0 = Math2.step(start0, v, d);
+    //     end1 = Math2.step(start0, v, -d);
+    //     int[] bp3 = findBoxPointOnPath(start0, end0);
+    //     int[] bp4 = findBoxPointOnPath(start0, end1);
+
+    //     return
+    //         bp0 != null ? bp0 :
+    //         (bp1 != null ? bp1 :
+    //          (bp2 != null ? bp2 :
+    //           (bp3 != null ? bp3 : bp4)));
+    // }
 
     /**
      * @return First box-point you come across when walking from start
      * till end, or NULL if none/edge.
      */
-    private int[] findBoxPointOnPath(int[] start, int[] end) {
+    public/***/ int[] findBoxPointOnPath(int[] start, int[] end) {
         PixelWalk pw = new PixelWalk(start, end);
 
         int[] p;
@@ -398,7 +435,7 @@ public class LabelLayoutIterator {
 
         return null;
     }
-    private int[] findBoxPointOnPath(double[] start, double[] end) {
+    public/***/ int[] findBoxPointOnPath(double[] start, double[] end) {
         return findBoxPointOnPath(Math2.toInt(start), Math2.toInt(end));
     }
 
@@ -406,14 +443,31 @@ public class LabelLayoutIterator {
      * @return True if rows are centered above/below eachother.
      * @pre Non-rotated rows.
      */
-    private boolean rowsCentered(LinkedList<Box> r0, LinkedList<Box> r1) {
+    public/***/ boolean rowsCentered(LinkedList<Box> r0, LinkedList<Box> r1) {
         double[] bs0 = new LabelLayout(r0).getBounds();
         double[] bs1 = new LabelLayout(r1).getBounds();
+        double w0 = bs0[2] - bs0[0];
+        double w1 = bs1[2] - bs1[0];
+        double deltaL = bs0[0] - bs1[0];
+        double deltaR = bs1[2] - bs0[2];
 
-        double deltaLeft = bs0[0] - bs1[0];
-        double deltaRight = bs1[2] - bs0[2];
+        return Math.abs(deltaL - deltaR) / Math.min(w0, w1) <= CENTERED_LAXNESS_FACTOR;
+    }
 
-        return Math2.same(deltaLeft, deltaRight, CENTERED_LAXNESS);
+    /**
+     * @return True if boxes in row have similar y-values.
+     */
+    private boolean sameYPos(LinkedList<Box> row) {
+        if (row.size() < 2) return true;
+
+        for (int i = 0; i < row.size()-1; i++) {
+            double by = row.get(i).getBottomLeft()[1];
+            double nby = row.get(i+1).getBottomLeft()[1];
+
+            if (Math.abs(by - nby) / row.get(0).getHeight() > MULTI_ROW_MAX_Y_DIFF_FACTOR)
+                return false;
+        }
+        return true;
     }
 
     /**
@@ -569,7 +623,7 @@ public class LabelLayoutIterator {
             p[1] == 0 ||
             p[1] == map.length-1;
     }
-    private boolean isEdgePoint(double[] p) {
+    public/***/ boolean isEdgePoint(double[] p) {
         return isEdgePoint(Math2.toInt(p));
     }
 
@@ -608,7 +662,7 @@ public class LabelLayoutIterator {
     /**
      * @return True if map is empty (all points false).
      */
-    private boolean mapIsEmpty() {
+    public/***/ boolean mapIsEmpty() {
         for (boolean[] row : map) {
             for (boolean p : row) {
                 if (p == true) return false;
@@ -620,7 +674,7 @@ public class LabelLayoutIterator {
     /**
      * @return True if layout might continue outside of box-image.
      */
-    private boolean isEdgeLabel(LabelLayout l) {
+    public/***/ boolean isEdgeLabel(LabelLayout l) {
         return
             isEdgeBox(l.getBox(0, 0)) ||
             isEdgeBox(l.getBox(0, -1)) ||
@@ -632,7 +686,7 @@ public class LabelLayoutIterator {
      * @return True if box might have a neighbor outside of box-image
      * (box-neighbor or row-neighbor).
      */
-    private boolean isEdgeBox(Box b) {
+    public/***/ boolean isEdgeBox(Box b) {
         double hl = b.getWidth() * BOX_SEARCH_LENGTH_FACTOR;
         double vl = b.getHeight() * ROW_SEARCH_LENGTH_FACTOR;
         double[] lr = b.getDirVector();

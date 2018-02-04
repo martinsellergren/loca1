@@ -1,9 +1,9 @@
 USER_NAME = "masel"
 TOKEN = sk.eyJ1IjoibWFzZWwiLCJhIjoiY2pkM2YwYXlvMncyZTMzczYzbXJ1Mzd3ayJ9.OBMENh5mWq6iwPZut8s0iw
 STREETS_STYLE_ID = streets-v10
-FULL_STYLE_ID = cjd3drfc848nz2tmoos1fysia
-LABEL_STYLE_ID = cjd3drv7d48cu2ss0oos7mcsb
-BOX_STYLE_ID = cjd3ds6gu48jy2skaohiit3hd
+FULL_STYLE_ID = cjd9dx1oe9t712roe6qmxmfgr
+LABEL_STYLE_ID = cjd9dxg7i84ev2snt9rudqcgg
+BOX_STYLE_ID = cjd9dxq0w9tpb2ss0ysjtiwlr
 
 all: cleanAll fetch generate update
 
@@ -23,8 +23,14 @@ cleanAll: clean
 fetch:
 	curl "https://api.mapbox.com/styles/v1/mapbox/$(STREETS_STYLE_ID)?access_token=$(TOKEN)" > Streets.json
 
-#mirror local files (full.json, label.json, box.json) in mapbox-server
+#update styles (mirror local files (full.json, label.json, box.json) in mapbox-server)
 update:
 	curl -X PATCH "https://api.mapbox.com/styles/v1/$(USER_NAME)/$(FULL_STYLE_ID)?access_token=$(TOKEN)" --data @full.json --header "Content-Type:application/json" > /dev/null
 	curl -X PATCH "https://api.mapbox.com/styles/v1/$(USER_NAME)/$(LABEL_STYLE_ID)?access_token=$(TOKEN)" --data @label.json --header "Content-Type:application/json" > /dev/null
 	curl -X PATCH "https://api.mapbox.com/styles/v1/$(USER_NAME)/$(BOX_STYLE_ID)?access_token=$(TOKEN)" --data @box.json --header "Content-Type:application/json" > /dev/null
+
+# #create new styles (mirror local files (full.json, label.json, box.json) in mapbox-server)
+# create:
+# 	curl -X POST "https://api.mapbox.com/styles/v1/$(USER_NAME)?access_token=$(TOKEN)" --data @full.json --header "Content-Type:application/json" > /dev/null
+# 	curl -X POST "https://api.mapbox.com/styles/v1/$(USER_NAME)?access_token=$(TOKEN)" --data @label.json --header "Content-Type:application/json" > /dev/null
+# 	curl -X POST "https://api.mapbox.com/styles/v1/$(USER_NAME)?access_token=$(TOKEN)" --data @box.json --header "Content-Type:application/json" > /dev/null

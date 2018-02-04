@@ -111,6 +111,17 @@ public class LabelLayout {
     }
 
     /**
+     * @return Avg box height.
+     */
+    public double getAverageBoxWidth() {
+        double sum = 0;
+        for (Box b : getBoxes()) {
+            sum += b.getWidth();
+        }
+        return sum / getNoBoxes();
+    }
+
+    /**
      * @return [xmin, ymin, xmax, ymax]
      */
     public double[] getBounds() {

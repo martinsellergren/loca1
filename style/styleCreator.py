@@ -39,6 +39,11 @@ def setLetterSpacing(data, extraSpace=0):
             space += layer['layout']['text-letter-spacing']
         layer['layout']['text-letter-spacing'] = space
 
+def setLineHeight(data, lineHeight):
+    for layer in getSymbolLayers(data):
+        layer['layout']['text-line-height'] = lineHeight
+
+
 def setTextMaxAngle(data, maxAngle=45):
     for layer in getSymbolLayers(data):
         layer['layout']['text-max-angle'] = maxAngle
@@ -72,6 +77,7 @@ def dumpStyle(data, fileName):
 font = 'Cousine Regular'
 font_box = font + '-Box'
 extraLetterSpace = 0.2
+lineHeight = 1.4
 textMaxAngle = 15;
 
 fileName_full = "full"
@@ -87,6 +93,7 @@ data = json.load(f)
 removeCreatedAndModifiedProps(data)
 setFont(data, font)
 setLetterSpacing(data, extraLetterSpace)
+setLineHeight(data, lineHeight)
 setTextMaxAngle(data, textMaxAngle)
 #noAbbreviations(data)
 #noRoadSigns()
