@@ -108,7 +108,7 @@ setNoOverlap(data)
 setTextPadding(data, textPadding)
 #noAbbreviations(data)
 #noRoadSigns()
-#noJunkLabels()
+#noJunkLabels() #like street numbers
 #setLanguage(data)
 
 #experiment

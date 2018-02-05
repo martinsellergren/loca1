@@ -56,12 +56,12 @@ public class LabelLayoutIterator {
     /**
      * Max search length from left/right edge of a box to
      * a neighbor-box (same label) is length(box)*this. */
-    public/***/ static final double BOX_SEARCH_LENGTH_FACTOR = 2;
+    public/***/ static final double BOX_SEARCH_LENGTH_FACTOR = 2.2;
 
     /**
      * Max search length from top/botten edge of a box to a
      * neighbor-row-box (same label) is height(box)*this. */
-    public/***/ static final double ROW_SEARCH_LENGTH_FACTOR = 0.2;
+    public/***/ static final double ROW_SEARCH_LENGTH_FACTOR = 0.3;
 
     /**
      * sb/hb >= this, where sb is shortest, tb tallest box, in
@@ -70,7 +70,7 @@ public class LabelLayoutIterator {
 
     /**
      * The maximum change in angle between two adjacent boxes. */
-    public/***/ static final double MAX_ANGLE_CHANGE = 20;
+    public/***/ static final double MAX_ANGLE_CHANGE = 25;
 
     /** w0 = (xL + w1 + xR) where w0 is width of longest line, w1
      * width of shortest, and xL, xR are distances next to shortest
@@ -85,6 +85,11 @@ public class LabelLayoutIterator {
     /**
      * Stricter when multiple row (all boxes on a straight baseline) */
     private static final double SAME_BASELINE_LAXNESS_FACTOR_MULTIROW = 0.1;
+
+    /**
+     * Padding in pixels. "Inside area" is surrended by padding.
+     * Depends on pixel density..  */
+    private static final int padding = 20;
 
 
     /** Start searching for next box-point at this pos in map. */
@@ -601,9 +606,9 @@ public class LabelLayoutIterator {
         LinkedList<int[]> ps = expandToBoxPoints(start);
         if (containsEdgePoint(ps)) return null;
 
-        Box b = new Box(ps);
-        if (isInside(b)) return b;
-        else return null;
+        return new Box(ps);
+        // if (isInside(b)) return b;
+        // else return null;
     }
 
     /**
@@ -671,7 +676,7 @@ public class LabelLayoutIterator {
     }
 
     /**
-     * @return True if box is inside box-image.
+     * @return True if box is inside box-image's inside-area.
      */
     public/***/ boolean isInside(Box b) {
         int[][] cs = Math2.toInt(b.getCorners());
@@ -681,12 +686,12 @@ public class LabelLayoutIterator {
     }
 
     /**
-     * @return True if point p is inside box-image.
+     * @return True if point p is inside box-image's inside area.
      */
     public/***/ boolean isInside(int[] p) {
         return
-            p[0] >= 0 && p[0] < map[0].length &&
-            p[1] >= 0 && p[1] < map.length;
+            p[0] >= this.padding && p[0] < map[0].length-this.padding &&
+            p[1] >= this.padding && p[1] < map.length-this.padding;
     }
     private boolean isInside(double[] p) {
         return isInside(Math2.toInt(p));
