@@ -2401,8 +2401,10 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "symbol-placement": "line", 
                 "icon-padding": 2, 
+                "text-padding": 5, 
                 "text-font": [
                     "Cousine Regular"
                 ], 
@@ -2471,8 +2473,10 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "symbol-placement": "line", 
                 "icon-padding": 2, 
+                "text-padding": 5, 
                 "text-font": [
                     "Cousine Regular"
                 ], 
@@ -2620,8 +2624,10 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "symbol-placement": "line", 
                 "icon-padding": 2, 
+                "text-padding": 5, 
                 "text-font": [
                     "Cousine Regular"
                 ], 
@@ -3029,6 +3035,7 @@
                 "text-letter-spacing": 0.2, 
                 "icon-allow-overlap": true, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "icon-size": {
                     "base": 1.5, 
                     "stops": [
@@ -3047,6 +3054,7 @@
                     ]
                 }, 
                 "icon-padding": 0, 
+                "text-padding": 5, 
                 "text-font": [
                     "Cousine Regular"
                 ], 
@@ -4669,8 +4677,10 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "symbol-placement": "line", 
                 "icon-padding": 2, 
+                "text-padding": 5, 
                 "text-font": [
                     "Cousine Regular"
                 ], 
@@ -4741,8 +4751,10 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "symbol-placement": "line", 
                 "icon-padding": 2, 
+                "text-padding": 5, 
                 "text-font": [
                     "Cousine Regular"
                 ], 
@@ -5002,7 +5014,9 @@
                 "text-letter-spacing": 0.2, 
                 "icon-allow-overlap": true, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "icon-size": 1, 
+                "text-padding": 5, 
                 "text-font": [
                     "Cousine Regular"
                 ], 
@@ -5036,8 +5050,10 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "symbol-placement": "line", 
                 "icon-padding": 2, 
+                "text-padding": 5, 
                 "text-font": [
                     "Cousine Regular"
                 ], 
@@ -5109,6 +5125,7 @@
                 "text-letter-spacing": 0.2, 
                 "icon-allow-overlap": true, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "icon-size": {
                     "base": 1.5, 
                     "stops": [
@@ -5123,6 +5140,7 @@
                     ]
                 }, 
                 "icon-padding": 0, 
+                "text-padding": 5, 
                 "text-font": [
                     "Cousine Regular"
                 ], 
@@ -6887,8 +6905,10 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "symbol-placement": "line", 
                 "icon-padding": 2, 
+                "text-padding": 5, 
                 "text-font": [
                     "Cousine Regular"
                 ], 
@@ -6953,8 +6973,10 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "symbol-placement": "line", 
                 "icon-padding": 2, 
+                "text-padding": 5, 
                 "text-font": [
                     "Cousine Regular"
                 ], 
@@ -7770,8 +7792,10 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "symbol-placement": "line", 
                 "icon-padding": 2, 
+                "text-padding": 5, 
                 "text-font": [
                     "Cousine Regular"
                 ], 
@@ -8238,7 +8262,8 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
-                "text-padding": 4, 
+                "text-allow-overlap": "false", 
+                "text-padding": 5, 
                 "text-font": [
                     "Cousine Regular"
                 ], 
@@ -8263,6 +8288,7 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "symbol-placement": "line", 
                 "text-line-height": 1.4, 
                 "text-font": [
@@ -8270,6 +8296,7 @@
                 ], 
                 "text-pitch-alignment": "viewport", 
                 "text-field": "{name_en}", 
+                "text-padding": 5, 
                 "text-size": {
                     "base": 1, 
                     "stops": [
@@ -8306,6 +8333,7 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular"
@@ -8313,7 +8341,7 @@
                 "text-anchor": "top", 
                 "icon-image": "{maki}-11", 
                 "text-field": "{name_en}", 
-                "text-padding": 2, 
+                "text-padding": 5, 
                 "text-offset": [
                     0, 
                     0.65
@@ -8380,6 +8408,7 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular"
@@ -8387,7 +8416,7 @@
                 "text-anchor": "top", 
                 "icon-image": "{maki}-11", 
                 "text-field": "{name_en}", 
-                "text-padding": 1, 
+                "text-padding": 5, 
                 "text-offset": [
                     0, 
                     0.65
@@ -8454,6 +8483,7 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular"
@@ -8461,7 +8491,7 @@
                 "text-anchor": "top", 
                 "icon-image": "{maki}-11", 
                 "text-field": "{name_en}", 
-                "text-padding": 1, 
+                "text-padding": 5, 
                 "text-offset": [
                     0, 
                     0.65
@@ -8523,6 +8553,7 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular"
@@ -8530,7 +8561,7 @@
                 "text-anchor": "top", 
                 "icon-image": "{maki}-11", 
                 "text-field": "{name_en}", 
-                "text-padding": 1, 
+                "text-padding": 5, 
                 "text-offset": [
                     0, 
                     0.65
@@ -8591,6 +8622,7 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular"
@@ -8598,7 +8630,7 @@
                 "text-anchor": "top", 
                 "icon-image": "{maki}-11", 
                 "text-field": "{name_en}", 
-                "text-padding": 2, 
+                "text-padding": 5, 
                 "text-offset": [
                     0, 
                     0.65
@@ -8659,8 +8691,9 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "symbol-placement": "line", 
-                "text-padding": 1, 
+                "text-padding": 5, 
                 "text-font": [
                     "Cousine Regular"
                 ], 
@@ -8724,8 +8757,9 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "symbol-placement": "line", 
-                "text-padding": 1, 
+                "text-padding": 5, 
                 "text-font": [
                     "Cousine Regular"
                 ], 
@@ -8782,8 +8816,9 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "symbol-placement": "line", 
-                "text-padding": 1, 
+                "text-padding": 5, 
                 "text-font": [
                     "Cousine Regular"
                 ], 
@@ -8833,6 +8868,7 @@
             "layout": {
                 "text-letter-spacing": 0.25, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "symbol-placement": {
                     "base": 1, 
                     "stops": [
@@ -8847,7 +8883,7 @@
                     ]
                 }, 
                 "icon-padding": 2, 
-                "text-padding": 2, 
+                "text-padding": 5, 
                 "text-font": [
                     "Cousine Regular"
                 ], 
@@ -8944,6 +8980,7 @@
             "layout": {
                 "text-letter-spacing": 0.25, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "symbol-placement": {
                     "base": 1, 
                     "stops": [
@@ -8958,7 +8995,7 @@
                     ]
                 }, 
                 "icon-padding": 2, 
-                "text-padding": 2, 
+                "text-padding": 5, 
                 "text-font": [
                     "Cousine Regular"
                 ], 
@@ -9055,12 +9092,14 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular"
                 ], 
                 "icon-image": "motorway-exit-{reflen}", 
                 "text-field": "{ref}", 
+                "text-padding": 5, 
                 "text-size": 9
             }, 
             "paint": {
@@ -9096,6 +9135,7 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular"
@@ -9114,7 +9154,7 @@
                     ]
                 }, 
                 "text-field": "{name_en}", 
-                "text-padding": 2, 
+                "text-padding": 5, 
                 "text-offset": [
                     0, 
                     0.65
@@ -9175,6 +9215,7 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular"
@@ -9193,7 +9234,7 @@
                     ]
                 }, 
                 "text-field": "{name_en}", 
-                "text-padding": 2, 
+                "text-padding": 5, 
                 "text-offset": [
                     0, 
                     0.65
@@ -9254,6 +9295,7 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "icon-padding": 0, 
                 "text-line-height": 1.4, 
                 "text-font": [
@@ -9274,6 +9316,7 @@
                         ]
                     ]
                 }, 
+                "text-padding": 5, 
                 "text-offset": [
                     0, 
                     0.85
@@ -9331,6 +9374,7 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "text-size": {
                     "base": 1, 
                     "stops": [
@@ -9348,6 +9392,7 @@
                     "Cousine Regular"
                 ], 
                 "text-field": "{name_en}", 
+                "text-padding": 5, 
                 "text-line-height": 1.4, 
                 "text-max-width": 7
             }, 
@@ -9372,6 +9417,7 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "text-size": {
                     "base": 1, 
                     "stops": [
@@ -9389,6 +9435,7 @@
                     "Cousine Regular"
                 ], 
                 "text-field": "{name_en}", 
+                "text-padding": 5, 
                 "text-line-height": 1.4, 
                 "text-max-width": 7
             }, 
@@ -9413,12 +9460,13 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular"
                 ], 
                 "text-field": "{name_en}", 
-                "text-padding": 2, 
+                "text-padding": 5, 
                 "text-offset": [
                     0, 
                     0
@@ -9479,6 +9527,7 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular"
@@ -9497,7 +9546,7 @@
                     ]
                 }, 
                 "text-field": "{name_en}", 
-                "text-padding": 2, 
+                "text-padding": 5, 
                 "text-offset": [
                     0, 
                     0.65
@@ -9558,6 +9607,7 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular"
@@ -9576,7 +9626,7 @@
                     ]
                 }, 
                 "text-field": "{name_en}", 
-                "text-padding": 2, 
+                "text-padding": 5, 
                 "text-offset": [
                     0, 
                     0.65
@@ -9637,7 +9687,8 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
-                "text-padding": 2, 
+                "text-allow-overlap": "false", 
+                "text-padding": 5, 
                 "text-font": [
                     "Cousine Regular"
                 ], 
@@ -9709,12 +9760,13 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular"
                 ], 
                 "text-field": "{name_en}", 
-                "text-padding": 2, 
+                "text-padding": 5, 
                 "text-offset": [
                     0, 
                     0
@@ -9758,7 +9810,8 @@
             "layout": {
                 "text-letter-spacing": 0.30000000000000004, 
                 "text-max-angle": 15, 
-                "text-padding": 3, 
+                "text-allow-overlap": "false", 
+                "text-padding": 5, 
                 "text-font": [
                     "Cousine Regular"
                 ], 
@@ -9802,7 +9855,8 @@
             "layout": {
                 "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
-                "text-padding": 3, 
+                "text-allow-overlap": "false", 
+                "text-padding": 5, 
                 "text-font": [
                     "Cousine Regular"
                 ], 
@@ -9846,6 +9900,7 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "text-size": {
                     "base": 1, 
                     "stops": [
@@ -9863,6 +9918,7 @@
                     "Cousine Regular"
                 ], 
                 "text-field": "{name_en}", 
+                "text-padding": 5, 
                 "text-line-height": 1.4
             }, 
             "paint": {
@@ -9886,6 +9942,7 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "text-size": {
                     "base": 1, 
                     "stops": [
@@ -9903,6 +9960,7 @@
                     "Cousine Regular"
                 ], 
                 "text-field": "{name_en}", 
+                "text-padding": 5, 
                 "text-line-height": 1.4, 
                 "text-max-width": 7
             }, 
@@ -9927,6 +9985,7 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular"
@@ -9946,6 +10005,7 @@
                 }, 
                 "icon-image": "dot-9", 
                 "text-field": "{name_en}", 
+                "text-padding": 5, 
                 "text-offset": {
                     "base": 1, 
                     "stops": [
@@ -10014,12 +10074,13 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular"
                 ], 
                 "text-field": "{name_en}", 
-                "text-padding": 2, 
+                "text-padding": 5, 
                 "text-offset": [
                     0, 
                     0
@@ -10061,6 +10122,7 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular"
@@ -10080,6 +10142,7 @@
                 }, 
                 "icon-image": "dot-9", 
                 "text-field": "{name_en}", 
+                "text-padding": 5, 
                 "text-offset": {
                     "base": 1, 
                     "stops": [
@@ -10163,6 +10226,7 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular"
@@ -10182,6 +10246,7 @@
                 }, 
                 "icon-image": "dot-10", 
                 "text-field": "{name_en}", 
+                "text-padding": 5, 
                 "text-offset": {
                     "base": 1, 
                     "stops": [
@@ -10270,6 +10335,7 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular"
@@ -10289,6 +10355,7 @@
                 }, 
                 "icon-image": "dot-10", 
                 "text-field": "{name_en}", 
+                "text-padding": 5, 
                 "text-offset": {
                     "base": 1, 
                     "stops": [
@@ -10378,6 +10445,7 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular"
@@ -10397,6 +10465,7 @@
                 }, 
                 "icon-image": "dot-11", 
                 "text-field": "{name_en}", 
+                "text-padding": 5, 
                 "text-offset": {
                     "base": 1, 
                     "stops": [
@@ -10485,6 +10554,7 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular"
@@ -10504,6 +10574,7 @@
                 }, 
                 "icon-image": "dot-11", 
                 "text-field": "{name_en}", 
+                "text-padding": 5, 
                 "text-offset": {
                     "base": 1, 
                     "stops": [
@@ -10593,6 +10664,7 @@
             "layout": {
                 "text-letter-spacing": 0.30000000000000004, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "symbol-placement": "line", 
                 "text-line-height": 1.4, 
                 "text-font": [
@@ -10600,6 +10672,7 @@
                 ], 
                 "text-pitch-alignment": "viewport", 
                 "text-field": "{name_en}", 
+                "text-padding": 5, 
                 "text-size": {
                     "base": 1, 
                     "stops": [
@@ -10658,11 +10731,13 @@
             "layout": {
                 "text-letter-spacing": 0.30000000000000004, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular"
                 ], 
                 "text-field": "{name_en}", 
+                "text-padding": 5, 
                 "text-size": {
                     "base": 1, 
                     "stops": [
@@ -10708,6 +10783,7 @@
             "layout": {
                 "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "symbol-placement": "line", 
                 "text-line-height": 1.4, 
                 "text-font": [
@@ -10715,6 +10791,7 @@
                 ], 
                 "text-pitch-alignment": "viewport", 
                 "text-field": "{name_en}", 
+                "text-padding": 5, 
                 "text-size": {
                     "base": 1.1, 
                     "stops": [
@@ -10762,11 +10839,13 @@
             "layout": {
                 "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular"
                 ], 
                 "text-field": "{name_en}", 
+                "text-padding": 5, 
                 "text-size": {
                     "base": 1.1, 
                     "stops": [
@@ -10813,6 +10892,7 @@
             "layout": {
                 "text-letter-spacing": 0.45, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "symbol-placement": "line", 
                 "text-size": {
                     "base": 1, 
@@ -10832,6 +10912,7 @@
                 ], 
                 "text-pitch-alignment": "viewport", 
                 "text-field": "{name_en}", 
+                "text-padding": 5, 
                 "text-line-height": 1.4, 
                 "text-max-width": 4
             }, 
@@ -10865,11 +10946,13 @@
             "layout": {
                 "text-letter-spacing": 0.45, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "text-line-height": 1.4, 
                 "text-font": [
                     "Cousine Regular"
                 ], 
                 "text-field": "{name_en}", 
+                "text-padding": 5, 
                 "text-size": {
                     "base": 1, 
                     "stops": [
@@ -10915,6 +10998,7 @@
             "layout": {
                 "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "text-size": {
                     "base": 1, 
                     "stops": [
@@ -10945,6 +11029,7 @@
                     ]
                 }, 
                 "text-line-height": 1.4, 
+                "text-padding": 5, 
                 "text-transform": "uppercase", 
                 "text-max-width": 5
             }, 
@@ -10973,6 +11058,7 @@
             "layout": {
                 "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "text-size": {
                     "base": 1, 
                     "stops": [
@@ -11003,6 +11089,7 @@
                     ]
                 }, 
                 "text-line-height": 1.4, 
+                "text-padding": 5, 
                 "text-transform": "uppercase", 
                 "text-max-width": 6
             }, 
@@ -11039,6 +11126,7 @@
             "layout": {
                 "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "text-size": {
                     "base": 1, 
                     "stops": [
@@ -11069,7 +11157,7 @@
                         ]
                     ]
                 }, 
-                "text-padding": 1, 
+                "text-padding": 5, 
                 "text-transform": "uppercase", 
                 "text-max-width": 6
             }, 
@@ -11098,6 +11186,7 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "text-size": {
                     "base": 0.9, 
                     "stops": [
@@ -11115,6 +11204,7 @@
                     "Cousine Regular"
                 ], 
                 "text-field": "{name_en}", 
+                "text-padding": 5, 
                 "text-line-height": 1.4, 
                 "text-max-width": 6
             }, 
@@ -11154,6 +11244,7 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "text-size": {
                     "base": 1, 
                     "stops": [
@@ -11183,6 +11274,7 @@
                         ]
                     ]
                 }, 
+                "text-padding": 5, 
                 "text-line-height": 1.4, 
                 "text-max-width": 6
             }, 
@@ -11223,6 +11315,7 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
+                "text-allow-overlap": "false", 
                 "text-size": {
                     "base": 1, 
                     "stops": [
@@ -11240,6 +11333,7 @@
                     "Cousine Regular"
                 ], 
                 "text-field": "{name_en}", 
+                "text-padding": 5, 
                 "text-line-height": 1.4, 
                 "text-max-width": {
                     "base": 1, 

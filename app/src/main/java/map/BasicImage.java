@@ -257,7 +257,7 @@ public class BasicImage {
         int[] br = Math2.toInt(lay.getBox(-1,-1).getBottomRight());
         int[] bl = Math2.toInt(lay.getBox(-1,0).getBottomLeft());
 
-        g.setPaint(Color.BLUE);
+        g.setPaint(Color.RED);
         g.drawLine(tl[0], tl[1], tr[0], tr[1]);
         g.drawLine(tr[0], tr[1], br[0], br[1]);
         g.drawLine(br[0], br[1], bl[0], bl[1]);

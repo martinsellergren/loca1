@@ -130,8 +130,10 @@ public class MapRequest {
 
         String imageUrl = staticImage.getUrl().toString();
         if (!this.attribution) {
-                imageUrl += "&attribution=false&logo=false";
+            imageUrl += "&attribution=false&logo=false";
         }
+
+        System.out.println(imageUrl);
 
         try {
             BufferedImage img = ImageIO.read(new URL(imageUrl));

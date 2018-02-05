@@ -56,6 +56,14 @@ def setNoLabelRotation(data):
     for layer in getSymbolLayers(data):
         layer['layout']['symbol-placement'] = 'point'
 
+def setNoOverlap(data):
+    for layer in getSymbolLayers(data):
+        layer['layout']['text-allow-overlap'] = 'false'
+
+def setTextPadding(data, textPadding):
+    for layer in getSymbolLayers(data):
+        layer['layout']['text-padding'] = textPadding
+
 def undecorateText(data):
     for layer in getSymbolLayers(data):
         paint = layer['paint']
@@ -78,7 +86,8 @@ font = 'Cousine Regular'
 font_box = font + '-Box'
 extraLetterSpace = 0.2
 lineHeight = 1.4
-textMaxAngle = 15;
+textMaxAngle = 15
+textPadding = 5 #label padding..
 
 fileName_full = "full"
 fileName_label = "label"
@@ -95,6 +104,8 @@ setFont(data, font)
 setLetterSpacing(data, extraLetterSpace)
 setLineHeight(data, lineHeight)
 setTextMaxAngle(data, textMaxAngle)
+setNoOverlap(data)
+setTextPadding(data, textPadding)
 #noAbbreviations(data)
 #noRoadSigns()
 #noJunkLabels()

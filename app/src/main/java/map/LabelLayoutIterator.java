@@ -66,22 +66,26 @@ public class LabelLayoutIterator {
     /**
      * sb/hb >= this, where sb is shortest, tb tallest box, in
      * any label. */
-    public/***/ static final double MAX_BOX_HEIGHT_DIFFERENCE_FACTOR = 0.9;
+    public/***/ static final double MAX_BOX_HEIGHT_DIFFERENCE_FACTOR = 0.7;
 
     /**
      * The maximum change in angle between two adjacent boxes. */
     public/***/ static final double MAX_ANGLE_CHANGE = 20;
 
-    /**
-     * abs(by - nby) / bh <= this, where by is any box's y-value
-     * and nby is neighbor-box's y-value. */
-    private static final double MULTI_ROW_MAX_Y_DIFF_FACTOR = 0.05;
+    // /**
+    //  * abs(by - nby) / bh <= this, where by is any box's y-value
+    //  * and nby is neighbor-box's y-value. */
+    // private static final double MULTI_ROW_MAX_Y_DIFF_FACTOR = 0.05;
 
     /** w0 = (xL + w1 + xR) where w0 is width of longest line, w1
      * width of shortest, and xL, xR are distances next to shortest
      * "under" longest. abs(xL - xR) / w1 = this. */
     public/***/ static final double CENTERED_LAXNESS_FACTOR = 0.15;
 
+    /**
+     * d / boxHeight <= this, where d is ortogonal distance from a
+     * box's baseline to neighbor box's closest bottom-point. */
+    private static final double SAME_BASELINE_LAXNESS_FACTOR = 0.2;
 
     /** Start searching for next box-point at this pos in map. */
     public/***/ int startX = 0;
@@ -346,7 +350,7 @@ public class LabelLayoutIterator {
         if (sl.getShortestBoxHeight() / nl.getTallestBoxHeight() < MAX_BOX_HEIGHT_DIFFERENCE_FACTOR) return null;
         if (nl.getShortestBoxHeight() / sl.getTallestBoxHeight() < MAX_BOX_HEIGHT_DIFFERENCE_FACTOR) return null;
         if (!rowsCentered(sr, nr)) return null;
-        if (!sameYPos(sr)) return null;
+        //if (!sameYPos(sr)) return null;
 
         return nr;
     }
@@ -454,21 +458,21 @@ public class LabelLayoutIterator {
         return Math.abs(deltaL - deltaR) / Math.min(w0, w1) <= CENTERED_LAXNESS_FACTOR;
     }
 
-    /**
-     * @return True if boxes in row have similar y-values.
-     */
-    private boolean sameYPos(LinkedList<Box> row) {
-        if (row.size() < 2) return true;
+    // /**
+    //  * @return True if boxes in row have similar y-values.
+    //  */
+    // private boolean sameYPos(LinkedList<Box> row) {
+    //     if (row.size() < 2) return true;
 
-        for (int i = 0; i < row.size()-1; i++) {
-            double by = row.get(i).getBottomLeft()[1];
-            double nby = row.get(i+1).getBottomLeft()[1];
+    //     for (int i = 0; i < row.size()-1; i++) {
+    //         double by = row.get(i).getBottomLeft()[1];
+    //         double nby = row.get(i+1).getBottomLeft()[1];
 
-            if (Math.abs(by - nby) / row.get(0).getHeight() > MULTI_ROW_MAX_Y_DIFF_FACTOR)
-                return false;
-        }
-        return true;
-    }
+    //         if (Math.abs(by - nby) / row.get(0).getHeight() > MULTI_ROW_MAX_Y_DIFF_FACTOR)
+    //             return false;
+    //     }
+    //     return true;
+    // }
 
     /**
      * Finds a neighbor-box to a start-box.
@@ -479,6 +483,7 @@ public class LabelLayoutIterator {
      *  -In close proximity to left/right of start-box.
      *  -At about same height as start-box.
      *  -At about the same rotation as start-box.
+     *  -At about same baseline as start-box.
      *
      * @param left Search left, otherwise right.
      * @param sb Start-box.
@@ -498,6 +503,8 @@ public class LabelLayoutIterator {
             return null;
         if (Math2.angleDiff(sb.getRotation(), nb.getRotation()) > MAX_ANGLE_CHANGE)
             return null;
+        if (!sameBaseline(sb, nb))
+            return null;
 
         return nb;
     }
@@ -514,14 +521,14 @@ public class LabelLayoutIterator {
         double INIT_JUMP_LENGTH_OUT_OF_STARTBOX = 3;
         double d = sb.getWidth() * BOX_SEARCH_LENGTH_FACTOR;
 
-        double[] start0 = sb.getTopLeft();
-        double[] start1 = sb.getLeftMid();
+        double[] start0 = sb.getLeftMid();
+        double[] start1 = sb.getTopLeft();
         double[] start2 = sb.getBottomLeft();
         int dir = -1;
 
         if (!left) {
-            start0 = sb.getTopRight();
-            start1 = sb.getRightMid();
+            start0 = sb.getRightMid();
+            start1 = sb.getTopRight();
             start2 = sb.getBottomRight();
             dir = 1;
         }
@@ -538,6 +545,21 @@ public class LabelLayoutIterator {
         int[] bp2 = findBoxPointOnPath(start2, end2);
 
         return bp0 != null ? bp0 : (bp1 != null ? bp1 : bp2);
+    }
+
+    /**
+     * @return True if boxes is positioned on same (similar) base-line.
+     */
+    private boolean sameBaseline(Box b0, Box b1) {
+        double[] p0 = b0.getBottomMid();
+        double[] v = b0.getDirVector();
+
+        double[] p1 =
+            Math2.distance(p0, b1.getBottomLeft()) <
+            Math2.distance(p0, b1.getBottomRight()) ?
+            b1.getBottomLeft() : b1.getBottomRight();
+
+        return Math.abs(Math2.distance(p1, p0, v)) / b0.getHeight() < SAME_BASELINE_LAXNESS_FACTOR;
     }
 
     /**
@@ -623,9 +645,6 @@ public class LabelLayoutIterator {
             p[1] == 0 ||
             p[1] == map.length-1;
     }
-    public/***/ boolean isEdgePoint(double[] p) {
-        return isEdgePoint(Math2.toInt(p));
-    }
 
     /**
      * @return True if box is inside box-image.
@@ -644,6 +663,9 @@ public class LabelLayoutIterator {
         return
             p[0] >= 0 && p[0] < map[0].length &&
             p[1] >= 0 && p[1] < map.length;
+    }
+    private boolean isInside(double[] p) {
+        return isInside(Math2.toInt(p));
     }
 
     /**
@@ -687,20 +709,20 @@ public class LabelLayoutIterator {
      * (box-neighbor or row-neighbor).
      */
     public/***/ boolean isEdgeBox(Box b) {
-        double hl = b.getWidth() * BOX_SEARCH_LENGTH_FACTOR;
-        double vl = b.getHeight() * ROW_SEARCH_LENGTH_FACTOR;
+        double hl = b.getWidth() * BOX_SEARCH_LENGTH_FACTOR * 1.5;
+        double vl = b.getHeight() * ROW_SEARCH_LENGTH_FACTOR * 1.5;
         double[] lr = b.getDirVector();
         double[] ud = b.getOrtoDirVector();
 
         return
-            isEdgePoint(Math2.step(b.getTopLeft(), lr, -hl)) ||
-            isEdgePoint(Math2.step(b.getTopLeft(), ud, -vl)) ||
-            isEdgePoint(Math2.step(b.getTopRight(), lr, hl)) ||
-            isEdgePoint(Math2.step(b.getTopRight(), ud, -vl)) ||
-            isEdgePoint(Math2.step(b.getBottomRight(), lr, hl)) ||
-            isEdgePoint(Math2.step(b.getBottomRight(), ud, vl)) ||
-            isEdgePoint(Math2.step(b.getBottomLeft(), lr, -hl)) ||
-            isEdgePoint(Math2.step(b.getBottomLeft(), ud, vl));
+            !isInside(Math2.step(b.getTopLeft(), lr, -hl)) ||
+            !isInside(Math2.step(b.getTopLeft(), ud, -vl)) ||
+            !isInside(Math2.step(b.getTopRight(), lr, hl)) ||
+            !isInside(Math2.step(b.getTopRight(), ud, -vl)) ||
+            !isInside(Math2.step(b.getBottomRight(), lr, hl)) ||
+            !isInside(Math2.step(b.getBottomRight(), ud, vl)) ||
+            !isInside(Math2.step(b.getBottomLeft(), lr, -hl)) ||
+            !isInside(Math2.step(b.getBottomLeft(), ud, vl));
     }
 
     //*********************************FOR TESTING

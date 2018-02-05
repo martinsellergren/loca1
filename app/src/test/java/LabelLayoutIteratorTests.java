@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Color;
 
 public class LabelLayoutIteratorTests {
-    BasicImage img = BasicImage.load("../test_world_box.png");
+    BasicImage img = BasicImage.load("../test_europe_box.png");
 
 
     // @Test
@@ -95,12 +95,14 @@ public class LabelLayoutIteratorTests {
     // public void expandToLabelLayout() {
     //     LabelLayoutIterator iter = new LabelLayoutIterator(img);
 
-    //     LabelLayout l = iter.expandToLabelLayout(new int[]{1022, 1532});
+    //     LabelLayout l = iter.expandToLabelLayout(new int[]{970,1393});
+    //                                              //{1022, 1532});
     //     img.drawLabelLayout(l);
+    //     System.out.println(l.getBoxes().length);
 
-    //     //l = iter.expandToLabelLayout(new int[]{1037, 1543});
-    //     l = iter.expandToLabelLayout(new int[]{1093, 1540});
-    //     img.drawLabelLayout(l);
+    //     // l = iter.expandToLabelLayout(new int[]{1037, 1543});
+    //     // l = iter.expandToLabelLayout(new int[]{1093, 1540});
+    //     // img.drawLabelLayout(l);
 
     //     img.save("test_LabelLayoutIterator_expandToLabelLayout.png");
     // }

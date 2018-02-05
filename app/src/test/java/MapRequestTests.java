@@ -5,32 +5,32 @@ import map.*;
 
 public class MapRequestTests {
 
-    @Test
-    public void fetch3_world() {
-        double west = -180;
-        double north = MapImageView.LATITUDE_BOUND;
-        double east = 180;
-        double south = -MapImageView.LATITUDE_BOUND;
-        int zoom = 3;
-        boolean highQ = false;
-        MapImageView view = new MapImageView(west, north, east, south, zoom, highQ);
-        MapRequest req = new MapRequest(view);
+    // @Test
+    // public void fetch3_world() {
+    //     double west = -180;
+    //     double north = MapImageView.LATITUDE_BOUND;
+    //     double east = 180;
+    //     double south = -MapImageView.LATITUDE_BOUND;
+    //     int zoom = 3;
+    //     boolean highQ = false;
+    //     MapImageView view = new MapImageView(west, north, east, south, zoom, highQ);
+    //     MapRequest req = new MapRequest(view);
 
-        try {
-            BasicImage[] imgs = req.fetch3();
-            assertTrue(imgs[0] != null);
-            assertTrue(imgs[1] != null);
-            assertTrue(imgs[2] != null);
+    //     try {
+    //         BasicImage[] imgs = req.fetch3();
+    //         assertTrue(imgs[0] != null);
+    //         assertTrue(imgs[1] != null);
+    //         assertTrue(imgs[2] != null);
 
-            imgs[0].save("test_world_full.png");
-            imgs[1].save("test_world_label.png");
-            imgs[2].save("test_world_box.png");
-        }
-        catch (IOException e) {
-            System.out.println(e);
-            assertTrue(false);
-        }
-    }
+    //         imgs[0].save("test_world_full.png");
+    //         imgs[1].save("test_world_label.png");
+    //         imgs[2].save("test_world_box.png");
+    //     }
+    //     catch (IOException e) {
+    //         System.out.println(e);
+    //         assertTrue(false);
+    //     }
+    // }
 
     // @Test
     // public void fetch3_europe() {
@@ -250,37 +250,27 @@ public class MapRequestTests {
     }
 
 
-    // @Test
-    // public void fetchRaw() {
-    //     // double lon = 180;
-    //     // double lat = 0;
-    //     // int w = 512;
-    //     // int h = 512;
-    //     // int z = 0;
-    //     // boolean doubleQ = false;
-    //     // MapImageView v = new MapImageView(lon, lat, w, h, z, doubleQ);
+    @Test
+    public void fetchRaw() {
+        double west = 45.791015625;
+        double north = 52.802761415419674;
+        double east = 99.931640625;
+        double south = 25.799891182088334;
+        int z = 3;
+        boolean doubleQ = false;
+        MapImageView v = new MapImageView(west, north, east, south, z, doubleQ);
 
-    //     double west = 0;
-    //     double north = MapImageView.LATITUDE_BOUND;
-    //     double east = 0;
-    //     double south = -MapImageView.LATITUDE_BOUND;
-    //     int z = 0;
-    //     boolean doubleQ = false;
-    //     MapImageView v = new MapImageView(west, north, east, south, z, doubleQ);
+        boolean attrib = true;
+        MapRequest req = new MapRequest(v, attrib);
 
-    //     boolean attrib = true;
-    //     boolean extend = false;
-    //     MapRequest req = new MapRequest(v, attrib, extend);
-    //     //MapRequest req = new MapRequest(lon, lat, w, h, z, doubleQ, attrib, extend);
+        try {
+            BasicImage img = req.fetchRaw(MapRequest.FULL_STYLE_ID);
+            assertTrue(img != null);
 
-    //     try {
-    //         BasicImage img = req.fetchRaw(MapRequest.FULL_STYLE_ID);
-    //         assertTrue(img != null);
-
-    //         img.save(req.toString() + ".png");
-    //     }
-    //     catch (IOException e) {
-    //         assertTrue(false);
-    //     }
-    // }
+            img.save(req.toString() + ".png");
+        }
+        catch (IOException e) {
+            assertTrue(false);
+        }
+    }
 }
