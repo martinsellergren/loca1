@@ -56,12 +56,12 @@ public class LabelLayoutIterator {
     /**
      * Max search length from left/right edge of a box to
      * a neighbor-box (same label) is length(box)*this. */
-    public/***/ static final double BOX_SEARCH_LENGTH_FACTOR = 2.2;
+    public/***/ static final double BOX_SEARCH_LENGTH_FACTOR = 2;
 
     /**
      * Max search length from top/botten edge of a box to a
      * neighbor-row-box (same label) is height(box)*this. */
-    public/***/ static final double ROW_SEARCH_LENGTH_FACTOR = 1;
+    public/***/ static final double ROW_SEARCH_LENGTH_FACTOR = 0.2;
 
     /**
      * sb/hb >= this, where sb is shortest, tb tallest box, in
@@ -72,11 +72,6 @@ public class LabelLayoutIterator {
      * The maximum change in angle between two adjacent boxes. */
     public/***/ static final double MAX_ANGLE_CHANGE = 20;
 
-    // /**
-    //  * abs(by - nby) / bh <= this, where by is any box's y-value
-    //  * and nby is neighbor-box's y-value. */
-    // private static final double MULTI_ROW_MAX_Y_DIFF_FACTOR = 0.05;
-
     /** w0 = (xL + w1 + xR) where w0 is width of longest line, w1
      * width of shortest, and xL, xR are distances next to shortest
      * "under" longest. abs(xL - xR) / w1 = this. */
@@ -85,7 +80,12 @@ public class LabelLayoutIterator {
     /**
      * d / boxHeight <= this, where d is ortogonal distance from a
      * box's baseline to neighbor box's closest bottom-point. */
-    private static final double SAME_BASELINE_LAXNESS_FACTOR = 0.2;
+    private static final double SAME_BASELINE_LAXNESS_FACTOR = 0.15;
+
+    /**
+     * Stricter when multiple row (all boxes on a straight baseline) */
+    private static final double SAME_BASELINE_LAXNESS_FACTOR_MULTIROW = 0.1;
+
 
     /** Start searching for next box-point at this pos in map. */
     public/***/ int startX = 0;
@@ -350,7 +350,7 @@ public class LabelLayoutIterator {
         if (sl.getShortestBoxHeight() / nl.getTallestBoxHeight() < MAX_BOX_HEIGHT_DIFFERENCE_FACTOR) return null;
         if (nl.getShortestBoxHeight() / sl.getTallestBoxHeight() < MAX_BOX_HEIGHT_DIFFERENCE_FACTOR) return null;
         if (!rowsCentered(sr, nr)) return null;
-        //if (!sameYPos(sr)) return null;
+        if (!sameBaseline(sr)) return null;
 
         return nr;
     }
@@ -548,9 +548,12 @@ public class LabelLayoutIterator {
     }
 
     /**
+     * @param lax d / boxHeight <= this, where d is ortogonal
+     * distance from a box's baseline to neighbor box's closest
+     * bottom-point.
      * @return True if boxes is positioned on same (similar) base-line.
      */
-    private boolean sameBaseline(Box b0, Box b1) {
+    private boolean sameBaseline(Box b0, Box b1, double lax) {
         double[] p0 = b0.getBottomMid();
         double[] v = b0.getDirVector();
 
@@ -559,7 +562,28 @@ public class LabelLayoutIterator {
             Math2.distance(p0, b1.getBottomRight()) ?
             b1.getBottomLeft() : b1.getBottomRight();
 
-        return Math.abs(Math2.distance(p1, p0, v)) / b0.getHeight() < SAME_BASELINE_LAXNESS_FACTOR;
+        return Math.abs(Math2.distance(p1, p0, v)) / b0.getHeight() < lax;
+    }
+
+    /**
+     * Between any boxes (baseline might be curved so high lax).
+     */
+    private boolean sameBaseline(Box b0, Box b1) {
+        return sameBaseline(b0, b1, this.SAME_BASELINE_LAXNESS_FACTOR);
+    }
+
+    /**
+     * Boxes in a row (straight base line so low lax).
+     * @return True if all boxes in row are on same baseline.
+     */
+    private boolean sameBaseline(LinkedList<Box> row) {
+        if (row.size() < 2) return true;
+
+        for (int i = 0; i < row.size()-1; i++) {
+            if (!sameBaseline(row.get(i), row.get(i+1))) return false;
+        }
+
+        return true;
     }
 
     /**
@@ -709,8 +733,8 @@ public class LabelLayoutIterator {
      * (box-neighbor or row-neighbor).
      */
     public/***/ boolean isEdgeBox(Box b) {
-        double hl = b.getWidth() * BOX_SEARCH_LENGTH_FACTOR * 1.5;
-        double vl = b.getHeight() * ROW_SEARCH_LENGTH_FACTOR * 1.5;
+        double hl = b.getWidth() * 1.5;
+        double vl = b.getHeight() * 1.5;
         double[] lr = b.getDirVector();
         double[] ud = b.getOrtoDirVector();
 

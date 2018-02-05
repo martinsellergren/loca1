@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Color;
 
 public class LabelLayoutIteratorTests {
-    BasicImage img = BasicImage.load("../test_europe_box.png");
+    BasicImage img = BasicImage.load("../test_world_box.png");
 
 
     // @Test

@@ -58,7 +58,7 @@ def setNoLabelRotation(data):
 
 def setNoOverlap(data):
     for layer in getSymbolLayers(data):
-        layer['layout']['text-allow-overlap'] = 'false'
+        layer['layout']['text-allow-overlap'] = False
 
 def setTextPadding(data, textPadding):
     for layer in getSymbolLayers(data):
@@ -85,9 +85,9 @@ def dumpStyle(data, fileName):
 font = 'Cousine Regular'
 font_box = font + '-Box'
 extraLetterSpace = 0.2
-lineHeight = 1.4
+lineHeight = 1.5
 textMaxAngle = 15
-textPadding = 5 #label padding..
+textPadding = 5#default 2
 
 fileName_full = "full"
 fileName_label = "label"

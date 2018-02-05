@@ -133,7 +133,7 @@ public class MapRequest {
             imageUrl += "&attribution=false&logo=false";
         }
 
-        System.out.println(imageUrl);
+        //System.out.println(imageUrl);
 
         try {
             BufferedImage img = ImageIO.read(new URL(imageUrl));

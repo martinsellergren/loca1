@@ -5,7 +5,7 @@ package map;
  * Enables easy convertion between image-pixel and geo-coordinates.
  * Immutable. Lon(gitude) and lat(itude) defines the position of
  * the center-point of the image. (Web-)Mercator-projection.
- * (0,0) is equator around Africa. Lon grows west, lat grows north.
+ * (0,0) is equator around Africa. Lon grows east, lat grows north.
  *
  * @inv -180 <= lon < 180
  * @inv -85 < lat < 85 (2*arctan(e^pi) - pi/2)

@@ -25,9 +25,9 @@ fetch:
 
 #update styles (mirror local files (full.json, label.json, box.json) in mapbox-server)
 update:
-	curl -X PATCH "https://api.mapbox.com/styles/v1/$(USER_NAME)/$(FULL_STYLE_ID)?access_token=$(TOKEN)" --data @full.json --header "Content-Type:application/json" > /dev/null
-	curl -X PATCH "https://api.mapbox.com/styles/v1/$(USER_NAME)/$(LABEL_STYLE_ID)?access_token=$(TOKEN)" --data @label.json --header "Content-Type:application/json" > /dev/null
-	curl -X PATCH "https://api.mapbox.com/styles/v1/$(USER_NAME)/$(BOX_STYLE_ID)?access_token=$(TOKEN)" --data @box.json --header "Content-Type:application/json" > /dev/null
+	curl -X PATCH "https://api.mapbox.com/styles/v1/$(USER_NAME)/$(FULL_STYLE_ID)?access_token=$(TOKEN)" --data @full.json --header "Content-Type:application/json"
+	curl -X PATCH "https://api.mapbox.com/styles/v1/$(USER_NAME)/$(LABEL_STYLE_ID)?access_token=$(TOKEN)" --data @label.json --header "Content-Type:application/json"
+	curl -X PATCH "https://api.mapbox.com/styles/v1/$(USER_NAME)/$(BOX_STYLE_ID)?access_token=$(TOKEN)" --data @box.json --header "Content-Type:application/json"
 
 # #create new styles (mirror local files (full.json, label.json, box.json) in mapbox-server)
 # create:

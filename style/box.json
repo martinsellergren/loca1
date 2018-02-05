@@ -2472,7 +2472,7 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
+                "text-allow-overlap": false, 
                 "symbol-placement": "line", 
                 "icon-padding": 2, 
                 "text-padding": 5, 
@@ -2492,7 +2492,7 @@
                         ]
                     ]
                 }, 
-                "text-line-height": 1.4, 
+                "text-line-height": 1.5, 
                 "symbol-spacing": 200
             }, 
             "paint": {
@@ -2549,7 +2549,7 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
+                "text-allow-overlap": false, 
                 "symbol-placement": "line", 
                 "icon-padding": 2, 
                 "text-padding": 5, 
@@ -2569,7 +2569,7 @@
                         ]
                     ]
                 }, 
-                "text-line-height": 1.4, 
+                "text-line-height": 1.5, 
                 "symbol-spacing": 200
             }, 
             "paint": {
@@ -2706,7 +2706,7 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
+                "text-allow-overlap": false, 
                 "symbol-placement": "line", 
                 "icon-padding": 2, 
                 "text-padding": 5, 
@@ -2726,7 +2726,7 @@
                         ]
                     ]
                 }, 
-                "text-line-height": 1.4, 
+                "text-line-height": 1.5, 
                 "symbol-spacing": 200
             }, 
             "paint": {
@@ -3127,7 +3127,7 @@
                 "text-letter-spacing": 0.2, 
                 "icon-allow-overlap": true, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
+                "text-allow-overlap": false, 
                 "icon-size": {
                     "base": 1.5, 
                     "stops": [
@@ -3153,7 +3153,7 @@
                 "icon-image": "turning-circle-outline", 
                 "icon-rotation-alignment": "map", 
                 "icon-ignore-placement": true, 
-                "text-line-height": 1.4
+                "text-line-height": 1.5
             }, 
             "paint": {
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
@@ -4789,7 +4789,7 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
+                "text-allow-overlap": false, 
                 "symbol-placement": "line", 
                 "icon-padding": 2, 
                 "text-padding": 5, 
@@ -4810,7 +4810,7 @@
                     ]
                 }, 
                 "icon-rotation-alignment": "map", 
-                "text-line-height": 1.4, 
+                "text-line-height": 1.5, 
                 "symbol-spacing": 200
             }, 
             "paint": {
@@ -4868,7 +4868,7 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
+                "text-allow-overlap": false, 
                 "symbol-placement": "line", 
                 "icon-padding": 2, 
                 "text-padding": 5, 
@@ -4889,7 +4889,7 @@
                     ]
                 }, 
                 "icon-rotation-alignment": "map", 
-                "text-line-height": 1.4, 
+                "text-line-height": 1.5, 
                 "symbol-spacing": 200
             }, 
             "paint": {
@@ -5137,14 +5137,14 @@
                 "text-letter-spacing": 0.2, 
                 "icon-allow-overlap": true, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
+                "text-allow-overlap": false, 
                 "icon-size": 1, 
                 "text-padding": 5, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
                 "icon-image": "level-crossing", 
-                "text-line-height": 1.4
+                "text-line-height": 1.5
             }, 
             "paint": {
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
@@ -5178,7 +5178,7 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
+                "text-allow-overlap": false, 
                 "symbol-placement": "line", 
                 "icon-padding": 2, 
                 "text-padding": 5, 
@@ -5198,7 +5198,7 @@
                         ]
                     ]
                 }, 
-                "text-line-height": 1.4, 
+                "text-line-height": 1.5, 
                 "symbol-spacing": 200
             }, 
             "paint": {
@@ -5258,7 +5258,7 @@
                 "text-letter-spacing": 0.2, 
                 "icon-allow-overlap": true, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
+                "text-allow-overlap": false, 
                 "icon-size": {
                     "base": 1.5, 
                     "stops": [
@@ -5280,7 +5280,7 @@
                 "icon-image": "turning-circle", 
                 "icon-rotation-alignment": "map", 
                 "icon-ignore-placement": true, 
-                "text-line-height": 1.4
+                "text-line-height": 1.5
             }, 
             "paint": {
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
@@ -7064,7 +7064,7 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
+                "text-allow-overlap": false, 
                 "symbol-placement": "line", 
                 "icon-padding": 2, 
                 "text-padding": 5, 
@@ -7085,7 +7085,7 @@
                     ]
                 }, 
                 "icon-rotation-alignment": "map", 
-                "text-line-height": 1.4, 
+                "text-line-height": 1.5, 
                 "symbol-spacing": 200
             }, 
             "paint": {
@@ -7137,7 +7137,7 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
+                "text-allow-overlap": false, 
                 "symbol-placement": "line", 
                 "icon-padding": 2, 
                 "text-padding": 5, 
@@ -7158,7 +7158,7 @@
                     ]
                 }, 
                 "icon-rotation-alignment": "map", 
-                "text-line-height": 1.4, 
+                "text-line-height": 1.5, 
                 "symbol-spacing": 200
             }, 
             "paint": {
@@ -7972,7 +7972,7 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
+                "text-allow-overlap": false, 
                 "symbol-placement": "line", 
                 "icon-padding": 2, 
                 "text-padding": 5, 
@@ -7992,7 +7992,7 @@
                         ]
                     ]
                 }, 
-                "text-line-height": 1.4, 
+                "text-line-height": 1.5, 
                 "symbol-spacing": 200
             }, 
             "paint": {
@@ -8453,13 +8453,13 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
+                "text-allow-overlap": false, 
                 "text-padding": 5, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
                 "text-field": "{house_num}", 
-                "text-line-height": 1.4, 
+                "text-line-height": 1.5, 
                 "text-size": 9.5, 
                 "text-max-width": 7
             }, 
@@ -8481,9 +8481,9 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
+                "text-allow-overlap": false, 
                 "symbol-placement": "line", 
-                "text-line-height": 1.4, 
+                "text-line-height": 1.5, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -8528,8 +8528,8 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
-                "text-line-height": 1.4, 
+                "text-allow-overlap": false, 
+                "text-line-height": 1.5, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -8605,8 +8605,8 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
-                "text-line-height": 1.4, 
+                "text-allow-overlap": false, 
+                "text-line-height": 1.5, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -8682,8 +8682,8 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
-                "text-line-height": 1.4, 
+                "text-allow-overlap": false, 
+                "text-line-height": 1.5, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -8754,8 +8754,8 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
-                "text-line-height": 1.4, 
+                "text-allow-overlap": false, 
+                "text-line-height": 1.5, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -8825,8 +8825,8 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
-                "text-line-height": 1.4, 
+                "text-allow-overlap": false, 
+                "text-line-height": 1.5, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -8896,7 +8896,7 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
+                "text-allow-overlap": false, 
                 "symbol-placement": "line", 
                 "text-padding": 5, 
                 "text-font": [
@@ -8904,7 +8904,7 @@
                 ], 
                 "text-pitch-alignment": "viewport", 
                 "text-field": "{name_en}", 
-                "text-line-height": 1.4, 
+                "text-line-height": 1.5, 
                 "text-rotation-alignment": "map", 
                 "text-size": {
                     "base": 1, 
@@ -8964,7 +8964,7 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
+                "text-allow-overlap": false, 
                 "symbol-placement": "line", 
                 "text-padding": 5, 
                 "text-font": [
@@ -8972,7 +8972,7 @@
                 ], 
                 "text-pitch-alignment": "viewport", 
                 "text-field": "{name_en}", 
-                "text-line-height": 1.4, 
+                "text-line-height": 1.5, 
                 "text-rotation-alignment": "map", 
                 "text-size": {
                     "base": 1, 
@@ -9025,7 +9025,7 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
+                "text-allow-overlap": false, 
                 "symbol-placement": "line", 
                 "text-padding": 5, 
                 "text-font": [
@@ -9033,7 +9033,7 @@
                 ], 
                 "text-pitch-alignment": "viewport", 
                 "text-field": "{name_en}", 
-                "text-line-height": 1.4, 
+                "text-line-height": 1.5, 
                 "text-rotation-alignment": "map", 
                 "text-size": {
                     "base": 1, 
@@ -9079,7 +9079,7 @@
             "layout": {
                 "text-letter-spacing": 0.25, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
+                "text-allow-overlap": false, 
                 "symbol-placement": {
                     "base": 1, 
                     "stops": [
@@ -9101,7 +9101,7 @@
                 "icon-image": "{shield}-{reflen}", 
                 "text-field": "{ref}", 
                 "icon-rotation-alignment": "viewport", 
-                "text-line-height": 1.4, 
+                "text-line-height": 1.5, 
                 "text-rotation-alignment": "viewport", 
                 "text-size": 9, 
                 "symbol-spacing": {
@@ -9192,7 +9192,7 @@
             "layout": {
                 "text-letter-spacing": 0.25, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
+                "text-allow-overlap": false, 
                 "symbol-placement": {
                     "base": 1, 
                     "stops": [
@@ -9214,7 +9214,7 @@
                 "icon-image": "{shield}-{reflen}", 
                 "text-field": "{ref}", 
                 "icon-rotation-alignment": "viewport", 
-                "text-line-height": 1.4, 
+                "text-line-height": 1.5, 
                 "text-rotation-alignment": "viewport", 
                 "text-size": 9, 
                 "symbol-spacing": {
@@ -9305,8 +9305,8 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
-                "text-line-height": 1.4, 
+                "text-allow-overlap": false, 
+                "text-line-height": 1.5, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -9351,8 +9351,8 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
-                "text-line-height": 1.4, 
+                "text-allow-overlap": false, 
+                "text-line-height": 1.5, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -9433,8 +9433,8 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
-                "text-line-height": 1.4, 
+                "text-allow-overlap": false, 
+                "text-line-height": 1.5, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -9515,9 +9515,9 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
+                "text-allow-overlap": false, 
                 "icon-padding": 0, 
-                "text-line-height": 1.4, 
+                "text-line-height": 1.5, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -9583,7 +9583,7 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
+                "text-allow-overlap": false, 
                 "text-size": {
                     "base": 1, 
                     "stops": [
@@ -9602,7 +9602,7 @@
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 5, 
-                "text-line-height": 1.4, 
+                "text-line-height": 1.5, 
                 "text-max-width": 7
             }, 
             "paint": {
@@ -9629,7 +9629,7 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
+                "text-allow-overlap": false, 
                 "text-size": {
                     "base": 1, 
                     "stops": [
@@ -9648,7 +9648,7 @@
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 5, 
-                "text-line-height": 1.4, 
+                "text-line-height": 1.5, 
                 "text-max-width": 7
             }, 
             "paint": {
@@ -9675,8 +9675,8 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
-                "text-line-height": 1.4, 
+                "text-allow-overlap": false, 
+                "text-line-height": 1.5, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -9744,8 +9744,8 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
-                "text-line-height": 1.4, 
+                "text-allow-overlap": false, 
+                "text-line-height": 1.5, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -9826,8 +9826,8 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
-                "text-line-height": 1.4, 
+                "text-allow-overlap": false, 
+                "text-line-height": 1.5, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -9908,7 +9908,7 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
+                "text-allow-overlap": false, 
                 "text-padding": 5, 
                 "text-font": [
                     "Cousine Regular-Box"
@@ -9938,7 +9938,7 @@
                         ]
                     ]
                 }, 
-                "text-line-height": 1.4, 
+                "text-line-height": 1.5, 
                 "text-offset": [
                     0, 
                     0.75
@@ -9983,8 +9983,8 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
-                "text-line-height": 1.4, 
+                "text-allow-overlap": false, 
+                "text-line-height": 1.5, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -10035,7 +10035,7 @@
             "layout": {
                 "text-letter-spacing": 0.30000000000000004, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
+                "text-allow-overlap": false, 
                 "text-padding": 5, 
                 "text-font": [
                     "Cousine Regular-Box"
@@ -10054,7 +10054,7 @@
                     ]
                 }, 
                 "text-field": "{name_en}", 
-                "text-line-height": 1.4, 
+                "text-line-height": 1.5, 
                 "text-transform": "uppercase", 
                 "text-max-width": 7
             }, 
@@ -10082,7 +10082,7 @@
             "layout": {
                 "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
+                "text-allow-overlap": false, 
                 "text-padding": 5, 
                 "text-font": [
                     "Cousine Regular-Box"
@@ -10101,7 +10101,7 @@
                     ]
                 }, 
                 "text-field": "{name_en}", 
-                "text-line-height": 1.4, 
+                "text-line-height": 1.5, 
                 "text-transform": "uppercase", 
                 "text-max-width": 7
             }, 
@@ -10129,7 +10129,7 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
+                "text-allow-overlap": false, 
                 "text-size": {
                     "base": 1, 
                     "stops": [
@@ -10148,7 +10148,7 @@
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 5, 
-                "text-line-height": 1.4
+                "text-line-height": 1.5
             }, 
             "paint": {
                 "text-color": "hsla(0, 0%, 0%, 1)", 
@@ -10173,7 +10173,7 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
+                "text-allow-overlap": false, 
                 "text-size": {
                     "base": 1, 
                     "stops": [
@@ -10192,7 +10192,7 @@
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 5, 
-                "text-line-height": 1.4, 
+                "text-line-height": 1.5, 
                 "text-max-width": 7
             }, 
             "paint": {
@@ -10218,8 +10218,8 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
-                "text-line-height": 1.4, 
+                "text-allow-overlap": false, 
+                "text-line-height": 1.5, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -10296,8 +10296,8 @@
             "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
-                "text-line-height": 1.4, 
+                "text-allow-overlap": false, 
+                "text-line-height": 1.5, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -10346,8 +10346,8 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
-                "text-line-height": 1.4, 
+                "text-allow-overlap": false, 
+                "text-line-height": 1.5, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -10439,8 +10439,8 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
-                "text-line-height": 1.4, 
+                "text-allow-overlap": false, 
+                "text-line-height": 1.5, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -10537,8 +10537,8 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
-                "text-line-height": 1.4, 
+                "text-allow-overlap": false, 
+                "text-line-height": 1.5, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -10636,8 +10636,8 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
-                "text-line-height": 1.4, 
+                "text-allow-overlap": false, 
+                "text-line-height": 1.5, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -10734,8 +10734,8 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
-                "text-line-height": 1.4, 
+                "text-allow-overlap": false, 
+                "text-line-height": 1.5, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -10832,9 +10832,9 @@
             "layout": {
                 "text-letter-spacing": 0.30000000000000004, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
+                "text-allow-overlap": false, 
                 "symbol-placement": "line", 
-                "text-line-height": 1.4, 
+                "text-line-height": 1.5, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -10902,8 +10902,8 @@
             "layout": {
                 "text-letter-spacing": 0.30000000000000004, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
-                "text-line-height": 1.4, 
+                "text-allow-overlap": false, 
+                "text-line-height": 1.5, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -10957,9 +10957,9 @@
             "layout": {
                 "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
+                "text-allow-overlap": false, 
                 "symbol-placement": "line", 
-                "text-line-height": 1.4, 
+                "text-line-height": 1.5, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -11016,8 +11016,8 @@
             "layout": {
                 "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
-                "text-line-height": 1.4, 
+                "text-allow-overlap": false, 
+                "text-line-height": 1.5, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -11072,7 +11072,7 @@
             "layout": {
                 "text-letter-spacing": 0.45, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
+                "text-allow-overlap": false, 
                 "symbol-placement": "line", 
                 "text-size": {
                     "base": 1, 
@@ -11093,7 +11093,7 @@
                 "text-pitch-alignment": "viewport", 
                 "text-field": "{name_en}", 
                 "text-padding": 5, 
-                "text-line-height": 1.4, 
+                "text-line-height": 1.5, 
                 "text-max-width": 4
             }, 
             "paint": {
@@ -11129,8 +11129,8 @@
             "layout": {
                 "text-letter-spacing": 0.45, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
-                "text-line-height": 1.4, 
+                "text-allow-overlap": false, 
+                "text-line-height": 1.5, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -11184,7 +11184,7 @@
             "layout": {
                 "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
+                "text-allow-overlap": false, 
                 "text-size": {
                     "base": 1, 
                     "stops": [
@@ -11214,7 +11214,7 @@
                         ]
                     ]
                 }, 
-                "text-line-height": 1.4, 
+                "text-line-height": 1.5, 
                 "text-padding": 5, 
                 "text-transform": "uppercase", 
                 "text-max-width": 5
@@ -11245,7 +11245,7 @@
             "layout": {
                 "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
+                "text-allow-overlap": false, 
                 "text-size": {
                     "base": 1, 
                     "stops": [
@@ -11275,7 +11275,7 @@
                         ]
                     ]
                 }, 
-                "text-line-height": 1.4, 
+                "text-line-height": 1.5, 
                 "text-padding": 5, 
                 "text-transform": "uppercase", 
                 "text-max-width": 6
@@ -11314,7 +11314,7 @@
             "layout": {
                 "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
+                "text-allow-overlap": false, 
                 "text-size": {
                     "base": 1, 
                     "stops": [
@@ -11328,7 +11328,7 @@
                         ]
                     ]
                 }, 
-                "text-line-height": 1.4, 
+                "text-line-height": 1.5, 
                 "text-font": [
                     "Cousine Regular-Box"
                 ], 
@@ -11375,7 +11375,7 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
+                "text-allow-overlap": false, 
                 "text-size": {
                     "base": 0.9, 
                     "stops": [
@@ -11394,7 +11394,7 @@
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 5, 
-                "text-line-height": 1.4, 
+                "text-line-height": 1.5, 
                 "text-max-width": 6
             }, 
             "paint": {
@@ -11423,7 +11423,7 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
+                "text-allow-overlap": false, 
                 "text-size": {
                     "base": 1, 
                     "stops": [
@@ -11454,7 +11454,7 @@
                     ]
                 }, 
                 "text-padding": 5, 
-                "text-line-height": 1.4, 
+                "text-line-height": 1.5, 
                 "text-max-width": 6
             }, 
             "paint": {
@@ -11484,7 +11484,7 @@
             "layout": {
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
-                "text-allow-overlap": "false", 
+                "text-allow-overlap": false, 
                 "text-size": {
                     "base": 1, 
                     "stops": [
@@ -11503,7 +11503,7 @@
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 5, 
-                "text-line-height": 1.4, 
+                "text-line-height": 1.5, 
                 "text-max-width": {
                     "base": 1, 
                     "stops": [
