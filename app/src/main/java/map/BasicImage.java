@@ -3,12 +3,19 @@ package map;
 import java.awt.image.BufferedImage;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.LinkedList;
 
 import javax.swing.*;
 import java.awt.FlowLayout;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.util.Arrays;
+
+import java.awt.GraphicsEnvironment;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsConfiguration;
+import java.awt.*;
+import java.awt.geom.AffineTransform;
 
 /**
  * A basic image with some useful behavior. A wrapper of BufferedImage.
@@ -21,7 +28,7 @@ public class BasicImage {
     }
 
     /**
-     * Constructor for empty image.
+     * Constructor for empty image. (r,g,b,a)=(0,0,0,0) for every pixel.
      */
     public BasicImage(int width, int height) {
         this.img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
@@ -49,6 +56,9 @@ public class BasicImage {
         boolean hasAlpha = true;
         return new Color(img.getRGB(x, y), hasAlpha);
     }
+    public Color getColor(int[] p) {
+        return getColor(p[0], p[1]);
+    }
 
     /**
      * Set color of pixel.
@@ -70,40 +80,212 @@ public class BasicImage {
      * i.e an un-rotated subsection of this image.
      */
     public BasicImage extractElement(Box box) {
-        double rot = -box.getRotation();
-        int[] tl = Math2.toInt(Math2.rotate(box.getTopLeft(), rot));
-        int[] br = Math2.toInt(Math2.rotate(box.getBottomRight(), rot));
-        BasicImage elemImg = new BasicImage(br[0]-tl[0], br[1]-tl[1]);
+        BasicImage rotated = crop(Math2.toInt(box.getBounds()));
+        BasicImage straight = rotated.rotate(box.getRotation());
+        int w = Math2.toInt(box.getWidth());
+        int h = Math2.toInt(box.getHeight());
+        int x0 = (straight.getWidth() - w) / 2;
+        int y0 = (straight.getHeight() -h) / 2;
 
-        int[] bounds = Math2.toInt(box.getBounds());
+        return straight.crop(x0, y0, x0+w, y0+h);
+    }
 
-        for (int y = bounds[1]; y <= bounds[3]; y++) {
-            for (int x = bounds[0]; x <= bounds[2]; x++) {
-                int[] imgP = new int[]{x, y};
-                int[] elemP = Math2.minus(Math2.rotate(imgP, rot), tl);
+    public BasicImage rotate(double angle) {
+        float radianAngle = (float) Math.toRadians(angle) ;
 
-                if (elemP[0] >= 0 &&
-                    elemP[1] >= 0 &&
-                    elemP[0] < elemImg.getWidth() &&
-                    elemP[1] < elemImg.getHeight()) {
-                    boolean hasAlpha = true;
-                    Color clr = new Color(img.getRGB(imgP[0], imgP[1]), hasAlpha);
-                    elemImg.setColor(elemP[0], elemP[1], clr);
+        float sin = (float) Math.abs(Math.sin(radianAngle));
+        float cos = (float) Math.abs(Math.cos(radianAngle));
+
+        int w = getWidth() ;
+        int h = getHeight();
+
+        int neww = (int) Math.round(w * cos + h * sin);
+        int newh = (int) Math.round(h * cos + w * sin);
+
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice gd = ge.getDefaultScreenDevice();
+        GraphicsConfiguration gc = gd.getDefaultConfiguration();
+
+        BufferedImage result = gc.createCompatibleImage(neww, newh, Transparency.TRANSLUCENT);
+        Graphics2D g = result.createGraphics();
+
+        //-----------------------MODIFIED--------------------------------------
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON) ;
+        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC) ;
+        g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY) ;
+
+        AffineTransform at = AffineTransform.getTranslateInstance((neww-w)/2, (newh-h)/2);
+        at.rotate(radianAngle, w/2, h/2);
+        //---------------------------------------------------------------------
+
+        g.drawRenderedImage(this.img, at);
+        g.dispose();
+
+        return new BasicImage(result);
+    }
+    // public BasicImage rotate(double angle) {
+    //     angle = Math.toRadians(angle);
+    //     GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+    //     GraphicsDevice gd = ge.getDefaultScreenDevice();
+    //     GraphicsConfiguration gc = gd.getDefaultConfiguration();
+
+    //     double sin = Math.abs(Math.sin(angle)), cos = Math.abs(Math.cos(angle));
+    //     int w = this.getWidth(), h = this.getHeight();
+    //     int neww = (int) Math.floor(w * cos + h * sin), newh = (int) Math.floor(h * cos + w * sin);
+    //     int transparency = this.img.getColorModel().getTransparency();
+    //     BufferedImage result = gc.createCompatibleImage(neww, newh, transparency);
+    //     Graphics2D g = result.createGraphics();
+    //     g.translate((neww - w) / 2, (newh - h) / 2);
+    //     g.rotate(angle, w / 2, h / 2);
+    //     g.drawRenderedImage(this.img, null);
+    //     return new BasicImage(result);
+    // }
+
+    /**
+     * @return Rotated image, by angle degrees. Dims...
+     */
+    // public BasicImage rotate(double angle) {
+    //     float radianAngle = (float) Math.toRadians(angle) ;
+
+    //     float sin = (float) Math.abs(Math.sin(radianAngle));
+    //     float cos = (float) Math.abs(Math.cos(radianAngle));
+
+    //     int w = this.getWidth() ;
+    //     int h = this.getHeight();
+
+    //     int neww = (int) Math.round(w * cos + h * sin);
+    //     int newh = (int) Math.round(h * cos + w * sin);
+
+    //     GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+    //     GraphicsDevice gd = ge.getDefaultScreenDevice();
+    //     GraphicsConfiguration gc = gd.getDefaultConfiguration();
+
+    //     BufferedImage result = gc.createCompatibleImage(neww, newh, Transparency.TRANSLUCENT);
+    //     Graphics2D g = result.createGraphics();
+
+    //     //-----------------------MODIFIED--------------------------------------
+    //     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON) ;
+    //     g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC) ;
+    //     g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY) ;
+
+    //     AffineTransform at = AffineTransform.getTranslateInstance((neww-w)/2, (newh-h)/2);
+    //     at.rotate(radianAngle, w/2, h/2);
+    //     //---------------------------------------------------------------------
+
+    //     g.drawRenderedImage(this.img, at);
+    //     g.dispose();
+
+    //     return new BasicImage(result);
+    // }
+
+    // public BasicImage extractElement(Box box) {
+    //     double rot = -box.getRotation();
+    //     double[] tl = Math2.rotate(box.getTopLeft(), rot);
+    //     double[] br = Math2.rotate(box.getBottomRight(), rot);
+    //     BasicImage elemImg = new BasicImage(Math2.down(br[0]-tl[0]),
+    //                                         Math2.up(br[1]-tl[1]));
+
+    //     //tl = Math2.toDouble(Math2.toInt(tl));
+
+    //     int[] bounds = Math2.toInt(box.getBounds());
+
+    //     for (int y = bounds[1]; y <= bounds[3]; y++) {
+    //         for (int x = bounds[0]; x <= bounds[2]; x++) {
+    //             int[] imgP = new int[]{x, y};
+    //             double[] elemP = Math2.minus(Math2.rotate(imgP, rot), tl);
+    //             //elemImg.cleverSetColor(elemP, getColor(imgP));
+
+    //             int[] pp = Math2.toInt(elemP);
+    //             if (elemImg.isInside(pp))
+    //                 elemImg.setColor(pp, this.getColor(imgP));
+    //         }
+    //     }
+    //     return elemImg;
+    // }
+
+    /**
+     * Rounds to int-point so that color-overwriting is avoided if
+     * possible. Only overwrites more transparent pixels.
+     *
+     * If point is outside of image regardless of rounding, does
+     * nothing. If point is overwriting a less transparant pixel
+     * regardless of rounding, instead does nothing.
+     *
+     * @param p Point to be rounded and corresponding pixel colored.
+     * @param clr Color of new pixel.
+     */
+    private void cleverSetColor(double[] p, Color clr) {
+        LinkedList<int[]> ps = new LinkedList<int[]>();
+        ps.add(Math2.lCeil(p));
+        ps.add(Math2.rCeil(p));
+        ps.add(Math2.rFloor(p));
+        ps.add(Math2.lFloor(p));
+
+        int newAlpha = clr.getAlpha();
+        int maxAlphaDiff = Integer.MIN_VALUE;
+        int maxAlphaI = -1;
+
+        for (int i = 0; i < ps.size(); i++) {
+            int[] q = ps.get(i);
+            if (isInside(q)) {
+                int alphaDiff = newAlpha - getColor(q).getAlpha();
+                if (alphaDiff > maxAlphaDiff) {
+                    maxAlphaDiff = alphaDiff;
+                    maxAlphaI = i;
                 }
             }
         }
-        return elemImg;
+
+        if (maxAlphaDiff > 0) {
+            int[] q = ps.get(maxAlphaI);
+            setColor(q, clr);
+        }
+    }
+
+    /**
+     * @return True if point p is inside image-bounds.
+     */
+    public boolean isInside(int[] p) {
+        return
+            p[0] >= 0 &&
+            p[1] >= 0 &&
+            p[0] < this.getWidth() &&
+            p[1] < this.getHeight();
+    }
+
+    /**
+     * Creates a new image made up of all letters in the layout
+     * on a straight line, in correct label-order.
+     *
+     * @param lay Label-layout.
+     * @param padding Space between letters.
+     * @return One-line letter-image with hight of tallest letter-img.
+     */
+    public BasicImage extractLabel(LabelLayout lay, int padding) {
+        LinkedList<BasicImage> ls = new LinkedList<BasicImage>();
+        for (Box b : lay.getBoxes())
+            ls.add(extractElement(b));
+
+        return concatenateImages(ls, padding);
     }
 
     /**
      * @return A deep copy of this image.
      */
     public BasicImage copy() {
+        BufferedImage b = getBufferedImage();
+        return new BasicImage(b);
+    }
+
+    /**
+     * @return A buffere imgage of this image.
+     */
+    public BufferedImage getBufferedImage() {
         BufferedImage b = new BufferedImage(img.getWidth(), img.getHeight(), img.getType());
         Graphics2D g = b.createGraphics();
         g.drawImage(img, 0, 0, null);
         g.dispose();
-        return new BasicImage(b);
+        return b;
     }
 
     /**
@@ -114,6 +296,9 @@ public class BasicImage {
     public BasicImage crop(int xmin, int ymin, int xmax, int ymax) {
         BufferedImage croped = this.img.getSubimage(xmin, ymin, xmax-xmin, ymax-ymin);
         return new BasicImage(croped);
+    }
+    public BasicImage crop(int[] bs) {
+        return crop(bs[0], bs[1], bs[2], bs[3]);
     }
 
     /**
@@ -155,6 +340,34 @@ public class BasicImage {
         return new BasicImage(img);
     }
 
+
+    /**
+     * @param imgs One row of images with varying dims.
+     * @param padding between images.
+     * @return All imgs consecutively concatenated into
+     * one image, with width=sum(widths) and height max(heights).
+     */
+    public static BasicImage concatenateImages(LinkedList<BasicImage> imgs, int padding) {
+        int width = 0;
+        int height = -1;
+        for (BasicImage img : imgs) {
+            width += img.getWidth();
+            if (height < img.getHeight()) height = img.getHeight();
+        }
+        width += padding * (imgs.size()+1);
+
+        BasicImage res = new BasicImage(width, height);
+        Graphics2D g = res.createGraphics();
+        int x = padding;
+
+        for (BasicImage img : imgs) {
+            int y = (res.getHeight() - img.getHeight()) / 2;
+            g.drawImage(img.getBufferedImage(), null, x, y);
+            x += img.getWidth() + padding;
+        }
+
+        return res;
+    }
 
     //*******************************FOR TESTING
 

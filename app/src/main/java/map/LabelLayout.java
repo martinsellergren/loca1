@@ -40,6 +40,7 @@ public class LabelLayout {
 
     /**
      * @return All letter-boxes in a 1d-array. Letter box copies.
+     * Ordered correctly, letter by letter.
      */
     public Box[] getBoxes() {
         Box[] bs = new Box[getNoBoxes()];

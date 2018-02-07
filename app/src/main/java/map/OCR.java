@@ -6,7 +6,8 @@ package map;
 public class OCR {
 
     /**
-     * @return Character in image.
+     * @return Character in image. Empty img returns space. Failed
+     * recognition returns '?'.
      */
     public static char detectChar(BasicImage img) {
         return 0;

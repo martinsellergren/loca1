@@ -157,8 +157,8 @@ public class Math2 {
         return new double[] {A[0][0]*v[0] + A[0][1]*v[1],
                              A[1][0]*v[0] + A[1][1]*v[1] };
     }
-    public static int[] rotate(int[] v, double deg) {
-        return Math2.toInt(Math2.rotate(Math2.toDouble(v), deg));
+    public static double[] rotate(int[] v, double deg) {
+        return Math2.rotate(Math2.toDouble(v), deg);
     }
 
     /**
@@ -691,6 +691,36 @@ public class Math2 {
      */
     public static double area(double[][] cs) {
         return distance(cs[0], cs[2]) * distance(cs[1], cs[3]);
+    }
+
+    /**
+     * @return Integer below.
+     */
+    public static int up(double x) {
+        return (int)Math.floor(x);
+    }
+
+    /**
+     * @return Integer above.
+     */
+    public static int down(double x) {
+        return (int)Math.ceil(x);
+    }
+
+    /**
+     * Round point to integer.
+     */
+    public static int[] lCeil(double[] p) {
+        return new int[]{ down(p[0]), down(p[0]) };
+    }
+    public static int[] rCeil(double[] p) {
+        return new int[]{ up(p[0]), down(p[0]) };
+    }
+    public static int[] rFloor(double[] p) {
+        return new int[]{ up(p[0]), up(p[0]) };
+    }
+    public static int[] lFloor(double[] p) {
+        return new int[]{ down(p[0]), up(p[0]) };
     }
 
     //****************************************CONVERSIONS

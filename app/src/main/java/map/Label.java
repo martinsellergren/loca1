@@ -28,6 +28,12 @@ public class Label {
      * @pre layout and labelImg are associated.
      */
     public Label(LabelLayout layout, BasicImage labelImg) {
+        this.layout = layout;
+
+        for (Box b : layout.getBoxes()) {
+            BasicImage letter = labelImg.extractElement(b);
+            this.text += OCR.detectChar(letter);
+        }
     }
 
     /**
