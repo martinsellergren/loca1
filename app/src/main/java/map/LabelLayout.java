@@ -79,6 +79,15 @@ public class LabelLayout {
     }
 
     /**
+     * @return Box-copies of boxes in specified row.
+     */
+    public LinkedList<Box> getRow(int r) {
+        if (r < 0) r = getNoRows() + r;
+        LinkedList<Box> row = this.letterBoxes.get(r);
+        return new LinkedList<Box>(row);
+    }
+
+    /**
     * @return The height of the tallest box.
     */
     public double getTallestBoxHeight() {

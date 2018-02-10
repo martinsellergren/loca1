@@ -40,7 +40,7 @@ import java.awt.Color;
  *
  * @pre No letter-boxes touch!
  * @pre Horizontal space between boxes of same row is always less
- * than the width of any box in the label. (...!)
+ * than the height of the boxes of that label.
  * @pre Hight of a box is always shorter than 2*height of any box in
  * same label (i.e same font-size) (and higher than 0.5*any box
  * in label).
@@ -55,12 +55,12 @@ public class LabelLayoutIterator {
 
     /**
      * Max search length from left/right edge of a box to
-     * a neighbor-box (same label) is length(box)*this. */
-    public/***/ static final double BOX_SEARCH_LENGTH_FACTOR = 2.2;
+     * a neighbor-box (same label) is boxHeight*this. */
+    public/***/ static final double BOX_SEARCH_LENGTH_FACTOR = 1;
 
     /**
      * Max search length from top/botten edge of a box to a
-     * neighbor-row-box (same label) is height(box)*this. */
+     * neighbor-row-box (same label) is boxHeight*this. */
     public/***/ static final double ROW_SEARCH_LENGTH_FACTOR = 0.3;
 
     /**
@@ -72,9 +72,10 @@ public class LabelLayoutIterator {
      * The maximum change in angle between two adjacent boxes. */
     public/***/ static final double MAX_ANGLE_CHANGE = 25;
 
-    /** w0 = (xL + w1 + xR) where w0 is width of longest line, w1
-     * width of shortest, and xL, xR are distances next to shortest
-     * "under" longest. abs(xL - xR) / w1 = this. */
+    /**
+     * w0 = (dL + w1 + dR) where w0 is width of longest line, w1
+     * width of shortest, and dL, dR are distances next to shortest
+     * "under" longest. abs(_L - dR) / w1 = this. */
     public/***/ static final double CENTERED_LAXNESS_FACTOR = 0.15;
 
     /**
@@ -85,11 +86,6 @@ public class LabelLayoutIterator {
     /**
      * Stricter when multiple row (all boxes on a straight baseline) */
     private static final double SAME_BASELINE_LAXNESS_FACTOR_MULTIROW = 0.1;
-
-    /**
-     * Padding in pixels. "Inside area" is surrended by padding.
-     * Depends on pixel density..  */
-    private static final int padding = 20;
 
 
     /** Start searching for next box-point at this pos in map. */
@@ -385,50 +381,6 @@ public class LabelLayoutIterator {
 
         return bp0 != null ? bp0 : bp1;
     }
-    // public/***/ int[] findPotentialNeighborRowPoint(boolean up, LinkedList<Box> sr) {
-    //     double INIT_JUMP_LENGTH_OUT_OF_STARTBOX = 3;
-    //     Box midB = sr.get(sr.size() / 2);
-
-    //     //vertical
-    //     double d = new LabelLayout(sr).getAverageBoxHeight() * ROW_SEARCH_LENGTH_FACTOR;
-    //     double[] v = new double[]{0,1};
-    //     double[] start0 = midB.getTopLeft();
-    //     double[] start1 = midB.getTopMid();
-    //     double[] start2 = midB.getTopRight();
-    //     int dir = -1;
-
-    //     if (!up) {
-    //         start0 = midB.getBottomLeft();
-    //         start1 = midB.getBottomMid();
-    //         start2 = midB.getBottomRight();
-    //         dir = 1;
-    //     }
-
-    //     double[] end0 = Math2.step(start0, v, dir*d);
-    //     double[] end1 = Math2.step(start1, v, dir*d);
-    //     double[] end2 = Math2.step(start2, v, dir*d);
-    //     start0 = Math2.step(start0, v, dir*INIT_JUMP_LENGTH_OUT_OF_STARTBOX);
-    //     start1 = Math2.step(start1, v, dir*INIT_JUMP_LENGTH_OUT_OF_STARTBOX);
-    //     start2 = Math2.step(start2, v, dir*INIT_JUMP_LENGTH_OUT_OF_STARTBOX);
-    //     int[] bp0 = findBoxPointOnPath(start0, end0);
-    //     int[] bp1 = findBoxPointOnPath(start1, end1);
-    //     int[] bp2 = findBoxPointOnPath(start2, end2);
-
-    //     //horizontal
-    //     d = new LabelLayout(sr).getAverageBoxWidth() * BOX_SEARCH_LENGTH_FACTOR;
-    //     start0 = Math2.step(start0, v, midB.getHeight());
-    //     v = new double[]{1,0};
-    //     end0 = Math2.step(start0, v, d);
-    //     end1 = Math2.step(start0, v, -d);
-    //     int[] bp3 = findBoxPointOnPath(start0, end0);
-    //     int[] bp4 = findBoxPointOnPath(start0, end1);
-
-    //     return
-    //         bp0 != null ? bp0 :
-    //         (bp1 != null ? bp1 :
-    //          (bp2 != null ? bp2 :
-    //           (bp3 != null ? bp3 : bp4)));
-    // }
 
     /**
      * @return First box-point you come across when walking from start
@@ -462,22 +414,6 @@ public class LabelLayoutIterator {
 
         return Math.abs(deltaL - deltaR) / Math.min(w0, w1) <= CENTERED_LAXNESS_FACTOR;
     }
-
-    // /**
-    //  * @return True if boxes in row have similar y-values.
-    //  */
-    // private boolean sameYPos(LinkedList<Box> row) {
-    //     if (row.size() < 2) return true;
-
-    //     for (int i = 0; i < row.size()-1; i++) {
-    //         double by = row.get(i).getBottomLeft()[1];
-    //         double nby = row.get(i+1).getBottomLeft()[1];
-
-    //         if (Math.abs(by - nby) / row.get(0).getHeight() > MULTI_ROW_MAX_Y_DIFF_FACTOR)
-    //             return false;
-    //     }
-    //     return true;
-    // }
 
     /**
      * Finds a neighbor-box to a start-box.
@@ -524,7 +460,7 @@ public class LabelLayoutIterator {
      */
     public/***/ int[] findPotentialNeighborBoxPoint(boolean left, Box sb) {
         double INIT_JUMP_LENGTH_OUT_OF_STARTBOX = 3;
-        double d = sb.getWidth() * BOX_SEARCH_LENGTH_FACTOR;
+        double d = sb.getHeight() * BOX_SEARCH_LENGTH_FACTOR;
 
         double[] start0 = sb.getLeftMid();
         double[] start1 = sb.getTopLeft();
@@ -606,9 +542,9 @@ public class LabelLayoutIterator {
         LinkedList<int[]> ps = expandToBoxPoints(start);
         if (containsEdgePoint(ps)) return null;
 
-        return new Box(ps);
-        // if (isInside(b)) return b;
-        // else return null;
+        Box b = new Box(ps);
+        if (isInside(b)) return b;
+        else return null;
     }
 
     /**
@@ -676,7 +612,7 @@ public class LabelLayoutIterator {
     }
 
     /**
-     * @return True if box is inside box-image's inside-area.
+     * @return True if box is inside box-image.
      */
     public/***/ boolean isInside(Box b) {
         int[][] cs = Math2.toInt(b.getCorners());
@@ -686,12 +622,12 @@ public class LabelLayoutIterator {
     }
 
     /**
-     * @return True if point p is inside box-image's inside area.
+     * @return True if point p is inside box-image.
      */
     public/***/ boolean isInside(int[] p) {
         return
-            p[0] >= this.padding && p[0] < map[0].length-this.padding &&
-            p[1] >= this.padding && p[1] < map.length-this.padding;
+            p[0] >= 0 && p[0] < map[0].length &&
+            p[1] >= 0 && p[1] < map.length;
     }
     private boolean isInside(double[] p) {
         return isInside(Math2.toInt(p));
@@ -738,20 +674,21 @@ public class LabelLayoutIterator {
      * (box-neighbor or row-neighbor).
      */
     public/***/ boolean isEdgeBox(Box b) {
-        double hl = b.getWidth() * 1.5;
-        double vl = b.getHeight() * 1.5;
+        double hd = b.getHeight() * BOX_SEARCH_LENGTH_FACTOR * 2;
+        double vd = b.getHeight() * ROW_SEARCH_LENGTH_FACTOR + b.getHeight();
+
         double[] lr = b.getDirVector();
         double[] ud = b.getOrtoDirVector();
 
         return
-            !isInside(Math2.step(b.getTopLeft(), lr, -hl)) ||
-            !isInside(Math2.step(b.getTopLeft(), ud, -vl)) ||
-            !isInside(Math2.step(b.getTopRight(), lr, hl)) ||
-            !isInside(Math2.step(b.getTopRight(), ud, -vl)) ||
-            !isInside(Math2.step(b.getBottomRight(), lr, hl)) ||
-            !isInside(Math2.step(b.getBottomRight(), ud, vl)) ||
-            !isInside(Math2.step(b.getBottomLeft(), lr, -hl)) ||
-            !isInside(Math2.step(b.getBottomLeft(), ud, vl));
+            !isInside(Math2.step(b.getTopLeft(), lr, -hd)) ||
+            !isInside(Math2.step(b.getTopLeft(), ud, -vd)) ||
+            !isInside(Math2.step(b.getTopRight(), lr, hd)) ||
+            !isInside(Math2.step(b.getTopRight(), ud, -vd)) ||
+            !isInside(Math2.step(b.getBottomRight(), lr, hd)) ||
+            !isInside(Math2.step(b.getBottomRight(), ud, vd)) ||
+            !isInside(Math2.step(b.getBottomLeft(), lr, -hd)) ||
+            !isInside(Math2.step(b.getBottomLeft(), ud, vd));
     }
 
     //*********************************FOR TESTING

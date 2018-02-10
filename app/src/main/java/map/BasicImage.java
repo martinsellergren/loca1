@@ -90,6 +90,9 @@ public class BasicImage {
         return straight.crop(x0, y0, x0+w, y0+h);
     }
 
+    /**
+     * @return Rotated image, by angle degrees. Dims...
+     */
     public BasicImage rotate(double angle) {
         float radianAngle = (float) Math.toRadians(angle) ;
 
@@ -123,124 +126,45 @@ public class BasicImage {
 
         return new BasicImage(result);
     }
-    // public BasicImage rotate(double angle) {
-    //     angle = Math.toRadians(angle);
-    //     GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-    //     GraphicsDevice gd = ge.getDefaultScreenDevice();
-    //     GraphicsConfiguration gc = gd.getDefaultConfiguration();
 
-    //     double sin = Math.abs(Math.sin(angle)), cos = Math.abs(Math.cos(angle));
-    //     int w = this.getWidth(), h = this.getHeight();
-    //     int neww = (int) Math.floor(w * cos + h * sin), newh = (int) Math.floor(h * cos + w * sin);
-    //     int transparency = this.img.getColorModel().getTransparency();
-    //     BufferedImage result = gc.createCompatibleImage(neww, newh, transparency);
-    //     Graphics2D g = result.createGraphics();
-    //     g.translate((neww - w) / 2, (newh - h) / 2);
-    //     g.rotate(angle, w / 2, h / 2);
-    //     g.drawRenderedImage(this.img, null);
-    //     return new BasicImage(result);
-    // }
+    // /**
+    //  * Rounds to int-point so that color-overwriting is avoided if
+    //  * possible. Only overwrites more transparent pixels.
+    //  *
+    //  * If point is outside of image regardless of rounding, does
+    //  * nothing. If point is overwriting a less transparant pixel
+    //  * regardless of rounding, instead does nothing.
+    //  *
+    //  * @param p Point to be rounded and corresponding pixel colored.
+    //  * @param clr Color of new pixel.
+    //  */
+    // private void cleverSetColor(double[] p, Color clr) {
+    //     LinkedList<int[]> ps = new LinkedList<int[]>();
+    //     ps.add(Math2.lCeil(p));
+    //     ps.add(Math2.rCeil(p));
+    //     ps.add(Math2.rFloor(p));
+    //     ps.add(Math2.lFloor(p));
 
-    /**
-     * @return Rotated image, by angle degrees. Dims...
-     */
-    // public BasicImage rotate(double angle) {
-    //     float radianAngle = (float) Math.toRadians(angle) ;
+    //     int newAlpha = clr.getAlpha();
+    //     int maxAlphaDiff = Integer.MIN_VALUE;
+    //     int maxAlphaI = -1;
 
-    //     float sin = (float) Math.abs(Math.sin(radianAngle));
-    //     float cos = (float) Math.abs(Math.cos(radianAngle));
-
-    //     int w = this.getWidth() ;
-    //     int h = this.getHeight();
-
-    //     int neww = (int) Math.round(w * cos + h * sin);
-    //     int newh = (int) Math.round(h * cos + w * sin);
-
-    //     GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-    //     GraphicsDevice gd = ge.getDefaultScreenDevice();
-    //     GraphicsConfiguration gc = gd.getDefaultConfiguration();
-
-    //     BufferedImage result = gc.createCompatibleImage(neww, newh, Transparency.TRANSLUCENT);
-    //     Graphics2D g = result.createGraphics();
-
-    //     //-----------------------MODIFIED--------------------------------------
-    //     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON) ;
-    //     g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC) ;
-    //     g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY) ;
-
-    //     AffineTransform at = AffineTransform.getTranslateInstance((neww-w)/2, (newh-h)/2);
-    //     at.rotate(radianAngle, w/2, h/2);
-    //     //---------------------------------------------------------------------
-
-    //     g.drawRenderedImage(this.img, at);
-    //     g.dispose();
-
-    //     return new BasicImage(result);
-    // }
-
-    // public BasicImage extractElement(Box box) {
-    //     double rot = -box.getRotation();
-    //     double[] tl = Math2.rotate(box.getTopLeft(), rot);
-    //     double[] br = Math2.rotate(box.getBottomRight(), rot);
-    //     BasicImage elemImg = new BasicImage(Math2.down(br[0]-tl[0]),
-    //                                         Math2.up(br[1]-tl[1]));
-
-    //     //tl = Math2.toDouble(Math2.toInt(tl));
-
-    //     int[] bounds = Math2.toInt(box.getBounds());
-
-    //     for (int y = bounds[1]; y <= bounds[3]; y++) {
-    //         for (int x = bounds[0]; x <= bounds[2]; x++) {
-    //             int[] imgP = new int[]{x, y};
-    //             double[] elemP = Math2.minus(Math2.rotate(imgP, rot), tl);
-    //             //elemImg.cleverSetColor(elemP, getColor(imgP));
-
-    //             int[] pp = Math2.toInt(elemP);
-    //             if (elemImg.isInside(pp))
-    //                 elemImg.setColor(pp, this.getColor(imgP));
+    //     for (int i = 0; i < ps.size(); i++) {
+    //         int[] q = ps.get(i);
+    //         if (isInside(q)) {
+    //             int alphaDiff = newAlpha - getColor(q).getAlpha();
+    //             if (alphaDiff > maxAlphaDiff) {
+    //                 maxAlphaDiff = alphaDiff;
+    //                 maxAlphaI = i;
+    //             }
     //         }
     //     }
-    //     return elemImg;
+
+    //     if (maxAlphaDiff > 0) {
+    //         int[] q = ps.get(maxAlphaI);
+    //         setColor(q, clr);
+    //     }
     // }
-
-    /**
-     * Rounds to int-point so that color-overwriting is avoided if
-     * possible. Only overwrites more transparent pixels.
-     *
-     * If point is outside of image regardless of rounding, does
-     * nothing. If point is overwriting a less transparant pixel
-     * regardless of rounding, instead does nothing.
-     *
-     * @param p Point to be rounded and corresponding pixel colored.
-     * @param clr Color of new pixel.
-     */
-    private void cleverSetColor(double[] p, Color clr) {
-        LinkedList<int[]> ps = new LinkedList<int[]>();
-        ps.add(Math2.lCeil(p));
-        ps.add(Math2.rCeil(p));
-        ps.add(Math2.rFloor(p));
-        ps.add(Math2.lFloor(p));
-
-        int newAlpha = clr.getAlpha();
-        int maxAlphaDiff = Integer.MIN_VALUE;
-        int maxAlphaI = -1;
-
-        for (int i = 0; i < ps.size(); i++) {
-            int[] q = ps.get(i);
-            if (isInside(q)) {
-                int alphaDiff = newAlpha - getColor(q).getAlpha();
-                if (alphaDiff > maxAlphaDiff) {
-                    maxAlphaDiff = alphaDiff;
-                    maxAlphaI = i;
-                }
-            }
-        }
-
-        if (maxAlphaDiff > 0) {
-            int[] q = ps.get(maxAlphaI);
-            setColor(q, clr);
-        }
-    }
 
     /**
      * @return True if point p is inside image-bounds.
@@ -267,6 +191,17 @@ public class BasicImage {
             ls.add(extractElement(b));
 
         return concatenateImages(ls, padding);
+    }
+
+    /**
+     * Uses default padding = average box height.
+     *
+     * @param lay Label-layout.
+     * @return One-line letter-image with hight of tallest letter-img.
+     */
+    public BasicImage extractLabel(LabelLayout lay) {
+        int bh = Math2.toInt(lay.getAverageBoxHeight());
+        return extractLabel(lay, bh);
     }
 
     /**

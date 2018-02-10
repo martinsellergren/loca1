@@ -21,19 +21,16 @@ public class Label {
      * label-text. The category of the label is set to unspecified
      * (use setCategory() afterwords).
      *
-     * @param layout Specification of label (letter positions).
+     * @param lay Specification of label (letter positions).
      * @param labelImg A label-image; see MapImage-constructor for a
      * description.
      *
      * @pre layout and labelImg are associated.
      */
-    public Label(LabelLayout layout, BasicImage labelImg) {
-        this.layout = layout;
-
-        for (Box b : layout.getBoxes()) {
-            BasicImage letter = labelImg.extractElement(b);
-            this.text += OCR.detectChar(letter);
-        }
+    public Label(LabelLayout lay, BasicImage labelImg) {
+        this.text = OCR.detectString(labelImg.extractLabel(lay));
+        this.category = Category.UNSPECIFIED;
+        this.layout = lay;
     }
 
     /**
