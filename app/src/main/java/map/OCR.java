@@ -7,36 +7,46 @@ import static org.bytedeco.javacpp.tesseract.*;
 import java.io.File;
 
 /**
- * Static class for turning image of letters into chars.
+ * Class for turning images of letters strings.
  */
 public class OCR {
+    private TessBaseAPI api = new TessBaseAPI();
+    public enum Language { eng, swe; }
+
+    /**
+     * Initializes the ocr-engine for specified language detection.
+     *
+     * @param l Language for this ocr-engine.
+     */
+    public OCR(Language l) {
+        if (api.Init(".", l.name()) != 0)
+            throw new RuntimeException("Could not initialize tesseract.");
+        api.ReadConfigFile("./tessdata/configs");
+    }
+
+    /**
+     * Close down engine and free up memory.
+     */
+    public void end() {
+        api.End();
+    }
 
     /**
      * @return String in image.
      */
-    public static String detectString(BasicImage img) {
-        BytePointer outText;
-
-        TessBaseAPI api = new TessBaseAPI();
-        // Initialize tesseract-ocr with English, without specifying tessdata path
-        if (api.Init(".", "ENG") != 0) {
-            System.err.println("Could not initialize tesseract.");
-            System.exit(1);
-        }
-
-        // Open input image with leptonica library
+    public String detectString(BasicImage img) {
         String fn = "temp.png";
         img.save(fn);
         PIX image = pixRead(fn);
         new File(fn).delete();
 
         api.SetImage(image);
+        api.SetSourceResolution(70);
+
         // Get OCR result
-        outText = api.GetUTF8Text();
+        BytePointer outText = api.GetUTF8Text();
         String text = outText.getString();
 
-        // Destroy used object and release memory
-        api.End();
         outText.deallocate();
         pixDestroy(image);
 

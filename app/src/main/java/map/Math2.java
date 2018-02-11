@@ -696,32 +696,32 @@ public class Math2 {
     /**
      * @return Integer below.
      */
-    public static int up(double x) {
+    public static int floor(double x) {
         return (int)Math.floor(x);
     }
 
     /**
      * @return Integer above.
      */
-    public static int down(double x) {
+    public static int ceil(double x) {
         return (int)Math.ceil(x);
     }
 
-    /**
-     * Round point to integer.
-     */
-    public static int[] lCeil(double[] p) {
-        return new int[]{ down(p[0]), down(p[0]) };
-    }
-    public static int[] rCeil(double[] p) {
-        return new int[]{ up(p[0]), down(p[0]) };
-    }
-    public static int[] rFloor(double[] p) {
-        return new int[]{ up(p[0]), up(p[0]) };
-    }
-    public static int[] lFloor(double[] p) {
-        return new int[]{ down(p[0]), up(p[0]) };
-    }
+    // /**
+    //  * Round point to integer.
+    //  */
+    // public static int[] lCeil(double[] p) {
+    //     return new int[]{ down(p[0]), down(p[0]) };
+    // }
+    // public static int[] rCeil(double[] p) {
+    //     return new int[]{ up(p[0]), down(p[0]) };
+    // }
+    // public static int[] rFloor(double[] p) {
+    //     return new int[]{ up(p[0]), up(p[0]) };
+    // }
+    // public static int[] lFloor(double[] p) {
+    //     return new int[]{ down(p[0]), up(p[0]) };
+    // }
 
     //****************************************CONVERSIONS
 

@@ -24,11 +24,12 @@ public class Label {
      * @param lay Specification of label (letter positions).
      * @param labelImg A label-image; see MapImage-constructor for a
      * description.
+     * @param ocr Ocr-engine set up for correct language.
      *
      * @pre layout and labelImg are associated.
      */
-    public Label(LabelLayout lay, BasicImage labelImg) {
-        this.text = OCR.detectString(labelImg.extractLabel(lay));
+    public Label(LabelLayout lay, BasicImage labelImg, OCR ocr) {
+        this.text = ocr.detectString(labelImg.extractLabel(lay));
         this.category = Category.UNSPECIFIED;
         this.layout = lay;
     }
@@ -41,12 +42,37 @@ public class Label {
      * @param c Label's category.
      */
     public Label(String text, LabelLayout l, Category c) {
+        this.text = text;
+        this.category = c;
+        this.layout = l;
     }
+
+    /**
+     * @return Text of label.
+     */
+    public String getText() {
+        return this.text;
+    }
+
+    /**
+     * @return Category of label.
+     */
+    public Category getCategory() {
+        return this.category;
+    }
+
+    // /**
+    //  * @return Layout of label.
+    //  */
+    // public LabelLayout getLayout() {
+    //     return this.layout;
+    // }
 
     /**
      * Add offset to every position in label.
      */
     public void addOffset(int addX, int addY) {
+        this.layout.addOffset(addX, addY);
     }
 
     /**

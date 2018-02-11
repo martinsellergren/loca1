@@ -80,20 +80,22 @@ public class BasicImage {
      * i.e an un-rotated subsection of this image.
      */
     public BasicImage extractElement(Box box) {
-        BasicImage rotated = crop(Math2.toInt(box.getBounds()));
-        BasicImage straight = rotated.rotate(box.getRotation());
+        int[] bs = box.getIntBounds();
+        BasicImage rotated = crop(bs);
+        BasicImage straight = rotated.rotate(-box.getRotation());
         int w = Math2.toInt(box.getWidth());
         int h = Math2.toInt(box.getHeight());
         int x0 = (straight.getWidth() - w) / 2;
-        int y0 = (straight.getHeight() -h) / 2;
+        int y0 = (straight.getHeight() - h) / 2;
 
-        return straight.crop(x0, y0, x0+w, y0+h);
+        return straight;//.crop(x0, y0, x0+w, y0+h);
     }
 
     /**
      * @return Rotated image, by angle degrees. Dims...
      */
     public BasicImage rotate(double angle) {
+        angle *= -1;
         float radianAngle = (float) Math.toRadians(angle) ;
 
         float sin = (float) Math.abs(Math.sin(radianAngle));
@@ -190,7 +192,49 @@ public class BasicImage {
         for (Box b : lay.getBoxes())
             ls.add(extractElement(b));
 
-        return concatenateImages(ls, padding);
+        BasicImage img = concatenateImages(ls, padding);
+        img = img.addAlpha(100);
+        //img = img.addBackground(Color.WHITE);
+
+        return img;
+    }
+
+    /**
+     * Add term to every pixel-alpha-value that isn't transparent.
+     * @param add Value to add. (0 <= alpha-value <= 255).
+     */
+    public BasicImage addAlpha(int add) {
+        BasicImage cpy = copy();
+
+        for (int y = 0; y < getHeight(); y++) {
+            for (int x = 0; x < getWidth(); x++) {
+                Color c = getColor(x, y);
+                //if (c.getAlpha() == 0) continue;
+
+                int newA = c.getAlpha() + add;
+                if (newA < 0) newA = 0;
+                if (newA > 255) newA = 255;
+
+                Color c_ = new Color(c.getRed(), c.getGreen(), c.getBlue(), newA);
+                cpy.setColor(x, y, c_);
+            }
+        }
+        return cpy;
+    }
+
+    /**
+     * Adds a background color.
+     */
+    public BasicImage addBackground(Color c) {
+        BasicImage back = new BasicImage(getWidth(), getHeight());
+        back.color(c);
+
+        Graphics2D g = back.createGraphics();
+        g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
+        g.drawImage(this.img, 0, 0, null);
+        g.dispose();
+
+        return back;
     }
 
     /**
@@ -229,7 +273,7 @@ public class BasicImage {
      * @pre mins < maxes.
      */
     public BasicImage crop(int xmin, int ymin, int xmax, int ymax) {
-        BufferedImage croped = this.img.getSubimage(xmin, ymin, xmax-xmin, ymax-ymin);
+        BufferedImage croped = this.img.getSubimage(xmin, ymin, xmax-xmin+1, ymax-ymin+1);
         return new BasicImage(croped);
     }
     public BasicImage crop(int[] bs) {
@@ -392,7 +436,7 @@ public class BasicImage {
     }
 
     /**
-     * Draw a LabelLayout on the image.
+     * Draws a LabelLayout on the image.
      */
     public void drawLabelLayout(LabelLayout lay) {
         Graphics2D g = createGraphics();
@@ -410,6 +454,15 @@ public class BasicImage {
         g.drawLine(tr[0], tr[1], br[0], br[1]);
         g.drawLine(br[0], br[1], bl[0], bl[1]);
         g.drawLine(bl[0], bl[1], tl[0], tl[1]);
+    }
+
+    /**
+     * Draws a string at label's center.
+     */
+    public void drawLabelText(String text, LabelLayout lay) {
+        Graphics2D g = createGraphics();
+        double[] bs = lay.getBounds();
+        g.drawString(text, (float)(bs[0]+bs[2])/2, (float)(bs[1]+bs[3])/2);
     }
 
     /**

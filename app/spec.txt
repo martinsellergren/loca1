@@ -55,7 +55,7 @@ BasicImage
 MapImage<-BasicImage
     labels::Label[]
     view::MapImageView
-    new MapImage(viewportView::MapImageView, imgView::MapImageView, imgs::BasicImages[map,label,box])
+    new MapImage(viewportView::MapImageView, imgView::MapImageView, imgs::BasicImages[map,label,box], lang::enum)
         pre: viewportView fits in imgView. imgView and imgs correspond.
     addLabelOffset(x::int, y::int)::void
     fetchAndSetLabelCategories()::void throws IOException
@@ -115,7 +115,8 @@ Label
     category: enum
     layout: LabelLayout
     new Label(text::String, layout::LabelLayout, category)
-    new Label(labelImg::BasicImage, layout::LabelLayout)
+    new Label(labelImg::BasicImage, layout::LabelLayout, OCREngine)
+        (OCREngine set to corresponding language)
     addOffset(addX::int, addY::int)
     setCategory(c::category enum)
     fetchCategory(double[wnes])::category enum (if place not found, returns undefined-category)
@@ -133,7 +134,7 @@ Labels(tied to a mapImage)
             label.setCategory(c)
 
 OCR
-    //detectChar(img::BasicImage)::char
+    OCREngine::...
     detectString(img::BasicImage)::string
 
 LabelLayout
@@ -179,9 +180,10 @@ Box
     addOffset(addX::int, addY::int)
 
 Map
-    new Map(westLon::double, northLat, eastLon, southLat)
     bounds::double[WNES]
     zoomLevelImgs::MapImage[]
+    lang::enum
+    new Map(westLon::double, northLat, eastLon, southLat, lang::enum)
     addZoomLevel(img::MapImage)::void
     hasZoomLevel(int z)::bool
     getBounds()::double[]

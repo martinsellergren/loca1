@@ -32,18 +32,18 @@ public class BasicImageTests {
     //     // elem.save("3extracted.png");
     // }
 
-    @Test
-    public void extractElement_real() {
-        BasicImage boxImg = BasicImage.load("../test_europe_box.png");
-        BasicImage labelImg = BasicImage.load("../test_europe_label.png");
+    // @Test
+    // public void extractElement_real() {
+    //     BasicImage boxImg = BasicImage.load("../test_europe_box.png");
+    //     BasicImage labelImg = BasicImage.load("../test_europe_label.png");
 
-        LabelLayoutIterator iter = new LabelLayoutIterator(boxImg);
-        LabelLayout l = iter.expandToLabelLayout(new int[]{970,1393});
+    //     LabelLayoutIterator iter = new LabelLayoutIterator(boxImg);
+    //     LabelLayout l = iter.expandToLabelLayout(new int[]{970,1393});
 
-        int PADDING = 5;
-        BasicImage line = labelImg.extractLabel(l, PADDING);
-        line.save("extractElement_real.png");
-    }
+    //     int PADDING = 5;
+    //     BasicImage line = labelImg.extractLabel(l, PADDING);
+    //     line.save("extractElement_real.png");
+    // }
 
     @Test
     public void concatenateImages_2x2Layout_squares() {
