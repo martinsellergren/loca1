@@ -189,8 +189,18 @@ public class BasicImage {
      */
     public BasicImage extractLabel(LabelLayout lay, int padding) {
         LinkedList<BasicImage> ls = new LinkedList<BasicImage>();
-        for (Box b : lay.getBoxes())
-            ls.add(extractElement(b));
+
+        for (Box b : lay.getBoxesWithNewlines()) {
+            if (b != null) {
+                ls.add(this.extractElement(b));
+            }
+            else {
+                int h = Math2.toInt(lay.getAverageBoxHeight());
+                int w = Math2.toInt(h * 0.7f);
+                BasicImage space = new BasicImage(w, h);
+                ls.add(space);
+            }
+        }
 
         BasicImage img = concatenateImages(ls, padding);
         img = img.addAlpha(100);

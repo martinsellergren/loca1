@@ -53,6 +53,22 @@ public class LabelLayout {
         return bs;
     }
 
+    /**
+     * @return All boxes in a 1d-array (copies). New-line is a null.
+     */
+    public LinkedList<Box> getBoxesWithNewlines() {
+        LinkedList<Box> bs = new LinkedList<Box>();
+
+        for (LinkedList<Box> row : letterBoxes) {
+            for (Box b : row) {
+                bs.add(b);
+            }
+            bs.add(null);
+        }
+        bs.removeLast();
+        return bs;
+    }
+
     public int getNoBoxes() {
         int count = 0;
         for (LinkedList<Box> row : letterBoxes) {
@@ -212,6 +228,7 @@ public class LabelLayout {
     //      * @return True if iter has more.
     //      */
     //     public boolean hasMore() {
+
     //         return false;
     //     }
     // }

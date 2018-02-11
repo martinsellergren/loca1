@@ -61,13 +61,6 @@ public class Label {
         return this.category;
     }
 
-    // /**
-    //  * @return Layout of label.
-    //  */
-    // public LabelLayout getLayout() {
-    //     return this.layout;
-    // }
-
     /**
      * Add offset to every position in label.
      */

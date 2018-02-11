@@ -19,9 +19,10 @@ public class OCR {
      * @param l Language for this ocr-engine.
      */
     public OCR(Language l) {
-        if (api.Init(".", l.name()) != 0)
+        if (api.Init(".", l.name()) != 0) {
             throw new RuntimeException("Could not initialize tesseract.");
-        api.ReadConfigFile("./tessdata/configs");
+        }
+        api.SetVariable("tessedit_char_whitelist", "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ -");
     }
 
     /**

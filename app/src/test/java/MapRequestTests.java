@@ -5,6 +5,8 @@ import map.*;
 
 public class MapRequestTests {
 
+    boolean highQ = true;
+
     // @Test
     // public void fetch3_world() {
     //     double west = -180;
@@ -12,7 +14,7 @@ public class MapRequestTests {
     //     double east = 180;
     //     double south = -MapImageView.LATITUDE_BOUND;
     //     int zoom = 3;
-    //     boolean highQ = false;
+    //     //boolean highQ = false;
     //     MapImageView view = new MapImageView(west, north, east, south, zoom, highQ);
     //     MapRequest req = new MapRequest(view);
 
@@ -39,7 +41,7 @@ public class MapRequestTests {
     //     double north = 60.06484046;
     //     double south = 32.99023556;
     //     int zoom = 5;
-    //     boolean highQ = true;
+    //     //boolean highQ = true;
     //     MapImageView view = new MapImageView(west, north, east, south, zoom, highQ);
     //     MapRequest req = new MapRequest(view);
 
@@ -66,7 +68,7 @@ public class MapRequestTests {
     //     double north = 59.383059;
     //     double south = 59.371692;
     //     int zoom = 17;
-    //     boolean highQ = false;
+    //     //boolean highQ = false;
     //     MapImageView view = new MapImageView(west, north, east, south, zoom, highQ);
     //     MapRequest req = new MapRequest(view);
 
@@ -93,7 +95,7 @@ public class MapRequestTests {
     //     double north = 59.383059;
     //     double south = 59.371692;
     //     int zoom = 14;
-    //     boolean highQ = false;
+    //     //boolean highQ = false;
     //     MapImageView view = new MapImageView(west, north, east, south, zoom, highQ);
     //     MapRequest req = new MapRequest(view);
 
