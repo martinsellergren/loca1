@@ -88,7 +88,7 @@ public class BasicImage {
         int x0 = (straight.getWidth() - w) / 2;
         int y0 = (straight.getHeight() - h) / 2;
 
-        return straight;//.crop(x0, y0, x0+w, y0+h);
+        return straight.crop(x0, y0, x0+w, y0+h);
     }
 
     /**

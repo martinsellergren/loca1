@@ -82,7 +82,7 @@ def dumpStyle(data, fileName):
     f.close()
 
 
-font = 'Cousine Regular'
+font = 'Inconsolata Regular'#'Cousine Regular'
 font_box = font + '-Box'
 extraLetterSpace = 0.2
 lineHeight = 1.5
