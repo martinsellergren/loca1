@@ -1,4 +1,4 @@
-USER_NAME = "masel"
+USER_NAME = masel
 TOKEN = sk.eyJ1IjoibWFzZWwiLCJhIjoiY2pkM2YwYXlvMncyZTMzczYzbXJ1Mzd3ayJ9.OBMENh5mWq6iwPZut8s0iw
 STREETS_STYLE_ID = streets-v10
 FULL_STYLE_ID = cjd9dx1oe9t712roe6qmxmfgr
