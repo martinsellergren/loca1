@@ -24,25 +24,25 @@ public class LabelTests {
     //     labelImgCpy.save("test_Label_detectAllLabels.png");
     // }
 
-    // @Test
-    // public void detectAllLabels() {
-    //     LabelLayoutIterator iter = new LabelLayoutIterator(boxImg);
-    //     OCR ocr = new OCR(OCR.Language.eng);
+    @Test
+    public void detectAllLabels() {
+        LabelLayoutIterator iter = new LabelLayoutIterator(boxImg);
+        OCR ocr = new OCR(OCR.Language.eng);
 
-    //     LabelLayout lay;
-    //     while ((lay=iter.next()) != null) {
-    //         try {
-    //             Label l = new Label(lay, labelImg, ocr);
-    //             labelImg.drawLabelLayout(lay);
-    //             labelImg.drawLabelText(l.getText(), lay);
-    //         }
-    //         catch (Exception e) {
-    //             System.out.println(lay);
-    //             throw e;
-    //         }
-    //     }
+        LabelLayout lay;
+        while ((lay=iter.next()) != null) {
+            try {
+                Label l = new Label(lay, labelImg, ocr);
+                labelImg.drawLabelLayout(lay);
+                labelImg.drawLabelText(l.getText(), lay);
+            }
+            catch (Exception e) {
+                System.out.println(lay);
+                throw e;
+            }
+        }
 
-    //     ocr.end();
-    //     labelImg.save("test_Label_detectAllLabels.png");
-    // }
+        ocr.end();
+        labelImg.save("test_Label_detectAllLabels.png");
+    }
 }

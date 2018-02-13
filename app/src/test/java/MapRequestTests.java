@@ -61,32 +61,32 @@ public class MapRequestTests {
     //     }
     // }
 
-    @Test
-    public void fetch3_rudboda_z14() {
-        double west = 18.146238;
-        double east = 18.191557;
-        double north = 59.383059;
-        double south = 59.371692;
-        int zoom = 14;
-        //boolean highQ = false;
-        MapImageView view = new MapImageView(west, north, east, south, zoom, highQ);
-        MapRequest req = new MapRequest(view);
+    // @Test
+    // public void fetch3_rudboda_z14() {
+    //     double west = 18.146238;
+    //     double east = 18.191557;
+    //     double north = 59.383059;
+    //     double south = 59.371692;
+    //     int zoom = 14;
+    //     //boolean highQ = false;
+    //     MapImageView view = new MapImageView(west, north, east, south, zoom, highQ);
+    //     MapRequest req = new MapRequest(view);
 
-        try {
-            BasicImage[] imgs = req.fetch3();
-            assertTrue(imgs[0] != null);
-            assertTrue(imgs[1] != null);
-            assertTrue(imgs[2] != null);
+    //     try {
+    //         BasicImage[] imgs = req.fetch3();
+    //         assertTrue(imgs[0] != null);
+    //         assertTrue(imgs[1] != null);
+    //         assertTrue(imgs[2] != null);
 
-            imgs[0].save("test_rudboda_z14_full.png");
-            imgs[1].save("test_rudboda_z14_label.png");
-            imgs[2].save("test_rudboda_z14_box.png");
-        }
-        catch (IOException e) {
-            System.out.println(e);
-            assertTrue(false);
-        }
-    }
+    //         imgs[0].save("test_rudboda_z14_full.png");
+    //         imgs[1].save("test_rudboda_z14_label.png");
+    //         imgs[2].save("test_rudboda_z14_box.png");
+    //     }
+    //     catch (IOException e) {
+    //         System.out.println(e);
+    //         assertTrue(false);
+    //     }
+    // }
 
     // @Test
     // public void fetch3_rudboda_z17() {

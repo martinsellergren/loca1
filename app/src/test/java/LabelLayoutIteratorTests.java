@@ -94,15 +94,11 @@ public class LabelLayoutIteratorTests {
     // @Test
     // public void expandToLabelLayout() {
     //     LabelLayoutIterator iter = new LabelLayoutIterator(img);
-
-    //     LabelLayout l = iter.expandToLabelLayout(new int[]{970,1393});
-    //                                              //{1022, 1532});
+    //     LabelLayout l = iter.expandToLabelLayout(new int[]{2839,1273});
     //     img.drawLabelLayout(l);
-    //     System.out.println(l.getBoxes().length);
 
-    //     // l = iter.expandToLabelLayout(new int[]{1037, 1543});
-    //     // l = iter.expandToLabelLayout(new int[]{1093, 1540});
-    //     // img.drawLabelLayout(l);
+    //     l = iter.expandToLabelLayout(new int[]{2836,1101});
+    //     img.drawLabelLayout(l);
 
     //     img.save("test_LabelLayoutIterator_expandToLabelLayout.png");
     // }

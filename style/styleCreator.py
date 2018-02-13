@@ -88,7 +88,7 @@ font_box = font + '-Box'
 extraLetterSpace = 0.2
 lineHeight = 1.5
 textMaxAngle = 15
-textPadding = 7#default 2
+textPadding = 10#default 2
 
 fileName_full = "full"
 fileName_label = "label"
