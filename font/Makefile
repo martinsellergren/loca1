@@ -6,7 +6,7 @@ simplify:
 	python fontSimplifier.py $(FONT)
 
 box:
-	python fontBoxer.py $(basename $(FONT))-Simple$(suffix $(FONT))
+	python fontBoxer.py $(FONT)
 
 clean:
 	rm -f *-Simple*

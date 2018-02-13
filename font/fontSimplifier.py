@@ -6,34 +6,47 @@ import unicodedata
 # c: unicode character.
 # return: True if c is letter (not symbol..).
 def isLetter(c):
-    return False
+    return unicodedata.category(c) in ['Lu', 'Ll', 'Lt', 'Lm', 'Lo']
 
 # Replace layout of dest with layout of src, preserving dims.
 # src: Source glyph.
 # dest: Destination glyph.
 def replaceLayout(src, dest):
-    pass
+    if src.unicode == dest.unicode: return
+    w = dest.width
+    dest.clear()
+    dest.background = src.background.dup()
+    dest.foreground = src.foreground.dup()
+    dest.width = w
 
 # Update layout of glyph, remove all.
 # g: Glyph.
 def giveSpaceLayout(g):
-    pass
+    w = g.width
+    g.clear()
+    g.width = w
 
-# c: Unicode character.
+# l: Unicode letter.
 # return: Simplified unicode character (i.e ae->a).
-def simplify(c):
-    cs = unicode(unidecode.unidecode(c))
+def simplify(l):
+    cs = unicode(unidecode.unidecode(l))
     for c in cs:
         if isLetter(c): return c
-    sys.exit(-1)
+    return None
 
 # c: Unicode character.
 # font: Font with glyphs.
 # return: Glyph in font of the c-character.
 def findGlyph(c, font):
+    if c is None: return None
     index = ord(c)
+    for g in font.glyphs():
+        if g.unicode == index: return g
     return None
 
+def unlinkReferences(font):
+    for g in font.glyphs():
+        g.unlinkRef()
 
 
 fname = sys.argv[1]
@@ -41,6 +54,7 @@ x = fname.split(".")
 name = x[0]
 ext = x[1]
 font = fontforge.open(fname)
+unlinkReferences(font)
 
 for glyph in font.glyphs():
     if glyph.unicode == -1:
@@ -52,6 +66,7 @@ for glyph in font.glyphs():
     if isLetter(c):
         c_simple = simplify(c)
         glyph_simple = findGlyph(c_simple, font)
+
         if glyph_simple is None:
             giveSpaceLayout(glyph)
         else:
