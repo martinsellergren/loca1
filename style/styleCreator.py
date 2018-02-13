@@ -83,11 +83,12 @@ def dumpStyle(data, fileName):
 
 
 font = 'Inconsolata Regular'#'Cousine Regular'
+font_label = font + '-Simple'
 font_box = font + '-Box'
 extraLetterSpace = 0.2
 lineHeight = 1.5
 textMaxAngle = 15
-textPadding = 5#default 2
+textPadding = 7#default 2
 
 fileName_full = "full"
 fileName_label = "label"
@@ -108,7 +109,7 @@ setNoOverlap(data)
 setTextPadding(data, textPadding)
 #noAbbreviations(data)
 #noRoadSigns()
-#noJunkLabels() #like street numbers
+#noJunkLabels() #like street numbers, protected area, ...
 #setLanguage(data)
 
 #experiment
@@ -120,6 +121,7 @@ dumpStyle(data, fileName_full)
 
 undecorateText(data)
 hideGraphics(data)
+setFont(data, font_label)
 setName(data, fileName_label)
 dumpStyle(data, fileName_label)
 

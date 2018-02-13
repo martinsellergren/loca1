@@ -22,7 +22,7 @@ public class OCR {
         if (api.Init(".", l.name()) != 0) {
             throw new RuntimeException("Could not initialize tesseract.");
         }
-        api.SetVariable("tessedit_char_whitelist", "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ -");
+        api.SetVariable("tessedit_char_whitelist", " abcdefghijklmnopqrstuvwxyz");
     }
 
     /**

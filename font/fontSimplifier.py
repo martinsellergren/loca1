@@ -27,11 +27,11 @@ def giveSpaceLayout(g):
     g.width = w
 
 # l: Unicode letter.
-# return: Simplified unicode character (i.e ae->a).
+# return: Simplified unicode character (i.e ae->a, A->a).
 def simplify(l):
     cs = unicode(unidecode.unidecode(l))
     for c in cs:
-        if isLetter(c): return c
+        if isLetter(c): return c.lower()
     return None
 
 # c: Unicode character.

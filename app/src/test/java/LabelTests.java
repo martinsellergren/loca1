@@ -3,8 +3,8 @@ import static org.junit.Assert.*;
 import map.*;
 
 public class LabelTests {
-    BasicImage boxImg = BasicImage.load("../test_rudboda_z14_box.png");
-    BasicImage labelImg = BasicImage.load("../test_rudboda_z14_label.png");
+    BasicImage boxImg = BasicImage.load("../test_europe_box.png");
+    BasicImage labelImg = BasicImage.load("../test_europe_label.png");
 
     // @Test
     // public void detectLabel() {
@@ -24,25 +24,25 @@ public class LabelTests {
     //     labelImgCpy.save("test_Label_detectAllLabels.png");
     // }
 
-    @Test
-    public void detectAllLabels() {
-        LabelLayoutIterator iter = new LabelLayoutIterator(boxImg);
-        OCR ocr = new OCR(OCR.Language.eng);
+    // @Test
+    // public void detectAllLabels() {
+    //     LabelLayoutIterator iter = new LabelLayoutIterator(boxImg);
+    //     OCR ocr = new OCR(OCR.Language.eng);
 
-        LabelLayout lay;
-        while ((lay=iter.next()) != null) {
-            try {
-                Label l = new Label(lay, labelImg, ocr);
-                labelImg.drawLabelLayout(lay);
-                labelImg.drawLabelText(l.getText(), lay);
-            }
-            catch (Exception e) {
-                System.out.println(lay);
-                throw e;
-            }
-        }
+    //     LabelLayout lay;
+    //     while ((lay=iter.next()) != null) {
+    //         try {
+    //             Label l = new Label(lay, labelImg, ocr);
+    //             labelImg.drawLabelLayout(lay);
+    //             labelImg.drawLabelText(l.getText(), lay);
+    //         }
+    //         catch (Exception e) {
+    //             System.out.println(lay);
+    //             throw e;
+    //         }
+    //     }
 
-        ocr.end();
-        labelImg.save("test_Label_detectAllLabels.png");
-    }
+    //     ocr.end();
+    //     labelImg.save("test_Label_detectAllLabels.png");
+    // }
 }
