@@ -14,14 +14,17 @@ package map;
  * @inv lat-bounds inside +-85...
  */
 public class MapImageView {
-
-    /** Tile size in pixels (x*x) where zoom level 0 fits whole
-     * world on one tile. */
-    public static final int DEFAULT_TILE_SIZE = 512;
+    /**
+     * Pixels added to dimensions so that all originally cut labels fit.
+     * Expressed in defult pixel density (MapRequest.DEFAULT_TILE_SIZE).
+     * Determined through experiments.
+     */
+    public/***/ static final int EXTENSION_TERM = 100;
 
     /** Max/min value for latitude. */
     public static final double LATITUDE_BOUND =
         Math.toDegrees(2*Math.atan(Math.exp(Math.PI)) - Math.PI/2);
+
 
     /** Map-center longitude (degrees). */
     public final double lon;
@@ -29,17 +32,17 @@ public class MapImageView {
     /** Map-center latitude (degrees). */
     public final double lat;
 
-    /** Map width in pixels. Actual width depends on pixel-density. */
+    /** Map width in pixels. Actual width depends on pixel density. */
     public final int width;
 
-    /** Map height in pixels. Actual height depends on pixel-density. */
+    /** Map height in pixels. Actual height depends on pixel density. */
     public final int height;
 
     /** Zoom of image where 0 is all way out and 20 is all way in. */
     public final int zoom;
 
-    /** True means pixel-density is doubled (high quality). */
-    public final boolean x2;
+    /** Tile size (x*x). Zoom level 0 fits whole world on one tile. */
+    public final int tileSize;
 
 
     /**
@@ -50,18 +53,28 @@ public class MapImageView {
      * @param w Pixel-width. w > 0.
      * @param h Pixel-height. h > 0.
      * @param z Zoom. 0 <= z <= 20.
-     * @param x2 Double pixel-density.
+     * @param doubleQ A high quality image.
      */
-    public MapImageView(double lon, double lat, int w, int h, int z, boolean x2) {
+    public MapImageView(double lon, double lat, int w, int h, int z, boolean doubleQ) {
+        this(lon, lat, w, h, z,
+             doubleQ ?
+             (MapRequest.DEFAULT_TILE_SIZE*2) :
+             MapRequest.DEFAULT_TILE_SIZE);
+    }
+
+    /**
+     * Constructor when tilesize is known.
+     */
+    public/***/ MapImageView(double lon, double lat, int w, int h, int z, int ts) {
         this.lon = lon;
         this.lat = lat;
         this.width = w;
         this.height = h;
         this.zoom = z;
-        this.x2 = x2;
+        this.tileSize = ts;
 
-        assertWidth(w, z, x2);
-        assertLatitude(lat, h, z, x2);
+        assertWidth(this.width, this.zoom, this.tileSize);
+        assertLatitude(this.lat, this.height, this.zoom, this.tileSize);
     }
 
     /**
@@ -72,7 +85,7 @@ public class MapImageView {
      * @param east Eastern longitude.
      * @param south Southern latitude.
      */
-    public MapImageView(double west, double north, double east, double south, int z, boolean x2) {
+    public MapImageView(double west, double north, double east, double south, int z, boolean doubleQ) {
         west = Math2.toUnitDegrees(west);
         east = Math2.toUnitDegrees(east);
         if (north - south <= 0)
@@ -81,31 +94,25 @@ public class MapImageView {
             throw new IllegalArgumentException("Bad latitude bounds");
         }
 
-        double[] tl  = getPixelCoordinates_global(west, north, z, x2);
-        double[] br  = getPixelCoordinates_global(east, south, z, x2);
+        this.tileSize = doubleQ ? (MapRequest.DEFAULT_TILE_SIZE*2) : MapRequest.DEFAULT_TILE_SIZE;
+
+        double[] tl  = getPixelCoordinates_global(west, north, z, this.tileSize);
+        double[] br  = getPixelCoordinates_global(east, south, z, this.tileSize);
         double width = br[0]-tl[0] > 0 ?
-            (br[0]-tl[0]) : (getGlobalPixelMax(z, x2)[0]-tl[0]+br[0]);
+            (br[0]-tl[0]) : (getGlobalPixelMax(z, this.tileSize)[0]-tl[0]+br[0]);
         double height = br[1] - tl[1];
         double midX = tl[0] + width/2;
         double midY = (tl[1] + br[1]) / 2;
-        double[] midGeo = getGeoCoordinates_global(midX, midY, z, x2);
+        double[] midGeo = getGeoCoordinates_global(midX, midY, z, this.tileSize);
 
         this.lon = midGeo[0];
         this.lat = midGeo[1];
         this.width = Math.round((float)width);
         this.height = Math.round((float)height);
         this.zoom = z;
-        this.x2 = x2;;
 
-        assertWidth(this.width, z, x2);
-        assertLatitude(this.lat, this.height, z, x2);
-    }
-
-    /**
-     * Constructor with coordinates-array.
-     */
-    public MapImageView(double[] wnes, int z, boolean x2) {
-        this(wnes[0], wnes[1], wnes[2], wnes[3], z, x2);
+        assertWidth(this.width, this.zoom, this.tileSize);
+        assertLatitude(this.lat, this.height, this.zoom, this.tileSize);
     }
 
     /**
@@ -113,10 +120,10 @@ public class MapImageView {
      *
      * @param w Width.
      * @param z Zoom.
-     * @param x2 Double pixel-density.
+     * @param q Tile size.
      */
-    public/***/ static void assertWidth(int w, int z, boolean x2) {
-        int yMax = getGlobalPixelMax(z, x2)[1];
+    public/***/ static void assertWidth(int w, int z, int q) {
+        int yMax = getGlobalPixelMax(z, q)[1];
         if (w > yMax)
             throw new IllegalArgumentException("Bad width.");
     }
@@ -127,10 +134,10 @@ public class MapImageView {
      * @param lat Latitude.
      * @param h Height.
      * @param z Zoom.
-     * @param x2 Double pixel-density.
+     * @param q Tile size.
      */
-    public/***/ static void assertLatitude(double lat, int h, int z, boolean x2) {
-        if (!okLatitudeBound(lat, h, z, x2)) {
+    public/***/ static void assertLatitude(double lat, int h, int z, int q) {
+        if (!okLatitudeBound(lat, h, z, q)) {
             throw new IllegalArgumentException("Bad latitude bounds");
         }
     }
@@ -139,26 +146,26 @@ public class MapImageView {
      * @param lat Latitude.
      * @param h Height.
      * @param z Zoom.
-     * @param x2 Double pixel-density.
+     * @param q Tile size.
      * @return False if latitude bound is ouside valid span.
      */
-    public/***/ static boolean okLatitudeBound(double lat, int h, int z, boolean x2) {
-        double[] globMid = getPixelCoordinates_global(0, lat, z, x2);
+    public/***/ static boolean okLatitudeBound(double lat, int h, int z, int q) {
+        double[] globMid = getPixelCoordinates_global(0, lat, z, q);
         int yMin = Math.round( (float)(globMid[1] - h/2d) );
         int yMax = Math.round( (float)(globMid[1] + h/2d) );
 
-        return (yMin >= 0 && yMax <= getGlobalPixelMax(z, x2)[1]);
+        return (yMin >= 0 && yMax <= getGlobalPixelMax(z, q)[1]);
     }
 
     /**
      * Get max pixel coordinates for a certain zoom, img quality.
      *
      * @param z Zoom level.
-     * @param x2 Double pixel-density.
+     * @param q Tile size.
      * @return Max pixel coordinates [x,y].
      */
-    public/***/ static int[] getGlobalPixelMax(int z, boolean x2) {
-        double[] xy = getPixelCoordinates_global(179.9999999, -LATITUDE_BOUND, z, x2);
+    public/***/ static int[] getGlobalPixelMax(int z, int q) {
+        double[] xy = getPixelCoordinates_global(179.9999999, -LATITUDE_BOUND, z, q);
         return new int[]{ Math.round((float)xy[0]), Math.round((float)xy[1]) };
     }
 
@@ -200,7 +207,7 @@ public class MapImageView {
                 double yMid = (y0 + y1) / 2d;
                 double[] latlon = this.getGeoCoordinates(xMid, yMid);
 
-                vs[r][c] = new MapImageView(latlon[0], latlon[1], x1-x0, y1-y0, this.zoom, this.x2);
+                vs[r][c] = new MapImageView(latlon[0], latlon[1], x1-x0, y1-y0, this.zoom, this.tileSize);
             }
         }
 
@@ -215,23 +222,22 @@ public class MapImageView {
      * @return An extended view.
      */
     public MapImageView getExtendedView() {
-        int ext = 100;
-        if (this.x2) ext *= 2;
+        int ext = Math.round(EXTENSION_TERM * (float)this.tileSize / MapRequest.DEFAULT_TILE_SIZE);
 
-        double[] midGlob = getPixelCoordinates_global(0, this.lat, this.zoom, this.x2);
+        double[] midGlob = getPixelCoordinates_global(0, this.lat, this.zoom, this.tileSize);
         double yGlobTop = midGlob[1] - this.height / 2d;
         double yGlobBot = midGlob[1] + this.height / 2d;
-        int[] globMax = getGlobalPixelMax(this.zoom, this.x2);
+        int[] globMax = getGlobalPixelMax(this.zoom, this.tileSize);
         double newYGlobTop = Math.max(0, yGlobTop - ext);
         double newYGlobBot = Math.min(globMax[1], yGlobBot + ext);
         double newYGlobMid = (newYGlobTop + newYGlobBot) / 2;
 
         double lon = this.lon;
-        double lat = getGeoCoordinates_global(0, newYGlobMid, this.zoom, this.x2)[1];
+        double lat = getGeoCoordinates_global(0, newYGlobMid, this.zoom, this.tileSize)[1];
         int w = Math.min(globMax[0], this.width + ext);
         int h = (int)(newYGlobBot - newYGlobTop);
 
-        return new MapImageView(lon, lat, w, h, this.zoom, this.x2);
+        return new MapImageView(lon, lat, w, h, this.zoom, this.tileSize);
     }
 
     /**
@@ -253,11 +259,11 @@ public class MapImageView {
      * @return [lon, lat]]
      */
     public double[] getGeoCoordinates(double x, double y) {
-        double[] globalMid = getPixelCoordinates_global(this.lon, this.lat, this.zoom, this.x2);
+        double[] globalMid = getPixelCoordinates_global(this.lon, this.lat, this.zoom, this.tileSize);
         double globalX = globalMid[0] - this.width/2d + x;
         double globalY = globalMid[1] - this.height/2d + y;
 
-        return getGeoCoordinates_global(globalX, globalY, this.zoom, this.x2);
+        return getGeoCoordinates_global(globalX, globalY, this.zoom, this.tileSize);
     }
 
     /**
@@ -269,11 +275,11 @@ public class MapImageView {
      * @return Local [x, y]
      */
     public double[] getPixelCoordinates(double lon, double lat) {
-        double[] globalMid = getPixelCoordinates_global(this.lon, this.lat, this.zoom, this.x2);
+        double[] globalMid = getPixelCoordinates_global(this.lon, this.lat, this.zoom, this.tileSize);
         double tlx = globalMid[0] - this.width/2d;
         double tly = globalMid[1] - this.height/2d;
 
-        double[] globalXY = getPixelCoordinates_global(lon, lat, this.zoom, this.x2);
+        double[] globalXY = getPixelCoordinates_global(lon, lat, this.zoom, this.tileSize);
         return new double[]{ globalXY[0]-tlx, globalXY[1]-tly };
     }
 
@@ -281,19 +287,16 @@ public class MapImageView {
      * Turn global pixel-coordinates into geo-coordinates. Global
      * pixel-coordinates is defined by a grid covering the whole
      * earth (lat +-85, lon +-180). The granularity of the grid is
-     * defined by zoom-level and pixel-density.
+     * defined by zoom-level and tileSize (image-quality).
      * (0,0) is top left corner i.e lon -180, lat ~85.
      *
      * @param x Global x-pixel.
      * @param y Global y-pixel.
      * @param z Zoom level.
-     * @param x2 Double pixel-density.
+     * @param q TileSize (img-quality).
      * @return [lon, lat]
      */
-    public/***/ static double[] getGeoCoordinates_global(double x, double y, int z, boolean x2) {
-        int q = DEFAULT_TILE_SIZE;
-        if (x2) q *= 2;
-
+    public/***/ static double[] getGeoCoordinates_global(double x, double y, int z, int q) {
         double lon = 2*x*Math.PI / (q*Math.pow(2, z)) - Math.PI;
         double lat = 2*Math.atan(Math.exp(Math.PI - 2*Math.PI*y / (q*Math.pow(2, z)))) - Math.PI/2;
 
@@ -308,15 +311,12 @@ public class MapImageView {
      * @param lon Longitude.
      * @param lat Latitude.
      * @param z Zoom level.
-     * @param x2 Double pixel-density.
+     * @param q TileSize (img-quality).
      * @return Global [x, y]
      */
-    public/***/ static double[] getPixelCoordinates_global(double lon, double lat, int z, boolean x2) {
+    public/***/ static double[] getPixelCoordinates_global(double lon, double lat, int z, int q) {
         lon = Math.toRadians(Math2.toUnitDegrees(lon));
         lat = Math.toRadians(Math2.toUnitDegrees(lat));
-
-        int q = DEFAULT_TILE_SIZE;
-        if (x2) q *= 2;
 
         double x = q / (2*Math.PI) * Math.pow(2, z) * (lon + Math.PI);
         double y = q / (2*Math.PI) * Math.pow(2, z) * (Math.PI - Math.log(Math.tan(Math.PI/4 + lat/2)));

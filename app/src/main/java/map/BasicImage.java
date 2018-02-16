@@ -10,6 +10,8 @@ import java.awt.FlowLayout;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.util.Arrays;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.GraphicsDevice;
@@ -81,14 +83,14 @@ public class BasicImage {
      */
     public BasicImage extractElement(Box box) {
         int[] bs = box.getIntBounds();
-        BasicImage rotated = crop(bs);
+        BasicImage rotated = getSubImage(bs);
         BasicImage straight = rotated.rotate(-box.getRotation());
         int w = Math2.toInt(box.getWidth());
         int h = Math2.toInt(box.getHeight());
         int x0 = (straight.getWidth() - w) / 2;
         int y0 = (straight.getHeight() - h) / 2;
 
-        return straight.crop(x0, y0, x0+w, y0+h);
+        return straight.getSubImage(x0, y0, x0+w, y0+h);
     }
 
     /**
@@ -282,12 +284,12 @@ public class BasicImage {
      * @pre Positions inside this image.
      * @pre mins < maxes.
      */
-    public BasicImage crop(int xmin, int ymin, int xmax, int ymax) {
+    public BasicImage getSubImage(int xmin, int ymin, int xmax, int ymax) {
         BufferedImage croped = this.img.getSubimage(xmin, ymin, xmax-xmin+1, ymax-ymin+1);
         return new BasicImage(croped);
     }
-    public BasicImage crop(int[] bs) {
-        return crop(bs[0], bs[1], bs[2], bs[3]);
+    public BasicImage getSubImage(int[] bs) {
+        return getSubImage(bs[0], bs[1], bs[2], bs[3]);
     }
 
     /**
@@ -490,8 +492,11 @@ public class BasicImage {
      * Save img.
      */
     public void save(String fileName) {
+        save(Paths.get(fileName));
+    }
+    public void save(Path p) {
         try {
-            ImageIO.write(img, "png", new File(fileName));
+            ImageIO.write(img, "png", p.toFile());
         }
         catch (Exception e) {
             e.printStackTrace();

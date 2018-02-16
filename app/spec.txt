@@ -5,6 +5,7 @@ MapImageView
     tileSize::int
     new MapImageView(lon, lat, w, h, z, doubleQ::bool)
     new MapImageView(westLon::double, northLat, eastLon, southLat, z, doubleQ)
+    new MapImageView([WNES], z, doubleQ)
     split(maxWH::int)::MapImageView[][]
     getExtendedView()::MapImageView
     getGeoCoordinates(x::double, y::double)::double[lon,lat]
@@ -26,12 +27,9 @@ MapRequest
     doubleQ::bool
     attrib::bool
 
-    globals...
-    DEFAULT_TILE_SIZE
-
-    new MapRequest(view::MapImageView, attrib::bool)
-    fetch3()::BasicImage[map,label,box]
-    fetch(style::String)::BasicImage
+    new MapRequest(view::MapImageView, tileSize::int)
+    fetch3()::TiledImage[map,label,box]
+    fetch(style::String)::TiledImage
         split(maxWH::int)::MapRequest[][]
         fetchRaw(style::String)::BasicImage (pre: maxdim 1280*1280)
 
@@ -51,15 +49,35 @@ BasicImage
         hasMore()::Bool(sets next)
         next()::int[x,y]
 
+TiledImage
+    dir::Path
+    getWidth/Height()
+    getColor(x,y)::Color
+    setColor(x,y, Color)
+    drawPixel(x,y, Color)
+        (blends pixels: AlphaComposite-SRC_OVER)
+    drawRect(xmin,ymin,xmax,ymax, Color)
+    isInside(x,y)::boolean
+    getOneImage()::BasicImage
+    getSubImage(xmin,ymin,xmax,ymax)::BasicImage
+    static Builder
+        new Builder(path::File)
+        add(img::BasicImage)
+        build()::TiledImage
 
-MapImage<-BasicImage
+
+MapImage
+    img::TiledImage
+    imgView::MapImageView
     labels::Label[]
-    view::MapImageView
-    new MapImage(viewportView::MapImageView, imgView::MapImageView, imgs::BasicImages[map,label,box], lang::enum)
-        pre: viewportView fits in imgView. imgView and imgs correspond.
-    addLabelOffset(x::int, y::int)::void
+    # new MapImage(viewportView::MapImageView, imgView::MapImageView, imgs::BasicImages[map,label,box], lang::OCRenum)
+    #     pre: viewportView fits in imgView. imgView and imgs correspond.
+    new MapImage([WNES], zoom::int, doubleQ::bool, lang::OCRenum)
+        (uses internet) throws IOException
+        (extends WNES to: fit cut labels and detect edge-labels)
+    # addLabelOffset(x::int, y::int)::void
     fetchAndSetLabelCategories()::void throws IOException
-    removeUnspecifiedLabels()::void
+    removeUnknownLabels()::void
 
 LabelLayoutIterator
     map::boolean[][]
@@ -135,6 +153,8 @@ Labels(tied to a mapImage)
 
 OCR
     OCREngine::...
+    Language::enum
+    new OCR(language)
     detectString(img::BasicImage)::string
 
 LabelLayout
@@ -182,13 +202,10 @@ Box
 Map
     bounds::double[WNES]
     zoomLevelImgs::MapImage[]
-    lang::enum
-    new Map(westLon::double, northLat, eastLon, southLat, lang::enum)
-    addZoomLevel(img::MapImage)::void
+    new Map(westLon::double, northLat, eastLon, southLat, lang::OCRenum)
+    addZoomLevel()::void (uses internet) throws IOException
     hasZoomLevel(int z)::bool
     getBounds()::double[]
-
-
 
 
 

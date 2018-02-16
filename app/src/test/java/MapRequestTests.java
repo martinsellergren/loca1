@@ -19,7 +19,7 @@ public class MapRequestTests {
     //     MapRequest req = new MapRequest(view);
 
     //     try {
-    //         BasicImage[] imgs = req.fetch3();
+    //         BasicImage[] imgs = req.fetch3_one();
     //         assertTrue(imgs[0] != null);
     //         assertTrue(imgs[1] != null);
     //         assertTrue(imgs[2] != null);
@@ -46,7 +46,7 @@ public class MapRequestTests {
     //     MapRequest req = new MapRequest(view);
 
     //     try {
-    //         BasicImage[] imgs = req.fetch3();
+    //         BasicImage[] imgs = req.fetch3_one();
     //         assertTrue(imgs[0] != null);
     //         assertTrue(imgs[1] != null);
     //         assertTrue(imgs[2] != null);
@@ -73,7 +73,7 @@ public class MapRequestTests {
     //     MapRequest req = new MapRequest(view);
 
     //     try {
-    //         BasicImage[] imgs = req.fetch3();
+    //         BasicImage[] imgs = req.fetch3_one();
     //         assertTrue(imgs[0] != null);
     //         assertTrue(imgs[1] != null);
     //         assertTrue(imgs[2] != null);
@@ -100,7 +100,7 @@ public class MapRequestTests {
     //     MapRequest req = new MapRequest(view);
 
     //     try {
-    //         BasicImage[] imgs = req.fetch3();
+    //         BasicImage[] imgs = req.fetch3_one();
     //         assertTrue(imgs[0] != null);
     //         assertTrue(imgs[1] != null);
     //         assertTrue(imgs[2] != null);
@@ -241,7 +241,7 @@ public class MapRequestTests {
     static char imgIndex = 'a';
     public/***/ void fetchHelper(MapRequest req) {
         try {
-            BasicImage img = req.fetch(MapRequest.FULL_STYLE_ID);
+            BasicImage img = BasicImage.concatenateImages(req.fetch(MapRequest.FULL_STYLE_ID));
             assertTrue(img != null);
 
             img.save(imgIndex++ + "." +req.toString() + ".png");
@@ -263,19 +263,16 @@ public class MapRequestTests {
     //     // double east = 99.931640625;
     //     // double south = 25.799891182088334;
     //     // int z = 14;
-
     //     // italy
     //     // double west = 9.2724609375;
     //     // double east = 17.6220703125;
     //     // double north = 44.84029065139799;
     //     // double south = 41.70572851523752;
     //     // int z = 16;
-
     //     // boolean doubleQ = false;
     //     // MapImageView v = new MapImageView(west, north, east, south, z, doubleQ);
 
-    //     boolean attrib = true;
-    //     MapRequest req = new MapRequest(v, attrib);
+    //     MapRequest req = new MapRequest(v);
 
     //     try {
     //         BasicImage img = req.fetchRaw(MapRequest.FULL_STYLE_ID);
@@ -287,4 +284,45 @@ public class MapRequestTests {
     //         assertTrue(false);
     //     }
     // }
+
+    // @Test
+    // public void fetchRaw_maxsize() {
+    //     boolean highQ = true;
+    //     int zoom = 3;
+    //     MapImageView v = new MapImageView(0, 0, MapRequest.IMAGE_REQUEST_WIDTH_HEIGHT_LIMIT*2, MapRequest.IMAGE_REQUEST_WIDTH_HEIGHT_LIMIT*2, zoom, highQ);
+    //     MapRequest req = new MapRequest(v);
+
+    //     try {
+    //         BasicImage img = req.fetchRaw(MapRequest.FULL_STYLE_ID);
+    //         assertTrue(img != null);
+
+    //         img.save(req.toString() + ".png");
+    //     }
+    //     catch (IOException e) {
+    //         assertTrue(false);
+    //     }
+    // }
+
+    @Test
+    public void fetch_tileSizes() {
+        int zoom = 7;
+        boolean doubleQ = false;
+        MapImageView v = new MapImageView(0, 0, MapRequest.IMAGE_REQUEST_WIDTH_HEIGHT_LIMIT*5, MapRequest.IMAGE_REQUEST_WIDTH_HEIGHT_LIMIT*5, 7, highQ);
+
+        int ts = 512;
+        MapRequest req = new MapRequest(v, ts);
+        BasicImage[][] imgs = fetcher(req);
+
+        assertEquals(512, imgs[0][0].getWidth());
+        assertEquals(512, imgs[0][0].getHeight());
+    }
+
+    private BasicImage[][] fetcher(MapRequest req) {
+        try {
+            return req.fetch(MapRequest.FULL_STYLE_ID);
+        }
+        catch (IOException e) {
+            assertTrue(false);
+        }
+    }
 }

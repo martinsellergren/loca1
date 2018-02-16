@@ -9,5 +9,5 @@ public enum Category {
     CITY,
     LAKE,
     ROAD,
-    UNSPECIFIED;
+    UNKNOWN;
 }

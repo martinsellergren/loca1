@@ -18,7 +18,7 @@ public class Label {
     /**
      * Constructs a new label from a layout and the layout's
      * corresponding label-image. OCR-method is used to find
-     * label-text. The category of the label is set to unspecified
+     * label-text. The category of the label is set to unknown
      * (use setCategory() afterwords).
      *
      * @param lay Specification of label (letter positions).
@@ -30,7 +30,7 @@ public class Label {
      */
     public Label(LabelLayout lay, BasicImage labelImg, OCR ocr) {
         this.text = ocr.detectString(labelImg.extractLabel(lay));
-        this.category = Category.UNSPECIFIED;
+        this.category = Category.UNKNOWN;
         this.layout = lay;
     }
 
