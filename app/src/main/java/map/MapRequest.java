@@ -17,7 +17,19 @@ public class MapRequest {
     public static final String FULL_STYLE_ID = "cjd9dx1oe9t712roe6qmxmfgr";
     public static final String LABEL_STYLE_ID = "cjd9dxg7i84ev2snt9rudqcgg";
     public static final String BOX_STYLE_ID = "cjd9dxq0w9tpb2ss0ysjtiwlr";
-    public static final int IMAGE_REQUEST_WIDTH_HEIGHT_LIMIT = 1280;
+
+    /**
+     * Max width and height in pixels of request from server. */
+    public static final int IMAGE_REQUEST_SIZE_LIMIT = 1280;
+
+    /**
+     * Width and height in pixels of of requested images from server,
+     * and also of tiledImage-tiles returned by fetch.
+     *  -Actual width/height will be double if x2 is true.
+     *  -Last column width is 'width % this' (or 'this' if evens out).
+     *  -Last row height is 'height % this' (or 'this' if evens out).
+     * @inv this <= IMAGE_REQUEST_SIZE_LIMIT */
+    public static final int REQUEST_SIZE = 512;
 
     /** Mid-point. */
     public/***/ double lon,lat;
@@ -42,15 +54,12 @@ public class MapRequest {
     /**
      * Constructs the request from a defined map-image-view.
      * @param v Specifies the request; area, zoom, quality.
-     * @param ts Tile-size of resulting tiledImage. Is even.
      * @param saveDir Directory where fetched images are saved.
      */
-    public MapRequest(MapImageView v, int ts, Path saveDir) {
+    public MapRequest(MapImageView v, Path saveDir) {
         this.lon = v.lon;
         this.lat = v.lat;
         this.zoom = v.zoom;
-        this.tileSize = ts;
-        if (ts % 2 != 0) throw new RuntimeException("Bad tile size");
         this.saveDir = saveDir;
 
         this.x2 = false;
@@ -104,13 +113,13 @@ public class MapRequest {
      *
      * @param style Mapbox style ID.
      * @return A map image defined by this object and the style.
-     * @pre Max with,height defined by IMAGE_REQUEST_WIDTH_HEIGHT_LIMIT.
+     * @pre Max with,height defined by IMAGE_REQUEST_SIZE_LIMIT.
      * @throws RuntimeError if dims too big.
      * @throws IOException if failed to fetch image (bad internet-conn?)
      */
     public BasicImage fetchRaw(String style) throws IOException {
-        if (this.width > IMAGE_REQUEST_WIDTH_HEIGHT_LIMIT ||
-            this.height > IMAGE_REQUEST_WIDTH_HEIGHT_LIMIT) {
+        if (this.width > IMAGE_REQUEST_SIZE_LIMIT ||
+            this.height > IMAGE_REQUEST_SIZE_LIMIT) {
             throw new RuntimeException("Requested dims too big");
         }
 
@@ -148,12 +157,8 @@ public class MapRequest {
      * @return A 2d-layout of requests.
      */
     public/***/ MapRequest[][] split() {
-        int l = this.tileSize;
-        if (this.x2)
-            l /= 2;
-
         boolean x2 = false;
-        MapImageView[][] vs = new MapImageView(this.lon, this.lat, this.width, this.height, this.zoom, x2).split(l);
+        MapImageView[][] vs = new MapImageView(this.lon, this.lat, this.width, this.height, this.zoom, x2).split(REQUEST_SIZE);
 
         int rows = vs.length;
         int cols = vs[0].length;
@@ -162,7 +167,7 @@ public class MapRequest {
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
                 MapImageView v = vs[r][c];
-                reqs[r][c] = new MapRequest(vs[r][c], this.tileSize, this.saveDir);
+                reqs[r][c] = new MapRequest(vs[r][c], this.saveDir);
                 reqs[r][c].x2 = this.x2;
             }
         }
@@ -172,7 +177,7 @@ public class MapRequest {
 
     @Override
     public String toString() {
-        return String.format("lon(%s)_lat(%s)_w(%s)_h(%s)_z(%s)_2x(%s)",
-                             lon, lat, width, height, zoom, x2);
+        return String.format("lon(%s)_lat(%s)_w(%s)_h(%s)_z(%s)_2x(%s)_@(%s)",
+                             lon, lat, width, height, zoom, x2, saveDir);
     }
 }

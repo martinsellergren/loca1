@@ -507,11 +507,14 @@ public class BasicImage {
     /**
      * Load from file.
      */
-    public static BasicImage load(String file) {
+    public static BasicImage load(String fileName) {
+        return load(Paths.get(fileName));
+    }
+    public static BasicImage load(Path p) {
         BufferedImage img = null;
 
         try {
-            img = ImageIO.read(new File(file));
+            img = ImageIO.read(p.toFile());
         }
         catch (Exception e) {
             e.printStackTrace();
