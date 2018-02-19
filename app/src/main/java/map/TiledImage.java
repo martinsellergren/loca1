@@ -2,7 +2,12 @@ package map;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.io.File;
 import java.awt.Color;
+import java.util.Arrays;
+import java.awt.Graphics2D;
+import java.util.Arrays;
+import java.io.IOException;
 
 /**
  * An image made up of tiles. Tiles are saved on hd and loaded
@@ -19,13 +24,16 @@ import java.awt.Color;
  * naming convention: tile-r-c.png.
  */
 public class TiledImage {
+
     /** Directory where tiles reside. */
     private final Path dir;
 
-    /** Tile in memory. Only one at the time - last modified tile. */
+    /** Tile in memory. Only one at the time: last modified tile. */
     private BasicImage memTile;
 
-    /** Image data, so don't have to load and investigate. */
+    /** Image data, so don't have to load and investigate.
+     * Note: last-column-width = width % tileWidth
+     *       last-row-height = height % tileHeight. */
     private final int width, height, tileWidth, tileHeight, rows, cols;
 
     /**
@@ -42,6 +50,100 @@ public class TiledImage {
         this.rows = rs;
         this.cols = cs;
         this.memTile = loadTile(0, 0, dir);
+    }
+
+    /**
+     * @return Width of image.
+     */
+    public int getWidth() {
+        return this.width;
+    }
+
+    /**
+     * @return Height of image.
+     */
+    public int getHeight() {
+        return this.height;
+    }
+
+    /**
+     * @return Color of specified point. Also sets memTile.
+     */
+    public Color getColor(int[] p) {
+        int[] rc_xy = getTileAndPos(p);
+        this.memTile = loadTile(rc_xy[0], rc_xy[1]);
+        return memTile.getColor(rc_xy[2], rc_xy[3]);
+    }
+
+    /**
+     * Sets color at specified pixel. Overwrites current pixel.
+     * Also sets memTile.
+     */
+    public void setColor(int[] p, Color c) {
+        int[] rc_xy = getTileAndPos(p);
+        this.memTile = loadTile(rc_xy[0], rc_xy[1]);
+        memTile.setColor(rc_xy[2], rc_xy[3], c);
+    }
+
+    // /**
+    //  * Set color at specified pixel. Blends with current pixel value
+    //  * by laws defined at AlphaComposite-SRC_OVER.
+    //  */
+    // public void drawPixel(int[] p, Color c) {
+    // }
+
+    // /**
+    //  * Calls drawPixel on all pixels inside defined area.
+    //  * @param bs [xmin, ymin, xmax, ymax]
+    //  */
+    // public void drawRect(int[] bs, Color c) {
+    // }
+
+    /**
+     * @return True if point p is inside image.
+     */
+    public boolean isInside(int[] p) {
+        return
+            p[0] >= 0 &&
+            p[1] >= 0 &&
+            p[0] < getWidth() &&
+            p[1] < getHeight();
+    }
+
+    /**
+     * @param bs [xmin, ymin, xmax, ymax]
+     * @return A subimage defined by bounds.
+     */
+    public BasicImage getSubImage(int[] bs) {
+        if (!isInside(new int[]{bs[0], bs[1]}) ||
+            !isInside(new int[]{bs[2], bs[3]}))
+            throw new RuntimeException();
+
+        int width = bs[2] - bs[0] + 1;
+        int height = bs[3] - bs[1] + 1;
+        BasicImage img = new BasicImage(width, height);
+        Graphics2D g = img.createGraphics();
+
+        for (int y0 = bs[1]; y0 < height; ) {
+            int rowHeight = -1;
+
+            for (int x0 = bs[0]; x0 < width; ) {
+                int[] rc_xy = getTileAndPos(new int[]{x0, y0});
+                BasicImage tile = loadTile(rc_xy[0], rc_xy[1]);
+                rowHeight = tile.getHeight();
+                int x1 = Math.min(x0 + tile.getWidth() - 1, bs[2]);
+                int y1 = Math.min(y0 + rowHeight - 1, bs[3]);
+
+                BasicImage part = tile.getSubImage(x0, y0, x1, y1);
+                g.drawImage(part.getBufferedImage(), null, x0, y0);
+
+                x0 = x1 + 1;
+            }
+
+            y0 += rowHeight;
+        }
+
+        return img;
     }
 
     /**
@@ -66,51 +168,82 @@ public class TiledImage {
     }
 
     /**
-     * @return Width of image.
+     * @return [r, c, x, y] for row/col of tile containing point p,
+     * and x,y local point in this tile.
      */
-    public int getWidth() {
-        return 0;
+    private int[] getTileAndPos(int[] p) {
+        if (!isInside(p)) throw new RuntimeException();
+        int r = p[1] / this.tileHeight;
+        int c = p[0] / this.tileWidth;
+        int x = p[0] % this.tileWidth;
+        int y = p[1] % this.tileHeight;
+        return new int[]{r, c, x, y};
     }
 
     /**
-     * @return Height of image.
+     * Loads a tiled image from a directory. Investigates tile-layout
+     * through file-names and loads top-left and bottom-right tiles
+     * for finding dims etc.
+     *
+     * @parm dir Directory where tiles resides.
+     * @param Loaded TileImage with top-left tile as memTile.
+     * @throws RuntimeException if bad tiles in directory.
      */
-    public int getHeight() {
-        return 0;
+    public static TiledImage load(Path dir) throws IOException {
+        if (!dir.toFile().isDirectory())
+            throw new IOException("Bad dir");
+
+        File[] fs = dir.toFile().listFiles();
+        if (fs.length == 0)
+            throw new IOException("Empty dir");
+
+        Arrays.sort(fs);
+
+        String fnTL = fs[0].getName();
+        String fnBR = fs[fs.length - 1].getName();
+        int[] rcTL = getRowCol(fnTL);
+        int[] rcBR = getRowCol(fnBR);
+
+        BasicImage tl = loadTile(rcTL[0], rcTL[1], dir);
+        BasicImage br = loadTile(rcBR[0], rcBR[1], dir);
+
+        int tileW = tl.getWidth();
+        int tileH = tl.getHeight();
+        int rows = rcBR[0] + 1;
+        int cols = rcBR[1] + 1;
+        int width = tileW * (cols - 1) + br.getWidth();
+        int height = tileH * (rows - 1) + br.getHeight();
+
+        return new TiledImage(dir, width, height, tileW, tileH, rows, cols);
     }
 
     /**
-     * @return Color of specified point.
+     * @param fn FileName: tile-r-c.png
+     * @return [r, c]
      */
-    public Color getColor(int[] p) {
-        return null;
+    private static int[] getRowCol(String fn) throws IOException {
+        try {
+            String[] ps = fn.split("-");
+            int r = Integer.parseInt(ps[1]);
+            int c = Integer.parseInt(ps[2]);
+            return new int[]{r, c};
+        }
+        catch (Exception e) {
+            throw new IOException("Bad file name");
+        }
     }
 
-    /**
-     * Sets color at specified pixel. Overwrites current pixel.
-     */
-    public void setColor(int[] p, Color c) {
-    }
+
+    //---------------------------------------------------for testing
 
     /**
-     * Set color at specified pixel. Blends with current pixel value
-     * by laws defined at AlphaComposite-SRC_OVER.
+     * Assemble and save img. Be careful with heap overflows.
      */
-    public void drawPixel(int[] p, Color c) {
+    public void save(Path p) {
+        getOneImage().save(p);
     }
-
-    /**
-     * Calls drawPixel on all pixels inside defined area.
-     * @param bs [xmin, ymin, xmax, ymax]
-     */
-    public void drawRect(int[] bs, Color c) {
-    }
-
-    /**
-     * @return true if point p is inside image.
-     */
-    public boolean isInside(int[] p) {
-        return false;
+    public void save(String fn) {
+        save(Paths.get(fn));
     }
 
     /**
@@ -118,33 +251,17 @@ public class TiledImage {
      * with heap overflows.
      */
     public BasicImage getOneImage() {
-        return null;
+        BasicImage[][] lay = new BasicImage[this.rows][this.cols];
+
+        for (int r = 0; r < this.rows; r++) {
+            for (int c = 0; c < this.cols; c++) {
+                lay[r][c] = loadTile(r, c);
+            }
+        }
+
+        return BasicImage.concatenateImages(lay);
     }
 
-    /**
-     * @param bs [xmin, ymin, xmax, ymax]
-     * @return A subimage defined by bounds.
-     */
-    public BasicImage getSubImage(int[] bs) {
-        return null;
-    }
-
-    /**
-     * Assemble and save img.
-     */
-    public void save(Path p) {
-        getOneImage().save(p);
-    }
-
-    /**
-     * Loads a tiled image from a directory.
-     *
-     * @parm dir Directory where tiles resides.
-     * @throws RuntimeException if bad tiles in directory.
-     */
-    public static TiledImage load(Path dir) {
-        return null;
-    }
 
     /**
      * Builds the TiledImage by saving tiles to files.
@@ -163,6 +280,8 @@ public class TiledImage {
         private int lastRowH = -1;
 
         /**
+         * Initiates builder AND DELETES ALL FILES IN dir.
+         *
          * @param rs No rows in tile layout.
          * @param cs No columns in tile layout.
          * @param dir Direction where tiles will be saved.
@@ -171,6 +290,21 @@ public class TiledImage {
             this.rows = rs;
             this.cols = cs;
             this.dir = dir;
+
+            cleanDir(dir.toFile());
+        }
+
+
+        /**
+         * Deletes all content in dir.
+         */
+        private static void cleanDir(File dir) {
+            if (!dir.isDirectory()) return;
+
+            for (File f : dir.listFiles()) {
+                if (f.isDirectory()) cleanDir(f);
+                else f.delete();
+            }
         }
 
         /**

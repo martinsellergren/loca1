@@ -289,7 +289,7 @@ public class MapRequestTests {
     // public void fetchRaw_maxsize() {
     //     boolean highQ = true;
     //     int zoom = 3;
-    //     MapImageView v = new MapImageView(0, 0, MapRequest.IMAGE_REQUEST_WIDTH_HEIGHT_LIMIT*2, MapRequest.IMAGE_REQUEST_WIDTH_HEIGHT_LIMIT*2, zoom, highQ);
+    //     MapImageView v = new MapImageView(0, 0, MapRequest.IMAGE_REQUEST_SIZE_LIMIT*2, MapRequest.IMAGE_REQUEST_WIDTH_HEIGHT_LIMIT*2, zoom, highQ);
     //     MapRequest req = new MapRequest(v);
 
     //     try {
@@ -307,7 +307,7 @@ public class MapRequestTests {
     public void fetch_tileSizes() {
         int zoom = 7;
         boolean doubleQ = false;
-        MapImageView v = new MapImageView(0, 0, MapRequest.IMAGE_REQUEST_WIDTH_HEIGHT_LIMIT*5, MapRequest.IMAGE_REQUEST_WIDTH_HEIGHT_LIMIT*5, 7, highQ);
+        MapImageView v = new MapImageView(0, 0, MapRequest.IMAGE_REQUEST_SIZE_LIMIT*5, MapRequest.IMAGE_REQUEST_SIZE_LIMIT*5, 7, highQ);
 
         int ts = 512;
         MapRequest req = new MapRequest(v, ts);
