@@ -10,28 +10,35 @@ import java.util.Arrays;
 import java.io.IOException;
 
 /**
- * An image made up of tiles. Tiles are saved on hd and loaded
- * into memory when necessary. Only one tile is in memory at the time.
- * A tile is loaded when it is modified and stays loaded until another
- * image is loaded.
+ * An image made up of tiles. Tiles are saved on hdd and loaded
+ * into memory when necessary. Only one tile is cached in memory
+ * at a time.
  *
- * The dims of the individual tiles are unspecified, but always follows:
+ * The dims of the tiles are unspecified, but always follows:
  *  -All are perfect squares with same width/height, except
- *  -Last column tiles may be thinner
+ *  -Last column tiles may be thinner,
  *  -Last row tiles may be shorter.
  *
  * Tiles are saved in png-format in given directory, following
- * naming convention: tile-r-c.png.
+ * the naming convention: tile-r-c.png.
  */
 public class TiledImage {
 
-    /** Directory where tiles reside. */
+    /**
+     * Directory where tiles reside. */
     private final Path dir;
 
-    /** Tile in memory. Only one at the time: last modified tile. */
+    /**
+     * Tile in memory (cached), at specified row and column.
+     * Only one cached tile at the time: last loaded tile.
+     * Marked modified whenever if is or might has been modified. */
     private BasicImage memTile;
+    private int memTileRow;
+    private int memTileCol;
+    private boolean memTileModified;
 
-    /** Image data, so don't have to load and investigate.
+    /**
+     * Image data, so don't have to load and investigate.
      * Note: last-column-width = width % tileWidth
      *       last-row-height = height % tileHeight. */
     private final int width, height, tileWidth, tileHeight, rows, cols;
@@ -40,6 +47,12 @@ public class TiledImage {
      * Constructs the tiledImage from saved tiles.
      *
      * @param dir Directory where tiles reside, correctly named.
+     * @param w Width of image.
+     * @param h Height of image.
+     * @param tw Tile width of all tiles except those in last column.
+     * @param th Tile height of all tiles except those in last row.
+     * @param rs Number of rows in tile-layout.
+     * @param cs Number of columns in tile-layout.
      */
     private TiledImage(Path dir, int w, int h, int tw, int th, int rs, int cs) {
         this.dir = dir;
@@ -49,7 +62,11 @@ public class TiledImage {
         this.tileHeight = th;
         this.rows = rs;
         this.cols = cs;
+
         this.memTile = loadTile(0, 0, dir);
+        this.memTileRow = 0;
+        this.memTileCol = 0;
+        this.memTileModified = false;
     }
 
     /**
@@ -67,37 +84,42 @@ public class TiledImage {
     }
 
     /**
-     * @return Color of specified point. Also sets memTile.
+     * @return Color of specified point.
      */
     public Color getColor(int[] p) {
         int[] rc_xy = getTileAndPos(p);
-        this.memTile = loadTile(rc_xy[0], rc_xy[1]);
-        return memTile.getColor(rc_xy[2], rc_xy[3]);
+        BasicImage tile = getTile(rc_xy[0], rc_xy[1]);
+        return tile.getColor(rc_xy[2], rc_xy[3]);
     }
 
     /**
      * Sets color at specified pixel. Overwrites current pixel.
-     * Also sets memTile.
      */
     public void setColor(int[] p, Color c) {
         int[] rc_xy = getTileAndPos(p);
-        this.memTile = loadTile(rc_xy[0], rc_xy[1]);
-        memTile.setColor(rc_xy[2], rc_xy[3], c);
+        BasicImage tile = getTile(rc_xy[0], rc_xy[1]);
+        tile.setColor(rc_xy[2], rc_xy[3], c);
+        this.memTileModified = true;
     }
 
     // /**
     //  * Set color at specified pixel. Blends with current pixel value
     //  * by laws defined at AlphaComposite-SRC_OVER.
     //  */
-    // public void drawPixel(int[] p, Color c) {
+    // public void paintPixel(int[] p, Color c) {
     // }
 
-    // /**
-    //  * Calls drawPixel on all pixels inside defined area.
-    //  * @param bs [xmin, ymin, xmax, ymax]
-    //  */
-    // public void drawRect(int[] bs, Color c) {
-    // }
+    /**
+     * Calls setColor on all pixels inside defined area.
+     * @param bs [xmin, ymin, xmax, ymax]
+     */
+    public void paintRect(int[] bs, Color c) {
+        for (int y = bs[1]; y <= bs[3]; y++) {
+            for (int x = bs[0]; x <= bs[2]; x++) {
+                setColor(new int[]{x, y}, c);
+            }
+        }
+    }
 
     /**
      * @return True if point p is inside image.
@@ -111,6 +133,9 @@ public class TiledImage {
     }
 
     /**
+     * Crops out a subimage. Tiles are concatenated as needed.
+     * Beware of StackOverflows.
+     *
      * @param bs [xmin, ymin, xmax, ymax]
      * @return A subimage defined by bounds.
      */
@@ -147,7 +172,47 @@ public class TiledImage {
     }
 
     /**
-     * @return Tile at specified row/column.
+     * Returns specified tile. If tile not in memory, loads from
+     * hdd. NOTE: Returned tile is cached.
+     *
+     * @param r Row.
+     * @param c Column.
+     * @return Tile at [r,c].
+     */
+    private BasicImage getTile(int r, int c) {
+        if (r == this.memTileRow && c == this.memTileCol)
+            return this.memTile;
+
+        BasicImage tile = loadTile(r, c);
+        cache(r, c, tile);
+        return tile;
+    }
+
+    /**
+     * Caches specified tile.
+     */
+    private void cache(int r, int c, BasicImage tile) {
+        updateMemTileOnHdd();
+        this.memTileRow = r;
+        this.memTileCol = c;
+        this.memTile = tile;
+    }
+
+    /**
+     * Makes sure hdd-version of memTile is equal to cached version.
+     * If memTileModified is false, does nothing, else saves
+     * memTile to hdd, overwriting existing file.
+     */
+    private void updateMemTileOnHdd() {
+        if (this.memTileModified) {
+            Path p = getTilePath(this.memTileRow, this.memTileCol);
+            this.memTile.save(p);
+            this.memTileModified = false;
+        }
+    }
+
+    /**
+     * @return Tile at specified row/column loaded from hdd.
      */
     private static BasicImage loadTile(int r, int c, Path dir) {
         return BasicImage.load(getTilePath(r, c, dir));
@@ -172,7 +237,7 @@ public class TiledImage {
      * and x,y local point in this tile.
      */
     private int[] getTileAndPos(int[] p) {
-        if (!isInside(p)) throw new RuntimeException();
+        if (!isInside(p)) throw new RuntimeException("Out of bounds");
         int r = p[1] / this.tileHeight;
         int c = p[0] / this.tileWidth;
         int x = p[0] % this.tileWidth;

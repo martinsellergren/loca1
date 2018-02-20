@@ -489,7 +489,7 @@ public class BasicImage {
     }
 
     /**
-     * Save img.
+     * Save img. Overwrites if file exists.
      */
     public void save(String fileName) {
         save(Paths.get(fileName));
