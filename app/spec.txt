@@ -76,7 +76,7 @@ MapImage
         (uses internet) throws IOException
         (extends WNES to: fit cut labels and detect edge-labels)
     # addLabelOffset(x::int, y::int)::void
-    fetchAndSetLabelCategories()::void throws IOException
+    fetchAndSetPlaceCategories()::void throws IOException
     removeUnknownLabels()::void
 
 LabelLayoutIterator
@@ -128,14 +128,36 @@ LabelLayoutIterator
     # somethingThere(LEFT/RIGHT, startBox::Box, searchLength::double)::boolean
 
 
-Label
-    text: String
-    category: enum
-    layout: LabelLayout
-    new Label(text::String, layout::LabelLayout, category)
-    new Label(labelImg::BasicImage, layout::LabelLayout, OCREngine)
+# Label
+#     text: String
+#     category: enum
+#     layout: LabelLayout
+#     new Label(text::String, layout::LabelLayout, category)
+#     new Label(labelImg::BasicImage, layout::LabelLayout, OCREngine)
+#         (OCREngine set to corresponding language)
+#     addOffset(addX::int, addY::int)
+#     setCategory(c::category enum)
+#     fetchCategory(double[wnes])::category enum (if place not found, returns undefined-category)
+
+Places
+    places::Place[]
+    add(label::LabelLayout, labelImg::BasicImage, OCREngine)
         (OCREngine set to corresponding language)
+        (ignore if existing layout, adds layout if existing name, else new entry)
+    findPlace(name::String)::Place
+    removeRandom...()::Place
+    getPlaces()::Place[](shallow copy)
+    copy()::Places
+
+Place
+    name::String
+    labels::LabelLayout[]
+    category::enum
+    new Place(name, labels, [category])
+    addLayout(lay::LabelLayout)
+    hasLayout(lay::LabelLayout)::boolean
     addOffset(addX::int, addY::int)
+    getLabels()::LabelLayout[](shallow copy)
     setCategory(c::category enum)
     fetchCategory(double[wnes])::category enum (if place not found, returns undefined-category)
 

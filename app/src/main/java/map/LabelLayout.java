@@ -100,7 +100,9 @@ public class LabelLayout {
     public LinkedList<Box> getRow(int r) {
         if (r < 0) r = getNoRows() + r;
         LinkedList<Box> row = this.letterBoxes.get(r);
-        return new LinkedList<Box>(row);
+        LinkedList dest = new LinkedList<Box>();
+        for (Box b : row) dest.add(b.copy());
+        return dest;
     }
 
     /**
@@ -192,6 +194,35 @@ public class LabelLayout {
         }
     }
 
+    /**
+     * Investigates similarities and returns true if this layout
+     * is sufficiently similar to another.
+     * Sufficient if it appears this layout and the other
+     * has same text-label source in a map-image.
+     *
+     * @return True if this layout is similar to other.
+     */
+    public boolean same(LabelLayout other) {
+        double DELTA = 4;
+
+        return
+            this.getNoBoxes() == other.getNoBoxes() &&
+            Math2.same(this.getBounds(), other.getBounds(), DELTA);
+    }
+
+    /**
+     * @return A deep copy of this object.
+     */
+    public LabelLayout copy() {
+        LabelLayout dest = new LabelLayout(getRow(0));
+
+        for (int r = 1; r < getNoRows(); r++) {
+            dest.addRowLast(getRow(r));
+        }
+
+        return dest;
+    }
+
     @Override
     public String toString() {
         String s = "";
@@ -203,33 +234,4 @@ public class LabelLayout {
         }
         return s;
     }
-
-
-    // /**
-    //  * Iterator that returns letter-boxes of the label-layout.
-    //  * Usage: call hasMore() before getNext().
-    //  */
-    // public class LetterBoxIterator {
-    //     public/***/ int row = 0;
-    //     public/***/ int pos = 0;
-    //     public/***/ Box next = null;
-
-    //     /**
-    //      * @return Next letter-box in iterator.
-    //      */
-    //     public Box next() {
-    //         return next;
-    //     }
-
-    //     /**
-    //      * Indicates if more letter-boxes in iterator, and updates
-    //      * next if there is. Always call this before next().
-    //      *
-    //      * @return True if iter has more.
-    //      */
-    //     public boolean hasMore() {
-
-    //         return false;
-    //     }
-    // }
 }

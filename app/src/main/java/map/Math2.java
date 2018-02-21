@@ -225,6 +225,21 @@ public class Math2 {
     }
 
     /**
+     * @return True same(ps[x], qs[x]) for all x (within delta).
+     */
+    public static boolean same(double[][] ps, double[][] qs, double delta) {
+        if (ps.length != qs.length) return false;
+
+        for (int i = 0; i < ps.length; i++) {
+            if (!same(ps[i], qs[i], delta)) return false;
+        }
+        return true;
+    }
+    public static boolean same(double[][] ps, double[][] qs) {
+        return same(ps, qs, 0.000001);
+    }
+
+    /**
      * @return True if x and y (scalars) are equal
      * (within delta-distance).
      */
@@ -246,7 +261,7 @@ public class Math2 {
      * @return True if ps1 and ps2 contains same points, where same
      * points mean they are within the delta-distance.
      */
-    public static boolean same(double[][] ps1, double[][] ps2, double delta) {
+    public static boolean containsSame(double[][] ps1, double[][] ps2, double delta) {
         if (ps1.length != ps2.length) return false;
         for (double[] p : ps1) {
             if (!contains(p, ps2, delta)) return false;

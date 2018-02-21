@@ -206,8 +206,8 @@ public class Math2Tests {
         double[][] qs = new double[][]{new double[]{1.01, 1},
                                        new double[]{2, 1},
                                        new double[]{0, 0}};
-        assertTrue(Math2.same(ps, qs, delta));
-        assertTrue(Math2.same(qs, ps, delta));
+        assertTrue(Math2.containsSame(ps, qs, delta));
+        assertTrue(Math2.containsSame(qs, ps, delta));
 
         assertTrue(Math2.contains(new int[]{0, 0}, new int[][]{new int[]{2, 1}, new int[]{0, 0}, new int[]{1, 0}}));
         assertFalse(Math2.contains(new int[]{0, 0}, new int[][]{new int[]{2, 1}, new int[]{0, 1}, new int[]{1, 0}}));
