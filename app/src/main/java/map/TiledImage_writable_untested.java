@@ -12,7 +12,7 @@ import java.io.IOException;
 /**
  * An image made up of tiles. Tiles are saved on hdd and loaded
  * into memory when necessary. Only one tile is cached in memory
- * at a time. The image is not editable.
+ * at a time.
  *
  * The dims of the tiles are unspecified, but always follows:
  *  -All are perfect squares with same width/height, except
@@ -22,7 +22,7 @@ import java.io.IOException;
  * Tiles are saved in png-format in given directory, following
  * the naming convention: tile-r-c.png.
  */
-public class TiledImage {
+public class TiledImage_writable_untested {
 
     /**
      * Directory where tiles reside. */
@@ -30,10 +30,12 @@ public class TiledImage {
 
     /**
      * Tile in memory (cached), at specified row and column.
-     * Only one cached tile at the time: last loaded tile. */
+     * Only one cached tile at the time: last loaded tile.
+     * Marked modified whenever if is or might has been modified. */
     private BasicImage memTile;
     private int memTileRow;
     private int memTileCol;
+    private boolean memTileModified;
 
     /**
      * Image data, so don't have to load and investigate.
@@ -52,7 +54,7 @@ public class TiledImage {
      * @param rs Number of rows in tile-layout.
      * @param cs Number of columns in tile-layout.
      */
-    private TiledImage(Path dir, int w, int h, int tw, int th, int rs, int cs) {
+    private TiledImage_writable_untested(Path dir, int w, int h, int tw, int th, int rs, int cs) {
         this.dir = dir;
         this.width = w;
         this.height = h;
@@ -64,6 +66,7 @@ public class TiledImage {
         this.memTile = loadTile(0, 0, dir);
         this.memTileRow = 0;
         this.memTileCol = 0;
+        this.memTileModified = false;
     }
 
     /**
@@ -90,6 +93,35 @@ public class TiledImage {
     }
 
     /**
+     * Sets color at specified pixel. Overwrites current pixel.
+     */
+    public void setColor(int[] p, Color c) {
+        int[] rc_xy = getTileAndPos(p);
+        BasicImage tile = getTile(rc_xy[0], rc_xy[1]);
+        tile.setColor(rc_xy[2], rc_xy[3], c);
+        this.memTileModified = true;
+    }
+
+    /**
+     * Set color at specified pixel. Blends with current pixel value
+     * by laws defined at AlphaComposite-SRC_OVER.
+     */
+    public void paintPixel(int[] p, Color c) {
+    }
+
+    /**
+     * Calls setColor on all pixels inside defined area.
+     * @param bs [xmin, ymin, xmax, ymax]
+     */
+    public void paintRect(int[] bs, Color c) {
+        for (int y = bs[1]; y <= bs[3]; y++) {
+            for (int x = bs[0]; x <= bs[2]; x++) {
+                setColor(new int[]{x, y}, c);
+            }
+        }
+    }
+
+    /**
      * @return True if point p is inside image.
      */
     public boolean isInside(int[] p) {
@@ -100,44 +132,44 @@ public class TiledImage {
             p[1] < getHeight();
     }
 
-    // /**
-    //  * Crops out a subimage. Tiles are concatenated as needed.
-    //  * Beware of heap overflows
-    //  *
-    //  * @param bs [xmin, ymin, xmax, ymax]
-    //  * @return A subimage defined by bounds.
-    //  */
-    // public BasicImage getSubImage(int[] bs) {
-    //     if (!isInside(new int[]{bs[0], bs[1]}) ||
-    //         !isInside(new int[]{bs[2], bs[3]}))
-    //         throw new RuntimeException();
+    /**
+     * Crops out a subimage. Tiles are concatenated as needed.
+     * Beware of StackOverflows.
+     *
+     * @param bs [xmin, ymin, xmax, ymax]
+     * @return A subimage defined by bounds.
+     */
+    public BasicImage getSubImage(int[] bs) {
+        if (!isInside(new int[]{bs[0], bs[1]}) ||
+            !isInside(new int[]{bs[2], bs[3]}))
+            throw new RuntimeException();
 
-    //     int width = bs[2] - bs[0] + 1;
-    //     int height = bs[3] - bs[1] + 1;
-    //     BasicImage img = new BasicImage(width, height);
-    //     Graphics2D g = img.createGraphics();
+        int width = bs[2] - bs[0] + 1;
+        int height = bs[3] - bs[1] + 1;
+        BasicImage img = new BasicImage(width, height);
+        Graphics2D g = img.createGraphics();
 
-    //     for (int y0 = bs[1]; y0 < height; ) {
-    //         int rowHeight = -1;
+        for (int y0 = bs[1]; y0 < height; ) {
+            int rowHeight = -1;
 
-    //         for (int x0 = bs[0]; x0 < width; ) {
-    //             int[] rc_xy = getTileAndPos(new int[]{x0, y0});
-    //             BasicImage tile = loadTile(rc_xy[0], rc_xy[1]);
-    //             rowHeight = tile.getHeight();
-    //             int x1 = Math.min(x0 + tile.getWidth() - 1, bs[2]);
-    //             int y1 = Math.min(y0 + rowHeight - 1, bs[3]);
+            for (int x0 = bs[0]; x0 < width; ) {
+                int[] rc_xy = getTileAndPos(new int[]{x0, y0});
+                BasicImage tile = loadTile(rc_xy[0], rc_xy[1]);
+                rowHeight = tile.getHeight();
+                int x1 = Math.min(x0 + tile.getWidth() - 1, bs[2]);
+                int y1 = Math.min(y0 + rowHeight - 1, bs[3]);
 
-    //             BasicImage part = tile.getSubImage(x0, y0, x1, y1);
-    //             g.drawImage(part.getBufferedImage(), null, x0, y0);
+                BasicImage part = tile.getSubImage(x0, y0, x1, y1);
+                g.drawImage(part.getBufferedImage(), null, x0, y0);
 
-    //             x0 = x1 + 1;
-    //         }
+                x0 = x1 + 1;
+            }
 
-    //         y0 += rowHeight;
-    //     }
+            y0 += rowHeight;
+        }
 
-    //     return img;
-    // }
+        return img;
+    }
 
     /**
      * Returns specified tile. If tile not in memory, loads from
@@ -160,9 +192,23 @@ public class TiledImage {
      * Caches specified tile.
      */
     private void cache(int r, int c, BasicImage tile) {
+        updateMemTileOnHdd();
         this.memTileRow = r;
         this.memTileCol = c;
         this.memTile = tile;
+    }
+
+    /**
+     * Makes sure hdd-version of memTile is equal to cached version.
+     * If memTileModified is false, does nothing, else saves
+     * memTile to hdd, overwriting existing file.
+     */
+    private void updateMemTileOnHdd() {
+        if (this.memTileModified) {
+            Path p = getTilePath(this.memTileRow, this.memTileCol);
+            this.memTile.save(p);
+            this.memTileModified = false;
+        }
     }
 
     /**
@@ -208,7 +254,7 @@ public class TiledImage {
      * @param Loaded TileImage with top-left tile as memTile.
      * @throws RuntimeException if bad tiles in directory.
      */
-    public static TiledImage load(Path dir) throws IOException {
+    public static TiledImage_writable_untested load(Path dir) throws IOException {
         if (!dir.toFile().isDirectory())
             throw new IOException("Bad dir");
 
@@ -233,7 +279,7 @@ public class TiledImage {
         int width = tileW * (cols - 1) + br.getWidth();
         int height = tileH * (rows - 1) + br.getHeight();
 
-        return new TiledImage(dir, width, height, tileW, tileH, rows, cols);
+        return new TiledImage_writable_untested(dir, width, height, tileW, tileH, rows, cols);
     }
 
     /**
@@ -377,14 +423,14 @@ public class TiledImage {
          * @return The TiledImage-object.
          * @throws RuntimeException if excpected more/less tiles.
          */
-        public TiledImage build() {
+        public TiledImage_writable_untested build() {
             if (c != 0 || r != rows)
                 throw new RuntimeException("Bad tile numbering");
 
             int w = tileW * (cols - 1) + lastColW;
             int h = tileH * (rows - 1) + lastRowH;
 
-            return new TiledImage(dir, w, h, tileW, tileH, rows, cols);
+            return new TiledImage_writable_untested(dir, w, h, tileW, tileH, rows, cols);
         }
     }
 }

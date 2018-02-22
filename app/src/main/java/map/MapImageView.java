@@ -158,7 +158,7 @@ public class MapImageView {
      * @return Max pixel coordinates [x,y].
      */
     public/***/ static int[] getGlobalPixelMax(int z, boolean x2) {
-        double[] xy = getPixelCoordinates_global(179.9999999, -LATITUDE_BOUND, z, x2);
+        double[] xy = getPixelCoordinates_global(179.999999999, -LATITUDE_BOUND, z, x2);
         return new int[]{ Math.round((float)xy[0]), Math.round((float)xy[1]) };
     }
 
@@ -170,6 +170,18 @@ public class MapImageView {
         double[] se = getGeoCoordinates(this.width, this.height);
         return new double[]{ nw[0], nw[1], se[0], se[1] };
     }
+
+    // /**
+    //  * Finds the bounds of another view when it is placed inside
+    //  * this one.
+    //  * @return [xmin, ymin, xmax, ymax]. Returned points are inside
+    //  * this view, even if other view extends outside.
+    //  */
+    // public double[] getPixelBoundsOfOtherView(MapImageView other) {
+
+
+    //     return null;
+    // }
 
     /**
      * Splits view into smaller blocks, each with a maximum side-
@@ -215,8 +227,7 @@ public class MapImageView {
      * @return An extended view.
      */
     public MapImageView getExtendedView() {
-        int ext = 100;
-        if (this.x2) ext *= 2;
+        int ext = getExtensionTerm();
 
         double[] midGlob = getPixelCoordinates_global(0, this.lat, this.zoom, this.x2);
         double yGlobTop = midGlob[1] - this.height / 2d;
@@ -228,19 +239,21 @@ public class MapImageView {
 
         double lon = this.lon;
         double lat = getGeoCoordinates_global(0, newYGlobMid, this.zoom, this.x2)[1];
-        int w = Math.min(globMax[0], this.width + ext);
+        int w = Math.min(globMax[0], this.width + ext*2);
         int h = (int)(newYGlobBot - newYGlobTop);
 
         return new MapImageView(lon, lat, w, h, this.zoom, this.x2);
     }
 
     /**
-     * Finds the bounds of another view when it is placed inside
-     * this one.
-     * @return [xmin, ymin, xmax, ymax]
+     * @return value ext where [left-ext, top-ext, right+ext, bot+ext]
+     * is extended bounds where originally cut labels fit.
      */
-    public double[] getPixelBoundsOfOtherView(MapImageView other) {
-        return null;
+    public int getExtensionTerm() {
+        int ext = 100;
+        if (this.x2) ext *= 2;
+
+        return ext;
     }
 
     /**
