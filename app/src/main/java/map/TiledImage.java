@@ -179,7 +179,7 @@ public class TiledImage {
      * @return Path to tile: x/y/tile-r-c.png
      */
     private static Path getTilePath(int r, int c, Path dir) {
-        String fn = String.format("tile-%s-%s", r, c);
+        String fn = String.format("tile-%s-%s.png", r, c);
         return dir.resolve(fn);
     }
     private Path getTilePath(int r, int c) {
@@ -313,7 +313,6 @@ public class TiledImage {
             cleanDir(dir.toFile());
         }
 
-
         /**
          * Deletes all content in dir.
          */
@@ -341,7 +340,7 @@ public class TiledImage {
             tile.save(p);
 
             c++;
-            if (c > cols) {
+            if (c >= cols) {
                 c = 0;
                 r++;
             }

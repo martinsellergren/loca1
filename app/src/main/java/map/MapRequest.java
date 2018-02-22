@@ -55,6 +55,7 @@ public class MapRequest {
      * Constructs the request from a defined map-image-view.
      * @param v Specifies the request; area, zoom, quality.
      * @param saveDir Directory where fetched images are saved.
+     * NOTE: All files in saveDir will be deleted!
      */
     public MapRequest(MapImageView v, Path saveDir) {
         this.lon = v.lon;

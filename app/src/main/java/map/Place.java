@@ -33,20 +33,20 @@ public class Place {
     }
 
     /**
+     * Constructor with unknown category. Use fetch/setCategory()
+     * later.
+     */
+    public Place(String name, LabelLayout l) {
+        this(name, l, Category.UNKNOWN);
+    }
+
+    /**
      * Constructor from multiple layouts.
      */
     private Place(String name, LinkedList<LabelLayout> ls, Category c) {
         this.name = name;
         this.layouts = ls;
         this.category = c;
-    }
-
-    /**
-     * Constructed with unknown category. Use fetch/setCategory()
-     * later.
-     */
-    public Place(String name, LabelLayout l) {
-        this(name, l, Category.UNKNOWN);
     }
 
     /**

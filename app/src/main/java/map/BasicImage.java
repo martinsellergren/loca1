@@ -496,7 +496,8 @@ public class BasicImage {
     }
     public void save(Path p) {
         try {
-            ImageIO.write(img, "png", p.toFile());
+            p.toFile().mkdirs();
+            ImageIO.write(this.img, "png", p.toFile());
         }
         catch (Exception e) {
             e.printStackTrace();

@@ -19,6 +19,7 @@ public class Places {
 
     /**
      * Constructs from complete list of places.
+     * @pre Invariants hold in places-list.
      */
     private Places(LinkedList<Place> places) {
         this.places = places;
@@ -27,7 +28,8 @@ public class Places {
     /**
      * Adds a place to the list of places, or updates a current place.
      * Uses OCR method to find label-text (i.e place name). The
-     * category new added places are unknown (use setCategory() later).
+     * category of a new added place is set to unknown
+     * (use setCategory() later).
      *
      * - If layout exists in any place in list: done.
      * - If extracted label-text (i.e place-name) exists: add layout.

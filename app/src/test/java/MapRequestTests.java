@@ -2,10 +2,14 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import java.io.IOException;
 import map.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class MapRequestTests {
 
     boolean highQ = true;
+    Path saveDir = Paths.get("test_MapRequestTests");
+
 
     // @Test
     // public void fetch3_world() {
@@ -166,15 +170,15 @@ public class MapRequestTests {
     //     fetchBoundsHelper(west, north, east, south, zs);
     // }
 
-    // @Test
-    // public void fetch_sweden() {
-    //     double west = 9.887695;
-    //     double east = 23.862305;
-    //     double north = 69.446949;
-    //     double south = 55.336956;
-    //     int[] zs = new int[] {5};
-    //     fetchBoundsHelper(west, north, east, south, zs);
-    // }
+    @Test
+    public void fetch_sweden() {
+        double west = 9.887695;
+        double east = 23.862305;
+        double north = 69.446949;
+        double south = 55.336956;
+        int[] zs = new int[] {5};
+        fetchBoundsHelper(west, north, east, south, zs);
+    }
 
     // @Test
     // public void fetch_europe() {
@@ -226,10 +230,10 @@ public class MapRequestTests {
             MapImageView highQ_noExt = new MapImageView(west, north, east, south, z, true);
             MapImageView highQ_ext = highQ_noExt.getExtendedView();
 
-            MapRequest r1 = new MapRequest(lowQ_noExt);
-            MapRequest r2 = new MapRequest(highQ_noExt);
-            MapRequest r3 = new MapRequest(lowQ_ext);
-            MapRequest r4 = new MapRequest(highQ_ext);
+            MapRequest r1 = new MapRequest(lowQ_noExt, saveDir);
+            MapRequest r2 = new MapRequest(highQ_noExt, saveDir);
+            MapRequest r3 = new MapRequest(lowQ_ext, saveDir);
+            MapRequest r4 = new MapRequest(highQ_ext, saveDir);
 
             if (!highQ) fetchHelper(r1);
             if (highQ) fetchHelper(r2);
@@ -241,7 +245,7 @@ public class MapRequestTests {
     static char imgIndex = 'a';
     public/***/ void fetchHelper(MapRequest req) {
         try {
-            BasicImage img = BasicImage.concatenateImages(req.fetch(MapRequest.FULL_STYLE_ID));
+            TiledImage img = req.fetch(MapRequest.FULL_STYLE_ID);
             assertTrue(img != null);
 
             img.save(imgIndex++ + "." +req.toString() + ".png");
@@ -303,26 +307,25 @@ public class MapRequestTests {
     //     }
     // }
 
-    @Test
-    public void fetch_tileSizes() {
-        int zoom = 7;
-        boolean doubleQ = false;
-        MapImageView v = new MapImageView(0, 0, MapRequest.IMAGE_REQUEST_SIZE_LIMIT*5, MapRequest.IMAGE_REQUEST_SIZE_LIMIT*5, 7, highQ);
+    // @Test
+    // public void fetch_tileSizes() {
+    //     int zoom = 7;
+    //     boolean doubleQ = false;
+    //     MapImageView v = new MapImageView(0, 0, MapRequest.IMAGE_REQUEST_SIZE_LIMIT*5, MapRequest.IMAGE_REQUEST_SIZE_LIMIT*5, 7, highQ);
 
-        int ts = 512;
-        MapRequest req = new MapRequest(v, ts);
-        BasicImage[][] imgs = fetcher(req);
+    //     MapRequest req = new MapRequest(v, saveDir);
+    //     BasicImage[][] imgs = fetcher(req);
 
-        assertEquals(512, imgs[0][0].getWidth());
-        assertEquals(512, imgs[0][0].getHeight());
-    }
+    //     assertEquals(512, imgs[0][0].getWidth());
+    //     assertEquals(512, imgs[0][0].getHeight());
+    // }
 
-    private BasicImage[][] fetcher(MapRequest req) {
-        try {
-            return req.fetch(MapRequest.FULL_STYLE_ID);
-        }
-        catch (IOException e) {
-            assertTrue(false);
-        }
-    }
+    // private BasicImage[][] fetcher(MapRequest req) {
+    //     try {
+    //         return req.fetch(MapRequest.FULL_STYLE_ID);
+    //     }
+    //     catch (IOException e) {
+    //         assertTrue(false);
+    //     }
+    // }
 }

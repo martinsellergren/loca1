@@ -203,7 +203,7 @@ public class LabelLayout {
      * @return True if this layout is similar to other.
      */
     public boolean same(LabelLayout other) {
-        double DELTA = 4;
+        double DELTA = 10;
 
         return
             this.getNoBoxes() == other.getNoBoxes() &&
