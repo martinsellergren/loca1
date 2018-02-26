@@ -81,6 +81,34 @@ public class TiledImage {
     }
 
     /**
+     * @return Width of all tiles except last column.
+     */
+    public int getTileWidth() {
+        return this.tileWidth;
+    }
+
+    /**
+     * @return Height of all tiles except last row.
+     */
+    public int getTileHeight() {
+        return this.tileHeight;
+    }
+
+    /**
+     * @return Width of last column tiles.
+     */
+    private int getLastColWidth() {
+        return getWidth() - getTileWidth() * (this.cols - 1);
+    }
+
+    /**
+     * @return Height of last row tiles.
+     */
+    private int getLastRowHeight() {
+        return getHeight() - getTileHeight() * (this.rows - 1);
+    }
+
+    /**
      * @return Color of specified point.
      */
     public Color getColor(int[] p) {
@@ -102,7 +130,7 @@ public class TiledImage {
 
     /**
      * Crops out a subimage. Tiles are concatenated as needed.
-     * Beware of heap overflows. Minimizes no. reads from hdd.
+     * Beware of heap overflows. ~Minimizes no. reads from hdd.
      *
      * @param bs [xmin, ymin, xmax, ymax]. If outside, snaped inside.
      * @return A subimage defined by bounds.
@@ -114,46 +142,57 @@ public class TiledImage {
                        Math.min(bs[2], getWidth()-1),
                        Math.min(bs[3], getHeight()-1)};
 
+        int[] rcxyTL = getTileAndPos(new int[]{bs[0], bs[1]});
+        BasicImage tl = getTile(rcxyTL[0], rcxyTL[1]);
+        int leftTileLeftX = rcxyTL[2];
+        int topTileTopY = rcxyTL[3];
+
+        int[] rcxyBR = getTileAndPos(new int[]{bs[2], bs[3]});
+        BasicImage br = getTile(rcxyBR[0], rcxyBR[1]);
+        int rightTileRightX = rcxyBR[2];
+        int botTileBotY = rcxyBR[3];
+
         int width = bs[2] - bs[0] + 1;
         int height = bs[3] - bs[1] + 1;
-        BasicImage img = new BasicImage(width, height);
-        Graphics2D g = img.createGraphics();
+        BasicImage sub = new BasicImage(width, height);
+        Graphics2D g = sub.createGraphics();
 
-        for (int y0 = 0; y0 < height; ) {
-            int rowHeight = -1;
+        int subY = 0;
 
-            for (int x0 = 0; x0 < width; ) {
-                int[] rc_xy = getTileAndPos(new int[]{x0+bs[0], y0+bs[1]});
-                BasicImage tile = loadTile(rc_xy[0], rc_xy[1]);
-                rowHeight = tile.getHeight();
-                int x1 = Math.min(x0 + tile.getWidth() - 1, bs[2]);
-                int y1 = Math.min(y0 + rowHeight - 1, bs[3]);
+        for (int y = bs[1]; y <= bs[3]; y += getTileHeight()) {
+            int rowH = 0;
+            int subX = 0;
 
-                BasicImage part = tile.getSubImage(x0%tile.getWidth(), y0%rowHeight, x1%tile.getWidth(), y1%rowHeight);
-                g.drawImage(part.getBufferedImage(), null, x0, y0);
+            for (int x = bs[0]; x <= bs[2]; x += getTileWidth()) {
+                int[] rc = getTileAndPos(new int[]{x, y});
+                BasicImage tile = getTile(rc[0], rc[1]);
 
-                x0 = x1 + 1;
+                boolean firstRow = (rc[0] == rcxyTL[0]);
+                boolean firstCol = (rc[1] == rcxyTL[1]);
+                boolean lastRow = (rc[0] == rcxyBR[0]);
+                boolean lastCol = (rc[1] == rcxyBR[1]);
+
+                int left = 0;
+                int top = 0;
+                int right = tile.getWidth() - 1;
+                int bot = tile.getHeight() -1;
+                if (firstRow) top = topTileTopY;
+                if (firstCol) left = leftTileLeftX;
+                if (lastRow) bot = botTileBotY;
+                if (lastCol) right = rightTileRightX;
+                BasicImage part = tile.getSubImage(new int[]{left, top, right, bot});
+
+                g.drawImage(part.getBufferedImage(), null, subX, subY);
+
+                int partW = right - left + 1;
+                rowH = bot - top + 1;
+                subX += partW;
             }
-
-            y0 += rowHeight;
+            subY += rowH;
         }
 
-        return img;
+        return sub;
     }
-
-    // /**
-    //  * Turns specified area of image into a bitmap where tresh
-    //  * decides if point is true or false.
-    //  *  - If alpha >= tresh : map[r][c] = true.
-    //  *  - If alpha < tresh : map[r][c] = false.
-    //  *
-    //  * @param bs Bounds defining area.
-    //  * @param tresh Alphha threshold.
-    //  * @return Bitmap.
-    //  */
-    // public boolean[][] getBitmap(int[] bs, int tresh) {
-
-    // }
 
     /**
      * Returns specified tile. If tile not in memory, loads from

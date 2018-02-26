@@ -264,24 +264,22 @@ public class BasicImage {
      * @return A deep copy of this image.
      */
     public BasicImage copy() {
-        BufferedImage b = getBufferedImage();
-        return new BasicImage(b);
+        BasicImage dest = new BasicImage(getWidth(), getHeight());
+        Graphics2D g = dest.createGraphics();
+        g.drawImage(this.img, null, 0, 0);
+        return dest;
     }
 
     /**
-     * @return A buffere imgage of this image.
+     * @return A BufferedImgage of this image.
      */
     public BufferedImage getBufferedImage() {
-        BufferedImage b = new BufferedImage(img.getWidth(), img.getHeight(), img.getType());
-        Graphics2D g = b.createGraphics();
-        g.drawImage(img, 0, 0, null);
-        g.dispose();
-        return b;
+        return copy().img;
     }
 
     /**
      * @return New dimensioned image.
-     * @pre Positions inside this image.
+     * @pre Positions inside this image. If outside, snaped inside.
      * @pre mins < maxes.
      */
     public BasicImage getSubImage(int xmin, int ymin, int xmax, int ymax) {
@@ -289,6 +287,10 @@ public class BasicImage {
         return new BasicImage(croped);
     }
     public BasicImage getSubImage(int[] bs) {
+        bs = new int[]{Math.max(bs[0], 0),
+                       Math.max(bs[1], 0),
+                       Math.min(bs[2], getWidth()-1),
+                       Math.min(bs[3], getHeight()-1)};
         return getSubImage(bs[0], bs[1], bs[2], bs[3]);
     }
 
