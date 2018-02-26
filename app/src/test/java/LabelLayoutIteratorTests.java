@@ -7,13 +7,13 @@ import java.awt.Graphics2D;
 import java.awt.Color;
 
 public class LabelLayoutIteratorTests {
-    BasicImage img = BasicImage.load("../test_europe_box.png");
-
+    // BasicImage img = BasicImage.load("../sweden/box.png");
+    TiledImage img = TiledImageTests.loader("../sweden/box");
+    int[] area = new int[]{0, 0, img.getWidth(), img.getHeight()};
 
     // @Test
     // public void constructor() {
-    //     //BasicImage img = BasicImage.load("../test_box_small.png");
-    //     LabelLayoutIterator iter = new LabelLayoutIterator(img);
+    //     LabelLayoutIterator iter = new LabelLayoutIterator(img, area);
     //     iter.toImg().save("test_LabelLayoutIterator_constructor.png");
     // }
 
@@ -72,24 +72,27 @@ public class LabelLayoutIteratorTests {
     //     img.save("test_LabelLayoutIterator_expandToBox_all.png");
     // }
 
-    // @Test
-    // public void findLabelLayouts() {
-    //     //BasicImage img = BasicImage.load("../test_box_small.png");
-    //     LabelLayoutIterator iter = new LabelLayoutIterator(img);
+    @Test
+    public void findLabelLayouts() {
+        img.save("test_LabelLayoutIteratorTests_findLabelLayouts_before.png");
+        BasicImage labelBoxes = new BasicImage(img.getWidth(), img.getHeight());
 
-    //     LabelLayout lay;
-    //     while ((lay=iter.next()) != null) {
-    //         try {
-    //             img.drawLabelLayout(lay);
-    //         }
-    //         catch (Exception e) {
-    //             System.out.println(lay);
-    //             throw e;
-    //         }
-    //     }
+        LabelLayoutIterator iter = new LabelLayoutIterator(img, area);
+        //LabelLayoutIterator iter = new LabelLayoutIterator(img);
 
-    //     img.save("test_LabelLayoutIterator_findLabelLayouts.png");
-    // }
+        LabelLayout lay;
+        while ((lay=iter.next()) != null) {
+            try {
+                labelBoxes.drawLabelLayout(lay);
+            }
+            catch (Exception e) {
+                System.out.println(lay);
+                throw e;
+            }
+        }
+
+        labelBoxes.save("test_LabelLayoutIterator_findLabelLayouts_after.png");
+    }
 
     // @Test
     // public void expandToLabelLayout() {

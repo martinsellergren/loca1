@@ -100,43 +100,59 @@ public class TiledImage {
             p[1] < getHeight();
     }
 
+    /**
+     * Crops out a subimage. Tiles are concatenated as needed.
+     * Beware of heap overflows. Minimizes no. reads from hdd.
+     *
+     * @param bs [xmin, ymin, xmax, ymax]. If outside, snaped inside.
+     * @return A subimage defined by bounds.
+     * @pre Min-bounds < max-bounds.
+     */
+    public BasicImage getSubImage(int[] bs) {
+        bs = new int[]{Math.max(bs[0], 0),
+                       Math.max(bs[1], 0),
+                       Math.min(bs[2], getWidth()-1),
+                       Math.min(bs[3], getHeight()-1)};
+
+        int width = bs[2] - bs[0] + 1;
+        int height = bs[3] - bs[1] + 1;
+        BasicImage img = new BasicImage(width, height);
+        Graphics2D g = img.createGraphics();
+
+        for (int y0 = 0; y0 < height; ) {
+            int rowHeight = -1;
+
+            for (int x0 = 0; x0 < width; ) {
+                int[] rc_xy = getTileAndPos(new int[]{x0+bs[0], y0+bs[1]});
+                BasicImage tile = loadTile(rc_xy[0], rc_xy[1]);
+                rowHeight = tile.getHeight();
+                int x1 = Math.min(x0 + tile.getWidth() - 1, bs[2]);
+                int y1 = Math.min(y0 + rowHeight - 1, bs[3]);
+
+                BasicImage part = tile.getSubImage(x0%tile.getWidth(), y0%rowHeight, x1%tile.getWidth(), y1%rowHeight);
+                g.drawImage(part.getBufferedImage(), null, x0, y0);
+
+                x0 = x1 + 1;
+            }
+
+            y0 += rowHeight;
+        }
+
+        return img;
+    }
+
     // /**
-    //  * Crops out a subimage. Tiles are concatenated as needed.
-    //  * Beware of heap overflows
+    //  * Turns specified area of image into a bitmap where tresh
+    //  * decides if point is true or false.
+    //  *  - If alpha >= tresh : map[r][c] = true.
+    //  *  - If alpha < tresh : map[r][c] = false.
     //  *
-    //  * @param bs [xmin, ymin, xmax, ymax]
-    //  * @return A subimage defined by bounds.
+    //  * @param bs Bounds defining area.
+    //  * @param tresh Alphha threshold.
+    //  * @return Bitmap.
     //  */
-    // public BasicImage getSubImage(int[] bs) {
-    //     if (!isInside(new int[]{bs[0], bs[1]}) ||
-    //         !isInside(new int[]{bs[2], bs[3]}))
-    //         throw new RuntimeException();
+    // public boolean[][] getBitmap(int[] bs, int tresh) {
 
-    //     int width = bs[2] - bs[0] + 1;
-    //     int height = bs[3] - bs[1] + 1;
-    //     BasicImage img = new BasicImage(width, height);
-    //     Graphics2D g = img.createGraphics();
-
-    //     for (int y0 = bs[1]; y0 < height; ) {
-    //         int rowHeight = -1;
-
-    //         for (int x0 = bs[0]; x0 < width; ) {
-    //             int[] rc_xy = getTileAndPos(new int[]{x0, y0});
-    //             BasicImage tile = loadTile(rc_xy[0], rc_xy[1]);
-    //             rowHeight = tile.getHeight();
-    //             int x1 = Math.min(x0 + tile.getWidth() - 1, bs[2]);
-    //             int y1 = Math.min(y0 + rowHeight - 1, bs[3]);
-
-    //             BasicImage part = tile.getSubImage(x0, y0, x1, y1);
-    //             g.drawImage(part.getBufferedImage(), null, x0, y0);
-
-    //             x0 = x1 + 1;
-    //         }
-
-    //         y0 += rowHeight;
-    //     }
-
-    //     return img;
     // }
 
     /**
@@ -235,6 +251,9 @@ public class TiledImage {
 
         return new TiledImage(dir, width, height, tileW, tileH, rows, cols);
     }
+    public static TiledImage load(String dir) throws IOException {
+        return load(Paths.get(dir));
+    }
 
     /**
      * @param fn FileName: tile-r-c.png
@@ -242,7 +261,7 @@ public class TiledImage {
      */
     private static int[] getRowCol(String fn) throws IOException {
         try {
-            String[] ps = fn.split("-");
+            String[] ps = fn.split("[-.]");
             int r = Integer.parseInt(ps[1]);
             int c = Integer.parseInt(ps[2]);
             return new int[]{r, c};

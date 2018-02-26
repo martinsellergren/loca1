@@ -129,28 +129,13 @@ public class LabelLayoutIterator {
      *
      * @param img Box-image stored in tiles.
      * @param bs Bounds [xmin ymin xmax ymax] for the area
-     * in the image that will be analyzed for labels.
+     * in the image that will be analyzed for labels. Analysis is kept
+     * inside image even if bs goes outside.
      *
      * @pre Min-bounds < max-bounds.
-     * @pre 0 <= bounds < imgWidth/imgHeight
      */
     public LabelLayoutIterator(TiledImage img, int[] bs, int alphaThreshold) {
-        int w = bs[2] - bs[0] + 1;
-        int h = bs[3] - bs[1] + 1;
-        this.map = new boolean[h][w];
-
-        for (int y = bs[1]; y <= bs[3]; y++) {
-            for (int x = bs[0]; x <= bs[2]; x++) {
-                Color c = img.getColor(new int[]{x, y});
-                int alpha = c.getAlpha();
-                if (alpha >= alphaThreshold) {
-                    this.map[y][x] = true;
-                }
-                else {
-                    this.map[y][x] = false;
-                }
-            }
-        }
+        this(img.getSubImage(bs), alphaThreshold);
     }
 
     /**

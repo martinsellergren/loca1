@@ -79,9 +79,9 @@ public class MapRequest {
      */
     public TiledImage[] fetch3() throws IOException {
         return new TiledImage[] {
-            fetch(FULL_STYLE_ID),
-            fetch(LABEL_STYLE_ID),
-            fetch(BOX_STYLE_ID) };
+            fetch(FULL_STYLE_ID, "full"),
+            fetch(LABEL_STYLE_ID, "label"),
+            fetch(BOX_STYLE_ID, "box") };
     }
 
     /**
@@ -89,15 +89,17 @@ public class MapRequest {
      * from mapbox servers and concatenated.
      *
      * @param style Mapbox style ID.
+     * @param subdir Directory-name within saveDir.
      * @return A map image defined by this object and the style.
      * @throws IOException if failed to fetch image (bad internet-conn?)
      */
-    public TiledImage fetch(String style) throws IOException {
+    public TiledImage fetch(String style, String subdir) throws IOException {
         MapRequest[][] reqs = this.split();
+        Path dir = this.saveDir.resolve(subdir);
 
         int rows = reqs.length;
         int cols = reqs[0].length;
-        TiledImage.Builder builder = new TiledImage.Builder(rows, cols, this.saveDir);
+        TiledImage.Builder builder = new TiledImage.Builder(rows, cols, dir);
 
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
