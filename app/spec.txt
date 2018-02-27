@@ -53,10 +53,10 @@ TiledImage
     dir::Path
     getWidth/Height()
     getColor(x,y)::Color
-    setColor(x,y, Color)
-    drawPixel(x,y, Color)
-        (blends pixels: AlphaComposite-SRC_OVER)
-    drawRect(xmin,ymin,xmax,ymax, Color)
+    //setColor(x,y, Color)
+    //drawPixel(x,y, Color)
+        //(blends pixels: AlphaComposite-SRC_OVER)
+    //drawRect(xmin,ymin,xmax,ymax, Color)
     isInside(x,y)::boolean
     getOneImage()::BasicImage
     getSubImage(xmin,ymin,xmax,ymax)::BasicImage
@@ -65,11 +65,10 @@ TiledImage
         add(img::BasicImage)
         build()::TiledImage
 
-
 MapImage
     img::TiledImage
     imgView::MapImageView
-    labels::Label[]
+    places::Places
     # new MapImage(viewportView::MapImageView, imgView::MapImageView, imgs::BasicImages[map,label,box], lang::OCRenum)
     #     pre: viewportView fits in imgView. imgView and imgs correspond.
     new MapImage([WNES], zoom::int, doubleQ::bool, lang::OCRenum)
@@ -104,41 +103,6 @@ LabelLayoutIterator
     findNeighborRow(UP/DOWN, startRow::Box[])::Box[]/NULL(if nothing neighbor-row-like there)
     findNeighborBox(LEFT/RIGHT, startBox)::Box/NULL(if nothing neighbor-box-like there)
 
-
-
-    # findBoxPoint(startX::int, startY::int)::Point/NULL
-    # expandToRow(box-point::Point)::Box[]
-    #     (result may start/end in null: outside of box-image. [null] possible)
-    # addRows(UP/DOWN, startRow::Box[], lay(accumulator, contains startRow)::Box[][])::Box[][]
-    #     (done if nothing there OR startRow has(/finds row with) null start/end)
-    #     (always adds found row to accum, even if null start/end..)
-    # removeLabel(lay::LabelLayout)::Void
-    #     (ignores null-start/ends)
-    # expandAndRemove(p::int[])::Void
-
-    # expandToBox(box-point::Point)::Box/NULL (null if at box-image-edge)
-    # addBoxes(LEFT/RIGHT, startBox::Box, accum(contains startBox)::Box[])::Box[]
-    #     (done if nothing there OR startBox is null)
-
-    # findNeighborRow(UP/DOWN, startRow:Box[])::Box[]/NULL
-    #     (nothing there::null, something that failed to expand to box::[null],
-    #     first boxes then edge::[(null),b,b,(null)], all good::[b,b,b])
-    # findNeighborBox(LEFT/RIGHT, startBox::Box)::Box/NULL
-    #     (returns null if 1.nothing there. 2.box-image-edge there. 3.bp expanded to null(because edge))
-    # somethingThere(LEFT/RIGHT, startBox::Box, searchLength::double)::boolean
-
-
-# Label
-#     text: String
-#     category: enum
-#     layout: LabelLayout
-#     new Label(text::String, layout::LabelLayout, category)
-#     new Label(labelImg::BasicImage, layout::LabelLayout, OCREngine)
-#         (OCREngine set to corresponding language)
-#     addOffset(addX::int, addY::int)
-#     setCategory(c::category enum)
-#     fetchCategory(double[wnes])::category enum (if place not found, returns undefined-category)
-
 Places
     places::Place[]
     add(label::LabelLayout, labelImg::BasicImage, OCREngine)
@@ -160,18 +124,6 @@ Place
     getLabels()::LabelLayout[](shallow copy)
     setCategory(c::category enum)
     fetchCategory(double[wnes])::category enum (if place not found, returns undefined-category)
-
-//skip
-Labels(tied to a mapImage)
-    labels Label[]
-    new Labels(labelImg::BasicImage, boxImg::BoxImage)
-        iter = new boxImage.LabelLayoutIter()
-            layout = iter.next()
-            labels[i] = new Label(labelImg, layout)
-    fetchAndSetCategories(mapImageBasics)
-        for each label:
-            c = label.fetchCategory(mapImageBasics)
-            label.setCategory(c)
 
 OCR
     OCREngine::...
@@ -224,6 +176,7 @@ Box
 Map
     bounds::double[WNES]
     zoomLevelImgs::MapImage[]
+    lang::OCRenum
     new Map(westLon::double, northLat, eastLon, southLat, lang::OCRenum)
     addZoomLevel()::void (uses internet) throws IOException
     hasZoomLevel(int z)::bool

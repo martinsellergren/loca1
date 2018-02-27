@@ -122,6 +122,5 @@ public class Place {
         }
 
         return new Place(this.name, ls, this.category);
-
     }
 }

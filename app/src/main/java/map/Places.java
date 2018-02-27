@@ -47,7 +47,6 @@ public class Places {
         if (p != null) {
             p.addLayout(lay);
         }
-
         else {
             places.add(new Place(name, lay));
         }

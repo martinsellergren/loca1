@@ -3,7 +3,6 @@ package map;
 import org.bytedeco.javacpp.*;
 import static org.bytedeco.javacpp.lept.*;
 import static org.bytedeco.javacpp.tesseract.*;
-
 import java.io.File;
 
 /**
@@ -11,7 +10,6 @@ import java.io.File;
  */
 public class OCR {
     private TessBaseAPI api = new TessBaseAPI();
-    public enum Language { eng, swe; }
 
     /**
      * Initializes the ocr-engine for specified language detection.

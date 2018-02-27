@@ -14,9 +14,16 @@ import java.nio.file.Path;
 public class MapRequest {
     public/***/ static final String USER_NAME = "masel";
     public/***/ static final String TOKEN = "sk.eyJ1IjoibWFzZWwiLCJhIjoiY2pkM2YwYXlvMncyZTMzczYzbXJ1Mzd3ayJ9.OBMENh5mWq6iwPZut8s0iw";
-    public static final String FULL_STYLE_ID = "cjd9dx1oe9t712roe6qmxmfgr";
-    public static final String LABEL_STYLE_ID = "cjd9dxg7i84ev2snt9rudqcgg";
-    public static final String BOX_STYLE_ID = "cjd9dxq0w9tpb2ss0ysjtiwlr";
+
+    //eng
+    public static final String FULL_STYLE_ID_ENG = "cjd9dx1oe9t712roe6qmxmfgr";
+    public static final String LABEL_STYLE_ID_ENG = "cjd9dxg7i84ev2snt9rudqcgg";
+    public static final String BOX_STYLE_ID_ENG = "cjd9dxq0w9tpb2ss0ysjtiwlr";
+
+    //swe (same for now..)
+    public static final String FULL_STYLE_ID_SWE = "cjd9dx1oe9t712roe6qmxmfgr";
+    public static final String LABEL_STYLE_ID_SWE = "cjd9dxg7i84ev2snt9rudqcgg";
+    public static final String BOX_STYLE_ID_SWE = "cjd9dxq0w9tpb2ss0ysjtiwlr";
 
     /**
      * Max width and height in pixels of request from server. */
@@ -50,18 +57,24 @@ public class MapRequest {
     /** Directory for the fetched fetched tiledImage. */
     private Path saveDir;
 
+    /** Language of labels returned by fetch3(). */
+    private Language lang;
+
 
     /**
      * Constructs the request from a defined map-image-view.
      * @param v Specifies the request; area, zoom, quality.
      * @param saveDir Directory where fetched images are saved.
+     * @param lang Language of labels returned by fetch3().
+     *
      * NOTE: All files in saveDir will be deleted!
      */
-    public MapRequest(MapImageView v, Path saveDir) {
+    public MapRequest(MapImageView v, Path saveDir, Language lang) {
         this.lon = v.lon;
         this.lat = v.lat;
         this.zoom = v.zoom;
         this.saveDir = saveDir;
+        this.lang = lang;
 
         this.x2 = false;
         this.width = v.width;
@@ -78,10 +91,27 @@ public class MapRequest {
      * @throws IOException if failed to fetch image (bad internet-conn?)
      */
     public TiledImage[] fetch3() throws IOException {
+        String fullID = "";
+        String labelID = "";
+        String boxID = "";
+
+        switch (this.lang) {
+        case ENG:
+            fullID = FULL_STYLE_ID_ENG;
+            labelID = LABEL_STYLE_ID_ENG;
+            boxID = BOX_STYLE_ID_ENG;
+            break;
+        case SWE:
+            fullID = FULL_STYLE_ID_SWE;
+            labelID = LABEL_STYLE_ID_SWE;
+            boxID = BOX_STYLE_ID_SWE;
+            break;
+        }
+
         return new TiledImage[] {
-            fetch(FULL_STYLE_ID, "full"),
-            fetch(LABEL_STYLE_ID, "label"),
-            fetch(BOX_STYLE_ID, "box") };
+            fetch(fullID, "full"),
+            fetch(labelID, "label"),
+            fetch(boxID, "box") };
     }
 
     /**
@@ -170,7 +200,7 @@ public class MapRequest {
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
                 MapImageView v = vs[r][c];
-                reqs[r][c] = new MapRequest(vs[r][c], this.saveDir);
+                reqs[r][c] = new MapRequest(vs[r][c], this.saveDir, this.lang);
                 reqs[r][c].x2 = this.x2;
             }
         }

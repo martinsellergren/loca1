@@ -38,7 +38,7 @@ public class MapImageView {
     /** Zoom of image where 0 is all way out and 20 is all way in. */
     public final int zoom;
 
-    /** True means pixel-density is doubled (high quality). */
+    /** True means pixel-density is doubled on widht and hight. */
     public final boolean x2;
 
 

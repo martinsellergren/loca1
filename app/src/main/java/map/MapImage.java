@@ -1,6 +1,8 @@
 package map;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * An image of a map with full specification of its labels
@@ -8,14 +10,26 @@ import java.io.IOException;
  * and specified zoom through a MapImageView-object.
  */
 public class MapImage {
-    // private BasicImage[][] tiles;
-    // public/***/ MapImageView view;
-    // public/***/ Label[] labels;
+    private TiledImage img;
+    public/***/ MapImageView view;
+    public/***/ Places places;
 
-    // public MapImage(double[] wnes, int zoom, boolean doubleQ) {
-    //     MapImageView v = new MapImageView(wnes, zoom, doubleQ);
-    //     MapRequest req = new MapRequest(v);
-    // }
+    /**
+     * Fetches map-images from internet, finds places (labels) using
+     * OCR, finds categories of these places using internet.
+     * Extends bounds to 1) Fit cut labels, 2) Detect edge-labels.
+     *
+     * @param wnes [west north east south] bounds.
+     * @param zoom 0-20.
+     * @param doubleQ Double quality image (double pixel density).
+     * @param lang Fetch map-images with labels of this language.
+     */
+    public MapImage(double[] wnes, int zoom, boolean doubleQ, Language lang) throws IOException {
+        MapImageView v = new MapImageView(wnes, zoom, doubleQ);
+        Path p = Paths.get("zoom_level_" + zoom);
+        MapRequest req = new MapRequest(v.getExtendedView(), p, lang);
+        TiledImage[] imgs = req.fetch3();
+    }
 
     // /**
     //  * Constructs a map-image from an image of a map and additional
