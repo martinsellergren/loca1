@@ -37,8 +37,10 @@ public class TiledImage {
 
     /**
      * Image data, so don't have to load and investigate.
-     * Note: last-column-width = width % tileWidth
-     *       last-row-height = height % tileHeight. */
+     * Note: last-column-width = width % tileLength
+     *       last-row-height = height % tileLength.
+     * also:
+     * tileWidth == tileHeight except if one-row/col layout. */
     private final int width, height, tileWidth, tileHeight, rows, cols;
 
     /**

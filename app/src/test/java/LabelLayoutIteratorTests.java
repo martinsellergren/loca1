@@ -72,27 +72,27 @@ public class LabelLayoutIteratorTests {
     //     img.save("test_LabelLayoutIterator_expandToBox_all.png");
     // }
 
-    @Test
-    public void findLabelLayouts() {
-        img.save("test_LabelLayoutIteratorTests_findLabelLayouts_before.png");
-        BasicImage labelBoxes = new BasicImage(img.getWidth(), img.getHeight());
+    // @Test
+    // public void findLabelLayouts() {
+    //     img.save("test_LabelLayoutIteratorTests_findLabelLayouts_before.png");
+    //     BasicImage labelBoxes = new BasicImage(img.getWidth(), img.getHeight());
 
-        LabelLayoutIterator iter = new LabelLayoutIterator(img, area);
-        //LabelLayoutIterator iter = new LabelLayoutIterator(img);
+    //     LabelLayoutIterator iter = new LabelLayoutIterator(img, area);
+    //     //LabelLayoutIterator iter = new LabelLayoutIterator(img);
 
-        LabelLayout lay;
-        while ((lay=iter.next()) != null) {
-            try {
-                labelBoxes.drawLabelLayout(lay);
-            }
-            catch (Exception e) {
-                System.out.println(lay);
-                throw e;
-            }
-        }
+    //     LabelLayout lay;
+    //     while ((lay=iter.next()) != null) {
+    //         try {
+    //             labelBoxes.drawLabelLayout(lay);
+    //         }
+    //         catch (Exception e) {
+    //             System.out.println(lay);
+    //             throw e;
+    //         }
+    //     }
 
-        labelBoxes.save("test_LabelLayoutIterator_findLabelLayouts_after.png");
-    }
+    //     labelBoxes.save("test_LabelLayoutIterator_findLabelLayouts_after.png");
+    // }
 
     // @Test
     // public void expandToLabelLayout() {
