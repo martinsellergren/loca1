@@ -221,8 +221,9 @@ public class MapImageView {
 
     /**
      * Constructs a new view with extended dims so that all originally
-     * cut labels fit. Only extends if not going outside bounds.
-     * Therefore, the mid-point of the view might change.
+     * cut labels fit, plus an extra margin. Only extends if not
+     * going outside bounds. Therefore, the mid-point of the
+     * view might change.
      *
      * @return An extended view.
      */
@@ -247,7 +248,8 @@ public class MapImageView {
 
     /**
      * @return value ext where [left-ext, top-ext, right+ext, bot+ext]
-     * is extended bounds where originally cut labels fit.
+     * is extended pixel-bounds where originally cut labels fit,
+     * plus extra margin (for edge-label detection).
      */
     public int getExtensionTerm() {
         int ext = 100;

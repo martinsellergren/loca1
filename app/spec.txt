@@ -105,6 +105,7 @@ LabelLayoutIterator
 
 Places
     places::Place[]
+    new Places(labelImg::TiledImage, boxImg::TiledImage, language)
     add(label::LabelLayout, labelImg::BasicImage, OCREngine)
         (OCREngine set to corresponding language)
         (ignore if existing layout, adds layout if existing name, else new entry)

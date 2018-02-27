@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.awt.Graphics2D;
 import java.util.Arrays;
 import java.io.IOException;
+import java.util.LinkedList;
 
 /**
  * An image made up of tiles. Tiles are saved on hdd and loaded
@@ -194,6 +195,68 @@ public class TiledImage {
         }
 
         return sub;
+    }
+
+    /**
+     * Creates a new image made up of all letters in the layout
+     * on a straight line, in correct label-order.
+     *
+     * @param lay Label-layout.
+     * @param padding Space between letters.
+     * @return One-line letter-image with hight of tallest letter-img.
+     */
+    public BasicImage extractLabel(LabelLayout lay, int padding) {
+        LinkedList<BasicImage> ls = new LinkedList<BasicImage>();
+
+        for (Box b : lay.getBoxesWithNewlines()) {
+            if (b != null) {
+                ls.add(extractElement(b));
+            }
+            else {
+                int h = Math2.toInt(lay.getAverageBoxHeight());
+                int w = Math2.toInt(h * 0.7f);
+                BasicImage space = new BasicImage(w, h);
+                ls.add(space);
+            }
+        }
+
+        BasicImage img = BasicImage.concatenateImages(ls, padding);
+        img = img.addAlpha(100);
+        //img = img.addBackground(Color.WHITE);
+
+        return img;
+    }
+
+    /**
+     * Uses default padding = average box height.
+     *
+     * @param lay Label-layout.
+     * @return One-line letter-image with hight of tallest letter-img.
+     */
+    public BasicImage extractLabel(LabelLayout lay) {
+        int bh = Math2.toInt(lay.getAverageBoxHeight());
+        return extractLabel(lay, bh);
+    }
+
+    /**
+     * Returns an element in the image contained inside a box.
+     * The box (and element in image) may be rotated, but returned
+     * element is not.
+     *
+     * @param b Box describing element to be extracted.
+     * @return A new image where non-rotated element fits perfectly,
+     * i.e an un-rotated subsection of this image.
+     */
+    public BasicImage extractElement(Box box) {
+        int[] bs = box.getIntBounds();
+        BasicImage rotated = getSubImage(bs);
+        BasicImage straight = rotated.rotate(-box.getRotation());
+        int w = Math2.toInt(box.getWidth());
+        int h = Math2.toInt(box.getHeight());
+        int x0 = (straight.getWidth() - w) / 2;
+        int y0 = (straight.getHeight() - h) / 2;
+
+        return straight.getSubImage(x0, y0, x0+w, y0+h);
     }
 
     /**

@@ -16,7 +16,7 @@ public class MapImage {
 
     /**
      * Fetches map-images from internet, finds places (labels) using
-     * OCR, finds categories of these places using internet.
+     * OCR and internet.
      * Extends bounds to 1) Fit cut labels, 2) Detect edge-labels.
      *
      * @param wnes [west north east south] bounds.
@@ -25,10 +25,12 @@ public class MapImage {
      * @param lang Fetch map-images with labels of this language.
      */
     public MapImage(double[] wnes, int zoom, boolean doubleQ, Language lang) throws IOException {
-        MapImageView v = new MapImageView(wnes, zoom, doubleQ);
+        this.view = new MapImageView(wnes, zoom, doubleQ).getExtendedView();
         Path p = Paths.get("zoom_level_" + zoom);
-        MapRequest req = new MapRequest(v.getExtendedView(), p, lang);
+        MapRequest req = new MapRequest(view, p, lang);
         TiledImage[] imgs = req.fetch3();
+        this.img = imgs[0];
+        this.places = new Places(imgs[1], imgs[2], view, lang);
     }
 
     // /**
@@ -76,19 +78,19 @@ public class MapImage {
     //     this(vv, iv, imgs[0], imgs[1], imgs[2]);
     // }
 
-    /**
-     * Fetches category for each label from online sources and sets
-     * each label's category. Only sets the category if label-text
-     * was found in online database (inside relevant bounding-box).
-     *
-     * @throws IOException if communication problem (network error?)
-     */
-    public void fetchAndSetLabelCategories() throws IOException {
-    }
+    // /**
+    //  * Fetches category for each label from online sources and sets
+    //  * each label's category. Only sets the category if label-text
+    //  * was found in online database (inside relevant bounding-box).
+    //  *
+    //  * @throws IOException if communication problem (network error?)
+    //  */
+    // public void fetchAndSetLabelCategories() throws IOException {
+    // }
 
-    /**
-     * Removes all labels with unspecified category.
-     */
-    public void removeUnspecifiedLabels() throws IOException {
-    }
+    // /**
+    //  * Removes all labels with unspecified category.
+    //  */
+    // public void removeUnspecifiedLabels() throws IOException {
+    // }
 }

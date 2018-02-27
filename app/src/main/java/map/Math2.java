@@ -722,21 +722,27 @@ public class Math2 {
         return (int)Math.ceil(x);
     }
 
-    // /**
-    //  * Round point to integer.
-    //  */
-    // public static int[] lCeil(double[] p) {
-    //     return new int[]{ down(p[0]), down(p[0]) };
-    // }
-    // public static int[] rCeil(double[] p) {
-    //     return new int[]{ up(p[0]), down(p[0]) };
-    // }
-    // public static int[] rFloor(double[] p) {
-    //     return new int[]{ up(p[0]), up(p[0]) };
-    // }
-    // public static int[] lFloor(double[] p) {
-    //     return new int[]{ down(p[0]), up(p[0]) };
-    // }
+    /**
+     * Splits bounds into grid of bounds layed out in 1d-list
+     * (row by row). All blocks perfect squares except blocks in:
+     *  - last column may be thinner.
+     *  - last row may be shorter.
+     *
+     * @param bs [xmin ymin xmax ymax]
+     * @param gridSize Side-length of grid-block.
+     */
+    public static LinkedList<int[]> split(int[] bs, int gridSize) {
+        LinkedList<int[]> bss = new LinkedList<int[]>();
+
+        for (int y0 = bs[1]; y0 <= bs[3]; y0 += gridSize) {
+            for (int x0 = bs[0]; x0 <= bs[2]; x0 += gridSize) {
+                int x1 = Math.min(x0 + gridSize - 1, bs[2]);
+                int y1 = Math.min(y0 + gridSize - 1, bs[3]);
+                bss.add(new int[]{x1, y1});
+            }
+        }
+        return bss;
+    }
 
     //****************************************CONVERSIONS
 
