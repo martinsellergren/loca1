@@ -140,10 +140,7 @@ public class TiledImage {
      * @pre Min-bounds < max-bounds.
      */
     public BasicImage getSubImage(int[] bs) {
-        bs = new int[]{Math.max(bs[0], 0),
-                       Math.max(bs[1], 0),
-                       Math.min(bs[2], getWidth()-1),
-                       Math.min(bs[3], getHeight()-1)};
+        bs = Math2.getInsideBounds(bs, getWidth(), getHeight());
 
         int[] rcxyTL = getTileAndPos(new int[]{bs[0], bs[1]});
         BasicImage tl = getTile(rcxyTL[0], rcxyTL[1]);

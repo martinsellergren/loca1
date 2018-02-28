@@ -282,16 +282,14 @@ public class BasicImage {
      * @pre Positions inside this image. If outside, snaped inside.
      * @pre mins < maxes.
      */
-    public BasicImage getSubImage(int xmin, int ymin, int xmax, int ymax) {
-        BufferedImage croped = this.img.getSubimage(xmin, ymin, xmax-xmin+1, ymax-ymin+1);
+    public BasicImage getSubImage(int[] bs) {
+        bs = Math2.getInsideBounds(bs, getWidth(), getHeight());
+
+        BufferedImage croped = this.img.getSubimage(bs[0], bs[1], bs[2]-bs[0]+1, bs[3]-bs[1]+1);
         return new BasicImage(croped);
     }
-    public BasicImage getSubImage(int[] bs) {
-        bs = new int[]{Math.max(bs[0], 0),
-                       Math.max(bs[1], 0),
-                       Math.min(bs[2], getWidth()-1),
-                       Math.min(bs[3], getHeight()-1)};
-        return getSubImage(bs[0], bs[1], bs[2], bs[3]);
+    public BasicImage getSubImage(int xmin, int ymin, int xmax, int ymax) {
+        return getSubImage(new int[]{xmin, ymin, xmax, ymax});
     }
 
     /**

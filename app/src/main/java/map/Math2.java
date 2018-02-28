@@ -744,6 +744,14 @@ public class Math2 {
         return bss;
     }
 
+    public static int[] getInsideBounds(int[] bs, int width, int height) {
+        bs = new int[]{Math.max(bs[0], 0),
+                       Math.max(bs[1], 0),
+                       Math.min(bs[2], width-1),
+                       Math.min(bs[3], height-1)};
+        return bs;
+    }
+
     //****************************************CONVERSIONS
 
     /**

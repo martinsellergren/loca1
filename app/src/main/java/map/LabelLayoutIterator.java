@@ -123,30 +123,29 @@ public class LabelLayoutIterator {
             }
         }
     }
-
-    /**
-     * Constructs from a tiledImage and bounds.
-     *
-     * @param img Box-image stored in tiles.
-     * @param bs Bounds [xmin ymin xmax ymax] for the area
-     * in the image that will be analyzed for labels. Analysis is kept
-     * inside image even if bs goes outside.
-     *
-     * @pre Min-bounds < max-bounds.
-     */
-    public LabelLayoutIterator(TiledImage img, int[] bs, int alphaThreshold) {
-        this(img.getSubImage(bs), alphaThreshold);
-    }
-
     /**
      * Constructor for using default value for alphaThreshold.
      */
     public LabelLayoutIterator(BasicImage img) {
         this(img, DEFAULT_ALPHA_THRESHOLD);
     }
-    public LabelLayoutIterator(TiledImage img, int[] bs) {
-        this(img, bs, DEFAULT_ALPHA_THRESHOLD);
-    }
+
+    // /**
+    //  * Constructs from a tiledImage and bounds.
+    //  *
+    //  * @param img Box-image stored in tiles.
+    //  * @param bs Bounds [xmin ymin xmax ymax] for the area
+    //  * in the image that will be analyzed for labels. Analysis is kept
+    //  * inside image even if bs goes outside.
+    //  *
+    //  * @pre Min-bounds < max-bounds.
+    //  */
+    // public LabelLayoutIterator(TiledImage img, int[] bs, int alphaThreshold) {
+    //     this(img.getSubImage(bs), alphaThreshold);
+    // }
+    // public LabelLayoutIterator(TiledImage img, int[] bs) {
+    //     this(img, bs, DEFAULT_ALPHA_THRESHOLD);
+    // }
 
     /**
      * Finds and returns next layout. Starts searching at startX

@@ -40,7 +40,9 @@ public class Places {
 
         for (int[] bs : bss) {
             bs = new int[]{bs[0]-extTerm, bs[1]-extTerm, bs[2]+extTerm, bs[3]+extTerm};
-            LabelLayoutIterator iter = new LabelLayoutIterator(boxImg, bs);
+            BasicImage boxImg_ = boxImg.getSubImage(bs);
+            bs = Math2.getInsideBounds(bs, boxImg_.getWidth(), boxImg_.getHeight());
+            LabelLayoutIterator iter = new LabelLayoutIterator(boxImg_);
 
             LabelLayout lay;
             while ((lay = iter.next()) != null) {

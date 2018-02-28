@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 public class MapRequestTests {
 
     boolean highQ = true;
+    Language lang = Language.ENG;
     Path saveDir = Paths.get("test_MapRequestTests");
 
 //     @Test
@@ -115,8 +116,8 @@ public class MapRequestTests {
     public/***/ void fetchHelper(double w, double n, double e, double s, int z) {
         try {
             MapImageView v = new MapImageView(w, n, e, s, z, highQ);
-            MapRequest req = new MapRequest(v, saveDir);
-            TiledImage img = req.fetch(MapRequest.FULL_STYLE_ID, ""+imgIndex);
+            MapRequest req = new MapRequest(v, saveDir, lang);
+            TiledImage img = req.fetch(MapRequest.FULL_STYLE_ID_ENG, ""+imgIndex);
             img.save(imgIndex++ + "." +req.toString() + ".png");
         }
         catch (IOException ex) {
@@ -127,7 +128,7 @@ public class MapRequestTests {
     public void fetch3Helper(double w, double n, double e, double s, int z) {
         try {
             MapImageView v = new MapImageView(w, n, e, s, z, highQ);
-            MapRequest req = new MapRequest(v, saveDir);
+            MapRequest req = new MapRequest(v, saveDir, lang);
             TiledImage[] imgs = req.fetch3();
             imgs[0].save("test_MapRequestTests_fetch3Helper_full.png");
             imgs[1].save("test_MapRequestTests_fetch3Helper_label.png");
