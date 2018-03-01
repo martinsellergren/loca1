@@ -360,6 +360,71 @@ public class BasicImage {
         return res;
     }
 
+    /**
+     * Save img. Overwrites if file exists.
+     */
+    public void save(String fileName) {
+        save(Paths.get(fileName));
+    }
+    public void save(Path p) {
+        try {
+            p.toFile().mkdirs();
+            ImageIO.write(this.img, "png", p.toFile());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            System.exit(-1);
+        }
+    }
+
+    /**
+     * Load from file.
+     */
+    public static BasicImage load(String fileName) {
+        return load(Paths.get(fileName));
+    }
+    public static BasicImage load(Path p) {
+        BufferedImage img = null;
+
+        try {
+            img = ImageIO.read(p.toFile());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return new BasicImage(img);
+    }
+
+    /**
+     * Draws an overlay covering a label.
+     *
+     * @param l Label to be covered.
+     * @param c Color used for the overlay.
+     *
+     * @pre l fits inside this image with some margin.
+     */
+    public void drawLabelCover(LabelLayout l, Color c) {
+        Graphics2D g = createGraphics();
+        g.setColor(c);
+        g.setStroke(new BasicStroke((float) l.getTallestBoxHeight(),
+                                    BasicStroke.CAP_ROUND,
+                                    BasicStroke.JOIN_MITER));
+
+        for (int i = 0; i < l.getNoRows(); i++) {
+            LinkedList<Box> row = l.getRow(i);
+            int[] cursor = Math2.toInt(row.get(0).getLeftMid());
+
+            for (Box b : row) {
+                int[] lm = Math2.toInt(b.getLeftMid());
+                int[] rm = Math2.toInt(b.getRightMid());
+                g.drawLine(cursor[0], cursor[1], lm[0], lm[1]);
+                g.drawLine(lm[0], lm[1], rm[0], rm[0]);
+            }
+        }
+
+    }
+
     //*******************************FOR TESTING
 
     /**
@@ -486,41 +551,5 @@ public class BasicImage {
         frame.getContentPane().add(new JLabel(new ImageIcon(this.img)));
         frame.pack();
         frame.setVisible(true);
-    }
-
-    /**
-     * Save img. Overwrites if file exists.
-     */
-    public void save(String fileName) {
-        save(Paths.get(fileName));
-    }
-    public void save(Path p) {
-        try {
-            p.toFile().mkdirs();
-            ImageIO.write(this.img, "png", p.toFile());
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            System.exit(-1);
-        }
-    }
-
-    /**
-     * Load from file.
-     */
-    public static BasicImage load(String fileName) {
-        return load(Paths.get(fileName));
-    }
-    public static BasicImage load(Path p) {
-        BufferedImage img = null;
-
-        try {
-            img = ImageIO.read(p.toFile());
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return new BasicImage(img);
     }
 }

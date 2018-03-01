@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.Random;
 import java.io.IOException;
 import java.util.Iterator;
+import java.awt.Color;
 
 /**
  * A list of places (location, name, category).
@@ -161,5 +162,18 @@ public class Places {
             if (p.getCategory() == Category.UNKNOWN)
                 iter.remove();
         }
+    }
+
+    /**
+     * @param c Color of overlay.
+     * @return A list with label-overlays of every place. A place has
+     * one label-overlay per label.
+     */
+    public LinkedList<Place.LabelCover[]> getLabelOverlays(Color c) {
+        LinkedList<Place.LabelCover[]> covs = new LinkedList<Place.LabelCover[]>();
+        for (Place p : this.places) {
+            covs.add(p.getLabelCovers(c));
+        }
+        return covs;
     }
 }

@@ -1,6 +1,9 @@
 package map;
 
 import java.util.LinkedList;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Color;
 
 /**
  * Representation of a place on a map described by one or many labels.
@@ -85,6 +88,13 @@ public class Place {
     }
 
     /**
+     * @return Number of labels of this place.
+     */
+    public int getNoLabels() {
+        return this.layouts.size();
+    }
+
+    /**
      * Add offset to every label of place.
      */
     public void addOffset(int addX, int addY) {
@@ -122,5 +132,38 @@ public class Place {
         }
 
         return new Place(this.name, ls, this.category);
+    }
+
+    /**
+     * Creates images (one per label) that covers the text of this
+     * label.
+     *
+     * @param c Color of image.
+     * @return Label-overlays, one per label in no particular order.
+     */
+    class LabelCover {
+        public final BasicImage img;
+        public final int[] topLeft;
+        private LabelCover(BasicImage img, int[] tl) {
+            this.img = img; this.topLeft = tl;
+        }
+    }
+    public LabelCover[] getLabelOverlays(Color c) {
+        LabelCover[] covs = new LabelCover[this.layouts.size()];
+        double SCALE_FACTOR = 1.2;
+        Color col = Color.RED;
+
+        for (int i = 0; i < layouts.size(); i++) {
+            LabelLayout lay = this.layouts.get(i).copy();
+            int[] bs = Math2.toInt(Math2.scaleBounds(lay.getBounds(), SCALE_FACTOR));
+
+            int[] tl = new int[]{bs[0], bs[1]};
+            BasicImage img = new BasicImage(bs[2]-bs[0]+1, bs[3]-bs[1]+1);
+            lay.addOffset(-tl[0], -tl[1]);
+            img.drawLabelCover(lay, col);
+            covs[i] = new LabelCover(img, tl);
+        }
+
+        return covs;
     }
 }

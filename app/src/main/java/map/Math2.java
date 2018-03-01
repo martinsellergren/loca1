@@ -744,12 +744,40 @@ public class Math2 {
         return bss;
     }
 
+    /**
+     * If a point in the provided bounds are outside specified area
+     * the point is snapped inside, i.e placed on the near edge.
+     * Area defined by x-values [0, width-1] and y-values [0, height-1].
+     *
+     * @param bs [xmin ymin xmax ymax]
+     * @return Bounds inside specified area.
+     */
     public static int[] getInsideBounds(int[] bs, int width, int height) {
         bs = new int[]{Math.max(bs[0], 0),
                        Math.max(bs[1], 0),
                        Math.min(bs[2], width-1),
                        Math.min(bs[3], height-1)};
         return bs;
+    }
+
+    /**
+     * @param bs [xmin ymin xmax ymax]
+     * @param fact Scale factor.
+     * @return Bounds with ~same mid-point but width and height
+     * scaled by fact, and rounded to int.
+     */
+    public static double[] scaleBounds(double[] bs, double fact) {
+        double w = bs[2] - bs[0] + 1;
+        double h = bs[3] - bs[1] + 1;
+        double newW = w * fact;
+        double newH = h * fact;
+        double midX = (bs[0] + bs[2]) / 2d;
+        double midY = (bs[1] + bs[3]) / 2d;
+
+        return new double[]{ midX - newW / 2,
+                             midY - newH / 2,
+                             midX + newW / 2,
+                             midY + newH / 2 };
     }
 
     //****************************************CONVERSIONS
