@@ -9,6 +9,7 @@ public class PlacesTests {
     TiledImage bimg;
     MapImageView view;
     Language lang;
+    Places places;
 
     @Before
     public void setUp() {
@@ -21,18 +22,17 @@ public class PlacesTests {
         int z = 5;
         view = new MapImageView(w, n, e, s, z, true);
         lang = Language.ENG;
+        places = new Places(limg, bimg, view, lang);
     }
 
     @Test
     public void construction() {
-        try {
-            Places ps = new Places(limg, bimg, view, lang);
+        BasicImage dump = limg.getOneImage();
+
+        for (Place p : places.getPlaces()) {
+            dump.drawPlace(p);
         }
-        catch (IOException e) {
-            assertTrue(false);
-        }
+
+        dump.save("test_PlacesTests_construction.png");
     }
-
-
-
 }

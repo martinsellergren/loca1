@@ -88,6 +88,19 @@ public class Place {
     }
 
     /**
+     * @return Array of label-layouts (copies).
+     */
+    public LabelLayout[] getLabelLayouts() {
+        LabelLayout[] lays = new LabelLayout[this.layouts.size()];
+
+        for (int i = 0; i < lays.length; i++) {
+            lays[i] = this.layouts.get(i).copy();
+        }
+
+        return lays;
+    }
+
+    /**
      * @return Number of labels of this place.
      */
     public int getNoLabels() {
@@ -160,7 +173,7 @@ public class Place {
             int[] tl = new int[]{bs[0], bs[1]};
             BasicImage img = new BasicImage(bs[2]-bs[0]+1, bs[3]-bs[1]+1);
             lay.addOffset(-tl[0], -tl[1]);
-            img.drawLabelCover(lay, col);
+            img.drawLabelOverlay(lay, col);
             covs[i] = new LabelCover(img, tl);
         }
 

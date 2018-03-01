@@ -31,6 +31,8 @@ public class MapImage {
         TiledImage[] imgs = req.fetch3();
         this.img = imgs[0];
         this.places = new Places(imgs[1], imgs[2], view, lang);
+        places.fetchCategories(view);
+        places.removeUnknownPlaces();
     }
 
     // /**

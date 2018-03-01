@@ -404,7 +404,7 @@ public class BasicImage {
      *
      * @pre l fits inside this image with some margin.
      */
-    public void drawLabelCover(LabelLayout l, Color c) {
+    public void drawLabelOverlay(LabelLayout l, Color c) {
         Graphics2D g = createGraphics();
         g.setColor(c);
         g.setStroke(new BasicStroke((float) l.getTallestBoxHeight(),
@@ -425,6 +425,13 @@ public class BasicImage {
 
     }
 
+    /**
+     * Return graphics for drawing on image etc.
+     */
+    public Graphics2D createGraphics() {
+        return this.img.createGraphics();
+    }
+
     //*******************************FOR TESTING
 
     /**
@@ -437,10 +444,20 @@ public class BasicImage {
     }
 
     /**
-     * Return graphics for drawing on image etc.
+     * Draws Place on image:
+     *  1) Draws place-overlays semi-transparant.
+     *  2) Draws place-name in corner of each overlay.
+     *  3) Draws place-category in corner.
+     *  4) Draws a number indicating number of labels in corner.
      */
-    public Graphics2D createGraphics() {
-        return this.img.createGraphics();
+    public void drawPlace(Place p) {
+        Color overlayC = new Color(1, 0, 0, 0.5f);
+        Color textC = Color.BLACK;
+
+        for (LabelLayout lay : p.getLabelLayouts()) {
+            drawLabelOverlay(lay, overlayC);
+            drawLabelText(p.getName(), lay);
+        }
     }
 
     /**

@@ -24,16 +24,15 @@ public class Places {
 
     /**
      * Finds label-layouts from a box-image, and their text using
-     * a label-image and ocr. Label-categories from internet using
-     * the label-text and location on earth. Removes labels that
-     * failes to receive a category.
+     * a label-image and ocr. Place-categories set to UNKNOWN (needs
+     * internet: use fetchCategories().
      *
      * @param labelImg A label-image.
      * @param boxImg A box-image.
      * @param view A map-image-view describing labelImg and boxImg.
      * @param lang Language of text in labelImg.
      */
-    public Places(TiledImage labelImg, TiledImage boxImg, MapImageView view, Language lang) throws IOException {
+    public Places(TiledImage labelImg, TiledImage boxImg, MapImageView view, Language lang) {
         OCR ocr = new OCR(lang);
         int extTerm = view.getExtensionTerm();
         int[] imgBs = new int[]{0, 0, boxImg.getWidth()-1, boxImg.getHeight()-1};
@@ -52,8 +51,6 @@ public class Places {
             }
         }
         ocr.end();
-        fetchLabelCategories(view);
-        removeUnknownPlaces();
     }
 
     /**
@@ -67,8 +64,7 @@ public class Places {
     /**
      * Adds a place to the list of places, or updates a current place.
      * Uses OCR method to find label-text (i.e place name). The
-     * category of a new added place is set to unknown
-     * (use setCategory() later).
+     * category of a new added place is set to unknown.
      *
      * - If layout exists in any place in list: done.
      * - If extracted label-text (i.e place-name) exists: add layout.
@@ -143,9 +139,9 @@ public class Places {
     /**
      * Fetches and sets categories for every place. Queries the area
      * around the place-location (one of them). If fails to find a
-     * category, leaves this place untouched.
+     * category, leaves this place untouched. Uses internet.
      */
-    private void fetchLabelCategories(MapImageView v) throws IOException {
+    public void fetchCategories(MapImageView v) throws IOException {
         for (Place p : this.places) {
             p.setCategory(Category.OCEAN);
         }
@@ -154,7 +150,7 @@ public class Places {
     /**
      * Removes all places with unknown category.
      */
-    private void removeUnknownPlaces() {
+    public void removeUnknownPlaces() {
         Iterator<Place> iter = this.places.iterator();
         while (iter.hasNext()) {
             Place p = iter.next();
@@ -164,16 +160,16 @@ public class Places {
         }
     }
 
-    /**
-     * @param c Color of overlay.
-     * @return A list with label-overlays of every place. A place has
-     * one label-overlay per label.
-     */
-    public LinkedList<Place.LabelCover[]> getLabelOverlays(Color c) {
-        LinkedList<Place.LabelCover[]> covs = new LinkedList<Place.LabelCover[]>();
-        for (Place p : this.places) {
-            covs.add(p.getLabelCovers(c));
-        }
-        return covs;
-    }
+    // /**
+    //  * @param c Color of overlay.
+    //  * @return A list with label-overlays of every place. A place has
+    //  * one label-overlay per label.
+    //  */
+    // public LinkedList<Place.LabelCover[]> getLabelOverlays(Color c) {
+    //     LinkedList<Place.LabelCover[]> covs = new LinkedList<Place.LabelCover[]>();
+    //     for (Place p : this.places) {
+    //         covs.add(p.getLabelCovers(c));
+    //     }
+    //     return covs;
+    // }
 }
