@@ -259,6 +259,14 @@ public class MapImageView {
     }
 
     /**
+     * @param bs [xmin ymin xmax ymax] pixel-coordinate points.
+     * @return [WNES]
+     */
+    public double[] getGeoBounds(double[] bs) {
+        return null;
+    }
+
+    /**
      * Turn pixel-coordinates into geo-coordinates. Pixel cordinates
      * are specific to associated map-image (local).
      * (0,0) is top left corner of this image.

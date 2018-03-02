@@ -28,11 +28,12 @@ public class PlacesTests {
     @Test
     public void construction() {
         BasicImage dump = limg.getOneImage();
+        dump.save("test_PlacesTests_construction_before.png");
 
         for (Place p : places.getPlaces()) {
             dump.drawPlace(p);
         }
 
-        dump.save("test_PlacesTests_construction.png");
+        dump.save("test_PlacesTests_construction_after.png");
     }
 }

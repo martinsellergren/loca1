@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Color;
+import java.io.IOException;
 
 /**
  * Representation of a place on a map described by one or many labels.
@@ -123,8 +124,10 @@ public class Place {
      * @param bounds [WNES] geo-bounds of the place.
      * @return Places' category.
      */
-    public Category fetchCategory(double[] bounds) {
-        return null;
+    public Category fetchCategory(double[] bounds) throws IOException {
+
+
+        return Category.OCEAN;
     }
 
     /**

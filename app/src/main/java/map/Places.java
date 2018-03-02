@@ -93,7 +93,7 @@ public class Places {
         }
         else {
             this.places.add(new Place(name, lay));
-            System.out.print("\"" + name + "\"\n");
+            //System.out.print("\"" + name + "\"\n");
         }
     }
 
@@ -152,9 +152,7 @@ public class Places {
      * category, leaves this place untouched. Uses internet.
      */
     public void fetchCategories(MapImageView v) throws IOException {
-        for (Place p : this.places) {
-            p.setCategory(Category.OCEAN);
-        }
+        for (Place p : this.places)
     }
 
     /**
@@ -170,16 +168,7 @@ public class Places {
         }
     }
 
-    // /**
-    //  * @param c Color of overlay.
-    //  * @return A list with label-overlays of every place. A place has
-    //  * one label-overlay per label.
-    //  */
-    // public LinkedList<Place.LabelCover[]> getLabelOverlays(Color c) {
-    //     LinkedList<Place.LabelCover[]> covs = new LinkedList<Place.LabelCover[]>();
-    //     for (Place p : this.places) {
-    //         covs.add(p.getLabelCovers(c));
-    //     }
-    //     return covs;
-    // }
+    static class PlacesBuilder {
+
+    }
 }

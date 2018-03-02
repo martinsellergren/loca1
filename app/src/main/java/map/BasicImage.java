@@ -472,12 +472,22 @@ public class BasicImage {
      */
     public void drawPlace(Place p) {
         Color overlayC = Color.RED;
-        Color textC = Color.WHITE;
+        Color col = Color.WHITE;
 
         for (LabelLayout lay : p.getLabelLayouts()) {
             drawLabelOverlay(lay, overlayC);
-            drawLabelText(p.getName(), lay, textC);
+            drawLabelData(p.getName(), p.getCategory(), p.getNoLabels(), lay, col);
         }
+    }
+
+    /**
+     * Draws label name, category and label-count on label.
+     */
+    public void drawLabelData(String text, Category cat, int count, LabelLayout lay, Color col) {
+        Graphics2D g = createGraphics();
+        g.setPaint(col);
+        double[] bs = lay.getBounds();
+        g.drawString(text + ", " + cat.toString() + ", x" + count, (float)bs[0], (float)(bs[1]+bs[3])/2);
     }
 
     /**
@@ -568,16 +578,6 @@ public class BasicImage {
         g.drawLine(tr[0], tr[1], br[0], br[1]);
         g.drawLine(br[0], br[1], bl[0], bl[1]);
         g.drawLine(bl[0], bl[1], tl[0], tl[1]);
-    }
-
-    /**
-     * Draws a string at label's center.
-     */
-    public void drawLabelText(String text, LabelLayout lay, Color c) {
-        Graphics2D g = createGraphics();
-        g.setPaint(c);
-        double[] bs = lay.getBounds();
-        g.drawString(text, (float)(bs[0]+bs[2])/2, (float)(bs[1]+bs[3])/2);
     }
 
     /**

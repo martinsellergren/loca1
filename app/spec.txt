@@ -126,6 +126,10 @@ Place
     setCategory(c::category enum)
     fetchCategory(double[wnes])::category enum (if place not found, returns undefined-category)
 
+PlaceQuery
+    new PlaceQuery(String text, double[] wnes) throws IOException, NoRelevantPlaceException
+    getCategory()::Category
+
 OCR
     OCREngine::...
     Language::enum
