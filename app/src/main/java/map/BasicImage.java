@@ -425,23 +425,24 @@ public class BasicImage {
      * @pre l fits inside this image with some margin.
      */
     public void drawLabelOverlay(LabelLayout l, Color c) {
-        // Graphics2D g = createGraphics();
-        // g.setColor(c);
-        // g.setStroke(new BasicStroke((float) l.getTallestBoxHeight(),
-        //                             BasicStroke.CAP_ROUND,
-        //                             BasicStroke.JOIN_MITER));
+        Graphics2D g = createGraphics();
+        g.setColor(c);
+        g.setStroke(new BasicStroke((float) l.getTallestBoxHeight(),
+                                    BasicStroke.CAP_ROUND,
+                                    BasicStroke.JOIN_MITER));
 
-        // for (int i = 0; i < l.getNoRows(); i++) {
-        //     LinkedList<Box> row = l.getRow(i);
-        //     int[] cursor = Math2.toInt(row.get(0).getLeftMid());
+        for (int i = 0; i < l.getNoRows(); i++) {
+            LinkedList<Box> row = l.getRow(i);
+            int[] cursor = Math2.toInt(row.get(0).getLeftMid());
 
-        //     for (Box b : row) {
-        //         int[] lm = Math2.toInt(b.getLeftMid());
-        //         int[] rm = Math2.toInt(b.getRightMid());
-        //         g.drawLine(cursor[0], cursor[1], lm[0], lm[1]);
-        //         g.drawLine(lm[0], lm[1], rm[0], rm[0]);
-        //     }
-        // }
+            for (Box b : row) {
+                int[] lm = Math2.toInt(b.getLeftMid());
+                int[] rm = Math2.toInt(b.getRightMid());
+                g.drawLine(cursor[0], cursor[1], lm[0], lm[1]);
+                g.drawLine(lm[0], lm[1], rm[0], rm[1]);
+                cursor = Math2.toInt(b.getLeftMid());
+            }
+        }
     }
 
     /**
@@ -464,13 +465,13 @@ public class BasicImage {
 
     /**
      * Draws Place on image:
-     *  1) Draws place-overlays semi-transparant.
+     *  1) Draws place-overlays.
      *  2) Draws place-name in corner of each overlay.
      *  3) Draws place-category in corner.
      *  4) Draws a number indicating number of labels in corner.
      */
     public void drawPlace(Place p) {
-        Color overlayC = new Color(1, 0, 0, 0.5f);
+        Color overlayC = Color.RED;
         Color textC = Color.WHITE;
 
         for (LabelLayout lay : p.getLabelLayouts()) {
