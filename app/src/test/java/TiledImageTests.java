@@ -11,11 +11,11 @@ public class TiledImageTests {
     // TiledImage img = loader(Paths.get("../sweden/full"));
     // TiledImage img1x = buildOneTile15x10Image();
 
-    // @Test
-    // public void load() {
-    //     img.save("test_TiledImageTests_build.png");
-    //     img1x.save("test_TiledImageTests_build_1x.png");
-    // }
+    // // @Test
+    // // public void load() {
+    // //     img.save("test_TiledImageTests_build.png");
+    // //     img1x.save("test_TiledImageTests_build_1x.png");
+    // // }
 
     // @Test
     // public void dims() {
@@ -56,6 +56,10 @@ public class TiledImageTests {
     //     sub = img1x.getSubImage(new int[]{5, 4, 10, 9});
     //     assertEquals(6, sub.getWidth());
     //     assertEquals(6, sub.getHeight());
+
+    //     //save
+    //     img.getSubImage(new int[]{0, 0, 100000, 100000}).save("test_TiledImageTests_wholeSubImage.png");
+    //     img.getSubImage(new int[]{img.getWidth()/2, img.getHeight()/2, 100000, 100000}).save("test_TiledImageTests_halfSubImage.png");
     // }
 
     public static TiledImage loader(Path dir) {
