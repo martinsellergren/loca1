@@ -738,7 +738,7 @@ public class Math2 {
             for (int x0 = bs[0]; x0 <= bs[2]; x0 += gridSize) {
                 int x1 = Math.min(x0 + gridSize - 1, bs[2]);
                 int y1 = Math.min(y0 + gridSize - 1, bs[3]);
-                bss.add(new int[]{x1, y1});
+                bss.add(new int[]{x0, y0, x1, y1});
             }
         }
         return bss;
@@ -753,11 +753,10 @@ public class Math2 {
      * @return Bounds inside specified area.
      */
     public static int[] getInsideBounds(int[] bs, int width, int height) {
-        bs = new int[]{Math.max(bs[0], 0),
+        return new int[]{Math.max(bs[0], 0),
                        Math.max(bs[1], 0),
                        Math.min(bs[2], width-1),
                        Math.min(bs[3], height-1)};
-        return bs;
     }
 
     /**

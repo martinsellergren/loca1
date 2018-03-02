@@ -140,58 +140,38 @@ public class TiledImage {
      * @pre Min-bounds < max-bounds.
      */
     public BasicImage getSubImage(int[] bs) {
-        bs = Math2.getInsideBounds(bs, getWidth(), getHeight());
+        BasicImage tiles = getSubImage_fullTiles(bs);
+        int[] tl_rcxy = getTileAndPos(new int[]{bs[0], bs[1]});
+        int xmin = tl_rcxy[0];
+        int ymin = tl_rcxy[1];
+        int xmax = xmin + (bs[2] - bs[0]);
+        int ymax = ymin + (bs[3] - bs[1]);
+        return tiles.getSubImage(xmin, ymin, xmax, ymax);
+    }
 
-        int[] rcxyTL = getTileAndPos(new int[]{bs[0], bs[1]});
-        BasicImage tl = getTile(rcxyTL[0], rcxyTL[1]);
-        int leftTileLeftX = rcxyTL[2];
-        int topTileTopY = rcxyTL[3];
+    /**
+     * @return Sub-image split in full tile-blocks where bounds fit.
+     */
+    private BasicImage getSubImage_fullTiles(int[] bs) {
+        LinkedList<LinkedList<BasicImage>> tiles = new LinkedList<LinkedList<BasicImage>>();
+        int[] tl_rcxy = getTileAndPos(new int[]{bs[0], bs[1]});
 
-        int[] rcxyBR = getTileAndPos(new int[]{bs[2], bs[3]});
-        BasicImage br = getTile(rcxyBR[0], rcxyBR[1]);
-        int rightTileRightX = rcxyBR[2];
-        int botTileBotY = rcxyBR[3];
+        int xmin = bs[0] - tl_rcxy[2];
+        int ymin = bs[1] - tl_rcxy[3];
 
-        int width = bs[2] - bs[0] + 1;
-        int height = bs[3] - bs[1] + 1;
-        BasicImage sub = new BasicImage(width, height);
-        Graphics2D g = sub.createGraphics();
+        for (int y = ymin; y <= bs[3]; y += getTileHeight()) {
+            LinkedList<BasicImage> row = new LinkedList<BasicImage>();
 
-        int subY = 0;
-
-        for (int y = bs[1]; y <= bs[3]; y += getTileHeight()) {
-            int rowH = 0;
-            int subX = 0;
-
-            for (int x = bs[0]; x <= bs[2]; x += getTileWidth()) {
+            for (int x = xmin; x <= bs[2]; x += getTileWidth()) {
                 int[] rc = getTileAndPos(new int[]{x, y});
                 BasicImage tile = getTile(rc[0], rc[1]);
-
-                boolean firstRow = (rc[0] == rcxyTL[0]);
-                boolean firstCol = (rc[1] == rcxyTL[1]);
-                boolean lastRow = (rc[0] == rcxyBR[0]);
-                boolean lastCol = (rc[1] == rcxyBR[1]);
-
-                int left = 0;
-                int top = 0;
-                int right = tile.getWidth() - 1;
-                int bot = tile.getHeight() -1;
-                if (firstRow) top = topTileTopY;
-                if (firstCol) left = leftTileLeftX;
-                if (lastRow) bot = botTileBotY;
-                if (lastCol) right = rightTileRightX;
-                BasicImage part = tile.getSubImage(new int[]{left, top, right, bot});
-
-                g.drawImage(part.getBufferedImage(), null, subX, subY);
-
-                int partW = right - left + 1;
-                rowH = bot - top + 1;
-                subX += partW;
+                row.add(tile);
             }
-            subY += rowH;
+
+            tiles.add(row);
         }
 
-        return sub;
+        return BasicImage.concatenateImages(tiles);
     }
 
     /**
@@ -399,6 +379,29 @@ public class TiledImage {
         }
 
         return BasicImage.concatenateImages(lay);
+    }
+
+    /**
+     * Draw tile grid lines.
+     */
+    public BasicImage getOneImageWithGrid() {
+        BasicImage img = getOneImage();
+        Graphics2D g = img.createGraphics();
+        g.setPaint(Color.RED);
+
+        for (int r = 1; r <= this.rows; r++) {
+            int y = getTileHeight() * r;
+            if (r == rows) y = getTileHeight() * (r-1) + getLastRowHeight();
+            g.drawLine(0, y, getWidth()-1, y);
+        }
+
+        for (int c = 1; c <= this.cols; c++) {
+            int x = getTileWidth() * c;
+            if (c == cols) x = getTileWidth() * (c-1) + getLastColWidth();
+            g.drawLine(x, 0, x, getHeight()-1);
+        }
+
+        return img;
     }
 
 

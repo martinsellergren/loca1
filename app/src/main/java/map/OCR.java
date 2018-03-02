@@ -49,6 +49,6 @@ public class OCR {
         outText.deallocate();
         pixDestroy(image);
 
-        return text;
+        return text.trim();
     }
 }

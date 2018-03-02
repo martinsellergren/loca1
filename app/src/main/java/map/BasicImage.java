@@ -330,7 +330,27 @@ public class BasicImage {
 
         return new BasicImage(img);
     }
+    public static BasicImage concatenateImages(LinkedList<LinkedList<BasicImage>> imgs) {
+        return concatenateImages(to2DArray(imgs));
+    }
 
+    /**
+     * @return 2d-array of images, from 2d-list of images.
+     */
+    public static BasicImage[][] to2DArray(LinkedList<LinkedList<BasicImage>> list) {
+        if (list.size() == 0) return new BasicImage[0][0];
+
+        BasicImage[][] arr = new BasicImage[list.size()][list.get(0).size()];
+
+        for (int r = 0; r < list.size(); r++) {
+            LinkedList<BasicImage> row = list.get(r);
+
+            for (int c = 0; c < row.size(); c++) {
+                arr[r][c] = row.get(c);
+            }
+        }
+        return arr;
+    }
 
     /**
      * @param imgs One row of images with varying dims.
@@ -405,24 +425,23 @@ public class BasicImage {
      * @pre l fits inside this image with some margin.
      */
     public void drawLabelOverlay(LabelLayout l, Color c) {
-        Graphics2D g = createGraphics();
-        g.setColor(c);
-        g.setStroke(new BasicStroke((float) l.getTallestBoxHeight(),
-                                    BasicStroke.CAP_ROUND,
-                                    BasicStroke.JOIN_MITER));
+        // Graphics2D g = createGraphics();
+        // g.setColor(c);
+        // g.setStroke(new BasicStroke((float) l.getTallestBoxHeight(),
+        //                             BasicStroke.CAP_ROUND,
+        //                             BasicStroke.JOIN_MITER));
 
-        for (int i = 0; i < l.getNoRows(); i++) {
-            LinkedList<Box> row = l.getRow(i);
-            int[] cursor = Math2.toInt(row.get(0).getLeftMid());
+        // for (int i = 0; i < l.getNoRows(); i++) {
+        //     LinkedList<Box> row = l.getRow(i);
+        //     int[] cursor = Math2.toInt(row.get(0).getLeftMid());
 
-            for (Box b : row) {
-                int[] lm = Math2.toInt(b.getLeftMid());
-                int[] rm = Math2.toInt(b.getRightMid());
-                g.drawLine(cursor[0], cursor[1], lm[0], lm[1]);
-                g.drawLine(lm[0], lm[1], rm[0], rm[0]);
-            }
-        }
-
+        //     for (Box b : row) {
+        //         int[] lm = Math2.toInt(b.getLeftMid());
+        //         int[] rm = Math2.toInt(b.getRightMid());
+        //         g.drawLine(cursor[0], cursor[1], lm[0], lm[1]);
+        //         g.drawLine(lm[0], lm[1], rm[0], rm[0]);
+        //     }
+        // }
     }
 
     /**
@@ -452,11 +471,11 @@ public class BasicImage {
      */
     public void drawPlace(Place p) {
         Color overlayC = new Color(1, 0, 0, 0.5f);
-        Color textC = Color.BLACK;
+        Color textC = Color.WHITE;
 
         for (LabelLayout lay : p.getLabelLayouts()) {
             drawLabelOverlay(lay, overlayC);
-            drawLabelText(p.getName(), lay);
+            drawLabelText(p.getName(), lay, textC);
         }
     }
 
@@ -553,8 +572,9 @@ public class BasicImage {
     /**
      * Draws a string at label's center.
      */
-    public void drawLabelText(String text, LabelLayout lay) {
+    public void drawLabelText(String text, LabelLayout lay, Color c) {
         Graphics2D g = createGraphics();
+        g.setPaint(c);
         double[] bs = lay.getBounds();
         g.drawString(text, (float)(bs[0]+bs[2])/2, (float)(bs[1]+bs[3])/2);
     }

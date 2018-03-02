@@ -78,12 +78,22 @@ public class Places {
         if (layoutExists(lay)) return;
 
         String name = ocr.detectString(labelImg.extractLabel(lay));
+
+        // if (name.equals("")) {
+        //     System.out.println("\n" + lay);
+        //     labelImg.getSubImage(Math2.toInt(lay.getBounds())).save("sub.png");
+        //     BasicImage whole = labelImg.getOneImageWithGrid();
+        //     whole.drawLabelLayout(lay);
+        //     whole.save("whole.png");
+        // }
+
         Place p = findPlace(name);
         if (p != null) {
             p.addLayout(lay);
         }
         else {
             this.places.add(new Place(name, lay));
+            System.out.print("\"" + name + "\"\n");
         }
     }
 
