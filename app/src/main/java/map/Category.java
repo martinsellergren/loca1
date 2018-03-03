@@ -8,6 +8,5 @@ public enum Category {
     COUNTRY,
     LAKE,
     OCEAN,
-    ROAD,
-    UNKNOWN;
+    ROAD;
 }

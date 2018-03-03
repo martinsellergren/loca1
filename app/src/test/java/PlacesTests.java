@@ -22,7 +22,12 @@ public class PlacesTests {
         int z = 5;
         view = new MapImageView(w, n, e, s, z, true);
         lang = Language.ENG;
-        places = new Places(limg, bimg, view, lang);
+        try {
+            places = new Places.Builder(limg, bimg, view, lang).build();
+        }
+        catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Test

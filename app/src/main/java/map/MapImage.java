@@ -25,14 +25,14 @@ public class MapImage {
      * @param lang Fetch map-images with labels of this language.
      */
     public MapImage(double[] wnes, int zoom, boolean doubleQ, Language lang) throws IOException {
-        this.view = new MapImageView(wnes, zoom, doubleQ).getExtendedView();
-        Path p = Paths.get("zoom_level_" + zoom);
-        MapRequest req = new MapRequest(view, p, lang);
-        TiledImage[] imgs = req.fetch3();
-        this.img = imgs[0];
-        this.places = new Places(imgs[1], imgs[2], view, lang);
-        places.fetchCategories(view);
-        places.removeUnknownPlaces();
+        // this.view = new MapImageView(wnes, zoom, doubleQ).getExtendedView();
+        // Path p = Paths.get("zoom_level_" + zoom);
+        // MapRequest req = new MapRequest(view, p, lang);
+        // TiledImage[] imgs = req.fetch3();
+        // this.img = imgs[0];
+        // this.places = new Places(imgs[1], imgs[2], view, lang);
+        // places.fetchCategories(view);
+        // places.removeUnknownPlaces();
     }
 
     // /**

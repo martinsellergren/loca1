@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Color;
 import java.io.IOException;
+import com.google.gson.JsonObject;
 
 /**
  * Representation of a place on a map described by one or many labels.
@@ -20,59 +21,73 @@ import java.io.IOException;
  */
 public class Place {
     public/***/ String name;
-    public/***/ Category category;
     public/***/ LinkedList<LabelLayout> layouts = new LinkedList<LabelLayout>();
+    private JsonObject data;
+
+    // /**
+    //  * Constructor from one layout.
+    //  *
+    //  * @param name Place-name. length(name) > 0
+    //  * @param l Specification of the place-label's layout.
+    //  * @param c Place-category.
+    //  */
+    // public Place(String name, LabelLayout l, Category c) {
+    //     this.name = name;
+    //     this.layouts.add(l);
+    //     this.category = c;
+    // }
+
+    // /**
+    //  * Constructor with unknown category. Use fetch/setCategory()
+    //  * later.
+    //  */
+    // public Place(String name, LabelLayout l) {
+    //     this(name, l, Category.UNKNOWN);
+    // }
 
     /**
-     * Constructor from one layout.
+     * Constructes the place by fetching data from internet.
      *
-     * @param name Place-name. length(name) > 0
-     * @param l Specification of the place-label's layout.
-     * @param c Place-category.
+     * @param name Name of place (what label sais).
+     * @param lays Label-layouts, one or more.
+     * @param view Specifies a space where label-layout-positions
+     * makes sence.
      */
-    public Place(String name, LabelLayout l, Category c) {
+    public Place(String name, LinkedList<LabelLayout> lays, MapImageView view) throws PlaceQuery.NoRelevantResultException, IOException {
         this.name = name;
-        this.layouts.add(l);
-        this.category = c;
-    }
-
-    /**
-     * Constructor with unknown category. Use fetch/setCategory()
-     * later.
-     */
-    public Place(String name, LabelLayout l) {
-        this(name, l, Category.UNKNOWN);
+        this.layouts = lays;
+        this.data = null;
     }
 
     /**
      * Constructor from multiple layouts.
      */
-    private Place(String name, LinkedList<LabelLayout> ls, Category c) {
+    private Place(String name, LinkedList<LabelLayout> ls, JsonObject data) {
         this.name = name;
         this.layouts = ls;
-        this.category = c;
+        this.data = data;
     }
 
-    /**
-     * Adds a unique layout to the place.
-     * @return True if layout added. False if layout not unique so
-     * not added.
-     */
-    public boolean addLayout(LabelLayout lay) {
-        if (hasLayout(lay)) return false;
-        layouts.add(lay);
-        return true;
-    }
+    // /**
+    //  * Adds a unique layout to the place.
+    //  * @return True if layout added. False if layout not unique so
+    //  * not added.
+    //  */
+    // public boolean addLayout(LabelLayout lay) {
+    //     if (hasLayout(lay)) return false;
+    //     layouts.add(lay);
+    //     return true;
+    // }
 
-    /**
-     * @return True if place has layout lay.
-     */
-    public boolean hasLayout(LabelLayout lay) {
-        for (LabelLayout l : layouts) {
-            if (l.same(lay)) return true;
-        }
-        return false;
-    }
+    // /**
+    //  * @return True if place has layout lay.
+    //  */
+    // public boolean hasLayout(LabelLayout lay) {
+    //     for (LabelLayout l : layouts) {
+    //         if (l.same(lay)) return true;
+    //     }
+    //     return false;
+    // }
 
     /**
      * @return Name of place.
@@ -85,7 +100,7 @@ public class Place {
      * @return Category of place.
      */
     public Category getCategory() {
-        return this.category;
+        return Category.OCEAN;
     }
 
     /**
@@ -108,37 +123,37 @@ public class Place {
         return this.layouts.size();
     }
 
-    /**
-     * Add offset to every label of place.
-     */
-    public void addOffset(int addX, int addY) {
-        for (LabelLayout l : this.layouts) {
-            l.addOffset(addX, addY);
-        }
-    }
+    // /**
+    //  * Add offset to every label of place.
+    //  */
+    // public void addOffset(int addX, int addY) {
+    //     for (LabelLayout l : this.layouts) {
+    //         l.addOffset(addX, addY);
+    //     }
+    // }
+
+    // /**
+    //  * Fetches category from online-servers based on label's text
+    //  * (i.e place-name) and geo-position.
+    //  *
+    //  * @param bounds [WNES] geo-bounds of the place.
+    //  * @return Places' category.
+    //  */
+    // public Category fetchCategory(double[] bounds) throws IOException {
+
+
+    //     return Category.OCEAN;
+    // }
+
+    // /**
+    //  * Sets category.
+    //  */
+    // public void setCategory(Category c) {
+    //     this.category = c;
+    // }
 
     /**
-     * Fetches category from online-servers based on label's text
-     * (i.e place-name) and geo-position.
-     *
-     * @param bounds [WNES] geo-bounds of the place.
-     * @return Places' category.
-     */
-    public Category fetchCategory(double[] bounds) throws IOException {
-
-
-        return Category.OCEAN;
-    }
-
-    /**
-     * Sets category.
-     */
-    public void setCategory(Category c) {
-        this.category = c;
-    }
-
-    /**
-     * @return A deep copy of this object.
+     * @return A deep copy of this object (data not a copy).
      */
     public Place copy() {
         LinkedList<LabelLayout> ls = new LinkedList<LabelLayout>();
@@ -147,7 +162,7 @@ public class Place {
             ls.add(l.copy());
         }
 
-        return new Place(this.name, ls, this.category);
+        return new Place(this.name, ls, data);
     }
 
     /**

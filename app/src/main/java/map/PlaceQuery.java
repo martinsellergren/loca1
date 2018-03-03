@@ -9,6 +9,7 @@ import java.net.MalformedURLException;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonElement;
+import java.util.Arrays;
 
 /**
  * Fetches data about a place from internet.
@@ -20,13 +21,19 @@ public class PlaceQuery {
      * Queries for text and bounds, and looks for a result with a
      * category defined in Category-enum.
      */
-    class NoRelevantResultException extends Exception {}
+    class NoRelevantResultException extends Exception {
+        NoRelevantResultException(String mes) { super(mes); }
+    }
     public PlaceQuery(String text, double[] wnes) throws NoRelevantResultException, IOException {
         URL url = getURL(text, wnes);
         HttpURLConnection request = (HttpURLConnection) url.openConnection();
         request.connect();
         JsonParser jp = new JsonParser();
         this.data = jp.parse(new InputStreamReader((InputStream) request.getContent())).getAsJsonObject();
+
+        if (!hasGoodCategory()) {
+            throw new NoRelevantResultException(text + " at " + Arrays.toString(wnes));
+        }
     }
 
     /**
@@ -42,6 +49,14 @@ public class PlaceQuery {
             e.printStackTrace();
             throw new RuntimeException();
         }
+    }
+
+    /**
+     * @return True if category of fetched place-data is defined
+     * in Category-enum.
+     */
+    private boolean hasGoodCategory() {
+        return false;
     }
 
     /**
