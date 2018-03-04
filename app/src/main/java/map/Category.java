@@ -7,6 +7,7 @@ public enum Category {
     CITY,
     COUNTRY,
     LAKE,
+    SEA,
     OCEAN,
     ROAD;
 

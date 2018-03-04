@@ -9,9 +9,9 @@ public class PlaceQueryTests {
     // @Test
     // public void construction() {
         // String text = "sweden";
-        // double[] wnes = new double[]{-100,80,100,-80};
+        // double[] wsen = new double[]{-100,-80,100,80};
         // try {
-        //     PlaceQuery q = new PlaceQuery(text, wnes);
+        //     PlaceQuery q = new PlaceQuery(text, wsen);
         //     System.out.print(q);
         // }
         // catch (PlaceQuery.NoRelevantResultException e) {

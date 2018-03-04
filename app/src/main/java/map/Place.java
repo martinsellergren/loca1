@@ -54,21 +54,15 @@ public class Place {
      * @param view Specifies a space where label-layout-positions
      * makes sence.
      */
-    public static class UnknownPlaceException extends Exception {
-        private UnknownPlaceException(String msg) { super(msg); }
-    }
-    public Place(String name, LinkedList<LabelLayout> lays, MapImageView view) throws IOException, UnknownPlaceException {
+    public Place(String name, LinkedList<LabelLayout> lays, MapImageView view) throws IOException, PlaceQuery.UnknownPlaceException {
         this.name = name;
         this.layouts = lays;
         this.data = fetchData(name, lays, view);
-        if (data == null)
-            throw new UnknownPlaceException(name);
-
         this.category = PlaceQuery.getCategory(data);
     }
 
     /**
-     * Constructor from multiple layouts.
+     * Constructor from known blocks.
      */
     private Place(String name, LinkedList<LabelLayout> ls, JsonObject data) {
         this.name = name;
@@ -82,7 +76,7 @@ public class Place {
      * to find query-area. Tries next label-layout if previous failed
      * to find a place with a valid category. Return NULL if none found.
      */
-    private JsonObject fetchData(String name, LinkedList<LabelLayout> lays, MapImageView view) throws IOException {
+    private JsonObject fetchData(String name, LinkedList<LabelLayout> lays, MapImageView view) throws IOException, PlaceQuery.UnknownPlaceException {
         double QUERY_AREA_EXPANSION_FACTOR = 10;
 
         for (LabelLayout lay : lays) {
@@ -164,7 +158,7 @@ public class Place {
     //  * Fetches category from online-servers based on label's text
     //  * (i.e place-name) and geo-position.
     //  *
-    //  * @param bounds [WNES] geo-bounds of the place.
+    //  * @param bounds [WSEN] geo-bounds of the place.
     //  * @return Places' category.
     //  */
     // public Category fetchCategory(double[] bounds) throws IOException {

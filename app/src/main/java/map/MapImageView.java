@@ -260,13 +260,22 @@ public class MapImageView {
 
     /**
      * @param bs [xmin ymin xmax ymax] pixel-coordinate points.
-     * @return [WSEN]. Negative values if pixel-coordinates give
-     * negative geo-coordinates. Longitude might be bigger than 180
-     * (east always bigger than west). Outside y-pixel-coords gives
-     * lats on bound.
+     * @return [WSEN]. Might be outside normal longitude-values.
+     * W always less than E (no wrapping at 180deg). N/S-bounds
+     * apply (not outside +/- ~90).
      */
     public double[] getGeoBounds(double[] bs) {
-        return null;
+        double[] ws = getGeoCoordinates(bs[0], bs[3]);
+        double[] en = getGeoCoordinates(bs[2], bs[1]);
+        double w = ws[0];
+        double s = ws[1];
+        double e = en[0];
+        double n = en[1];
+        if (w > e) e += 360;
+        return new double[]{w, s, e, n};
+    }
+    public double[] getGeoBounds(int[] bs) {
+        return getGeoBounds(Math2.toDouble(bs));
     }
 
     /**

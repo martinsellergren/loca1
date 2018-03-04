@@ -22,6 +22,9 @@ public class OCR {
         }
         api.SetVariable("tessedit_char_whitelist", " abcdefghijklmnopqrstuvwxyz");
     }
+    public OCR() {
+        this(Language.ENG);
+    }
 
     /**
      * Close down engine and free up memory.

@@ -580,6 +580,8 @@ public class BasicImage {
         g.drawLine(bl[0], bl[1], tl[0], tl[1]);
     }
 
+    //public void drawBounds(int[]
+
     /**
      * Draw img to screen.
      */

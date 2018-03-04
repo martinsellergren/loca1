@@ -21,14 +21,21 @@ import com.google.gson.GsonBuilder;
 public class PlaceQuery {
 
     /**
+     * Exception thrown when query result isn't valid. */
+    public static class UnknownPlaceException extends Exception {
+        private UnknownPlaceException(String msg) { super(msg); }
+    }
+
+    /**
      * Max number of returned place candidates. */
     private static final int RESULT_LIMIT = 10;
 
     /**
      * Queries for text and bounds, and looks for a result with a
-     * category defined in Category-enum. NULL if none found.
+     * category defined in Category-enum.
+     * @trows UnknownPlaceException if no appropriate category.
      */
-    public static JsonObject fetch(String text, double[] wsen) throws IOException {
+    public static JsonObject fetch(String text, double[] wsen) throws IOException, UnknownPlaceException {
         URL url = getURL(text, wsen);
         JsonArray places = getPlaces(url);
         return selectPlace(places);
@@ -78,13 +85,15 @@ public class PlaceQuery {
      *
      * @param arr Array of places, sorted after search-result-relevance.
      * @return First place with valid category, or NULL if none.
+     * @throws UnknownPlaceException if no appropriate category.
      */
-    private static JsonObject selectPlace(JsonArray arr) {
+    private static JsonObject selectPlace(JsonArray arr) throws UnknownPlaceException {
         for (int i = 0; i < arr.size(); i++) {
             JsonObject place = arr.get(i).getAsJsonObject();
             if (getCategory(place) != null) return place;
         }
-        return null;
+
+        throw new UnknownPlaceException(new Gson().toJson(arr));
     }
 
     /**

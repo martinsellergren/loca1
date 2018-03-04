@@ -188,7 +188,7 @@ public class Places {
                 try {
                     ps.add(new Place(pd.name, pd.layouts, this.view));
                 }
-                catch (Place.UnknownPlaceException e) {
+                catch (PlaceQuery.UnknownPlaceException e) {
                     System.out.println(e.getMessage());
                 }
             }

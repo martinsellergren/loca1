@@ -200,6 +200,9 @@ public class LabelLayoutIterator {
      * if bp wont expand to a box.
      */
     public/***/ LabelLayout expandToLabelLayout(int[] bp) {
+        if (!isBoxPoint(bp))
+            throw new RuntimeException("Not box-point!");
+
         Box b = expandToBox(bp);
         if (b == null) return null;
 
