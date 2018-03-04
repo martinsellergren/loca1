@@ -100,8 +100,7 @@ public class Places {
 
         /**
          * Finds label-layouts from a box-image, and their text using
-         * a label-image and ocr. Place-categories set to UNKNOWN (needs
-         * internet: use fetchCategories().
+         * a label-image and ocr.
          *
          * @param labelImg A label-image.
          * @param boxImg A box-image.
@@ -189,7 +188,7 @@ public class Places {
                 try {
                     ps.add(new Place(pd.name, pd.layouts, this.view));
                 }
-                catch (PlaceQuery.NoRelevantResultException e) {
+                catch (Place.UnknownPlaceException e) {
                     System.out.println(e.getMessage());
                 }
             }

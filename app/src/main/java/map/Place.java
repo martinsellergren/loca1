@@ -22,6 +22,7 @@ import com.google.gson.JsonObject;
 public class Place {
     public/***/ String name;
     public/***/ LinkedList<LabelLayout> layouts = new LinkedList<LabelLayout>();
+    private Category category;
     private JsonObject data;
 
     // /**
@@ -53,10 +54,17 @@ public class Place {
      * @param view Specifies a space where label-layout-positions
      * makes sence.
      */
-    public Place(String name, LinkedList<LabelLayout> lays, MapImageView view) throws PlaceQuery.NoRelevantResultException, IOException {
+    public static class UnknownPlaceException extends Exception {
+        private UnknownPlaceException(String msg) { super(msg); }
+    }
+    public Place(String name, LinkedList<LabelLayout> lays, MapImageView view) throws IOException, UnknownPlaceException {
         this.name = name;
         this.layouts = lays;
-        this.data = null;
+        this.data = fetchData(name, lays, view);
+        if (data == null)
+            throw new UnknownPlaceException(name);
+
+        this.category = PlaceQuery.getCategory(data);
     }
 
     /**
@@ -65,7 +73,18 @@ public class Place {
     private Place(String name, LinkedList<LabelLayout> ls, JsonObject data) {
         this.name = name;
         this.layouts = ls;
+        this.category = PlaceQuery.getCategory(data);
         this.data = data;
+    }
+
+    /**
+     * Fetch data about place from internet. Expands layout-bounds
+     * to find query-area. Tries next label-layout if previous failed
+     * to find a place with a valid category.
+     */
+    private JsonObject fetchData(String name, LinkedList<LabelLayout> lays, MapImageView view) throws IOException {
+
+        return null;
     }
 
     // /**
@@ -100,7 +119,7 @@ public class Place {
      * @return Category of place.
      */
     public Category getCategory() {
-        return Category.OCEAN;
+        return this.category;
     }
 
     /**
