@@ -80,9 +80,18 @@ public class Place {
     /**
      * Fetch data about place from internet. Expands layout-bounds
      * to find query-area. Tries next label-layout if previous failed
-     * to find a place with a valid category.
+     * to find a place with a valid category. Return NULL if none found.
      */
     private JsonObject fetchData(String name, LinkedList<LabelLayout> lays, MapImageView view) throws IOException {
+        double QUERY_AREA_EXPANSION_FACTOR = 10;
+
+        for (LabelLayout lay : lays) {
+            double[] bs = Math2.scaleBounds(lay.getBounds(), QUERY_AREA_EXPANSION_FACTOR);
+            double[] wsen = view.getGeoBounds(bs);
+            JsonObject data = PlaceQuery.fetch(name, wsen);
+
+            if (data != null) return data;
+        }
 
         return null;
     }

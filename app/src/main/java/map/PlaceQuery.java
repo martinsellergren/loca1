@@ -28,18 +28,18 @@ public class PlaceQuery {
      * Queries for text and bounds, and looks for a result with a
      * category defined in Category-enum. NULL if none found.
      */
-    public static JsonObject fetch(String text, double[] wnes) throws IOException {
-        URL url = getURL(text, wnes);
+    public static JsonObject fetch(String text, double[] wsen) throws IOException {
+        URL url = getURL(text, wsen);
         JsonArray places = getPlaces(url);
         return selectPlace(places);
     }
 
     /**
      * @param text Query text.
-     * @param wnes Query bounds.
+     * @param wsen Query bounds.
      * @return URL for fetching json-data.
      */
-    private static URL getURL(String text, double[] wnes) {
+    private static URL getURL(String text, double[] wsen) {
         String str = "https://nominatim.openstreetmap.org/search?format=json";
         str += "&accept-language=eng";
         str += "&addressdetails=0";
@@ -49,7 +49,7 @@ public class PlaceQuery {
         str += "&bounded=1";
 
         str += "&q=" + text.replace(' ', '+');
-        str += String.format("&viewbox=%s,%s,%s,%s", wnes[0], wnes[3], wnes[2], wnes[1]);
+        str += String.format("&viewbox=%s,%s,%s,%s", wsen[0], wsen[1], wsen[2], wsen[3]);
         //System.out.println(str);
 
         try {

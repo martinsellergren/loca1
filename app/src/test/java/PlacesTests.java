@@ -16,11 +16,11 @@ public class PlacesTests {
     //     limg = TiledImageTests.loader("../sweden/label");
     //     bimg = TiledImageTests.loader("../sweden/box");
     //     double w = 9.887695;
-    //     double n = 69.446949;
-    //     double e = 23.862305;
     //     double s = 55.336956;
+    //     double e = 23.862305;
+    //     double n = 69.446949;
     //     int z = 5;
-    //     view = new MapImageView(w, n, e, s, z, true);
+    //     view = new MapImageView(w, s, e, n, z, true);
     //     lang = Language.ENG;
     //     try {
     //         places = new Places.Builder(limg, bimg, view, lang).build();

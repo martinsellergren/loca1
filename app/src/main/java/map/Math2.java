@@ -763,7 +763,8 @@ public class Math2 {
      * @param bs [xmin ymin xmax ymax]
      * @param fact Scale factor.
      * @return Bounds with ~same mid-point but width and height
-     * scaled by fact, and rounded to int.
+     * scaled by fact, and rounded to int. Note: Might return negative
+     * values!
      */
     public static double[] scaleBounds(double[] bs, double fact) {
         double w = bs[2] - bs[0] + 1;

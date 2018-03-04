@@ -19,13 +19,13 @@ public class MapImage {
      * OCR and internet.
      * Extends bounds to 1) Fit cut labels, 2) Detect edge-labels.
      *
-     * @param wnes [west north east south] bounds.
+     * @param wsen [west south east north] bounds.
      * @param zoom 0-20.
      * @param doubleQ Double quality image (double pixel density).
      * @param lang Fetch map-images with labels of this language.
      */
-    public MapImage(double[] wnes, int zoom, boolean doubleQ, Language lang) throws IOException {
-        // this.view = new MapImageView(wnes, zoom, doubleQ).getExtendedView();
+    public MapImage(double[] wsen, int zoom, boolean doubleQ, Language lang) throws IOException {
+        // this.view = new MapImageView(wsen, zoom, doubleQ).getExtendedView();
         // Path p = Paths.get("zoom_level_" + zoom);
         // MapRequest req = new MapRequest(view, p, lang);
         // TiledImage[] imgs = req.fetch3();

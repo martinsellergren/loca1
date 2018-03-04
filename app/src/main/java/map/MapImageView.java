@@ -67,12 +67,12 @@ public class MapImageView {
     /**
      * Constructs from map-bounds.
      *
-     * @param west Western longitude.
-     * @param north Northen latitude.
-     * @param east Eastern longitude.
-     * @param south Southern latitude.
+     * @param west Western longitude (minX).
+     * @param south Southern latitude (minY).
+     * @param north Northen latitude (maxX).
+     * @param east Eastern longitude (maxY).
      */
-    public MapImageView(double west, double north, double east, double south, int z, boolean x2) {
+    public MapImageView(double west, double south, double east, double north, int z, boolean x2) {
         west = Math2.toUnitDegrees(west);
         east = Math2.toUnitDegrees(east);
         if (north - south <= 0)
@@ -104,8 +104,8 @@ public class MapImageView {
     /**
      * Constructor with coordinates-array.
      */
-    public MapImageView(double[] wnes, int z, boolean x2) {
-        this(wnes[0], wnes[1], wnes[2], wnes[3], z, x2);
+    public MapImageView(double[] wsen, int z, boolean x2) {
+        this(wsen[0], wsen[1], wsen[2], wsen[3], z, x2);
     }
 
     /**
@@ -163,12 +163,12 @@ public class MapImageView {
     }
 
     /**
-     * @return [wLon, nLat, eLon, sLat]
+     * @return [wLon, sLat, eLon, nLat]
      */
     public double[] getGeoBounds() {
         double[] nw = getGeoCoordinates(0, 0);
         double[] se = getGeoCoordinates(this.width, this.height);
-        return new double[]{ nw[0], nw[1], se[0], se[1] };
+        return new double[]{ nw[0], se[1], se[0], nw[1] };
     }
 
     // /**
@@ -260,7 +260,10 @@ public class MapImageView {
 
     /**
      * @param bs [xmin ymin xmax ymax] pixel-coordinate points.
-     * @return [WNES]
+     * @return [WSEN]. Negative values if pixel-coordinates give
+     * negative geo-coordinates. Longitude might be bigger than 180
+     * (east always bigger than west). Outside y-pixel-coords gives
+     * lats on bound.
      */
     public double[] getGeoBounds(double[] bs) {
         return null;
