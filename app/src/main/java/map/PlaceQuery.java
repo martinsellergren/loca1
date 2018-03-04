@@ -38,7 +38,12 @@ public class PlaceQuery {
     public static JsonObject fetch(String text, double[] wsen) throws IOException, UnknownPlaceException {
         URL url = getURL(text, wsen);
         JsonArray places = getPlaces(url);
-        return selectPlace(places);
+        JsonObject place = selectPlace(places);
+
+        if (place == null)
+            throw new UnknownPlaceException(url.toString());
+
+        return place;
     }
 
     /**
@@ -57,10 +62,9 @@ public class PlaceQuery {
 
         str += "&q=" + text.replace(' ', '+');
         str += String.format("&viewbox=%s,%s,%s,%s", wsen[0], wsen[1], wsen[2], wsen[3]);
-        //System.out.println(str);
 
         try {
-            return new URL(str);//"http://freegeoip.net/json/");
+            return new URL(str);
         }
         catch (MalformedURLException e) {
             e.printStackTrace();
@@ -85,7 +89,6 @@ public class PlaceQuery {
      *
      * @param arr Array of places, sorted after search-result-relevance.
      * @return First place with valid category, or NULL if none.
-     * @throws UnknownPlaceException if no appropriate category.
      */
     private static JsonObject selectPlace(JsonArray arr) throws UnknownPlaceException {
         for (int i = 0; i < arr.size(); i++) {
@@ -93,7 +96,7 @@ public class PlaceQuery {
             if (getCategory(place) != null) return place;
         }
 
-        throw new UnknownPlaceException(new Gson().toJson(arr));
+        return null;
     }
 
     /**

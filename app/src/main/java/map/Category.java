@@ -4,9 +4,12 @@ package map;
  * Categories of map-objects, mainly map-labels.
  */
 public enum Category {
+    BAY,
     CITY,
     COUNTRY,
+    ISLAND,
     LAKE,
+    NATURE_RESERVE,
     SEA,
     OCEAN,
     ROAD;

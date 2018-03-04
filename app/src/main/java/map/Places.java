@@ -189,7 +189,7 @@ public class Places {
                     ps.add(new Place(pd.name, pd.layouts, this.view));
                 }
                 catch (PlaceQuery.UnknownPlaceException e) {
-                    System.out.println(e.getMessage());
+                    System.out.println("Place not found:\n" + e.getMessage());
                 }
             }
 

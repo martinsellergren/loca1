@@ -33,16 +33,19 @@ public class PlaceTests {
         this.ocr.end();
     }
 
-    @Test
-    public void construction() {
-        int[] pBalticSea = new int[]{876, 2594};
-        int[] pKalmar = new int[]{582, 2579};
+    // @Test
+    // public void construction() {
+    //     int[] pBalticSea = new int[]{876, 2594};
+    //     assertEquals(Category.SEA, findCategory(pBalticSea));
 
-        Category cat = constructAndReturnCategory(pBalticSea);
-        System.out.println(cat);
-    }
+    //     int[] pKalmar = new int[]{582, 2579};
+    //     assertEquals(Category.CITY, findCategory(pKalmar));
 
-    private Category constructAndReturnCategory(int[] p) {
+    //     int[] pSthlm = new int[]{745, 2168};
+    //     assertEquals(Category.CITY, findCategory(pSthlm));
+    // }
+
+    private Category findCategory(int[] p) {
         LabelLayout lay = iter.expandToLabelLayout(p);
         String name = ocr.detectString(labelImg.extractLabel(lay));
         LinkedList<LabelLayout> list = new LinkedList<LabelLayout>();

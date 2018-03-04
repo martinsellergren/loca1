@@ -13,8 +13,12 @@ public class PlacesTests {
 
     // @Before
     // public void setUp() {
+    //     TiledImageTests.loader("../sweden/full").getOneImage().save("test_PlacesTests_construction_full.png");
     //     limg = TiledImageTests.loader("../sweden/label");
+    //     limg.getOneImage().save("test_PlacesTests_construction_label.png");
     //     bimg = TiledImageTests.loader("../sweden/box");
+    //     bimg.getOneImage().save("test_PlacesTests_construction_box.png");
+
     //     double w = 9.887695;
     //     double s = 55.336956;
     //     double e = 23.862305;
@@ -33,7 +37,6 @@ public class PlacesTests {
     // @Test
     // public void construction() {
     //     BasicImage dump = limg.getOneImage();
-    //     dump.save("test_PlacesTests_construction_before.png");
 
     //     for (Place p : places.getPlaces()) {
     //         dump.drawPlace(p);
