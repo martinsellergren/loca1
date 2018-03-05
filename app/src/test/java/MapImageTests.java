@@ -1,40 +1,23 @@
-// import org.junit.Test;
-// import static org.junit.Assert.*;
-// import map.MapImage;
-// import java.awt.image.BufferedImage;
-// import java.awt.Color;
-// import java.awt.Graphics2D;
+import org.junit.Test;
+import static org.junit.Assert.*;
+import map.*;
+import java.io.IOException;
 
-// public class MapImageTests {
+public class MapImageTests {
 
-//     @Test
-//     public void concatenateImages_2x2Layout_squares() {
-//         int w = 10;
-//         int h = 10;
-//         int type = BufferedImage.TYPE_INT_ARGB;
-//         BufferedImage img1 = new BufferedImage(w, h, type);
-//         colorImg(img1, Color.RED);
-//         BufferedImage img2 = new BufferedImage(w, h, type);
-//         colorImg(img2, Color.GREEN);
-//         BufferedImage img3 = new BufferedImage(w, h, type);
-//         colorImg(img3, Color.BLUE);
-//         BufferedImage img4 = new BufferedImage(w, h, type);
-//         colorImg(img4, Color.YELLOW);
+    Language lang = Language.ENG;
 
-//         MapImage[][] imgs = new MapImage[][]{
-//                 {new MapImage(img1), new MapImage(img2)},
-//                 {new MapImage(img3), new MapImage(img4)}
-//             };
-//         MapImage img = MapImage.concatenateImages(imgs);
-//         assertEquals(img.getWidth(), 20);
-//         assertEquals(img.getHeight(), 20);
+    @Test
+    public void construction_fromExistingImages() throws IOException {
+        MapRequest.ViewAndImgs vis = MapRequest.world();
 
-//         //img.save("test_concatenateImages_2x2Layout_squares.png");
-//     }
+        MapImage mimg = new MapImage(vis.imgs, vis.view, lang);
+        BasicImage dump = mimg.getImg();
+        dump.save("test_MapImageTests_construction_before.png");
+        for (Place p : mimg.getPlaces()) {
+            dump.drawPlace(p);
+        }
+        dump.save("test_MapImageTests_construction_after.png");
+    }
 
-//     public/***/ void colorImg(BufferedImage img, Color c) {
-//         Graphics2D g = img.createGraphics();
-//         g.setPaint(c);
-//         g.fillRect(0, 0, img.getWidth(), img.getHeight());
-//     }
-// }
+}

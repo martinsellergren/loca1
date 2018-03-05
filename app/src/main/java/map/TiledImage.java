@@ -69,6 +69,14 @@ public class TiledImage {
         this.memTileCol = 0;
     }
 
+
+    /**
+     * @return Dir where tiles are stored.
+     */
+    public Path getDir() {
+        return this.dir;
+    }
+
     /**
      * @return Width of image.
      */
@@ -180,10 +188,10 @@ public class TiledImage {
      * on a straight line, in correct label-order.
      *
      * @param lay Label-layout.
-     * @param padding Space between letters.
+     * @param spaceLen Horizontal space between letters.
      * @return One-line letter-image with hight of tallest letter-img.
      */
-    public BasicImage extractLabel(LabelLayout lay, int padding) {
+    public BasicImage extractLabel(LabelLayout lay, int spaceLen) {
         LinkedList<BasicImage> ls = new LinkedList<BasicImage>();
 
         for (Box b : lay.getBoxesWithNewlines()) {
@@ -198,7 +206,7 @@ public class TiledImage {
             }
         }
 
-        BasicImage img = BasicImage.concatenateImages(ls, padding);
+        BasicImage img = BasicImage.concatenateImages(ls, spaceLen);
         img = img.addAlpha(100);
         //img = img.addBackground(Color.WHITE);
 
@@ -206,13 +214,13 @@ public class TiledImage {
     }
 
     /**
-     * Uses default padding = average box height.
+     * Uses default padding = average box height / 2.
      *
      * @param lay Label-layout.
      * @return One-line letter-image with hight of tallest letter-img.
      */
     public BasicImage extractLabel(LabelLayout lay) {
-        int bh = Math2.toInt(lay.getAverageBoxHeight());
+        int bh = Math2.toInt(lay.getAverageBoxHeight() / 2);
         return extractLabel(lay, bh);
     }
 
@@ -353,6 +361,36 @@ public class TiledImage {
         }
     }
 
+    /**
+     * Delets this tiled-image from file. Don't use the reference
+     * anymore!
+     */
+    public void delete() {
+        deleteDir(getDir().toFile());
+    }
+
+    /**
+     * Deletes all content in dir.
+     */
+    private static void cleanDir(File dir) {
+        if (!dir.isDirectory()) return;
+
+        for (File f : dir.listFiles()) {
+            if (f.isDirectory()) cleanDir(f);
+            else f.delete();
+        }
+    }
+
+    /**
+     * Deletes dir with all content.
+     */
+    private static void deleteDir(File dir) {
+        if (!dir.isDirectory()) return;
+        cleanDir(dir);
+        dir.delete();
+    }
+
+
 
     //---------------------------------------------------for testing
 
@@ -438,18 +476,6 @@ public class TiledImage {
         }
 
         /**
-         * Deletes all content in dir.
-         */
-        private static void cleanDir(File dir) {
-            if (!dir.isDirectory()) return;
-
-            for (File f : dir.listFiles()) {
-                if (f.isDirectory()) cleanDir(f);
-                else f.delete();
-            }
-        }
-
-        /**
          * Adds a tile to the builder by saving it to file with
          * correct name. Adds 'left-to-right, row-by-row'.
          *
@@ -508,6 +534,24 @@ public class TiledImage {
             int h = tileH * (rows - 1) + lastRowH;
 
             return new TiledImage(dir, w, h, tileW, tileH, rows, cols);
+        }
+    }
+
+
+
+    //-------------------------------------for testing
+
+    /**
+     * Load without exceptions.
+     */
+    public static TiledImage load_(String dir) {
+        try {
+            return load(dir);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            System.exit(-1);
+            return null;
         }
     }
 }

@@ -77,7 +77,7 @@ public class Place {
      * to find a place with a valid category. Return NULL if none found.
      */
     private JsonObject fetchData(String name, LinkedList<LabelLayout> lays, MapImageView view) throws IOException, PlaceQuery.UnknownPlaceException {
-        double QUERY_AREA_EXPANSION_FACTOR = 10;
+        double QUERY_AREA_EXPANSION_FACTOR = 1;
 
         for (LabelLayout lay : lays) {
             double[] bs = Math2.scaleBounds(lay.getBounds(), QUERY_AREA_EXPANSION_FACTOR);

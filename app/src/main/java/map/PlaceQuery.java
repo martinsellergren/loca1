@@ -28,7 +28,12 @@ public class PlaceQuery {
 
     /**
      * Max number of returned place candidates. */
-    private static final int RESULT_LIMIT = 10;
+    private static final int RESULT_LIMIT = 4;
+
+    /*
+     * True: Search only area around label.
+     * False: Preder area around label but might go outside. */
+    private static final boolean BOUNDED_QUERY = false;
 
     /**
      * Queries for text and bounds, and looks for a result with a
@@ -36,12 +41,12 @@ public class PlaceQuery {
      * @trows UnknownPlaceException if no appropriate category.
      */
     public static JsonObject fetch(String text, double[] wsen) throws IOException, UnknownPlaceException {
-        URL url = getURL(text, wsen);
-        JsonArray places = getPlaces(url);
+        URL[] urls = getURLs(text, wsen);
+        JsonArray places = getPlaces(urls);
         JsonObject place = selectPlace(places);
 
         if (place == null)
-            throw new UnknownPlaceException(url.toString());
+            throw new UnknownPlaceException(Arrays.toString(urls));
 
         return place;
     }
@@ -49,38 +54,62 @@ public class PlaceQuery {
     /**
      * @param text Query text.
      * @param wsen Query bounds.
-     * @return URL for fetching json-data.
+     * @return Array of URLs for fetching json-data. Usually length=1.
      */
-    private static URL getURL(String text, double[] wsen) {
+    private static URL[] getURLs(String text, double[] wsen) {
         String str = "https://nominatim.openstreetmap.org/search?format=json";
         str += "&accept-language=eng";
         str += "&addressdetails=0";
         str += "&limit=" + RESULT_LIMIT;
         str += "&extratags=1";
         str += "&namedetails=0";
-        str += "&bounded=1";
+        if (BOUNDED_QUERY) str += "&bounded=1";
+        else str += "&bounded=0";
 
+        double w = wsen[0];
+        double s = wsen[1];
+        double e = wsen[2];
+        double n = wsen[3];
         str += "&q=" + text.replace(' ', '+');
-        str += String.format("&viewbox=%s,%s,%s,%s", wsen[0], wsen[1], wsen[2], wsen[3]);
+
+        String str0 = str + String.format("&viewbox=%s,%s,%s,%s", w, s, e, n);
 
         try {
-            return new URL(str);
+            if (w < -180 || e < -180) {
+                String str1 = str + String.format("&viewbox=%s,%s,%s,%s", w+360, s, e+360, n);
+                return new URL[]{ new URL(str0), new URL(str1) };
+            }
+            else if (w > 180 || e > 180) {
+                String str1 = str + String.format("&viewbox=%s,%s,%s,%s", w-360, s, e-360, n);
+                return new URL[]{ new URL(str0), new URL(str1) };
+            }
+            else {
+                return new URL[]{ new URL(str0) };
+            }
         }
-        catch (MalformedURLException e) {
-            e.printStackTrace();
+        catch (MalformedURLException exc) {
+            exc.printStackTrace();
             throw new RuntimeException();
         }
     }
 
     /**
-     * @param URL A url that holds a json-array of places-objects.
-     * @return This array.
+     * @param URL An array of urls that each holds a json-array of
+     * places-objects, or an empty json-array.
+     * @return First non-empty json-array from the url-array,
+     * or an empty JsonArray of none.
      */
-    private static JsonArray getPlaces(URL url) throws IOException {
-        HttpURLConnection request = (HttpURLConnection) url.openConnection();
-        request.connect();
-        JsonParser jp = new JsonParser();
-        return jp.parse(new InputStreamReader((InputStream) request.getContent())).getAsJsonArray();
+    private static JsonArray getPlaces(URL[] urls) throws IOException {
+        for (URL url : urls) {
+            HttpURLConnection request = (HttpURLConnection) url.openConnection();
+            request.connect();
+            JsonParser jp = new JsonParser();
+            JsonArray arr = jp.parse(new InputStreamReader((InputStream) request.getContent())).getAsJsonArray();
+
+            if (arr.size() > 0) return arr;
+        }
+
+        return new JsonArray();
     }
 
     /**

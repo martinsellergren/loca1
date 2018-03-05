@@ -142,23 +142,35 @@ public class MapRequestTests {
     //     fetch3Helper(west, south, east, north, z);
     // }
 
+    // @Test
+    // public void fetcher() {
+    //     fetch3Helper(MapRequest.world().view);
+    //     fetch3Helper(MapRequest.europe().view);
+    //     fetch3Helper(MapRequest.sweden().view);
+    //     fetch3Helper(MapRequest.uppsala().view);
+    //     fetch3Helper(MapRequest.luthagen().view);
+    //     fetch3Helper(MapRequest.lidingo().view);
+    //     fetch3Helper(MapRequest.rudboda().view);
+    //     fetch3Helper(MapRequest.mefjard().view);
+    //     fetch3Helper(MapRequest.lonEdge().view);
+    // }
 
-    static char imgIndex = 'a';
-    public/***/ void fetchHelper(double w, double s, double e, double n, int z) {
-        try {
-            MapImageView v = new MapImageView(w, s, e, n, z, highQ);
-            MapRequest req = new MapRequest(v, "test_MapRequestTests", lang);
-            TiledImage img = req.fetch(MapRequest.FULL_STYLE_ID_ENG, ""+imgIndex);
-            img.save(imgIndex++ + "." +req.toString() + ".png");
-        }
-        catch (IOException ex) {
-            assertTrue(false);
-        }
-    }
 
-    public void fetch3Helper(double w, double s, double e, double n, int z) {
+    // static char imgIndex = 'a';
+    // public/***/ void fetchHelper(double w, double s, double e, double n, int z) {
+    //     try {
+    //         MapImageView v = new MapImageView(w, s, e, n, z, highQ);
+    //         MapRequest req = new MapRequest(v, "test_MapRequestTests", lang);
+    //         TiledImage img = req.fetch(MapRequest.FULL_STYLE_ID_ENG, ""+imgIndex);
+    //         img.save(imgIndex++ + "." +req.toString() + ".png");
+    //     }
+    //     catch (IOException ex) {
+    //         assertTrue(false);
+    //     }
+    // }
+
+    public void fetch3Helper(MapImageView v) {
         try {
-            MapImageView v = new MapImageView(w, s, e, n, z, highQ);
             Path p = Paths.get("test_MapRequestTests_" + v.toString().replace(' ', '_'));
             MapRequest req = new MapRequest(v, p, lang);
             TiledImage[] imgs = req.fetch3();
@@ -174,6 +186,9 @@ public class MapRequestTests {
         catch (IOException ex) {
             assertTrue(false);
         }
+    }
+    public void fetch3Helper(double w, double s, double e, double n, int z) {
+        fetch3Helper(new MapImageView(w, s, e, n, z, this.highQ));
     }
 
     // @Test

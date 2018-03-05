@@ -271,7 +271,7 @@ public class MapImageView {
         double s = ws[1];
         double e = en[0];
         double n = en[1];
-        if (w > e) w -= 360;
+        if (w > e) e += 360;
         return new double[]{w, s, e, n};
     }
     public double[] getGeoBounds(int[] bs) {
@@ -366,5 +366,91 @@ public class MapImageView {
             "width: " + this.width + ", " +
             "height: " + this.height + ", " +
             "zoom: " + this.zoom;
+    }
+
+
+    //------------------------------------------for testing
+
+    public static boolean x2_ = true;
+
+    public static MapImageView world() {
+        double w = -180;
+        double s = -MapImageView.LATITUDE_BOUND;
+        double e = 180;
+        double n = MapImageView.LATITUDE_BOUND;
+        int z = 3;
+        return new MapImageView(w, s, e, n, z, x2_);
+    }
+
+    public static MapImageView europe() {
+        double w = -18.36914062;
+        double s = 32.99023556;
+        double e = 56.33789063;
+        double n = 60.06484046;
+        int z = 5;
+        return new MapImageView(w, s, e, n, z, x2_);
+    }
+
+    public static MapImageView sweden() {
+        double w = 9.887695;
+        double s = 55.336956;
+        double e = 23.862305;
+        double n = 69.446949;
+        int z = 5;
+        return new MapImageView(w, s, e, n, z, x2_);
+    }
+
+    public static MapImageView uppsala() {
+        double w = 17.572212;
+        double s = 59.784881;
+        double e = 17.73529;
+        double n = 59.879084;
+        int z = 12;
+        return new MapImageView(w, s, e, n, z, x2_);
+    }
+
+    public static MapImageView luthagen() {
+        double w = 17.602767;
+        double s = 59.85836;
+        double e = 17.649845;
+        double n = 59.863962;
+        int z = 16;
+        return new MapImageView(w, s, e, n, z, x2_);
+    }
+
+    public static MapImageView lidingo() {
+        double w = 18.08246612548828;
+        double s = 59.33564087770051;
+        double e = 18.27404022216797;
+        double n = 59.39407306645033;
+        int z = 14;
+        return new MapImageView(w, s, e, n, z, x2_);
+    }
+
+    public static MapImageView rudboda() {
+        double w = 18.15;
+        double s = 59.372;
+        double e = 18.19;
+        double n = 59.383;
+        int z = 17;
+        return new MapImageView(w, s, e, n, z, x2_);
+    }
+
+    public static MapImageView mefjard() {
+        double w = 18.460774;
+        double s = 58.958251;
+        double e = 18.619389;
+        double n = 59.080544;
+        int z = 13;
+        return new MapImageView(w, s, e, n, z, x2_);
+    }
+
+    public static MapImageView lonEdge() {
+        double w = 177;
+        double s = 54;
+        double e = -168;
+        double n = 66;
+        int z = 3;
+        return new MapImageView(w, s, e, n, z, x2_);
     }
 }

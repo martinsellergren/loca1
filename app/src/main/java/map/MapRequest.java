@@ -217,4 +217,51 @@ public class MapRequest {
         return String.format("lon(%s)_lat(%s)_w(%s)_h(%s)_z(%s)_2x(%s)_@(%s)",
                              lon, lat, width, height, zoom, x2, saveDir);
     }
+
+
+
+    //----------------------------------------for testing. local reqs.
+
+    static String imgsDir = "../imgs";
+
+    public static class ViewAndImgs {
+        public MapImageView view;
+        public TiledImage[] imgs;
+
+        public ViewAndImgs(String dir, MapImageView v) {
+            this.view = v;
+            this.imgs = new TiledImage[] {
+                TiledImage.load_(imgsDir + "/" + dir + "/full"),
+                TiledImage.load_(imgsDir + "/" + dir + "/label"),
+                TiledImage.load_(imgsDir + "/" + dir + "/box") };
+        }
+    }
+
+    public static ViewAndImgs world() {
+        return new ViewAndImgs("world", MapImageView.world());
+    }
+    public static ViewAndImgs europe() {
+        return new ViewAndImgs("europe", MapImageView.europe());
+    }
+    public static ViewAndImgs sweden() {
+        return new ViewAndImgs("sweden", MapImageView.sweden());
+    }
+    public static ViewAndImgs uppsala() {
+        return new ViewAndImgs("uppsala", MapImageView.uppsala());
+    }
+    public static ViewAndImgs luthagen() {
+        return new ViewAndImgs("luthagen", MapImageView.luthagen());
+    }
+    public static ViewAndImgs lidingo() {
+        return new ViewAndImgs("lidingo", MapImageView.lidingo());
+    }
+    public static ViewAndImgs rudboda() {
+        return new ViewAndImgs("rudboda", MapImageView.rudboda());
+    }
+    public static ViewAndImgs mefjard() {
+        return new ViewAndImgs("mefjard", MapImageView.mefjard());
+    }
+    public static ViewAndImgs lonEdge() {
+        return new ViewAndImgs("lonEdge", MapImageView.lonEdge());
+    }
 }

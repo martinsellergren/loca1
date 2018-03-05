@@ -472,7 +472,7 @@ public class BasicImage {
      */
     public void drawPlace(Place p) {
         Color overlayC = Color.RED;
-        Color col = Color.WHITE;
+        Color col = Color.BLACK;
 
         for (LabelLayout lay : p.getLabelLayouts()) {
             drawLabelOverlay(lay, overlayC);
