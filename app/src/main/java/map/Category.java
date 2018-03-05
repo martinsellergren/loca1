@@ -5,14 +5,62 @@ package map;
  */
 public enum Category {
     BAY,
-    CITY,
-    COUNTRY,
-    ISLAND,
     LAKE,
     NATURE_RESERVE,
     SEA,
+    STREET,
     OCEAN,
-    ROAD;
+
+    WATERWAY,
+    RIVER,
+    STREAM,
+    CANAL,
+    DRAIN,
+    DITCH,
+
+    SHOP,
+    CAFE,
+
+    //PLACE-TAG
+    //Administratively declared places
+    COUNTRY,
+    STATE,
+    REGION,
+    PROVINCE,
+    DISTRICT,
+    COUNTY,
+    MUNICIPALITY,
+
+    //Populated settlements, urban
+    CITY,
+    BOROUGH,
+    SUBURB,
+    QUARTER,
+    NEIGHBOURHOOD,
+    CITY_BLOCK,
+    PLOT,
+
+    //Populated settlements, urban and rural
+    TOWN,
+    VILLAGE,
+    HAMLET,
+    ISOLATED_DWELLING,
+    FARM,
+    ALLOTMENTS,
+
+    //Other places
+    CONTINENT,
+    ARCHIPELAGO,
+    ISLAND,
+    ISLET,
+    SQUARE,
+    LOCALITY;
+
+
+
+
+
+
 
     /**
      * @param name Name of enum-value (ignores case).

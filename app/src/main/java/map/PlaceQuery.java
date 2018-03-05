@@ -104,6 +104,7 @@ public class PlaceQuery {
      * appropriate.
      */
     public static Category getCategory(JsonObject place) {
+        //place-tag
         if (place.has("extratags")
             && place.getAsJsonObject("extratags").has("place")) {
             String placeStr = place.getAsJsonObject("extratags").get("place").getAsString();
@@ -111,8 +112,14 @@ public class PlaceQuery {
             if (c != null) return c;
         }
 
+        //type-tag
         String type = place.get("type").getAsString();
-        return Category.find(type);
+        Category c = Category.find(type);
+        if (c != null) return c;
+
+        //class-tag
+        String cls = place.get("class").getAsString();
+        return Category.find(cls);
     }
 
     /**

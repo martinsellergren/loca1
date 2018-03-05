@@ -7,6 +7,7 @@ import java.net.URL;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * Fetch map images from mapbox server.
@@ -84,6 +85,9 @@ public class MapRequest {
             this.width = (int)Math.ceil(v.width / 2.0);
             this.height = (int)Math.ceil(v.height / 2.0);
         }
+    }
+    public MapRequest(MapImageView v, String saveDir, Language lang) {
+        this(v, Paths.get(saveDir), lang);
     }
 
     /**

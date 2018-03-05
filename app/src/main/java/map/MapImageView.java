@@ -271,7 +271,7 @@ public class MapImageView {
         double s = ws[1];
         double e = en[0];
         double n = en[1];
-        if (w > e) e += 360;
+        if (w > e) w -= 360;
         return new double[]{w, s, e, n};
     }
     public double[] getGeoBounds(int[] bs) {
@@ -365,6 +365,6 @@ public class MapImageView {
             "lat: " + this.lat + ", " +
             "width: " + this.width + ", " +
             "height: " + this.height + ", " +
-            "zoom: " + this.zoom + "\n";
+            "zoom: " + this.zoom;
     }
 }

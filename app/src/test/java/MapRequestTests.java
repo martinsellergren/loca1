@@ -9,17 +9,6 @@ public class MapRequestTests {
 
     boolean highQ = true;
     Language lang = Language.ENG;
-    Path saveDir = Paths.get("test_MapRequestTests");
-
-//     @Test
-//     public void fetch_whole() {
-//         double west = -180;
-//         double south = -MapImageView.LATITUDE_BOUND;
-//         double east = 180;
-//         double north = MapImageView.LATITUDE_BOUND;
-//         int z = 3;
-//         fetchHelper(west, south, east, north, z);
-//     }
 
 //     @Test
 //     public void fetch_mid() {
@@ -28,7 +17,7 @@ public class MapRequestTests {
 //         double east = 50;
 //         double north = 60;
 //         int z = 4;
-//         fetchHelper(west, south, east, north, z);
+//         fetch3Helper(west, south, east, north, z);
 //     }
 
 //     @Test
@@ -38,7 +27,7 @@ public class MapRequestTests {
 //         double east = 50;
 //         double north = MapImageView.LATITUDE_BOUND;
 //         int z = 2;
-//         fetchHelper(west, south, east, north, z);
+//         fetch3Helper(west, south, east, north, z);
 //     }
 
 //     @Test
@@ -48,7 +37,7 @@ public class MapRequestTests {
 //         double east = 50;
 //         double north = -10;
 //         int z = 2;
-//         fetchHelper(west, south, east, north, z);
+//         fetch3Helper(west, south, east, north, z);
 //     }
 
 //     @Test
@@ -58,8 +47,30 @@ public class MapRequestTests {
 //         double east = 0;
 //         double north = MapImageView.LATITUDE_BOUND;
 //         int z = 2;
-//         fetchHelper(west, south, east, north, z);
+//         fetch3Helper(west, south, east, north, z);
 //     }
+
+
+
+    // @Test
+    // public void fetch_world() {
+    //     double west = -180;
+    //     double south = -MapImageView.LATITUDE_BOUND;
+    //     double east = 180;
+    //     double north = MapImageView.LATITUDE_BOUND;
+    //     int z = 3;
+    //     fetch3Helper(west, south, east, north, z);
+    // }
+
+    // @Test
+    // public void fetch_europe() {
+    //     double west = -18.36914062;
+    //     double south = 32.99023556;
+    //     double east = 56.33789063;
+    //     double north = 60.06484046;
+    //     int z = 5;
+    //     fetch3Helper(west, south, east, north, z);
+    // }
 
     // @Test
     // public void fetch_sweden() {
@@ -71,52 +82,72 @@ public class MapRequestTests {
     //     fetch3Helper(west, south, east, north, z);
     // }
 
-//     @Test
-//     public void fetch_europe() {
-//         double west = -18.36914062;
-//         double south = 32.99023556;
-//         double east = 56.33789063;
-//         double north = 60.06484046;
-//         int z = 5;
-//         fetchHelper(west, south, east, north, z);
-//     }
+    // @Test
+    // public void fetch_uppsala() {
+    //     double west = 17.572212;
+    //     double south = 59.784881;
+    //     double east = 17.73529;
+    //     double north = 59.879084;
+    //     int z = 12;
+    //     fetch3Helper(west, south, east, north, z);
+    // }
 
-//     @Test
-//     public void fetch_lidingo() {
-//         double west = 18.08246612548828;
-//         double south = 59.33564087770051;
-//         double east = 18.27404022216797;
-//         double north = 59.39407306645033;
-//         int z = 14;
-//         fetchHelper(west, south, east, north, z);
-//     }
+    // @Test
+    // public void fetch_luthagen() {
+    //     double west = 17.602767;
+    //     double south = 59.85836;
+    //     double east = 17.649845;
+    //     double north = 59.863962;
+    //     int z = 16;
+    //     fetch3Helper(west, south, east, north, z);
+    // }
 
-//     @Test
-//     public void fetch_rudboda() {
-//         double west = 18.146238;
-//         double south = 59.371692;
-//         double east = 18.191557;
-//         double north = 59.383059;
-//         int z = 17;
-//         fetchHelper(west, south, east, north, z);
-//     }
+    // @Test
+    // public void fetch_lidingo() {
+    //     double west = 18.08246612548828;
+    //     double south = 59.33564087770051;
+    //     double east = 18.27404022216797;
+    //     double north = 59.39407306645033;
+    //     int z = 14;
+    //     fetch3Helper(west, south, east, north, z);
+    // }
 
-//     @Test
-//     public void fetch_mefjard() {
-//         double west = 18.472567;
-//         double south = 59.042776;
-//         double east = 18.487844;
-//         double north = 59.075697;
-//         int z = 10;
-//         fetchHelper(west, south, east, north, z);
-//     }
+    // @Test
+    // public void fetch_rudboda() {
+    //     double west = 18.15;
+    //     double south = 59.372;
+    //     double east = 18.19;
+    //     double north = 59.383;
+    //     int z = 17;
+    //     fetch3Helper(west, south, east, north, z);
+    // }
+
+    // @Test
+    // public void fetch_mefjard() {
+    //     double west = 18.460774;
+    //     double south = 58.958251;
+    //     double east = 18.619389;
+    //     double north = 59.080544;
+    //     int z = 13;
+    //     fetch3Helper(west, south, east, north, z);
+    // }
+
+    // @Test
+    // public void fetch_lonEdge() {
+    //     double west = 177;
+    //     double south = 54;
+    //     double east = -168;
+    //     double north = 66;
+    //     int z = 3;
+    //     fetch3Helper(west, south, east, north, z);
+    // }
 
 
     static char imgIndex = 'a';
     public/***/ void fetchHelper(double w, double s, double e, double n, int z) {
         try {
             MapImageView v = new MapImageView(w, s, e, n, z, highQ);
-            MapRequest req = new MapRequest(v, saveDir, lang);
+            MapRequest req = new MapRequest(v, "test_MapRequestTests", lang);
             TiledImage img = req.fetch(MapRequest.FULL_STYLE_ID_ENG, ""+imgIndex);
             img.save(imgIndex++ + "." +req.toString() + ".png");
         }
@@ -128,11 +159,17 @@ public class MapRequestTests {
     public void fetch3Helper(double w, double s, double e, double n, int z) {
         try {
             MapImageView v = new MapImageView(w, s, e, n, z, highQ);
-            MapRequest req = new MapRequest(v, saveDir, lang);
+            Path p = Paths.get("test_MapRequestTests_" + v.toString().replace(' ', '_'));
+            MapRequest req = new MapRequest(v, p, lang);
             TiledImage[] imgs = req.fetch3();
-            imgs[0].save("test_MapRequestTests_fetch3Helper_full.png");
-            imgs[1].save("test_MapRequestTests_fetch3Helper_label.png");
-            imgs[2].save("test_MapRequestTests_fetch3Helper_box.png");
+            try {
+                imgs[0].save(p.resolve("full.png"));
+                imgs[1].save(p.resolve("label.png"));
+                imgs[2].save(p.resolve("box.png"));
+            }
+            catch (OutOfMemoryError exc) {
+                System.out.print("Out of mem: " + req);
+            }
         }
         catch (IOException ex) {
             assertTrue(false);
