@@ -196,8 +196,7 @@ public class LabelLayoutIterator {
      * 3.Looks up/down for more rows -> layout.
      *
      * @param bp Box-point.
-     * @return The layout of the label that contains bp, or NULL
-     * if bp wont expand to a box.
+     * @return The layout of the label that contains bp.
      */
     public/***/ LabelLayout expandToLabelLayout(int[] bp) {
         if (!isBoxPoint(bp))
@@ -593,7 +592,7 @@ public class LabelLayoutIterator {
      * @pre p is box-point.
      */
     public/***/ LinkedList<int[]> getBoxPointNeighbors(int[] p) {
-        if (!isBoxPoint(p)) throw new RuntimeException();
+        if (!isBoxPoint(p)) throw new RuntimeException("Not bp!");
 
         int[] left = new int[]{ p[0]-1, p[1] };
         int[] up = new int[]{ p[0], p[1]-1 };

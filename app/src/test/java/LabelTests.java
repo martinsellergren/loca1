@@ -1,10 +1,17 @@
 import org.junit.*;
 import static org.junit.Assert.*;
 import map.*;
+import java.io.IOException;
 
 public class LabelTests {
-    BasicImage boxImg = BasicImage.load("../test_europe_box.png");
-    BasicImage labelImg = BasicImage.load("../test_europe_label.png");
+    BasicImage boxImg;
+    BasicImage labelImg;
+
+    @BeforeClass
+    public void setUp() throws IOException {
+        this.boxImg = BasicImage.load("../test_europe_box.png");
+        this.labelImg = BasicImage.load("../test_europe_label.png");
+    }
 
     // @Test
     // public void detectLabel() {

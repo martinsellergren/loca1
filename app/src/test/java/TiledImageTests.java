@@ -77,7 +77,7 @@ public class TiledImageTests {
         return loader(Paths.get(dir));
     }
 
-    public static TiledImage buildOneTile15x10Image() {
+    public static TiledImage buildOneTile15x10Image() throws IOException {
         BasicImage img = new BasicImage(15, 10);
         img.color(Color.BLUE);
         TiledImage.Builder b = new TiledImage.Builder(1, 1, Paths.get("test_TiledImageTests_OneTileImage"));

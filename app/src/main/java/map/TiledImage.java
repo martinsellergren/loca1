@@ -55,7 +55,7 @@ public class TiledImage {
      * @param rs Number of rows in tile-layout.
      * @param cs Number of columns in tile-layout.
      */
-    private TiledImage(Path dir, int w, int h, int tw, int th, int rs, int cs) {
+    private TiledImage(Path dir, int w, int h, int tw, int th, int rs, int cs) throws IOException {
         this.dir = dir;
         this.width = w;
         this.height = h;
@@ -122,7 +122,7 @@ public class TiledImage {
     /**
      * @return Color of specified point.
      */
-    public Color getColor(int[] p) {
+    public Color getColor(int[] p) throws IOException {
         int[] rc_xy = getTileAndPos(p);
         BasicImage tile = getTile(rc_xy[0], rc_xy[1]);
         return tile.getColor(rc_xy[2], rc_xy[3]);
@@ -147,7 +147,7 @@ public class TiledImage {
      * @return A subimage defined by bounds.
      * @pre Min-bounds < max-bounds.
      */
-    public BasicImage getSubImage(int[] bs) {
+    public BasicImage getSubImage(int[] bs) throws IOException {
         bs = Math2.getInsideBounds(bs, getWidth(), getHeight());
         BasicImage tiles = getSubImage_fullTiles(bs);
         int[] tl_rcxy = getTileAndPos(new int[]{bs[0], bs[1]});
@@ -161,7 +161,7 @@ public class TiledImage {
     /**
      * @return Sub-image split in full tile-blocks where bounds fit.
      */
-    private BasicImage getSubImage_fullTiles(int[] bs) {
+    private BasicImage getSubImage_fullTiles(int[] bs) throws IOException {
         LinkedList<LinkedList<BasicImage>> tiles = new LinkedList<LinkedList<BasicImage>>();
         int[] tl_rcxy = getTileAndPos(new int[]{bs[0], bs[1]});
 
@@ -191,7 +191,7 @@ public class TiledImage {
      * @param spaceLen Horizontal space between letters.
      * @return One-line letter-image with hight of tallest letter-img.
      */
-    public BasicImage extractLabel(LabelLayout lay, int spaceLen) {
+    public BasicImage extractLabel(LabelLayout lay, int spaceLen) throws IOException {
         LinkedList<BasicImage> ls = new LinkedList<BasicImage>();
 
         for (Box b : lay.getBoxesWithNewlines()) {
@@ -219,7 +219,7 @@ public class TiledImage {
      * @param lay Label-layout.
      * @return One-line letter-image with hight of tallest letter-img.
      */
-    public BasicImage extractLabel(LabelLayout lay) {
+    public BasicImage extractLabel(LabelLayout lay) throws IOException {
         int bh = Math2.toInt(lay.getAverageBoxHeight() / 2);
         return extractLabel(lay, bh);
     }
@@ -233,7 +233,7 @@ public class TiledImage {
      * @return A new image where non-rotated element fits perfectly,
      * i.e an un-rotated subsection of this image.
      */
-    public BasicImage extractElement(Box box) {
+    public BasicImage extractElement(Box box) throws IOException {
         int[] bs = box.getIntBounds();
         BasicImage rotated = getSubImage(bs);
         BasicImage straight = rotated.rotate(-box.getRotation());
@@ -253,7 +253,7 @@ public class TiledImage {
      * @param c Column.
      * @return Tile at [r,c].
      */
-    private BasicImage getTile(int r, int c) {
+    private BasicImage getTile(int r, int c) throws IOException {
         if (r == this.memTileRow && c == this.memTileCol)
             return this.memTile;
 
@@ -274,10 +274,10 @@ public class TiledImage {
     /**
      * @return Tile at specified row/column loaded from hdd.
      */
-    private static BasicImage loadTile(int r, int c, Path dir) {
+    private static BasicImage loadTile(int r, int c, Path dir) throws IOException {
         return BasicImage.load(getTilePath(r, c, dir));
     }
-    private BasicImage loadTile(int r, int c) {
+    private BasicImage loadTile(int r, int c) throws IOException {
         return loadTile(r, c, this.dir);
     }
 
@@ -398,7 +398,7 @@ public class TiledImage {
      * Assemble and save img. Be careful with heap overflows.
      */
     public void save(Path p) {
-        getOneImage().save(p);
+        getOneImage().save_(p);
     }
     public void save(String fn) {
         save(Paths.get(fn));
@@ -413,7 +413,12 @@ public class TiledImage {
 
         for (int r = 0; r < this.rows; r++) {
             for (int c = 0; c < this.cols; c++) {
-                lay[r][c] = loadTile(r, c);
+                try {
+                    lay[r][c] = loadTile(r, c);
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
@@ -483,7 +488,7 @@ public class TiledImage {
          * last column (may be thinner), last row (may be shorter).
          * @throws RuntimeException if bad dims.
          */
-        public void add(BasicImage tile) {
+        public void add(BasicImage tile) throws IOException {
             testDims(tile);
 
             Path p = getTilePath(r, c, dir);
@@ -526,7 +531,7 @@ public class TiledImage {
          * @return The TiledImage-object.
          * @throws RuntimeException if excpected more/less tiles.
          */
-        public TiledImage build() {
+        public TiledImage build() throws IOException {
             if (c != 0 || r != rows)
                 throw new RuntimeException("Bad tile numbering");
 

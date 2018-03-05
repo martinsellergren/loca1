@@ -107,7 +107,7 @@ public class Places {
          * @param view A map-image-view describing labelImg and boxImg.
          * @param lang Language of text in labelImg.
          */
-        public Builder(TiledImage labelImg, TiledImage boxImg, MapImageView view, Language lang) {
+        public Builder(TiledImage labelImg, TiledImage boxImg, MapImageView view, Language lang) throws IOException {
             this.view = view;
             OCR ocr = new OCR(lang);
             int extTerm = view.getExtensionTerm();
@@ -142,7 +142,7 @@ public class Places {
          * @param labelImg An image containing the label described by lay.
          * @param ocr Ocr-engine set up for correct language.
          */
-        private void add(LabelLayout lay, TiledImage labelImg, OCR ocr) {
+        private void add(LabelLayout lay, TiledImage labelImg, OCR ocr) throws IOException {
             if (layoutExists(lay)) return;
 
             String name = ocr.detectString(labelImg.extractLabel(lay));

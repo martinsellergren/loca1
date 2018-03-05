@@ -12,6 +12,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.io.IOException;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.GraphicsDevice;
@@ -383,36 +384,22 @@ public class BasicImage {
     /**
      * Save img. Overwrites if file exists.
      */
-    public void save(String fileName) {
+    public void save(String fileName) throws IOException {
         save(Paths.get(fileName));
     }
-    public void save(Path p) {
-        try {
-            p.toFile().mkdirs();
-            ImageIO.write(this.img, "png", p.toFile());
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            System.exit(-1);
-        }
+    public void save(Path p) throws IOException {
+        p.toFile().mkdirs();
+        ImageIO.write(this.img, "png", p.toFile());
     }
 
     /**
      * Load from file.
      */
-    public static BasicImage load(String fileName) {
+    public static BasicImage load(String fileName) throws IOException {
         return load(Paths.get(fileName));
     }
-    public static BasicImage load(Path p) {
-        BufferedImage img = null;
-
-        try {
-            img = ImageIO.read(p.toFile());
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
+    public static BasicImage load(Path p) throws IOException {
+        BufferedImage img = ImageIO.read(p.toFile());
         return new BasicImage(img);
     }
 
@@ -453,6 +440,44 @@ public class BasicImage {
     }
 
     //*******************************FOR TESTING
+
+    /**
+     * Save img. Overwrites if file exists.
+     */
+    public void save_(String fileName) {
+        save_(Paths.get(fileName));
+    }
+    public void save_(Path p) {
+        try {
+            p.toFile().mkdirs();
+            ImageIO.write(this.img, "png", p.toFile());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            System.exit(-1);
+        }
+    }
+
+    /**
+     * Load from file.
+     */
+    public static BasicImage load_(String fileName) {
+        return load_(Paths.get(fileName));
+    }
+    public static BasicImage load_(Path p) {
+        BufferedImage img = null;
+
+        try {
+            img = ImageIO.read(p.toFile());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return new BasicImage(img);
+    }
+
+
 
     /**
      * Color image in one color.

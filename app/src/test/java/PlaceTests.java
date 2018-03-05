@@ -53,12 +53,12 @@ public class PlaceTests {
     // }
 
     private Category findCategory(int[] p) {
-        LabelLayout lay = iter.expandToLabelLayout(p);
-        String name = ocr.detectString(labelImg.extractLabel(lay));
-        LinkedList<LabelLayout> list = new LinkedList<LabelLayout>();
-        list.add(lay);
-
         try {
+            LabelLayout lay = iter.expandToLabelLayout(p);
+            String name = ocr.detectString(labelImg.extractLabel(lay));
+            LinkedList<LabelLayout> list = new LinkedList<LabelLayout>();
+            list.add(lay);
+
             Place place = new Place(name, list, view);
             return place.getCategory();
         }

@@ -9,7 +9,7 @@ public class MapImageTests {
 
     @Test
     public void construction_fromExistingImages() throws IOException {
-        MapRequest.ViewAndImgs vis = MapRequest.world();
+        MapRequest.ViewAndImgs vis = MapRequest.sweden();
 
         MapImage mimg = new MapImage(vis.imgs, vis.view, lang);
         BasicImage dump = mimg.getImg();

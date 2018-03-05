@@ -4,6 +4,7 @@ import org.bytedeco.javacpp.*;
 import static org.bytedeco.javacpp.lept.*;
 import static org.bytedeco.javacpp.tesseract.*;
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Class for turning images of letters strings.
@@ -16,13 +17,13 @@ public class OCR {
      *
      * @param l Language for this ocr-engine.
      */
-    public OCR(Language l) {
+    public OCR(Language l) throws IOException {
         if (api.Init(".", l.name()) != 0) {
-            throw new RuntimeException("Could not initialize tesseract.");
+            throw new IOException("Could not initialize tesseract.");
         }
         api.SetVariable("tessedit_char_whitelist", " abcdefghijklmnopqrstuvwxyz");
     }
-    public OCR() {
+    public OCR() throws IOException {
         this(Language.ENG);
     }
 
@@ -36,7 +37,7 @@ public class OCR {
     /**
      * @return String in image.
      */
-    public String detectString(BasicImage img) {
+    public String detectString(BasicImage img) throws IOException {
         String fn = "temp.png";
         img.save(fn);
         PIX image = pixRead(fn);
