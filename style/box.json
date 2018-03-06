@@ -2477,7 +2477,7 @@
                 "icon-padding": 2, 
                 "text-padding": 10, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "icon-image": {
                     "base": 1, 
@@ -2554,7 +2554,7 @@
                 "icon-padding": 2, 
                 "text-padding": 10, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "icon-image": {
                     "base": 1, 
@@ -2711,7 +2711,7 @@
                 "icon-padding": 2, 
                 "text-padding": 10, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "icon-image": {
                     "base": 1, 
@@ -3148,7 +3148,7 @@
                 "icon-padding": 0, 
                 "text-padding": 10, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "icon-image": "turning-circle-outline", 
                 "icon-rotation-alignment": "map", 
@@ -4794,7 +4794,7 @@
                 "icon-padding": 2, 
                 "text-padding": 10, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "icon-image": {
                     "base": 1, 
@@ -4873,7 +4873,7 @@
                 "icon-padding": 2, 
                 "text-padding": 10, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "icon-image": {
                     "base": 1, 
@@ -5141,7 +5141,7 @@
                 "icon-size": 1, 
                 "text-padding": 10, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "icon-image": "level-crossing", 
                 "text-line-height": 1.5
@@ -5183,7 +5183,7 @@
                 "icon-padding": 2, 
                 "text-padding": 10, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "icon-image": {
                     "base": 1, 
@@ -5275,7 +5275,7 @@
                 "icon-padding": 0, 
                 "text-padding": 10, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "icon-image": "turning-circle", 
                 "icon-rotation-alignment": "map", 
@@ -7069,7 +7069,7 @@
                 "icon-padding": 2, 
                 "text-padding": 10, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "icon-image": {
                     "base": 1, 
@@ -7142,7 +7142,7 @@
                 "icon-padding": 2, 
                 "text-padding": 10, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "icon-image": {
                     "base": 1, 
@@ -7977,7 +7977,7 @@
                 "icon-padding": 2, 
                 "text-padding": 10, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "icon-image": {
                     "base": 1, 
@@ -8456,7 +8456,7 @@
                 "text-allow-overlap": false, 
                 "text-padding": 10, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-field": "{house_num}", 
                 "text-line-height": 1.5, 
@@ -8485,7 +8485,7 @@
                 "symbol-placement": "line", 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-pitch-alignment": "viewport", 
                 "text-field": "{name_en}", 
@@ -8531,7 +8531,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-anchor": "top", 
                 "icon-image": "{maki}-11", 
@@ -8608,7 +8608,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-anchor": "top", 
                 "icon-image": "{maki}-11", 
@@ -8685,7 +8685,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-anchor": "top", 
                 "icon-image": "{maki}-11", 
@@ -8757,7 +8757,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-anchor": "top", 
                 "icon-image": "{maki}-11", 
@@ -8828,7 +8828,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-anchor": "top", 
                 "icon-image": "{maki}-11", 
@@ -8900,7 +8900,7 @@
                 "symbol-placement": "line", 
                 "text-padding": 10, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-pitch-alignment": "viewport", 
                 "text-field": "{name_en}", 
@@ -8968,7 +8968,7 @@
                 "symbol-placement": "line", 
                 "text-padding": 10, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-pitch-alignment": "viewport", 
                 "text-field": "{name_en}", 
@@ -9029,7 +9029,7 @@
                 "symbol-placement": "line", 
                 "text-padding": 10, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-pitch-alignment": "viewport", 
                 "text-field": "{name_en}", 
@@ -9096,7 +9096,7 @@
                 "icon-padding": 2, 
                 "text-padding": 10, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "icon-image": "{shield}-{reflen}", 
                 "text-field": "{ref}", 
@@ -9209,7 +9209,7 @@
                 "icon-padding": 2, 
                 "text-padding": 10, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "icon-image": "{shield}-{reflen}", 
                 "text-field": "{ref}", 
@@ -9308,7 +9308,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "icon-image": "motorway-exit-{reflen}", 
                 "text-field": "{ref}", 
@@ -9354,7 +9354,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-anchor": "top", 
                 "icon-image": {
@@ -9436,7 +9436,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-anchor": "top", 
                 "icon-image": {
@@ -9519,7 +9519,7 @@
                 "icon-padding": 0, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-anchor": "top", 
                 "icon-image": "{network}", 
@@ -9598,7 +9598,7 @@
                     ]
                 }, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 
@@ -9644,7 +9644,7 @@
                     ]
                 }, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 
@@ -9678,7 +9678,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 
@@ -9747,7 +9747,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-anchor": "top", 
                 "icon-image": {
@@ -9829,7 +9829,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-anchor": "top", 
                 "icon-image": {
@@ -9911,7 +9911,7 @@
                 "text-allow-overlap": false, 
                 "text-padding": 10, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-anchor": "top", 
                 "icon-image": {
@@ -9986,7 +9986,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 
@@ -10038,7 +10038,7 @@
                 "text-allow-overlap": false, 
                 "text-padding": 10, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-size": {
                     "base": 1, 
@@ -10085,7 +10085,7 @@
                 "text-allow-overlap": false, 
                 "text-padding": 10, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-size": {
                     "base": 1, 
@@ -10144,7 +10144,7 @@
                     ]
                 }, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 
@@ -10188,7 +10188,7 @@
                     ]
                 }, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 
@@ -10221,7 +10221,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-anchor": {
                     "base": 1, 
@@ -10299,7 +10299,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 
@@ -10349,7 +10349,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-anchor": {
                     "base": 1, 
@@ -10442,7 +10442,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-anchor": {
                     "base": 1, 
@@ -10540,7 +10540,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-anchor": {
                     "base": 1, 
@@ -10639,7 +10639,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-anchor": {
                     "base": 1, 
@@ -10737,7 +10737,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-anchor": {
                     "base": 1, 
@@ -10836,7 +10836,7 @@
                 "symbol-placement": "line", 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-pitch-alignment": "viewport", 
                 "text-field": "{name_en}", 
@@ -10905,7 +10905,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 
@@ -10961,7 +10961,7 @@
                 "symbol-placement": "line", 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-pitch-alignment": "viewport", 
                 "text-field": "{name_en}", 
@@ -11019,7 +11019,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 
@@ -11088,7 +11088,7 @@
                     ]
                 }, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-pitch-alignment": "viewport", 
                 "text-field": "{name_en}", 
@@ -11132,7 +11132,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 
@@ -11199,7 +11199,7 @@
                     ]
                 }, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-field": {
                     "base": 1, 
@@ -11260,7 +11260,7 @@
                     ]
                 }, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-field": {
                     "base": 1, 
@@ -11330,7 +11330,7 @@
                 }, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-field": {
                     "base": 1, 
@@ -11390,7 +11390,7 @@
                     ]
                 }, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 
@@ -11438,7 +11438,7 @@
                     ]
                 }, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-field": {
                     "base": 1, 
@@ -11499,7 +11499,7 @@
                     ]
                 }, 
                 "text-font": [
-                    "Inconsolata Regular-Box"
+                    "Inconsolata Regular-Simple-lower-Box"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 

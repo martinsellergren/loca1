@@ -195,5 +195,21 @@ public class Places {
 
             return new Places(ps);
         }
+
+
+        //--------------------------for testing
+
+        /**
+         * Build without internet. Category is dummy, data is null.
+         */
+        public Places build_() {
+            LinkedList<Place> ps = new LinkedList<Place>();
+
+            for (PlaceData pd : this.places) {
+                ps.add(new Place(pd.name, pd.layouts));
+            }
+
+            return new Places(ps);
+        }
     }
 }

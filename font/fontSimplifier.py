@@ -27,11 +27,17 @@ def giveSpaceLayout(g):
     g.width = w
 
 # l: Unicode letter.
-# return: Simplified unicode character (i.e ae->a, A->a).
+# return: Simplified unicode character (i.e ae->a).
+#  If LOWER_CASE is true, returns lower case chars,
+#   otherwise UPPER case.
 def simplify(l):
     cs = unicode(unidecode.unidecode(l))
     for c in cs:
-        if isLetter(c): return c.lower()
+        if isLetter(c):
+            if LOWER_CASE:
+                return c.lower()
+            else:
+                return c.upper()
     return None
 
 # c: Unicode character.
@@ -48,6 +54,9 @@ def unlinkReferences(font):
     for g in font.glyphs():
         g.unlinkRef()
 
+
+
+LOWER_CASE = True
 
 fname = sys.argv[1]
 x = fname.split(".")
@@ -75,5 +84,9 @@ for glyph in font.glyphs():
         giveSpaceLayout(glyph)
 
 
-font.fontname = name + "-Simple"# + str(randint(0,1000000))
-font.generate(name + "-Simple." + ext)
+if LOWER_CASE:
+    font.fontname = name + "-Simple-lower"# + str(randint(0,1000000))
+    font.generate(name + "-Simple-lower." + ext)
+else:
+    font.fontname = name + "-Simple-UPPER"
+    font.generate(name + "-Simple-UPPER." + ext)

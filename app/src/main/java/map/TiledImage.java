@@ -210,18 +210,19 @@ public class TiledImage {
         img = img.addAlpha(100);
         //img = img.addBackground(Color.WHITE);
 
+        //img.save("bla.png");
         return img;
     }
 
     /**
-     * Uses default padding = average box height / 2.
+     * Uses default padding = average box height / 3.
      *
      * @param lay Label-layout.
      * @return One-line letter-image with hight of tallest letter-img.
      */
     public BasicImage extractLabel(LabelLayout lay) throws IOException {
-        int bh = Math2.toInt(lay.getAverageBoxHeight() / 2);
-        return extractLabel(lay, bh);
+        int s = Math2.toInt(lay.getAverageBoxHeight() / 3);
+        return extractLabel(lay, s);
     }
 
     /**
@@ -234,15 +235,15 @@ public class TiledImage {
      * i.e an un-rotated subsection of this image.
      */
     public BasicImage extractElement(Box box) throws IOException {
-        int[] bs = box.getIntBounds();
+        int[] bs = Math2.toIntBounds(box.getBounds());
         BasicImage rotated = getSubImage(bs);
         BasicImage straight = rotated.rotate(-box.getRotation());
-        int w = Math2.toInt(box.getWidth());
-        int h = Math2.toInt(box.getHeight());
-        int x0 = (straight.getWidth() - w) / 2;
-        int y0 = (straight.getHeight() - h) / 2;
-
-        return straight.getSubImage(x0, y0, x0+w, y0+h);
+        double w = box.getWidth();
+        double h = box.getHeight();
+        double x0 = (straight.getWidth() - w) / 2;
+        double y0 = (straight.getHeight() - h) / 2;
+        double[] bs_ = new double[]{x0, y0, x0+w, y0+h};
+        return straight.getSubImage(Math2.toIntBounds(bs_));
     }
 
     /**

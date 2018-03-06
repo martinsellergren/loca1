@@ -172,18 +172,6 @@ public class Box {
             Math.max(Math.max(tl[1], tr[1]), Math.max(br[1], bl[1])) };
     }
 
-    /**
-     * @return Int-bounds, rounded so that box-dims are maximized.
-     */
-    public int[] getIntBounds() {
-        double[] bs = getBounds();
-
-        return new int[]{ Math2.floor(bs[0]),
-                          Math2.floor(bs[1]),
-                          Math2.ceil(bs[2]),
-                          Math2.ceil(bs[3]) };
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == this) return true;

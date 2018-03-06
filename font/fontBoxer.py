@@ -1,20 +1,21 @@
 '''
 usage:
-python fontBoxer.py fontName.ttf
+python fontBoxer.py font1.ttf font2.ttf
 
 Creates a font called fontName-Box.ttf.
 Each letter in src becomes a "box" in dest. The box is formed like
 the symbol [.
 The box is sized and positioned so that corresponding letter
-just barely fits inside. If a character is very short/thin the
-box is given a min-width/height. If a character is very wide the
+just barely fits inside. If a character is very wide the
 box-width is thinner than it's underlying character.
+The box-height is fixed, set to tallest character height of font2.
+
+font1.ttf is the font that will be boxed.
+font2.ttf only determines character height.
 
 Properties of dest when the font is used:
  * No boxes touch (with safety margin).
  * Space between boxes is always less than the width of any box.
- * Highest box is always shorter than 2*shortest box (with extra
-    margin).
 '''
 
 import fontforge
@@ -84,17 +85,19 @@ def expandH(y1,y2):
 
 
 fname = sys.argv[1]
+fname2 = sys.argv[2]
 x = fname.split(".")
 name = x[0]
 ext = x[1]
 
 font = fontforge.open(fname)
 fontW, fontH = next(font.glyphs()).width, font.ascent
-maxCharW, maxCharH = getCharExtremeDims(font)
+_, maxCharH = getCharExtremeDims(fontforge.open(fname2))
 maxBoxW, maxBoxH = round(fontW*0.9), maxCharH
 minBoxW, minBoxH = round(fontW/2 * 1.3), round(maxBoxH*0.7)
 xmin,ymin,xmax,ymax = getCharExtremePos(font)
 fixedHeightMinimizingFactor = 0
+
 
 for glyph in font.glyphs():
     glyphW = glyph.width

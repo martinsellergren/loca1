@@ -1,12 +1,8 @@
-FONT = Inconsolata-Regular.ttf
+FONT = Inconsolata-Regular
 
-all: clean simplify box
-
-simplify:
-	python fontSimplifier.py $(FONT)
-
-box:
-	python fontBoxer.py $(FONT)
+all: clean
+	python fontSimplifier.py $(FONT).ttf
+	find . -maxdepth 1 -name "*Simple*" -exec basename {} \; | xargs -I{} python fontBoxer.py {} $(FONT)
 
 clean:
 	rm -f *-Simple*

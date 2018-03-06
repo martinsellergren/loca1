@@ -780,6 +780,16 @@ public class Math2 {
                              midY + newH / 2 };
     }
 
+    /**
+     * @return Int-bounds rounded away from center.
+     */
+    public static int[] toIntBounds(double[] bs) {
+        return new int[]{ Math2.floor(bs[0]),
+                          Math2.floor(bs[1]),
+                          Math2.ceil(bs[2]),
+                          Math2.ceil(bs[3]) };
+    }
+
     //****************************************CONVERSIONS
 
     /**

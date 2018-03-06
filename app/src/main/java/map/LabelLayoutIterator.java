@@ -51,7 +51,7 @@ import java.awt.Color;
 public class LabelLayoutIterator {
     /**
      * Pixels alpha-value-threshold where over means box-point. */
-    public/***/ static final int DEFAULT_ALPHA_THRESHOLD = 100;
+    public/***/ static final int DEFAULT_ALPHA_THRESHOLD = 1;
 
     /**
      * Max search length from left/right edge of a box to

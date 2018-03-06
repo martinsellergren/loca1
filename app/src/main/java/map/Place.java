@@ -25,27 +25,6 @@ public class Place {
     private Category category;
     private JsonObject data;
 
-    // /**
-    //  * Constructor from one layout.
-    //  *
-    //  * @param name Place-name. length(name) > 0
-    //  * @param l Specification of the place-label's layout.
-    //  * @param c Place-category.
-    //  */
-    // public Place(String name, LabelLayout l, Category c) {
-    //     this.name = name;
-    //     this.layouts.add(l);
-    //     this.category = c;
-    // }
-
-    // /**
-    //  * Constructor with unknown category. Use fetch/setCategory()
-    //  * later.
-    //  */
-    // public Place(String name, LabelLayout l) {
-    //     this(name, l, Category.UNKNOWN);
-    // }
-
     /**
      * Constructes the place by fetching data from internet.
      *
@@ -64,9 +43,9 @@ public class Place {
     /**
      * Constructor from known blocks.
      */
-    private Place(String name, LinkedList<LabelLayout> ls, JsonObject data) {
+    private Place(String name, LinkedList<LabelLayout> lays, JsonObject data) {
         this.name = name;
-        this.layouts = ls;
+        this.layouts = lays;
         this.category = PlaceQuery.getCategory(data);
         this.data = data;
     }
@@ -218,5 +197,18 @@ public class Place {
         }
 
         return covs;
+    }
+
+
+    //---------------------------for testing
+
+    /**
+     * Constructor without internet and data.
+     */
+    public Place(String name, LinkedList<LabelLayout> lays) {
+        this.name = name;
+        this.layouts = lays;
+        this.category = Category.OCEAN;
+        this.data = null;
     }
 }

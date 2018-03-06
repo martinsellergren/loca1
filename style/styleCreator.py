@@ -82,9 +82,13 @@ def dumpStyle(data, fileName):
     f.close()
 
 
+LOWER_CASE_FONT_IN_LABEL_IMG_STYLE = True
+
 font = 'Inconsolata Regular'#'Cousine Regular'
-font_label = font + '-Simple'
-font_box = font + '-Box'
+font_label = font + '-Simple-UPPER'
+if LOWER_CASE_FONT_IN_LABEL_IMG_STYLE:
+    font_label = font + '-Simple-lower'
+font_box = font_label + '-Box'
 extraLetterSpace = 0.2
 lineHeight = 1.5
 textMaxAngle = 15

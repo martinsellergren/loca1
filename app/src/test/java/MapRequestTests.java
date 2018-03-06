@@ -10,6 +10,42 @@ public class MapRequestTests {
     boolean highQ = true;
     Language lang = Language.ENG;
 
+    @Test
+    public void fetcher() {
+        // fetch3Helper(MapImageView.world(), "world");
+        // fetch3Helper(MapImageView.europe(), "europe");
+        // fetch3Helper(MapImageView.sweden(), "sweden");
+        // fetch3Helper(MapImageView.uppsala(), "uppsala");
+        // fetch3Helper(MapImageView.luthagen(), "luthagen");
+        // fetch3Helper(MapImageView.lidingo(), "lidingo");
+        // fetch3Helper(MapImageView.rudboda(), "rudboda");
+        // fetch3Helper(MapImageView.mefjard(), "mefjard");
+        // fetch3Helper(MapImageView.lonEdge(), "lonEdge");
+    }
+
+    public void fetch3Helper(MapImageView v, String saveDir) {
+        try {
+            //Path p = Paths.get("test_MapRequestTests_" + v.toString().replace(' ', '_'));
+            Path p = Paths.get(saveDir);
+            MapRequest req = new MapRequest(v, p, lang);
+            TiledImage[] imgs = req.fetch3();
+            try {
+                imgs[0].save(p.resolve("full.png"));
+                imgs[1].save(p.resolve("label.png"));
+                imgs[2].save(p.resolve("box.png"));
+            }
+            catch (OutOfMemoryError exc) {
+                System.out.print("Out of mem: " + req);
+            }
+        }
+        catch (IOException ex) {
+            assertTrue(false);
+        }
+    }
+    // public void fetch3Helper(double w, double s, double e, double n, int z) {
+    //     fetch3Helper(new MapImageView(w, s, e, n, z, this.highQ));
+    // }
+
 //     @Test
 //     public void fetch_mid() {
 //         double west = -50;
@@ -142,20 +178,6 @@ public class MapRequestTests {
     //     fetch3Helper(west, south, east, north, z);
     // }
 
-    // @Test
-    // public void fetcher() {
-    //     fetch3Helper(MapRequest.world().view);
-    //     fetch3Helper(MapRequest.europe().view);
-    //     fetch3Helper(MapRequest.sweden().view);
-    //     fetch3Helper(MapRequest.uppsala().view);
-    //     fetch3Helper(MapRequest.luthagen().view);
-    //     fetch3Helper(MapRequest.lidingo().view);
-    //     fetch3Helper(MapRequest.rudboda().view);
-    //     fetch3Helper(MapRequest.mefjard().view);
-    //     fetch3Helper(MapRequest.lonEdge().view);
-    // }
-
-
     // static char imgIndex = 'a';
     // public/***/ void fetchHelper(double w, double s, double e, double n, int z) {
     //     try {
@@ -168,28 +190,6 @@ public class MapRequestTests {
     //         assertTrue(false);
     //     }
     // }
-
-    public void fetch3Helper(MapImageView v) {
-        try {
-            Path p = Paths.get("test_MapRequestTests_" + v.toString().replace(' ', '_'));
-            MapRequest req = new MapRequest(v, p, lang);
-            TiledImage[] imgs = req.fetch3();
-            try {
-                imgs[0].save(p.resolve("full.png"));
-                imgs[1].save(p.resolve("label.png"));
-                imgs[2].save(p.resolve("box.png"));
-            }
-            catch (OutOfMemoryError exc) {
-                System.out.print("Out of mem: " + req);
-            }
-        }
-        catch (IOException ex) {
-            assertTrue(false);
-        }
-    }
-    public void fetch3Helper(double w, double s, double e, double n, int z) {
-        fetch3Helper(new MapImageView(w, s, e, n, z, this.highQ));
-    }
 
     // @Test
     // public void fetchRaw() {

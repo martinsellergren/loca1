@@ -33,8 +33,8 @@ public class MapImage {
         TiledImage[] imgs = req.fetch3();
         this.img = imgs[0];
         this.places = new Places.Builder(imgs[1], imgs[2], view, lang).build();
-        imgs[1].delete();
-        imgs[2].delete();
+        // imgs[1].delete();
+        // imgs[2].delete();
     }
 
     /**
@@ -69,6 +69,17 @@ public class MapImage {
     }
 
     //-------------------------for testing
+
+    /**
+     * Constructor from existing images. Uses internet for place-data.
+     * @param imgs [full label box]-img.
+     * @param o Just to allow another constructor (pass null).
+     */
+    public MapImage(TiledImage[] imgs, MapImageView v, Language l, Object o) throws IOException {
+        this.img = imgs[0];
+        this.view = v;
+        this.places = new Places.Builder(imgs[1], imgs[2], v, l).build_();
+    }
 
     public BasicImage getImg() {
         return this.img.getOneImage();
