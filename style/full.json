@@ -11463,7 +11463,7 @@
         "mapbox:autocomposite": true, 
         "mapbox:origin": "streets-v10"
     }, 
-    "visibility": "public", 
+    "visibility": "private", 
     "sources": {
         "composite": {
             "url": "mapbox://mapbox.mapbox-terrain-v2,mapbox.mapbox-streets-v7", 
@@ -11472,7 +11472,7 @@
     }, 
     "version": 8, 
     "draft": false, 
-    "owner": "mapbox", 
+    "owner": "masel", 
     "glyphs": "mapbox://fonts/masel/{fontstack}/{range}.pbf", 
     "id": "streets-v10", 
     "sprite": "mapbox://sprites/mapbox/streets-v10"

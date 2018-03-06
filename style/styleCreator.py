@@ -7,6 +7,10 @@ def removeCreatedAndModifiedProps(data):
     if 'modified' in data:
         del data['modified']
 
+def setOwnerAndVisibility(data):
+    data['owner'] = 'masel'
+    data['visibility'] = 'private'
+
 def getLayers(data, types):
     filtered = []
     for layer in data['layers']:
@@ -83,6 +87,22 @@ def dumpStyle(data, fileName):
 
 
 LOWER_CASE_FONT_IN_LABEL_IMG_STYLE = True
+LANGUAGE = 'name_en'
+'''
+name	The name (or names) used locally for the place.
+name_ar	Arabic (if available, otherwise same as name)
+name_en	English (if available, otherwise same as name)
+name_es	Spanish (if available, otherwise same as name_en)
+name_fr	French (if available, otherwise same as name_en)
+name_de	German (if available, otherwise same as name_en)
+name_pt	Portuguese (if available, otherwise same as name_en)
+name_ru	Russian (if available, otherwise same as name)
+name_zh	Chinese* (if available, otherwise same as name)
+name_zh-Hans	Simplified Chinese* (if available, otherwise same as name)
+'''
+
+noWrapping = False
+noRotation = False
 
 font = 'Inconsolata Regular'#'Cousine Regular'
 font_label = font + '-Simple-UPPER'
@@ -98,23 +118,22 @@ fileName_full = "full"
 fileName_label = "label"
 fileName_box = "box"
 
-noWrapping = False
-noRotation = False
-
 f = open(sys.argv[1], 'r')
 data = json.load(f)
 
 removeCreatedAndModifiedProps(data)
+setOwnerAndVisibility(data)
+
 setFont(data, font)
 setLetterSpacing(data, extraLetterSpace)
 setLineHeight(data, lineHeight)
 setTextMaxAngle(data, textMaxAngle)
 setNoOverlap(data)
 setTextPadding(data, textPadding)
-#noAbbreviations(data)
-#noRoadSigns()
-#noJunkLabels() #like street numbers, protected area, ...
 #setLanguage(data)
+#noRoadSigns()
+#noAbbreviationsOrRefs(data)
+#limitZoomOnPOI(data) #protected area etc
 
 #experiment
 #setNoLabelWrapping(data)

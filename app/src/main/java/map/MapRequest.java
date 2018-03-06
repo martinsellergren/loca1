@@ -14,7 +14,7 @@ import java.nio.file.Paths;
  */
 public class MapRequest {
     public/***/ static final String USER_NAME = "masel";
-    public/***/ static final String TOKEN = "sk.eyJ1IjoibWFzZWwiLCJhIjoiY2pkM2YwYXlvMncyZTMzczYzbXJ1Mzd3ayJ9.OBMENh5mWq6iwPZut8s0iw";
+    public/***/ static final String TOKEN = "pk.eyJ1IjoibWFzZWwiLCJhIjoiY2o0ZTR2NWtrMHZudDJ3cDQzdXRwZ29zZCJ9.VrI0NDIYaP_5ZAXqnpaD1A";
 
     //eng
     public static final String FULL_STYLE_ID_ENG = "cjd9dx1oe9t712roe6qmxmfgr";

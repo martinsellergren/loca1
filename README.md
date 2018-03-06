@@ -2,6 +2,8 @@
 
 todo:
 Font - upper-case better?
-Extention-term after zoom?
 Remove junk-labels, abbrevs
-Spec, docs, label-ocr-tests.
+Attribution
+Spec, docs
+Extention-term after zoom?
+Mountains? (mountain_peak_label)
