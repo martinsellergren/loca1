@@ -90,24 +90,25 @@ x = fname.split(".")
 name = x[0]
 ext = x[1]
 
+font2 = fontforge.open(fname2)
+_, maxCharH = getCharExtremeDims(font2)
+_,ymin,_,ymax = getCharExtremePos(font2)
+
 font = fontforge.open(fname)
-fontW, fontH = next(font.glyphs()).width, font.ascent
-_, maxCharH = getCharExtremeDims(fontforge.open(fname2))
-maxBoxW, maxBoxH = round(fontW*0.9), maxCharH
-minBoxW, minBoxH = round(fontW/2 * 1.3), round(maxBoxH*0.7)
-xmin,ymin,xmax,ymax = getCharExtremePos(font)
+fontW = next(font.glyphs()).width
+maxBoxW = round(fontW*0.9)
+minBoxW = round(fontW/2 * 1.3)
+xmin,_,xmax,_ = getCharExtremePos(font)
 fixedHeightMinimizingFactor = 0
 
 
 for glyph in font.glyphs():
     glyphW = glyph.width
-    x1,y1,x2,y2 = glyph.boundingBox()
-    boxW, boxH = x2-x1, y2-y1
+    x1,_,x2,_ = glyph.boundingBox()
+    boxW = x2-x1+1
 
     if boxW < minBoxW: x1,x2 = expandW(x1,x2)
     elif boxW > maxBoxW: x1,x2 = shrinkW(x1,x2)
-    if boxH < minBoxH: y1,y2 = expandH(y1,y2)
-    elif boxH > maxBoxH: sys.exit(-1) #never happens
 
     #fixed height!
     y1 = ymin + maxCharH*fixedHeightMinimizingFactor

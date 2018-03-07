@@ -100,7 +100,6 @@ name_ru	Russian (if available, otherwise same as name)
 name_zh	Chinese* (if available, otherwise same as name)
 name_zh-Hans	Simplified Chinese* (if available, otherwise same as name)
 '''
-
 noWrapping = False
 noRotation = False
 

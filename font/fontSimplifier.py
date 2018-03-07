@@ -56,7 +56,7 @@ def unlinkReferences(font):
 
 
 
-LOWER_CASE = True
+LOWER_CASE = False
 
 fname = sys.argv[1]
 x = fname.split(".")

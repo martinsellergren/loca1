@@ -21,7 +21,7 @@ public class OCR {
         if (api.Init(".", l.name()) != 0) {
             throw new IOException("Could not initialize tesseract.");
         }
-        api.SetVariable("tessedit_char_whitelist", " ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+        api.SetVariable("tessedit_char_whitelist", " abcdefghijklmnopqrstuvwxyz");
     }
     public OCR() throws IOException {
         this(Language.ENG);
