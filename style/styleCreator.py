@@ -114,7 +114,7 @@ def dumpStyle(data, fileName):
     f.close()
 
 
-LOWER_CASE_FONT_IN_LABEL_IMG = False
+LOWER_CASE_FONT_IN_LABEL_IMG = True
 LANGUAGE = 'name_en'
 '''
 name	The name (or names) used locally for the place.
