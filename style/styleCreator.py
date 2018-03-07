@@ -1,15 +1,6 @@
 import json
 import sys
 
-def removeCreatedAndModifiedProps(data):
-    if 'created' in data:
-        del data['created']
-    if 'modified' in data:
-        del data['modified']
-
-def setOwnerAndVisibility(data):
-    data['owner'] = 'masel'
-    data['visibility'] = 'private'
 
 def getLayers(data, types):
     filtered = []
@@ -23,6 +14,23 @@ def getSymbolLayers(data):
 
 def getNonSymbolLayers(data):
     return getLayers(data, ['fill', 'line', 'circle', 'heatmap', 'fill-extrusion', 'raster', 'background'])
+
+def getLayersFromID(data, ids):
+    filtered = []
+    for layer in data['layers']:
+        if 'id' in layer and layer['id'] in ids:
+            filtered.append(layer)
+    return filtered
+
+def removeCreatedAndModifiedProps(data):
+    if 'created' in data:
+        del data['created']
+    if 'modified' in data:
+        del data['modified']
+
+def setOwnerAndVisibility(data):
+    data['owner'] = 'masel'
+    data['visibility'] = 'private'
 
 def setName(data, name):
     if noWrapping: name += '_noWrap'
@@ -68,6 +76,26 @@ def setTextPadding(data, textPadding):
     for layer in getSymbolLayers(data):
         layer['layout']['text-padding'] = textPadding
 
+def setLanguageAndFullNames(data):
+    for layer in getSymbolLayers(data):
+        layer['layout']['text-field'] = '{name_en}'
+
+def noJunkLabels(data):
+    for layer in getLayersFromID(data, ['road-shields-black',
+                                        'road-shields-white',
+                                        'motorway-junction',
+                                        'housenum-label']):
+        data['layers'].remove(layer)
+
+def limitZoomOnPOI(data):
+    for layer in getLayersFromID(data, ['poi-scalerank3',
+                                        'poi-scalerank2',
+                                        'poi-scalerank1',
+                                        'poi-parks-scalerank3',
+                                        'poi-parks-scalerank2',
+                                        'poi-parks-scalerank1']):
+        layer['minzoom'] = 8
+
 def undecorateText(data):
     for layer in getSymbolLayers(data):
         paint = layer['paint']
@@ -86,7 +114,7 @@ def dumpStyle(data, fileName):
     f.close()
 
 
-LOWER_CASE_FONT_IN_LABEL_IMG_STYLE = True
+LOWER_CASE_FONT_IN_LABEL_IMG = False
 LANGUAGE = 'name_en'
 '''
 name	The name (or names) used locally for the place.
@@ -105,7 +133,7 @@ noRotation = False
 
 font = 'Inconsolata Regular'#'Cousine Regular'
 font_label = font + '-Simple-UPPER'
-if LOWER_CASE_FONT_IN_LABEL_IMG_STYLE:
+if LOWER_CASE_FONT_IN_LABEL_IMG:
     font_label = font + '-Simple-lower'
 font_box = font_label + '-Box'
 extraLetterSpace = 0.2
@@ -129,10 +157,10 @@ setLineHeight(data, lineHeight)
 setTextMaxAngle(data, textMaxAngle)
 setNoOverlap(data)
 setTextPadding(data, textPadding)
-#setLanguage(data)
-#noRoadSigns()
-#noAbbreviationsOrRefs(data)
-#limitZoomOnPOI(data) #protected area etc
+
+setLanguageAndFullNames(data)
+noJunkLabels(data)
+limitZoomOnPOI(data)
 
 #experiment
 #setNoLabelWrapping(data)

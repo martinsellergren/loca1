@@ -14,7 +14,7 @@ public class MapRequestTests {
     public void fetcher() {
         // fetch3Helper(MapImageView.world(), "world");
         // fetch3Helper(MapImageView.europe(), "europe");
-        // fetch3Helper(MapImageView.sweden(), "sweden");
+        fetch3Helper(MapImageView.sweden(), "sweden");
         // fetch3Helper(MapImageView.uppsala(), "uppsala");
         // fetch3Helper(MapImageView.luthagen(), "luthagen");
         // fetch3Helper(MapImageView.lidingo(), "lidingo");

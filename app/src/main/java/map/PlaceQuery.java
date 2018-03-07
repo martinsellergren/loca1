@@ -140,6 +140,12 @@ public class PlaceQuery {
             Category c = Category.find(placeStr);
             if (c != null) return c;
         }
+        if (place.has("extratags")
+            && place.getAsJsonObject("extratags").has("description")) {
+            String placeStr = place.getAsJsonObject("extratags").get("description").getAsString();
+            Category c = Category.find(placeStr);
+            if (c != null) return c;
+        }
 
         //type-tag
         String type = place.get("type").getAsString();

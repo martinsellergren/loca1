@@ -222,7 +222,7 @@ public class MapRequest {
 
     //----------------------------------------for testing. local reqs.
 
-    static String imgsDir = "../imgs/lowercase";
+    static String imgsDir = "../imgs/uppercase";
 
     public static class ViewAndImgs {
         public MapImageView view;

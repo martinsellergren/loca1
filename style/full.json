@@ -2421,6 +2421,7 @@
                         ]
                     ]
                 }, 
+                "text-field": "{name_en}", 
                 "text-line-height": 1.5, 
                 "symbol-spacing": 200
             }, 
@@ -2493,6 +2494,7 @@
                         ]
                     ]
                 }, 
+                "text-field": "{name_en}", 
                 "text-line-height": 1.5, 
                 "symbol-spacing": 200
             }, 
@@ -2644,6 +2646,7 @@
                         ]
                     ]
                 }, 
+                "text-field": "{name_en}", 
                 "text-line-height": 1.5, 
                 "symbol-spacing": 200
             }, 
@@ -3059,6 +3062,7 @@
                     "Inconsolata Regular"
                 ], 
                 "icon-image": "turning-circle-outline", 
+                "text-field": "{name_en}", 
                 "icon-rotation-alignment": "map", 
                 "icon-ignore-placement": true, 
                 "text-line-height": 1.5
@@ -4697,6 +4701,7 @@
                         ]
                     ]
                 }, 
+                "text-field": "{name_en}", 
                 "icon-rotation-alignment": "map", 
                 "text-line-height": 1.5, 
                 "symbol-spacing": 200
@@ -4771,6 +4776,7 @@
                         ]
                     ]
                 }, 
+                "text-field": "{name_en}", 
                 "icon-rotation-alignment": "map", 
                 "text-line-height": 1.5, 
                 "symbol-spacing": 200
@@ -5021,6 +5027,7 @@
                     "Inconsolata Regular"
                 ], 
                 "icon-image": "level-crossing", 
+                "text-field": "{name_en}", 
                 "text-line-height": 1.5
             }, 
             "paint": {}, 
@@ -5070,6 +5077,7 @@
                         ]
                     ]
                 }, 
+                "text-field": "{name_en}", 
                 "text-line-height": 1.5, 
                 "symbol-spacing": 200
             }, 
@@ -5145,6 +5153,7 @@
                     "Inconsolata Regular"
                 ], 
                 "icon-image": "turning-circle", 
+                "text-field": "{name_en}", 
                 "icon-rotation-alignment": "map", 
                 "icon-ignore-placement": true, 
                 "text-line-height": 1.5
@@ -6925,6 +6934,7 @@
                         ]
                     ]
                 }, 
+                "text-field": "{name_en}", 
                 "icon-rotation-alignment": "map", 
                 "text-line-height": 1.5, 
                 "symbol-spacing": 200
@@ -6993,6 +7003,7 @@
                         ]
                     ]
                 }, 
+                "text-field": "{name_en}", 
                 "icon-rotation-alignment": "map", 
                 "text-line-height": 1.5, 
                 "symbol-spacing": 200
@@ -7812,6 +7823,7 @@
                         ]
                     ]
                 }, 
+                "text-field": "{name_en}", 
                 "text-line-height": 1.5, 
                 "symbol-spacing": 200
             }, 
@@ -8263,32 +8275,6 @@
                 "text-letter-spacing": 0.2, 
                 "text-max-angle": 15, 
                 "text-allow-overlap": false, 
-                "text-padding": 10, 
-                "text-font": [
-                    "Inconsolata Regular"
-                ], 
-                "text-field": "{house_num}", 
-                "text-line-height": 1.5, 
-                "text-size": 9.5, 
-                "text-max-width": 7
-            }, 
-            "paint": {
-                "text-halo-blur": 0, 
-                "text-color": "hsl(35, 2%, 69%)", 
-                "text-halo-width": 0.5, 
-                "text-halo-color": "hsl(35, 8%, 85%)"
-            }, 
-            "source": "composite", 
-            "minzoom": 17, 
-            "source-layer": "housenum_label", 
-            "type": "symbol", 
-            "id": "housenum-label"
-        }, 
-        {
-            "layout": {
-                "text-letter-spacing": 0.2, 
-                "text-max-angle": 15, 
-                "text-allow-overlap": false, 
                 "symbol-placement": "line", 
                 "text-line-height": 1.5, 
                 "text-font": [
@@ -8611,6 +8597,7 @@
                 ]
             ], 
             "source": "composite", 
+            "minzoom": 8, 
             "source-layer": "poi_label", 
             "type": "symbol", 
             "id": "poi-scalerank3", 
@@ -8680,6 +8667,7 @@
                 ]
             ], 
             "source": "composite", 
+            "minzoom": 8, 
             "source-layer": "poi_label", 
             "type": "symbol", 
             "id": "poi-parks-scalerank3", 
@@ -8866,273 +8854,6 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.25, 
-                "text-max-angle": 15, 
-                "text-allow-overlap": false, 
-                "symbol-placement": {
-                    "base": 1, 
-                    "stops": [
-                        [
-                            10, 
-                            "point"
-                        ], 
-                        [
-                            11, 
-                            "line"
-                        ]
-                    ]
-                }, 
-                "icon-padding": 2, 
-                "text-padding": 10, 
-                "text-font": [
-                    "Inconsolata Regular"
-                ], 
-                "icon-image": "{shield}-{reflen}", 
-                "text-field": "{ref}", 
-                "icon-rotation-alignment": "viewport", 
-                "text-line-height": 1.5, 
-                "text-rotation-alignment": "viewport", 
-                "text-size": 9, 
-                "symbol-spacing": {
-                    "base": 1, 
-                    "stops": [
-                        [
-                            11, 
-                            150
-                        ], 
-                        [
-                            14, 
-                            200
-                        ]
-                    ]
-                }
-            }, 
-            "paint": {
-                "text-opacity": 1, 
-                "text-halo-width": 0, 
-                "icon-halo-color": "rgba(0, 0, 0, 1)", 
-                "text-color": "hsl(0, 0%, 7%)", 
-                "icon-halo-width": 1, 
-                "icon-color": "white", 
-                "text-halo-color": "hsl(0, 0%, 100%)"
-            }, 
-            "filter": [
-                "all", 
-                [
-                    "<=", 
-                    "reflen", 
-                    6
-                ], 
-                [
-                    "!in", 
-                    "shield", 
-                    "at-expressway", 
-                    "at-motorway", 
-                    "at-state-b", 
-                    "bg-motorway", 
-                    "bg-national", 
-                    "ch-main", 
-                    "ch-motorway", 
-                    "cz-motorway", 
-                    "cz-road", 
-                    "de-motorway", 
-                    "e-road", 
-                    "fi-main", 
-                    "gr-motorway", 
-                    "gr-national", 
-                    "hr-motorway", 
-                    "hr-state", 
-                    "hu-main", 
-                    "hu-motorway", 
-                    "nz-state", 
-                    "pl-expressway", 
-                    "pl-motorway", 
-                    "pl-national", 
-                    "ro-county", 
-                    "ro-motorway", 
-                    "ro-national", 
-                    "rs-motorway", 
-                    "rs-state-1b", 
-                    "se-main", 
-                    "si-expressway", 
-                    "si-motorway", 
-                    "sk-highway", 
-                    "sk-road", 
-                    "us-interstate", 
-                    "us-interstate-business", 
-                    "us-interstate-duplex", 
-                    "us-interstate-truck", 
-                    "za-metropolitan", 
-                    "za-national", 
-                    "za-provincial", 
-                    "za-regional"
-                ]
-            ], 
-            "source": "composite", 
-            "source-layer": "road_label", 
-            "type": "symbol", 
-            "id": "road-shields-black", 
-            "metadata": {
-                "mapbox:group": "1444933575858.6992"
-            }
-        }, 
-        {
-            "layout": {
-                "text-letter-spacing": 0.25, 
-                "text-max-angle": 15, 
-                "text-allow-overlap": false, 
-                "symbol-placement": {
-                    "base": 1, 
-                    "stops": [
-                        [
-                            10, 
-                            "point"
-                        ], 
-                        [
-                            11, 
-                            "line"
-                        ]
-                    ]
-                }, 
-                "icon-padding": 2, 
-                "text-padding": 10, 
-                "text-font": [
-                    "Inconsolata Regular"
-                ], 
-                "icon-image": "{shield}-{reflen}", 
-                "text-field": "{ref}", 
-                "icon-rotation-alignment": "viewport", 
-                "text-line-height": 1.5, 
-                "text-rotation-alignment": "viewport", 
-                "text-size": 9, 
-                "symbol-spacing": {
-                    "base": 1, 
-                    "stops": [
-                        [
-                            11, 
-                            150
-                        ], 
-                        [
-                            14, 
-                            200
-                        ]
-                    ]
-                }
-            }, 
-            "paint": {
-                "text-opacity": 1, 
-                "text-halo-width": 0, 
-                "icon-halo-color": "rgba(0, 0, 0, 1)", 
-                "text-color": "hsl(0, 0%, 100%)", 
-                "icon-halo-width": 1, 
-                "icon-color": "white", 
-                "text-halo-color": "hsl(0, 0%, 100%)"
-            }, 
-            "filter": [
-                "all", 
-                [
-                    "<=", 
-                    "reflen", 
-                    6
-                ], 
-                [
-                    "in", 
-                    "shield", 
-                    "at-expressway", 
-                    "at-motorway", 
-                    "at-state-b", 
-                    "bg-motorway", 
-                    "bg-national", 
-                    "ch-main", 
-                    "ch-motorway", 
-                    "cz-motorway", 
-                    "cz-road", 
-                    "de-motorway", 
-                    "e-road", 
-                    "fi-main", 
-                    "gr-motorway", 
-                    "gr-national", 
-                    "hr-motorway", 
-                    "hr-state", 
-                    "hu-main", 
-                    "hu-motorway", 
-                    "nz-state", 
-                    "pl-expressway", 
-                    "pl-motorway", 
-                    "pl-national", 
-                    "ro-county", 
-                    "ro-motorway", 
-                    "ro-national", 
-                    "rs-motorway", 
-                    "rs-state-1b", 
-                    "se-main", 
-                    "si-expressway", 
-                    "si-motorway", 
-                    "sk-highway", 
-                    "sk-road", 
-                    "us-interstate", 
-                    "us-interstate-business", 
-                    "us-interstate-duplex", 
-                    "us-interstate-truck", 
-                    "za-metropolitan", 
-                    "za-national", 
-                    "za-provincial", 
-                    "za-regional"
-                ]
-            ], 
-            "source": "composite", 
-            "source-layer": "road_label", 
-            "type": "symbol", 
-            "id": "road-shields-white", 
-            "metadata": {
-                "mapbox:group": "1444933575858.6992"
-            }
-        }, 
-        {
-            "layout": {
-                "text-letter-spacing": 0.2, 
-                "text-max-angle": 15, 
-                "text-allow-overlap": false, 
-                "text-line-height": 1.5, 
-                "text-font": [
-                    "Inconsolata Regular"
-                ], 
-                "icon-image": "motorway-exit-{reflen}", 
-                "text-field": "{ref}", 
-                "text-padding": 10, 
-                "text-size": 9
-            }, 
-            "paint": {
-                "text-color": "hsl(0, 0%, 100%)", 
-                "text-translate": [
-                    0, 
-                    0
-                ]
-            }, 
-            "filter": [
-                "all", 
-                [
-                    ">", 
-                    "reflen", 
-                    0
-                ], 
-                [
-                    "<=", 
-                    "reflen", 
-                    9
-                ]
-            ], 
-            "source": "composite", 
-            "minzoom": 14, 
-            "source-layer": "motorway_junction", 
-            "type": "symbol", 
-            "id": "motorway-junction", 
-            "metadata": {
-                "mapbox:group": "1444933575858.6992"
-            }
-        }, 
-        {
-            "layout": {
                 "text-letter-spacing": 0.21000000000000002, 
                 "text-max-angle": 15, 
                 "text-allow-overlap": false, 
@@ -9204,6 +8925,7 @@
                 ]
             ], 
             "source": "composite", 
+            "minzoom": 8, 
             "source-layer": "poi_label", 
             "type": "symbol", 
             "id": "poi-scalerank2", 
@@ -9284,6 +9006,7 @@
                 ]
             ], 
             "source": "composite", 
+            "minzoom": 8, 
             "source-layer": "poi_label", 
             "type": "symbol", 
             "id": "poi-parks-scalerank2", 
@@ -9303,19 +9026,7 @@
                 ], 
                 "text-anchor": "top", 
                 "icon-image": "{network}", 
-                "text-field": {
-                    "base": 1, 
-                    "stops": [
-                        [
-                            0, 
-                            ""
-                        ], 
-                        [
-                            13, 
-                            "{name_en}"
-                        ]
-                    ]
-                }, 
+                "text-field": "{name_en}", 
                 "text-padding": 10, 
                 "text-offset": [
                     0, 
@@ -9596,6 +9307,7 @@
                 ]
             ], 
             "source": "composite", 
+            "minzoom": 8, 
             "source-layer": "poi_label", 
             "type": "symbol", 
             "id": "poi-parks-scalerank1", 
@@ -9676,6 +9388,7 @@
                 ]
             ], 
             "source": "composite", 
+            "minzoom": 8, 
             "source-layer": "poi_label", 
             "type": "symbol", 
             "id": "poi-scalerank1", 
@@ -9705,18 +9418,7 @@
                         ]
                     ]
                 }, 
-                "text-field": {
-                    "stops": [
-                        [
-                            11, 
-                            "{ref}"
-                        ], 
-                        [
-                            12, 
-                            "{name_en}"
-                        ]
-                    ]
-                }, 
+                "text-field": "{name_en}", 
                 "text-line-height": 1.5, 
                 "text-offset": [
                     0, 
@@ -11015,19 +10717,7 @@
                 "text-font": [
                     "Inconsolata Regular"
                 ], 
-                "text-field": {
-                    "base": 1, 
-                    "stops": [
-                        [
-                            0, 
-                            "{abbr}"
-                        ], 
-                        [
-                            6, 
-                            "{name_en}"
-                        ]
-                    ]
-                }, 
+                "text-field": "{name_en}", 
                 "text-line-height": 1.5, 
                 "text-padding": 10, 
                 "text-transform": "uppercase", 
@@ -11075,19 +10765,7 @@
                 "text-font": [
                     "Inconsolata Regular"
                 ], 
-                "text-field": {
-                    "base": 1, 
-                    "stops": [
-                        [
-                            0, 
-                            "{abbr}"
-                        ], 
-                        [
-                            5, 
-                            "{name_en}"
-                        ]
-                    ]
-                }, 
+                "text-field": "{name_en}", 
                 "text-line-height": 1.5, 
                 "text-padding": 10, 
                 "text-transform": "uppercase", 
@@ -11144,19 +10822,7 @@
                 "text-font": [
                     "Inconsolata Regular"
                 ], 
-                "text-field": {
-                    "base": 1, 
-                    "stops": [
-                        [
-                            0, 
-                            "{abbr}"
-                        ], 
-                        [
-                            4, 
-                            "{name_en}"
-                        ]
-                    ]
-                }, 
+                "text-field": "{name_en}", 
                 "text-padding": 10, 
                 "text-transform": "uppercase", 
                 "text-max-width": 6
@@ -11261,19 +10927,7 @@
                 "text-font": [
                     "Inconsolata Regular"
                 ], 
-                "text-field": {
-                    "base": 1, 
-                    "stops": [
-                        [
-                            0, 
-                            "{code}"
-                        ], 
-                        [
-                            2, 
-                            "{name_en}"
-                        ]
-                    ]
-                }, 
+                "text-field": "{name_en}", 
                 "text-padding": 10, 
                 "text-line-height": 1.5, 
                 "text-max-width": 6
