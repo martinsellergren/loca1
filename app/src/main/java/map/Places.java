@@ -146,6 +146,8 @@ public class Places {
             if (layoutExists(lay)) return;
 
             String name = ocr.detectString(labelImg.extractLabel(lay));
+            if (isJunkName(name)) return;
+
             PlaceData p = findPlace(name);
             if (p != null)
                 p.addLayout(lay);
@@ -161,6 +163,13 @@ public class Places {
                 if (p.hasLayout(lay)) return true;
             }
             return false;
+        }
+
+        /**
+         * @return True if name couldn't possibly be the name if a place.
+         */
+        private boolean isJunkName(String n) {
+            return (n.length() == 0);
         }
 
         /**

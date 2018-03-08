@@ -408,7 +408,7 @@ public class Math2 {
      * @return Index in ps of point furthest from p.
      */
     public static int getFurthest(int[] p, int[][] ps) {
-        double maxd = Double.MIN_VALUE;
+        double maxd = Double.NEGATIVE_INFINITY;
         int maxi = -1;
 
         for (int i = 0; i < ps.length; i++) {
@@ -592,10 +592,10 @@ public class Math2 {
      * points in given list.
      */
     public static double[][] getExtremes(LinkedList<double[]> ps) {
-        double[] l = new double[]{Double.MAX_VALUE, 0};
-        double[] u = new double[]{0, Double.MAX_VALUE};
-        double[] r = new double[]{Double.MIN_VALUE, 0};
-        double[] d = new double[]{0, Double.MIN_VALUE};
+        double[] l = new double[]{Double.POSITIVE_INFINITY, 0};
+        double[] u = new double[]{0, Double.POSITIVE_INFINITY};
+        double[] r = new double[]{Double.NEGATIVE_INFINITY, 0};
+        double[] d = new double[]{0, Double.NEGATIVE_INFINITY};
 
         for (double[] p : ps) {
             if (p[0] < l[0]) l = p;

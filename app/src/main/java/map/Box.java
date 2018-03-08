@@ -187,8 +187,8 @@ public class Box {
     @Override
     public String toString() {
         return
-            "topL: " + Arrays.toString(topL) + "\n" +
-            "topR: " + Arrays.toString(topR) + "\n" +
+            "topL: " + Arrays.toString(topL) + ", " +
+            "topR: " + Arrays.toString(topR) + ", " +
             "height: " + height;
     }
 
@@ -305,8 +305,8 @@ public class Box {
      * @return [pLeft, pRight]
      */
     public/***/ static int[][] furthestFromLine(double[] p, double[] v, LinkedList<int[]> ps) {
-        double minD = Double.MAX_VALUE;
-        double maxD = Double.MIN_VALUE;
+        double minD = Double.POSITIVE_INFINITY;
+        double maxD = Double.NEGATIVE_INFINITY;
         int minI = -1;
         int maxI = -1;
 
@@ -322,6 +322,13 @@ public class Box {
                 maxD = d;
                 maxI = i;
             }
+
+            // if (d == 0) {
+            //     System.out.println(minD);
+            //     System.out.println(maxD);
+            //     System.out.println("\n");
+            // }
+
         }
 
         return new int[][]{ ps.get(minI), ps.get(maxI) };

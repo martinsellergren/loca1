@@ -18,17 +18,16 @@ public class MapImage {
     /**
      * Fetches map-images from internet, finds places (labels) using
      * OCR and internet.
-     * Extends bounds to 1) Fit cut labels, 2) Detect edge-labels.
+     * Extends view to 1) Fit cut labels, 2) Detect edge-labels.
      * New image is stored in working-dir/zoom_level_x/full.
      *
-     * @param wsen [west south east north] bounds.
-     * @param zoom 0-20.
-     * @param doubleQ Double quality image (double pixel density).
+     * @param view Describing area of interest; location on earth,
+     * zoom-level, quality. Created image will be extended.
      * @param lang Fetch map-images with labels of this language.
      */
-    public MapImage(double[] wsen, int zoom, boolean doubleQ, Language lang) throws IOException {
-        this.view = new MapImageView(wsen, zoom, doubleQ).getExtendedView();
-        Path p = Paths.get("zoom_level_" + zoom);
+    public MapImage(MapImageView v, Language lang) throws IOException {
+        this.view = v.getExtendedView();
+        Path p = Paths.get("zoom_level_" + v.zoom);
         MapRequest req = new MapRequest(view, p, lang);
         TiledImage[] imgs = req.fetch3();
         this.img = imgs[0];
