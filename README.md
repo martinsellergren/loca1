@@ -1,6 +1,9 @@
 # loca-studies
 
 todo:
+placeQuery every label- id from quiery
+no one-letter roads
+
 Attribution
 Spec, docs
 

@@ -373,6 +373,23 @@ public class MapImageView {
 
     public static boolean x2_ = true;
 
+    public static MapImageView randomize() {
+        int minDim = 1000;
+        int maxDim = 100000;
+        int w = Math2.randInt(minDim, maxDim+1);
+        int h = Math2.randInt(minDim, maxDim+1);
+        double lon = Math2.randDouble(-180, 180);
+        double lat = Math2.randDouble(-89, 89);
+        int z = Math2.randInt(0, 20+1);
+
+        try {
+            return new MapImageView(lon, lat, w, h, z, x2_);
+        }
+        catch (IllegalArgumentException e) {
+            return randomize();
+        }
+    }
+
     public static MapImageView world() {
         double w = -180;
         double s = -MapImageView.LATITUDE_BOUND;

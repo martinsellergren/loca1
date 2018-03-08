@@ -1,26 +1,42 @@
-import org.junit.Test;
+import org.junit.*;
 import static org.junit.Assert.*;
 import map.*;
 import java.io.IOException;
 
 public class MapImageTests {
 
-    boolean FETCH = false;
-    boolean FETCH_CATEGORIES = false; //ignored if FETCH
+    boolean FETCH;
+    boolean FETCH_CATEGORIES; //ignored if FETCH
     Language lang = Language.ENG;
+
+    @Before
+    public void setup() {
+        FETCH = true;
+        FETCH_CATEGORIES = true;
+    }
 
     @Test
     public void construction() throws IOException {
+        // FETCH = false;
+        // FETCH_CATEGORIES = true;
         // constructAndDump(MapImageView.world(), "world");
         // constructAndDump(MapImageView.europe(), "europe");
         // constructAndDump(MapImageView.sweden(), "sweden");
         // constructAndDump(MapImageView.uppsala(), "uppsala");
-        constructAndDump(MapImageView.luthagen(), "luthagen");
+        // constructAndDump(MapImageView.luthagen(), "luthagen");
         // constructAndDump(MapImageView.lidingo(), "lidingo");
         // constructAndDump(MapImageView.rudboda(), "rudboda");
         // constructAndDump(MapImageView.mefjard(), "mefjard");
         // constructAndDump(MapImageView.lonEdge(), "lonEdge");
     }
+
+    // @Test
+    // public void fuzz() throws IOException {
+    //     while (System.in.available() == 0) {
+    //         MapImageView v = MapImageView.randomize();
+    //         constructAndDump(v);
+    //     }
+    // }
 
     private void constructAndDump(MapImageView v, String name) throws IOException {
         MapImage mimg;
@@ -38,7 +54,6 @@ public class MapImageTests {
             }
         }
 
-
         BasicImage dump = mimg.getImg();
 
         dump.save("test_" + name + "_before.png");
@@ -46,6 +61,9 @@ public class MapImageTests {
             dump.drawPlace(p);
         }
         dump.save("test_" + name + "_after.png");
+    }
+    private void constructAndDump(MapImageView v) throws IOException {
+        constructAndDump(v, "test_" + v.toString());
     }
 
 }

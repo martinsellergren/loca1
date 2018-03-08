@@ -4,12 +4,14 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Collections;
+import java.util.Random;
 
 /**
  * Some additional math. 2D is assumed when applicable and angles
  * in degrees. X grows right, (NOTE:) y grows down.
  */
 public class Math2 {
+    public static Random rand = new Random();
 
     /**
      * @return Length of vector.
@@ -788,6 +790,20 @@ public class Math2 {
                           Math2.floor(bs[1]),
                           Math2.ceil(bs[2]),
                           Math2.ceil(bs[3]) };
+    }
+
+    /**
+     * @return Integer in [low, high).
+     */
+    public static int randInt(int low, int high) {
+        return rand.nextInt(high-low) + low;
+    }
+
+    /**
+     * @return Double in [low, high).
+     */
+    public static double randDouble(double low, double high) {
+        return rand.nextDouble() * (high-low) + low;
     }
 
     //****************************************CONVERSIONS
