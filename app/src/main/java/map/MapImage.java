@@ -31,7 +31,7 @@ public class MapImage {
         MapRequest req = new MapRequest(view, p, lang);
         TiledImage[] imgs = req.fetch3();
         this.img = imgs[0];
-        this.places = new Places.Builder(imgs[1], imgs[2], view, lang).build();
+        this.places = new Places(imgs[1], imgs[2], view, lang);
         imgs[1].delete();
         imgs[2].delete();
     }
@@ -43,7 +43,7 @@ public class MapImage {
     public MapImage(TiledImage[] imgs, MapImageView v, Language l) throws IOException {
         this.img = imgs[0];
         this.view = v;
-        this.places = new Places.Builder(imgs[1], imgs[2], v, l).build();
+        this.places = new Places(imgs[1], imgs[2], v, l);
     }
 
     /**
@@ -77,7 +77,7 @@ public class MapImage {
     public MapImage(TiledImage[] imgs, MapImageView v, Language l, Object o) throws IOException {
         this.img = imgs[0];
         this.view = v;
-        this.places = new Places.Builder(imgs[1], imgs[2], v, l).build_();
+        this.places = new Places(imgs[1], imgs[2], v, l);
     }
 
     public BasicImage getImg() {

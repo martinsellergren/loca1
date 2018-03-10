@@ -14,6 +14,15 @@ import java.awt.Color;
  * @inv No label has unknown category.
  */
 public class Places {
+    /**
+     * Width and height of image sent to label-layout-iter.
+     * If too large, risk of heap-overflow. */
+    private static final int LABEL_LAYOUT_ANALYSIS_SIZE = 1000;
+
+    /**
+     * List of places.
+     * @inv Place-IDs are unique.
+     */
     private LinkedList<Place> places = new LinkedList<Place>();
 
     /**
@@ -22,6 +31,23 @@ public class Places {
      */
     private Places(LinkedList<Place> places) {
         this.places = places;
+    }
+
+    /**
+     * Finds label-layouts from a box-image, creates labels from the
+     * layouts and a label-image, finally creates places using data
+     * from internet.
+     *
+     * @param labelImg A label-image.
+     * @param boxImg A box-image.
+     * @param view A map-image-view describing labelImg and boxImg.
+     * @param lang Language of text in labelImg.
+     */
+    public Places(TiledImage labelImg, TiledImage boxImg, MapImageView view, Language lang) throws IOException {
+        LinkedList<LabelLayout> lays = getLabelLayouts(boxImg, view);
+        LinkedList<Label> labs = getLabels(lays, labelImg, lang);
+        LinkedList<Place> oneLabPs = getOneLabelPlaces(labs, view);
+        this.places = combinePlaces(oneLabPs);
     }
 
     /**
@@ -53,172 +79,147 @@ public class Places {
         return new Places(ps);
     }
 
-
     //--------------------------------------------construction
+
+    /**
+     * Performs label-layout analysis for sub-images of a box-image.
+     * Sub-image max-side-length is LABEL_LAYOUT_ANALYSIS_SIZE.
+     *
+     * @param bimg Box-image.
+     * @param v View describing bimg.
+     * @return Layouts of labels in bimg.
+     */
+    private LinkedList<LabelLayout> getLabelLayouts(TiledImage bimg, MapImageView v) throws IOException {
+        LinkedList<LabelLayout> lays = new LinkedList<LabelLayout>();
+
+        int extTerm = v.getExtensionTerm();
+        int[] imgBs = new int[]{0, 0, bimg.getWidth()-1, bimg.getHeight()-1};
+        LinkedList<int[]> bss = Math2.split(imgBs, LABEL_LAYOUT_ANALYSIS_SIZE);
+
+        for (int[] bs : bss) {
+            bs = Math2.extendBounds(bs, extTerm);
+            BasicImage sub = bimg.getSubImage(bs);
+            bs = Math2.getInsideBounds(bs, sub.getWidth(), sub.getHeight());
+            LabelLayoutIterator iter = new LabelLayoutIterator(sub);
+            LabelLayout lay;
+            while ((lay = iter.next()) != null) {
+                lay.addOffset(bs[0], bs[1]);
+                lays.add(lay);
+            }
+        }
+
+        return removeDuplicateLayouts(lays);
+    }
+
+    /**
+     * Removes duplicate layous. Counts as duplicate if seems like
+     * two labels have same text-label source in a map-image.
+     *
+     * @param lays Mighs contain duplicates.
+     * @return List with no duplicates.
+     */
+    private LinkedList<LabelLayout> removeDuplicateLayouts(LinkedList<LabelLayout> lays) {
+        LinkedList<LabelLayout> filtered = new LinkedList<LabelLayout>();
+        for (LabelLayout lay : lays) {
+            if (!containsLayout(lay, filtered))
+                filtered.add(lay);
+        }
+
+        return filtered;
+    }
+
+    /**
+     * @return True if lays contains lay (similar enough).
+     */
+    private boolean containsLayout(LabelLayout lay, LinkedList<LabelLayout> lays) {
+        for (LabelLayout l : lays) {
+            if (l.same(lay)) return true;
+        }
+
+        return false;
+    }
 
 
     /**
-     * Class for building the Places-object. Uses ocr. Does not use
-     * internet until final build().
+     * Turn each label-layout into a label (unless junk!).
+     *
+     * @param lays Label-layouts.
+     * @param limg Label-image.
+     * @param lang Language of text in limg.
+     * @return Labels described by lays.
      */
-    public static class Builder {
+    private LinkedList<Label> getLabels(LinkedList<LabelLayout> lays, TiledImage limg, Language lang) throws IOException {
+        LinkedList<Label> labs = new LinkedList<Label>();
+        OCR ocr = new OCR(lang);
 
-        /**
-         * Width and height of image sent to label-layout-iter.
-         * If too large, risk of heap-overflow. */
-        private static final int LABEL_ANALYSIS_SIZE = 1000;
+        for (LabelLayout lay : lays) {
+            String txt = ocr.detectString(limg.extractLabel(lay));
+            if (!isJunkLabelText(txt))
+                labs.add(new Label(txt, lay));
+        }
 
-        /**
-         * Uncomplete place-object (created without internet).
-         */
-        private class PlaceData {
-            final String name;
-            final LinkedList<LabelLayout> layouts = new LinkedList<LabelLayout>();
+        ocr.end();
+        return labs;
+    }
 
-            private PlaceData(String name, LabelLayout lay) {
-                this.name = name;
-                this.layouts.add(lay);
+    /**
+     * @return True if txt couldn't possibly be a valid label text.
+     */
+    private boolean isJunkLabelText(String txt) {
+        return txt.length() == 0;
+    }
+
+    /**
+     * Try to turn each label into a place. Creates a place using
+     * internet to fetch data. If no good data found, ignores label.
+     *
+     * @param labs Labels.
+     * @param view View describing image of labs.
+     * @return List of places each having only one label, where same
+     * place-ID might occure multiple times.
+     */
+    private LinkedList<Place> getOneLabelPlaces(LinkedList<Label> labs, MapImageView view) throws IOException {
+        LinkedList<Place> ps = new LinkedList<Place>();
+
+        for (Label lab : labs) {
+            try {
+                ps.add(new Place(lab, view));
             }
-
-            private void addLayout(LabelLayout l) {
-                this.layouts.add(l);
-            }
-
-            /**
-             * @return True if place has layout lay.
-             */
-            private boolean hasLayout(LabelLayout lay) {
-                for (LabelLayout l : layouts) {
-                    if (l.same(lay)) return true;
-                }
-                return false;
+            catch (PlaceQuery.UnknownPlaceException e) {
+                System.out.println("Unknown place:\n" + e.getMessage());
             }
         }
 
-        private MapImageView view;
-        private LinkedList<PlaceData> places = new LinkedList<PlaceData>();
+        return ps;
+    }
 
-        /**
-         * Finds label-layouts from a box-image, and their text using
-         * a label-image and ocr.
-         *
-         * @param labelImg A label-image.
-         * @param boxImg A box-image.
-         * @param view A map-image-view describing labelImg and boxImg.
-         * @param lang Language of text in labelImg.
-         */
-        public Builder(TiledImage labelImg, TiledImage boxImg, MapImageView view, Language lang) throws IOException {
-            this.view = view;
-            OCR ocr = new OCR(lang);
-            int extTerm = view.getExtensionTerm();
-            int[] imgBs = new int[]{0, 0, boxImg.getWidth()-1, boxImg.getHeight()-1};
-            LinkedList<int[]> bss = Math2.split(imgBs, LABEL_ANALYSIS_SIZE);
+    /**
+     * Combines places that have same id, i.e one place gets all
+     * labels.
+     *
+     * @param oneLabPs List of one-label-places.
+     * @return List of places where each place-ID is unique.
+     */
+    private LinkedList<Place> combinePlaces(LinkedList<Place> oneLabPs) {
+        LinkedList<Place> ps = new LinkedList<Place>();
 
-            for (int[] bs : bss) {
-                bs = new int[]{bs[0]-extTerm, bs[1]-extTerm, bs[2]+extTerm, bs[3]+extTerm};
-                BasicImage boxImg_ = boxImg.getSubImage(bs);
-                bs = Math2.getInsideBounds(bs, boxImg_.getWidth(), boxImg_.getHeight());
-                LabelLayoutIterator iter = new LabelLayoutIterator(boxImg_);
+        for (Place oneLabP : oneLabPs) {
+            Place p = findPlace(oneLabP.getID(), ps);
 
-                LabelLayout lay;
-                while ((lay = iter.next()) != null) {
-                    lay.addOffset(bs[0], bs[1]);
-                    add(lay, labelImg, ocr);
-                }
-            }
-            ocr.end();
+            if (p == null) ps.add(oneLabP);
+            else p.addLabel(oneLabP.getLabels()[0]);
         }
 
-        /**
-         * Adds a place to the list of places, or updates a current place.
-         * Uses OCR method to find label-text (i.e place name). The
-         * category of a new added place is set to unknown.
-         *
-         * - If layout exists in any place in list: done.
-         * - If extracted label-text (i.e place-name) exists: add layout.
-         * - Else add new place.
-         *
-         * @param lay Specification of label (letter positions).
-         * @param labelImg An image containing the label described by lay.
-         * @param ocr Ocr-engine set up for correct language.
-         */
-        private void add(LabelLayout lay, TiledImage labelImg, OCR ocr) throws IOException {
-            if (layoutExists(lay)) return;
+        return ps;
+    }
 
-            String name = ocr.detectString(labelImg.extractLabel(lay));
-            if (isJunkName(name)) return;
-
-            PlaceData p = findPlace(name);
-            if (p != null)
-                p.addLayout(lay);
-            else
-                this.places.add(new PlaceData(name, lay));
+    /**
+     * @return Place in ps with specified id, or NULL if none.
+     */
+    private Place findPlace(String id, LinkedList<Place> ps) {
+        for (Place p : ps) {
+            if (p.getID() == id) return p;
         }
-
-        /**
-         * @return True if any place has any layout same as lay.
-         */
-        private boolean layoutExists(LabelLayout lay) {
-            for (PlaceData p : this.places) {
-                if (p.hasLayout(lay)) return true;
-            }
-            return false;
-        }
-
-        /**
-         * @return True if name couldn't possibly be the name if a place.
-         */
-        private boolean isJunkName(String n) {
-            return (n.length() == 0);
-        }
-
-        /**
-         * @return Place with specified name, or NULL.
-         */
-        private PlaceData findPlace(String name) {
-            for (PlaceData p : this.places) {
-                if (p.name.equals(name)) return p;
-            }
-            return null;
-        }
-
-        /**
-         * Builds the Places-object. The incomplete Place-objects
-         * (PlaceData) is evolved into real Place-objects using
-         * internet.
-         *
-         * @param view Specifies the image where the label-layouts
-         * resides.
-         */
-        public Places build() throws IOException {
-            LinkedList<Place> ps = new LinkedList<Place>();
-
-            for (PlaceData pd : this.places) {
-                try {
-                    ps.add(new Place(pd.name, pd.layouts, this.view));
-                }
-                catch (PlaceQuery.UnknownPlaceException e) {
-                    System.out.println("Place not found:\n" + e.getMessage());
-                }
-            }
-
-            return new Places(ps);
-        }
-
-
-        //--------------------------for testing
-
-        /**
-         * Build without internet. Category is dummy, data is null.
-         */
-        public Places build_() {
-            LinkedList<Place> ps = new LinkedList<Place>();
-
-            for (PlaceData pd : this.places) {
-                ps.add(new Place(pd.name, pd.layouts));
-            }
-
-            return new Places(ps);
-        }
+        return null;
     }
 }

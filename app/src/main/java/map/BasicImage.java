@@ -499,7 +499,8 @@ public class BasicImage {
         Color overlayC = Color.RED;
         Color col = Color.BLACK;
 
-        for (LabelLayout lay : p.getLabelLayouts()) {
+        for (Label lab : p.getLabels()) {
+            LabelLayout lay = lab.getLayout();
             drawLabelOverlay(lay, overlayC);
             drawLabelData(p.getName(), p.getCategory(), p.getNoLabels(), lay, col);
         }

@@ -783,6 +783,18 @@ public class Math2 {
     }
 
     /**
+     * @param bs [xmin ymin xmax ymax]
+     * @param extTerm Extension-term.
+     * @return Extended bounds.
+     */
+    public static int[] extendBounds(int[] bs, int extTerm) {
+        return new int[]{ bs[0] - extTerm,
+                          bs[1] - extTerm,
+                          bs[2] + extTerm,
+                          bs[3] + extTerm };
+    }
+
+    /**
      * @return Int-bounds rounded away from center.
      */
     public static int[] toIntBounds(double[] bs) {

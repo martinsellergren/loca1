@@ -31,9 +31,9 @@ public class PlaceQuery {
     private static final int RESULT_LIMIT = 4;
 
     /*
-     * True: Search only area around label.
-     * False: Preder area around label but might go outside. */
-    private static final boolean BOUNDED_QUERY = false;
+     * True: Search only inside specified area.
+     * False: Prefer specified area but might go outside. */
+    private static final boolean BOUNDED_QUERY = true;
 
     /**
      * Queries for text and bounds, and looks for a result with a
@@ -42,6 +42,9 @@ public class PlaceQuery {
      */
     public static JsonObject fetch(String text, double[] wsen) throws IOException, UnknownPlaceException {
         URL[] urls = getURLs(text, wsen);
+
+        System.out.println(Arrays.toString(urls));
+
         JsonArray places = getPlaces(urls);
         JsonObject place = selectPlace(places);
 
@@ -122,7 +125,7 @@ public class PlaceQuery {
     private static JsonObject selectPlace(JsonArray arr) throws UnknownPlaceException {
         for (int i = 0; i < arr.size(); i++) {
             JsonObject place = arr.get(i).getAsJsonObject();
-            if (getCategory(place) != null) return place;
+            if (findCategory(place) != null) return place;
         }
 
         return null;
@@ -132,7 +135,7 @@ public class PlaceQuery {
      * @return Category of place - searches in tags, or NULL if none
      * appropriate.
      */
-    public static Category getCategory(JsonObject place) {
+    private static Category findCategory(JsonObject place) {
         //place-tag
         if (place.has("extratags")
             && place.getAsJsonObject("extratags").has("place")) {
@@ -155,6 +158,43 @@ public class PlaceQuery {
         //class-tag
         String cls = place.get("class").getAsString();
         return Category.find(cls);
+    }
+
+    /**
+     * @return Category of place - searches in tags.
+     * @throws UnknownPlaceException if no valid category found (valid
+     * if listed in Category-enum).
+     */
+    public static Category getCategory(JsonObject place) throws UnknownPlaceException {
+        Category cat = findCategory(place);
+
+        if (cat != null) return cat;
+        else throw new UnknownPlaceException(new Gson().toJson(place));
+    }
+
+    /**
+     * @return Name of place.
+     * @throws UnknownPlaceException if there is no display_name-tag.
+     */
+    public static String getName(JsonObject place) throws UnknownPlaceException {
+        if (place.has("display_name")) {
+            return place.getAsJsonObject("display_name").getAsString();
+        }
+        else throw new UnknownPlaceException(new Gson().toJson(place));
+    }
+
+    /**
+     * @return ID of place.
+     * @throws UnknownPlaceException if there is no osm_type or
+     * osm_id tag.
+     */
+    public static String getID(JsonObject place) throws UnknownPlaceException {
+        if (place.has("osm_type") && place.has("osm_id")) {
+            return
+                place.getAsJsonObject("osm_type").getAsString() +
+                place.getAsJsonObject("osm_id").getAsString();
+        }
+        else throw new UnknownPlaceException(new Gson().toJson(place));
     }
 
     /**

@@ -197,8 +197,8 @@ public class LabelLayout {
     /**
      * Investigates similarities and returns true if this layout
      * is sufficiently similar to another.
-     * Sufficient if it appears this layout and the other
-     * has same text-label source in a map-image.
+     * Sufficient if it seems this layout and the other has same
+     * text-label source in a map-image.
      *
      * @return True if this layout is similar to other.
      */

@@ -20,75 +20,78 @@ import com.google.gson.JsonObject;
  * @inv length(layouts) >= 1
  */
 public class Place {
-    public/***/ String name;
-    public/***/ LinkedList<LabelLayout> layouts = new LinkedList<LabelLayout>();
-    private Category category;
-    private JsonObject data;
 
     /**
-     * Constructes the place by fetching data from internet.
+     * Expand label-area with this to get query-area. */
+    private final double QUERY_AREA_EXPANSION_FACTOR = 1;
+
+    /**
+     * Expand label-bounds with this to get overlay-image dims. */
+    private final double LABEL_OVERLAY_SCALE_FACTOR = 1.2;
+
+    public/***/ String name;
+    private Category category;
+    private String id;
+    private JsonObject data;
+    public/***/ LinkedList<Label> labels = new LinkedList<Label>();
+
+    /**
+     * Constructs a place with one single label, by fetching data
+     * from internet.
      *
-     * @param name Name of place (what label sais).
-     * @param lays Label-layouts, one or more.
-     * @param view Specifies a space where label-layout-positions
-     * makes sence.
+     * @param lab Label.
+     * @param view Describes the image of lab.
      */
-    public Place(String name, LinkedList<LabelLayout> lays, MapImageView view) throws IOException, PlaceQuery.UnknownPlaceException {
-        this.name = name;
-        this.layouts = lays;
-        this.data = fetchData(name, lays, view);
+    public Place(Label lab, MapImageView view) throws IOException, PlaceQuery.UnknownPlaceException {
+        this.data = fetchData(lab, view);
+        this.name = PlaceQuery.getName(data);
         this.category = PlaceQuery.getCategory(data);
+        this.id = PlaceQuery.getID(data);
+        labels.add(lab);
     }
 
     /**
      * Constructor from known blocks.
      */
-    private Place(String name, LinkedList<LabelLayout> lays, JsonObject data) {
+    private Place(String name, Category cat, String id, JsonObject data, LinkedList<Label> labs) {
         this.name = name;
-        this.layouts = lays;
-        this.category = PlaceQuery.getCategory(data);
+        this.category = cat;
+        this.id = id;
         this.data = data;
+        this.labels = labs;
     }
 
     /**
      * Fetch data about place from internet. Expands layout-bounds
-     * to find query-area. Tries next label-layout if previous failed
-     * to find a place with a valid category. Return NULL if none found.
+     * to find query-area.
+     *
+     * @param lab A label of this place.
+     * @param view Describing image of lab.
      */
-    private JsonObject fetchData(String name, LinkedList<LabelLayout> lays, MapImageView view) throws IOException, PlaceQuery.UnknownPlaceException {
-        double QUERY_AREA_EXPANSION_FACTOR = 1;
-
-        for (LabelLayout lay : lays) {
-            double[] bs = Math2.scaleBounds(lay.getBounds(), QUERY_AREA_EXPANSION_FACTOR);
-            double[] wsen = view.getGeoBounds(bs);
-            JsonObject data = PlaceQuery.fetch(name, wsen);
-
-            if (data != null) return data;
-        }
-
-        return null;
+    private JsonObject fetchData(Label lab, MapImageView view) throws IOException, PlaceQuery.UnknownPlaceException {
+        double[] bs = Math2.scaleBounds(lab.getLayout().getBounds(), QUERY_AREA_EXPANSION_FACTOR);
+        double[] wsen = view.getGeoBounds(bs);
+        return PlaceQuery.fetch(lab.getText(), wsen);
     }
 
-    // /**
-    //  * Adds a unique layout to the place.
-    //  * @return True if layout added. False if layout not unique so
-    //  * not added.
-    //  */
-    // public boolean addLayout(LabelLayout lay) {
-    //     if (hasLayout(lay)) return false;
-    //     layouts.add(lay);
-    //     return true;
-    // }
+    /**
+     * Adds label to the place, if unique layout.
+     */
+    public void addLabel(Label lab) {
+        if (!hasLayout(lab.getLayout())) {
+            labels.add(lab);
+        }
+    }
 
-    // /**
-    //  * @return True if place has layout lay.
-    //  */
-    // public boolean hasLayout(LabelLayout lay) {
-    //     for (LabelLayout l : layouts) {
-    //         if (l.same(lay)) return true;
-    //     }
-    //     return false;
-    // }
+    /**
+     * @return True if place has layout lay.
+     */
+    public boolean hasLayout(LabelLayout lay) {
+        for (Label lab : labels) {
+            if (lab.getLayout().same(lay)) return true;
+        }
+        return false;
+    }
 
     /**
      * @return Name of place.
@@ -105,65 +108,43 @@ public class Place {
     }
 
     /**
-     * @return Array of label-layouts (copies).
+     * @return ID of place.
      */
-    public LabelLayout[] getLabelLayouts() {
-        LabelLayout[] lays = new LabelLayout[this.layouts.size()];
+    public String getID() {
+        return this.id;
+    }
 
-        for (int i = 0; i < lays.length; i++) {
-            lays[i] = this.layouts.get(i).copy();
+    /**
+     * @return Labels of this place (copies).
+     */
+    public Label[] getLabels() {
+        Label[] labs = new Label[this.labels.size()];
+
+        for (int i = 0; i < this.labels.size(); i++) {
+            labs[i] = this.labels.get(i).copy();
         }
 
-        return lays;
+        return labs;
     }
 
     /**
      * @return Number of labels of this place.
      */
     public int getNoLabels() {
-        return this.layouts.size();
+        return this.labels.size();
     }
-
-    // /**
-    //  * Add offset to every label of place.
-    //  */
-    // public void addOffset(int addX, int addY) {
-    //     for (LabelLayout l : this.layouts) {
-    //         l.addOffset(addX, addY);
-    //     }
-    // }
-
-    // /**
-    //  * Fetches category from online-servers based on label's text
-    //  * (i.e place-name) and geo-position.
-    //  *
-    //  * @param bounds [WSEN] geo-bounds of the place.
-    //  * @return Places' category.
-    //  */
-    // public Category fetchCategory(double[] bounds) throws IOException {
-
-
-    //     return Category.OCEAN;
-    // }
-
-    // /**
-    //  * Sets category.
-    //  */
-    // public void setCategory(Category c) {
-    //     this.category = c;
-    // }
 
     /**
      * @return A deep copy of this object (data not a copy).
      */
     public Place copy() {
-        LinkedList<LabelLayout> ls = new LinkedList<LabelLayout>();
+        LinkedList<Label> labs = new LinkedList<Label>();
 
-        for (LabelLayout l : layouts) {
-            ls.add(l.copy());
+        for (Label lab : this.labels) {
+            labs.add(lab.copy());
         }
 
-        return new Place(this.name, ls, data);
+        return new Place(this.name, this.category, this.id, this.data, labs);
     }
 
     /**
@@ -173,30 +154,29 @@ public class Place {
      * @param c Color of image.
      * @return Label-overlays, one per label in no particular order.
      */
-    class LabelCover {
+    class LabelOverlay {
         public final BasicImage img;
         public final int[] topLeft;
-        private LabelCover(BasicImage img, int[] tl) {
+        private LabelOverlay(BasicImage img, int[] tl) {
             this.img = img; this.topLeft = tl;
         }
     }
-    public LabelCover[] getLabelOverlays(Color c) {
-        LabelCover[] covs = new LabelCover[this.layouts.size()];
-        double SCALE_FACTOR = 1.2;
+    public LabelOverlay[] getLabelOverlays(Color c) {
         Color col = Color.RED;
+        LabelOverlay[] ovs = new LabelOverlay[this.labels.size()];
 
-        for (int i = 0; i < layouts.size(); i++) {
-            LabelLayout lay = this.layouts.get(i).copy();
-            int[] bs = Math2.toInt(Math2.scaleBounds(lay.getBounds(), SCALE_FACTOR));
+        for (int i = 0; i < ovs.length; i++) {
+            LabelLayout lay = this.labels.get(i).getLayout();
+            int[] bs = Math2.toIntBounds(Math2.scaleBounds(lay.getBounds(), LABEL_OVERLAY_SCALE_FACTOR));
 
             int[] tl = new int[]{bs[0], bs[1]};
             BasicImage img = new BasicImage(bs[2]-bs[0]+1, bs[3]-bs[1]+1);
             lay.addOffset(-tl[0], -tl[1]);
             img.drawLabelOverlay(lay, col);
-            covs[i] = new LabelCover(img, tl);
+            ovs[i] = new LabelOverlay(img, tl);
         }
 
-        return covs;
+        return ovs;
     }
 
 
@@ -205,10 +185,10 @@ public class Place {
     /**
      * Constructor without internet and data.
      */
-    public Place(String name, LinkedList<LabelLayout> lays) {
-        this.name = name;
-        this.layouts = lays;
-        this.category = Category.OCEAN;
-        this.data = null;
-    }
+    // public Place(String name, LinkedList<LabelLayout> lays) {
+    //     this.name = name;
+    //     this.layouts = lays;
+    //     this.category = Category.OCEAN;
+    //     this.data = null;
+    // }
 }
