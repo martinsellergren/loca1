@@ -40,10 +40,10 @@ public class MapImage {
      * Constructor from existing images. Uses internet for place-data.
      * @param imgs [full label box]-img.
      */
-    public MapImage(TiledImage[] imgs, MapImageView v, Language l) throws IOException {
+    public MapImage(TiledImage[] imgs, MapImageView v, Language lang) throws IOException {
         this.img = imgs[0];
         this.view = v;
-        this.places = new Places(imgs[1], imgs[2], v, l);
+        this.places = new Places(imgs[1], imgs[2], v, lang);
     }
 
     /**

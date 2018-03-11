@@ -24,7 +24,7 @@ public class OCR {
         api.SetVariable("tessedit_char_whitelist", " abcdefghijklmnopqrstuvwxyz");
     }
     public OCR() throws IOException {
-        this(Language.ENG);
+        this(Language.EN);
     }
 
     /**

@@ -46,7 +46,7 @@ public class Places {
     public Places(TiledImage labelImg, TiledImage boxImg, MapImageView view, Language lang) throws IOException {
         LinkedList<LabelLayout> lays = getLabelLayouts(boxImg, view);
         LinkedList<Label> labs = getLabels(lays, labelImg, lang);
-        LinkedList<Place> oneLabPs = getOneLabelPlaces(labs, view);
+        LinkedList<Place> oneLabPs = getOneLabelPlaces(labs, view, lang);
         this.places = combinePlaces(oneLabPs);
     }
 
@@ -178,12 +178,12 @@ public class Places {
      * @return List of places each having only one label, where same
      * place-ID might occure multiple times.
      */
-    private LinkedList<Place> getOneLabelPlaces(LinkedList<Label> labs, MapImageView view) throws IOException {
+    private LinkedList<Place> getOneLabelPlaces(LinkedList<Label> labs, MapImageView view, Language lang) throws IOException {
         LinkedList<Place> ps = new LinkedList<Place>();
 
         for (Label lab : labs) {
             try {
-                ps.add(new Place(lab, view));
+                ps.add(new Place(lab, view, lang));
             }
             catch (PlaceQuery.UnknownPlaceException e) {
                 System.out.println("Unknown place:\n" + e.getMessage());

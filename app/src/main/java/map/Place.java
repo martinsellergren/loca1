@@ -41,9 +41,10 @@ public class Place {
      *
      * @param lab Label.
      * @param view Describes the image of lab.
+     * @param lang Language of preferred place-names.
      */
-    public Place(Label lab, MapImageView view) throws IOException, PlaceQuery.UnknownPlaceException {
-        this.data = fetchData(lab, view);
+    public Place(Label lab, MapImageView view, Language lang) throws IOException, PlaceQuery.UnknownPlaceException {
+        this.data = fetchData(lab, view, lang);
         this.name = PlaceQuery.getName(data);
         this.category = PlaceQuery.getCategory(data);
         this.id = PlaceQuery.getID(data);
@@ -67,11 +68,12 @@ public class Place {
      *
      * @param lab A label of this place.
      * @param view Describing image of lab.
+     * @param lang Prefered language of fetched data.
      */
-    private JsonObject fetchData(Label lab, MapImageView view) throws IOException, PlaceQuery.UnknownPlaceException {
+    private JsonObject fetchData(Label lab, MapImageView view, Language lang) throws IOException, PlaceQuery.UnknownPlaceException {
         double[] bs = Math2.scaleBounds(lab.getLayout().getBounds(), QUERY_AREA_EXPANSION_FACTOR);
         double[] wsen = view.getGeoBounds(bs);
-        return PlaceQuery.fetch(lab.getText(), wsen);
+        return PlaceQuery.fetch(lab.getText(), wsen, lang);
     }
 
     /**

@@ -33,15 +33,19 @@ public class PlaceQuery {
     /*
      * True: Search only inside specified area.
      * False: Prefer specified area but might go outside. */
-    private static final boolean BOUNDED_QUERY = true;
+    private static final boolean BOUNDED_QUERY = false;
 
     /**
      * Queries for text and bounds, and looks for a result with a
      * category defined in Category-enum.
-     * @trows UnknownPlaceException if no appropriate category.
+     *
+     * @param text Query-text.
+     * @param wsen Query-bounds.
+     * @param lang Preferred language of fetched data (like name).
+     * @throws UnknownPlaceException if no appropriate category.
      */
-    public static JsonObject fetch(String text, double[] wsen) throws IOException, UnknownPlaceException {
-        URL[] urls = getURLs(text, wsen);
+    public static JsonObject fetch(String text, double[] wsen, Language lang) throws IOException, UnknownPlaceException {
+        URL[] urls = getURLs(text, wsen, lang);
 
         System.out.println(Arrays.toString(urls));
 
@@ -59,13 +63,14 @@ public class PlaceQuery {
      * @param wsen Query bounds.
      * @return Array of URLs for fetching json-data. Usually length=1.
      */
-    private static URL[] getURLs(String text, double[] wsen) {
+    private static URL[] getURLs(String text, double[] wsen, Language lang) {
         String str = "https://nominatim.openstreetmap.org/search?format=json";
-        str += "&accept-language=eng";
+        String langQuery = lang.name().toLowerCase();
+        str += "&accept-language=" + langQuery;
+        str += "&namedetails=1";
         str += "&addressdetails=0";
         str += "&limit=" + RESULT_LIMIT;
         str += "&extratags=1";
-        str += "&namedetails=0";
         if (BOUNDED_QUERY) str += "&bounded=1";
         else str += "&bounded=0";
 
@@ -178,7 +183,9 @@ public class PlaceQuery {
      */
     public static String getName(JsonObject place) throws UnknownPlaceException {
         if (place.has("display_name")) {
-            return place.getAsJsonObject("display_name").getAsString();
+            String txt = place.get("display_name").getAsString();
+            String[] parts = txt.split(",");
+            return parts[0];
         }
         else throw new UnknownPlaceException(new Gson().toJson(place));
     }
@@ -191,8 +198,8 @@ public class PlaceQuery {
     public static String getID(JsonObject place) throws UnknownPlaceException {
         if (place.has("osm_type") && place.has("osm_id")) {
             return
-                place.getAsJsonObject("osm_type").getAsString() +
-                place.getAsJsonObject("osm_id").getAsString();
+                place.get("osm_type").getAsString() +
+                place.get("osm_id").getAsString();
         }
         else throw new UnknownPlaceException(new Gson().toJson(place));
     }

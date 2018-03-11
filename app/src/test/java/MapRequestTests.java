@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 public class MapRequestTests {
 
     boolean highQ = true;
-    Language lang = Language.ENG;
+    Language lang = Language.EN;
 
     @Test
     public void fetcher() {

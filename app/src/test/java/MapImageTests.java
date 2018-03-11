@@ -7,7 +7,7 @@ public class MapImageTests {
 
     boolean FETCH;
     boolean FETCH_CATEGORIES; //ignored if FETCH
-    Language lang = Language.ENG;
+    Language lang = Language.EN;
 
     @Before
     public void setup() {
@@ -21,7 +21,7 @@ public class MapImageTests {
         // FETCH_CATEGORIES = true;
         // constructAndDump(MapImageView.world(), "world");
         // constructAndDump(MapImageView.europe(), "europe");
-        // constructAndDump(MapImageView.sweden(), "sweden");
+        constructAndDump(MapImageView.sweden(), "sweden");
         // constructAndDump(MapImageView.uppsala(), "uppsala");
         // constructAndDump(MapImageView.luthagen(), "luthagen");
         // constructAndDump(MapImageView.lidingo(), "lidingo");

@@ -25,7 +25,7 @@ public class PlacesTests {
     //     double n = 69.446949;
     //     int z = 5;
     //     view = new MapImageView(w, s, e, n, z, true);
-    //     lang = Language.ENG;
+    //     lang = Language.EN;
     //     try {
     //         places = new Places.Builder(limg, bimg, view, lang).build();
     //     }

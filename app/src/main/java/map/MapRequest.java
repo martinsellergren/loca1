@@ -17,14 +17,14 @@ public class MapRequest {
     public/***/ static final String TOKEN = "pk.eyJ1IjoibWFzZWwiLCJhIjoiY2o0ZTR2NWtrMHZudDJ3cDQzdXRwZ29zZCJ9.VrI0NDIYaP_5ZAXqnpaD1A";
 
     //eng
-    public static final String FULL_STYLE_ID_ENG = "cjd9dx1oe9t712roe6qmxmfgr";
-    public static final String LABEL_STYLE_ID_ENG = "cjd9dxg7i84ev2snt9rudqcgg";
-    public static final String BOX_STYLE_ID_ENG = "cjd9dxq0w9tpb2ss0ysjtiwlr";
+    public static final String FULL_STYLE_ID_EN = "cjd9dx1oe9t712roe6qmxmfgr";
+    public static final String LABEL_STYLE_ID_EN = "cjd9dxg7i84ev2snt9rudqcgg";
+    public static final String BOX_STYLE_ID_EN = "cjd9dxq0w9tpb2ss0ysjtiwlr";
 
     //swe (same for now..)
-    public static final String FULL_STYLE_ID_SWE = "cjd9dx1oe9t712roe6qmxmfgr";
-    public static final String LABEL_STYLE_ID_SWE = "cjd9dxg7i84ev2snt9rudqcgg";
-    public static final String BOX_STYLE_ID_SWE = "cjd9dxq0w9tpb2ss0ysjtiwlr";
+    public static final String FULL_STYLE_ID_SV = "cjd9dx1oe9t712roe6qmxmfgr";
+    public static final String LABEL_STYLE_ID_SV = "cjd9dxg7i84ev2snt9rudqcgg";
+    public static final String BOX_STYLE_ID_SV = "cjd9dxq0w9tpb2ss0ysjtiwlr";
 
     /**
      * Max width and height in pixels of request from server. */
@@ -100,15 +100,15 @@ public class MapRequest {
         String boxID = "";
 
         switch (this.lang) {
-        case ENG:
-            fullID = FULL_STYLE_ID_ENG;
-            labelID = LABEL_STYLE_ID_ENG;
-            boxID = BOX_STYLE_ID_ENG;
+        case EN:
+            fullID = FULL_STYLE_ID_EN;
+            labelID = LABEL_STYLE_ID_EN;
+            boxID = BOX_STYLE_ID_EN;
             break;
-        case SWE:
-            fullID = FULL_STYLE_ID_SWE;
-            labelID = LABEL_STYLE_ID_SWE;
-            boxID = BOX_STYLE_ID_SWE;
+        case SV:
+            fullID = FULL_STYLE_ID_SV;
+            labelID = LABEL_STYLE_ID_SV;
+            boxID = BOX_STYLE_ID_SV;
             break;
         }
 

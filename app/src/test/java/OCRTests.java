@@ -7,7 +7,7 @@ public class OCRTests {
     @Test
     public void detectString() {
         // BasicImage label = BasicImage.load("../label.png");
-        // OCR ocr = new OCR(Language.ENG);
+        // OCR ocr = new OCR(Language.EN);
         // String text = ocr.detectString(label).trim();
         // //System.out.println(text);
         // assertEquals("Balearic sea", text);

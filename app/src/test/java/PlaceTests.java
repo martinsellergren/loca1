@@ -7,6 +7,7 @@ import java.util.LinkedList;
 
 public class PlaceTests {
 
+    Language lang = Language.EN;
     String path;
     OCR ocr;
     LabelLayoutIterator iter;
@@ -55,11 +56,10 @@ public class PlaceTests {
     private Category findCategory(int[] p) {
         try {
             LabelLayout lay = iter.expandToLabelLayout(p);
-            String name = ocr.detectString(labelImg.extractLabel(lay));
-            LinkedList<LabelLayout> list = new LinkedList<LabelLayout>();
-            list.add(lay);
+            String text = ocr.detectString(labelImg.extractLabel(lay));
+            Label lab = new Label(text, lay);
 
-            Place place = new Place(name, list, view);
+            Place place = new Place(lab, view, lang);
             return place.getCategory();
         }
         catch (PlaceQuery.UnknownPlaceException e) {
