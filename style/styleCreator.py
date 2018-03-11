@@ -22,6 +22,9 @@ def getLayersFromID(data, ids):
             filtered.append(layer)
     return filtered
 
+def getLayerFromID(data, id):
+    return getLayersFromID(data, [id])[0]
+
 def removeCreatedAndModifiedProps(data):
     if 'created' in data:
         del data['created']
@@ -96,6 +99,13 @@ def limitZoomOnPOI(data):
                                         'poi-parks-scalerank1']):
         layer['minzoom'] = 8
 
+def noShortStreetLabels(data):
+    SHORT_MEANS_LESS_THAN = 200
+
+    getLayerFromID(data, 'road-label-small')['filter'] = ["all", ["==", "$type", "LineString"], ["all", ["!in", "class", "golf", "link", "motorway", "pedestrian", "primary", "secondary", "street", "street_limited", "tertiary", "trunk"], [">", "len", SHORT_MEANS_LESS_THAN]]]
+    getLayerFromID(data, 'road-label-medium')['filter'] = ["all", ["==", "$type", "LineString"], ["all", [">", "len", SHORT_MEANS_LESS_THAN], ["in", "class", "link", "pedestrian", "street", "street_limited"]]]
+    getLayerFromID(data, 'road-label-large')['filter'] = ["all", [">", "len", SHORT_MEANS_LESS_THAN], ["in", "class", "motorway", "primary", "secondary", "tertiary", "trunk"]]
+
 def undecorateText(data):
     for layer in getSymbolLayers(data):
         paint = layer['paint']
@@ -161,6 +171,7 @@ setTextPadding(data, textPadding)
 setLanguageAndFullNames(data)
 noJunkLabels(data)
 limitZoomOnPOI(data)
+noShortStreetLabels(data)
 
 #experiment
 #setNoLabelWrapping(data)

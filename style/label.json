@@ -8923,18 +8923,26 @@
                     "LineString"
                 ], 
                 [
-                    "!in", 
-                    "class", 
-                    "golf", 
-                    "link", 
-                    "motorway", 
-                    "pedestrian", 
-                    "primary", 
-                    "secondary", 
-                    "street", 
-                    "street_limited", 
-                    "tertiary", 
-                    "trunk"
+                    "all", 
+                    [
+                        "!in", 
+                        "class", 
+                        "golf", 
+                        "link", 
+                        "motorway", 
+                        "pedestrian", 
+                        "primary", 
+                        "secondary", 
+                        "street", 
+                        "street_limited", 
+                        "tertiary", 
+                        "trunk"
+                    ], 
+                    [
+                        ">", 
+                        "len", 
+                        200
+                    ]
                 ]
             ], 
             "source": "composite", 
@@ -8990,12 +8998,20 @@
                     "LineString"
                 ], 
                 [
-                    "in", 
-                    "class", 
-                    "link", 
-                    "pedestrian", 
-                    "street", 
-                    "street_limited"
+                    "all", 
+                    [
+                        ">", 
+                        "len", 
+                        200
+                    ], 
+                    [
+                        "in", 
+                        "class", 
+                        "link", 
+                        "pedestrian", 
+                        "street", 
+                        "street_limited"
+                    ]
                 ]
             ], 
             "source": "composite", 
@@ -9045,13 +9061,21 @@
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
-                "in", 
-                "class", 
-                "motorway", 
-                "primary", 
-                "secondary", 
-                "tertiary", 
-                "trunk"
+                "all", 
+                [
+                    ">", 
+                    "len", 
+                    200
+                ], 
+                [
+                    "in", 
+                    "class", 
+                    "motorway", 
+                    "primary", 
+                    "secondary", 
+                    "tertiary", 
+                    "trunk"
+                ]
             ], 
             "source": "composite", 
             "source-layer": "road_label", 
