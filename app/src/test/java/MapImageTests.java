@@ -21,7 +21,7 @@ public class MapImageTests {
         // FETCH_CATEGORIES = true;
         // constructAndDump(MapImageView.world(), "world");
         // constructAndDump(MapImageView.europe(), "europe");
-        constructAndDump(MapImageView.sweden(), "sweden");
+        // constructAndDump(MapImageView.sweden(), "sweden");
         // constructAndDump(MapImageView.uppsala(), "uppsala");
         // constructAndDump(MapImageView.luthagen(), "luthagen");
         // constructAndDump(MapImageView.lidingo(), "lidingo");
@@ -30,13 +30,15 @@ public class MapImageTests {
         // constructAndDump(MapImageView.lonEdge(), "lonEdge");
     }
 
-    // @Test
-    // public void fuzz() throws IOException {
-    //     while (System.in.available() == 0) {
-    //         MapImageView v = MapImageView.randomize();
-    //         constructAndDump(v);
-    //     }
-    // }
+    @Test
+    public void fuzz() throws IOException {
+        while (true) {
+            MapImageView v = MapImageView.randomize();
+            System.out.println(v);
+            constructAndDump(v);
+            System.out.println("\n");
+        }
+    }
 
     private void constructAndDump(MapImageView v, String name) throws IOException {
         MapImage mimg;

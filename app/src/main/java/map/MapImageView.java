@@ -374,8 +374,8 @@ public class MapImageView {
     public static boolean x2_ = true;
 
     public static MapImageView randomize() {
-        int minDim = 1000;
-        int maxDim = 100000;
+        int minDim = 100;
+        int maxDim = 10000;
         int w = Math2.randInt(minDim, maxDim+1);
         int h = Math2.randInt(minDim, maxDim+1);
         double lon = Math2.randDouble(-180, 180);
