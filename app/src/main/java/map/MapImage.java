@@ -77,7 +77,7 @@ public class MapImage {
     public MapImage(TiledImage[] imgs, MapImageView v, Language l, Object o) throws IOException {
         this.img = imgs[0];
         this.view = v;
-        this.places = new Places(imgs[1], imgs[2], v, l);
+        this.places = new Places(imgs[1], imgs[2], v, l, null);
     }
 
     public BasicImage getImg() {

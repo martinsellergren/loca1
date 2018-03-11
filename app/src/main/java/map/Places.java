@@ -26,14 +26,6 @@ public class Places {
     private LinkedList<Place> places = new LinkedList<Place>();
 
     /**
-     * Constructs from complete list of places.
-     * @pre Invariants hold in places-list.
-     */
-    private Places(LinkedList<Place> places) {
-        this.places = places;
-    }
-
-    /**
      * Finds label-layouts from a box-image, creates labels from the
      * layouts and a label-image, finally creates places using data
      * from internet.
@@ -48,6 +40,14 @@ public class Places {
         LinkedList<Label> labs = getLabels(lays, labelImg, lang);
         LinkedList<Place> oneLabPs = getOneLabelPlaces(labs, view, lang);
         this.places = combinePlaces(oneLabPs);
+    }
+
+    /**
+     * Constructs from complete list of places.
+     * @pre Invariants hold in places-list.
+     */
+    private Places(LinkedList<Place> places) {
+        this.places = places;
     }
 
     /**
@@ -185,7 +185,7 @@ public class Places {
             try {
                 ps.add(new Place(lab, view, lang));
             }
-            catch (PlaceQuery.UnknownPlaceException e) {
+            catch (UnknownPlaceException e) {
                 System.out.println("Unknown place:\n" + e.getMessage());
             }
         }
@@ -221,5 +221,33 @@ public class Places {
             if (p.getID() == id) return p;
         }
         return null;
+    }
+
+    //--------------------------------------------for testing
+
+    /**
+     * Constructor without internet. Names from label-text and
+     * categories hardcoded.
+     * @param o Just to allow another constructor (pass null).
+     */
+    public Places(TiledImage labelImg, TiledImage boxImg, MapImageView view, Language lang, Object o) throws IOException {
+        LinkedList<LabelLayout> lays = getLabelLayouts(boxImg, view);
+        LinkedList<Label> labs = getLabels(lays, labelImg, lang);
+        LinkedList<Place> oneLabPs = getOneLabelPlaces_(labs);
+        this.places = combinePlaces(oneLabPs);
+    }
+
+    /**
+     * @return One-label-places with name by label-text and hardcoded
+     * category.
+     */
+    private LinkedList<Place> getOneLabelPlaces_(LinkedList<Label> labs) {
+        LinkedList<Place> ps = new LinkedList<Place>();
+
+        for (Label lab : labs) {
+            ps.add(new Place(lab));
+        }
+
+        return ps;
     }
 }

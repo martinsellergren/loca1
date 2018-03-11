@@ -62,7 +62,7 @@ public class PlaceTests {
             Place place = new Place(lab, view, lang);
             return place.getCategory();
         }
-        catch (PlaceQuery.UnknownPlaceException e) {
+        catch (UnknownPlaceException e) {
             System.out.print("Unknown place:\n" + e.getMessage());
             assertTrue(false);
         }

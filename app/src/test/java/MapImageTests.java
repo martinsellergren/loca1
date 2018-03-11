@@ -17,28 +17,29 @@ public class MapImageTests {
 
     @Test
     public void construction() throws IOException {
-        // FETCH = false;
-        // FETCH_CATEGORIES = true;
-        // constructAndDump(MapImageView.world(), "world");
-        // constructAndDump(MapImageView.europe(), "europe");
-        // constructAndDump(MapImageView.sweden(), "sweden");
-        // constructAndDump(MapImageView.uppsala(), "uppsala");
-        // constructAndDump(MapImageView.luthagen(), "luthagen");
-        // constructAndDump(MapImageView.lidingo(), "lidingo");
-        // constructAndDump(MapImageView.rudboda(), "rudboda");
-        // constructAndDump(MapImageView.mefjard(), "mefjard");
-        // constructAndDump(MapImageView.lonEdge(), "lonEdge");
+        FETCH = true;
+        FETCH_CATEGORIES = true;
+
+        constructAndDump(MapImageView.world(), "world");
+        constructAndDump(MapImageView.europe(), "europe");
+        constructAndDump(MapImageView.sweden(), "sweden");
+        constructAndDump(MapImageView.uppsala(), "uppsala");
+        constructAndDump(MapImageView.luthagen(), "luthagen");
+        constructAndDump(MapImageView.lidingo(), "lidingo");
+        constructAndDump(MapImageView.rudboda(), "rudboda");
+        constructAndDump(MapImageView.mefjard(), "mefjard");
+        constructAndDump(MapImageView.lonEdge(), "lonEdge");
     }
 
-    @Test
-    public void fuzz() throws IOException {
-        while (true) {
-            MapImageView v = MapImageView.randomize();
-            System.out.println(v);
-            constructAndDump(v);
-            System.out.println("\n");
-        }
-    }
+    // @Test
+    // public void fuzz() throws IOException {
+    //     while (true) {
+    //         MapImageView v = MapImageView.randomize();
+    //         System.out.println(v);
+    //         constructAndDump(v);
+    //         System.out.println("\n");
+    //     }
+    // }
 
     private void constructAndDump(MapImageView v, String name) throws IOException {
         MapImage mimg;

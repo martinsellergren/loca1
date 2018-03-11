@@ -552,14 +552,17 @@ public class LabelLayoutIterator {
      *
      * @param start Start-point.
      * @return A box encapsulating start-point and all connceted
-     * box-points, or NULL if resulting box is outside or on the
-     * box-image edge.
+     * box-points, or NULL if start-point expands to too few points,
+     * or if resulting box is outside or on the box-image edge.
      *
      * @pre start is a box-point in the map.
      */
     public/***/ Box expandToBox(int[] start) {
         LinkedList<int[]> ps = expandToBoxPoints(start);
-        if (containsEdgePoint(ps)) return null;
+        if (ps.size() < Box.MIN_NO_POINTS_FOR_BOX_FITTING
+            || containsEdgePoint(ps)) {
+            return null;
+        }
 
         Box b = new Box(ps);
         if (isInside(b)) return b;

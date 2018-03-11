@@ -43,12 +43,15 @@ public class Place {
      * @param view Describes the image of lab.
      * @param lang Language of preferred place-names.
      */
-    public Place(Label lab, MapImageView view, Language lang) throws IOException, PlaceQuery.UnknownPlaceException {
+    public Place(Label lab, MapImageView view, Language lang) throws IOException, UnknownPlaceException {
         this.data = fetchData(lab, view, lang);
         this.name = PlaceQuery.getName(data);
         this.category = PlaceQuery.getCategory(data);
         this.id = PlaceQuery.getID(data);
         labels.add(lab);
+
+        if (isJunk(lab, category))
+            throw new UnknownPlaceException("Junk place:\n" + this.data);
     }
 
     /**
@@ -63,6 +66,15 @@ public class Place {
     }
 
     /**
+     * @return True if label doesn't seem valid.
+     */
+    private boolean isJunk(Label lab, Category cat) {
+        return
+            this.category == Category.STREET
+            && lab.getText().length() < 2;
+    }
+
+    /**
      * Fetch data about place from internet. Expands layout-bounds
      * to find query-area.
      *
@@ -70,7 +82,7 @@ public class Place {
      * @param view Describing image of lab.
      * @param lang Prefered language of fetched data.
      */
-    private JsonObject fetchData(Label lab, MapImageView view, Language lang) throws IOException, PlaceQuery.UnknownPlaceException {
+    private JsonObject fetchData(Label lab, MapImageView view, Language lang) throws IOException, UnknownPlaceException {
         double[] bs = Math2.scaleBounds(lab.getLayout().getBounds(), QUERY_AREA_EXPANSION_FACTOR);
         double[] wsen = view.getGeoBounds(bs);
         return PlaceQuery.fetch(lab.getText(), wsen, lang);
@@ -185,12 +197,13 @@ public class Place {
     //---------------------------for testing
 
     /**
-     * Constructor without internet and data.
+     * Constructor without internet and data. Name from label-text..
      */
-    // public Place(String name, LinkedList<LabelLayout> lays) {
-    //     this.name = name;
-    //     this.layouts = lays;
-    //     this.category = Category.OCEAN;
-    //     this.data = null;
-    // }
+    public Place(Label lab) {
+        this.data = null;
+        this.name = lab.getText();
+        this.category = Category.OCEAN;
+        this.id = this.name;
+        labels.add(lab);
+    }
 }

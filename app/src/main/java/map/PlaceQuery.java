@@ -21,12 +21,6 @@ import com.google.gson.GsonBuilder;
 public class PlaceQuery {
 
     /**
-     * Exception thrown when query result isn't valid. */
-    public static class UnknownPlaceException extends Exception {
-        private UnknownPlaceException(String msg) { super(msg); }
-    }
-
-    /**
      * Max number of returned place candidates. */
     private static final int RESULT_LIMIT = 4;
 

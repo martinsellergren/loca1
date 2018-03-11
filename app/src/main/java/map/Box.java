@@ -10,6 +10,12 @@ import java.util.LinkedList;
  * @inv width,height > 0
  */
 public class Box {
+
+    /**
+     * Throws an exception if tries to construct the box from
+     * less than this points. */
+    public static final int MIN_NO_POINTS_FOR_BOX_FITTING = 10;
+
     public/***/ double[] topL;
     public/***/ double[] topR;
     public/***/ double height;
@@ -37,6 +43,9 @@ public class Box {
      * (at any rotation).
      */
     public Box(LinkedList<int[]> ps) {
+        if (ps.size() < MIN_NO_POINTS_FOR_BOX_FITTING)
+            throw new IllegalArgumentException("Too few points");
+
         double[][] cs = fitRectangle(ps);
         cs = orderByDirection(cs, ps);
 
@@ -46,6 +55,10 @@ public class Box {
 
         if (!Math2.same(Math2.distance(cs[0], cs[3]), Math2.distance(cs[1], cs[2])))
             throw new RuntimeException();
+        if (Math2.distance(topL, topR) == 0)
+            throw new IllegalArgumentException("Zero box width");
+        if (height == 0)
+            throw new IllegalArgumentException("Zero box height");
     }
 
     /**
