@@ -185,13 +185,17 @@ public class LabelLayout {
 
     /**
      * Add offset to every position in layout.
+     * @return Edited layout.
      */
-    public void addOffset(double addX, double addY) {
-        for (LinkedList<Box> row : letterBoxes) {
+    public LabelLayout addOffset(double addX, double addY) {
+        LabelLayout cpy = this.copy();
+
+        for (LinkedList<Box> row : cpy.letterBoxes) {
             for (Box b : row) {
                 b.addOffset(addX, addY);
             }
         }
+        return cpy;
     }
 
     /**

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.LinkedList;
 import java.util.Arrays;
 import java.awt.Color;
+import java.io.IOException;
 
 
 /**
@@ -296,7 +297,7 @@ public class LabelLayoutIterator {
             if (isBoxPoint(p)) return p;
         }
 
-        throw new RuntimeException();
+        throw new IllegalArgumentException();
     }
 
     /**
@@ -717,7 +718,7 @@ public class LabelLayoutIterator {
      * "potential-neighbor-boxes" are part of the row.
      *
      */
-    private boolean isEdgeRow(LinkedList<Box> row) {
+    public/***/ boolean isEdgeRow(LinkedList<Box> row) {
         if (isEdgeBox(row.getFirst())
             || isEdgeBox(row.getLast())
             || isEdgeBox(row.get(row.size() / 2)))
@@ -758,6 +759,24 @@ public class LabelLayoutIterator {
             !isInside(Math2.step(b.getBottomRight(), ud, vd)) ||
             !isInside(Math2.step(b.getBottomLeft(), lr, -hd)) ||
             !isInside(Math2.step(b.getBottomLeft(), ud, vd));
+    }
+
+
+    /**
+     * @param lay Label-layout.
+     * @param bimg Box-image containing lay.
+     * @return All box-points(pixel-pos) in bimg of label lay.
+     */
+    public static LinkedList<int[]> getLabelPoints(LabelLayout lay, BasicImage bimg) {
+        LabelLayoutIterator iter = new LabelLayoutIterator(bimg);
+        LinkedList<int[]> ps = new LinkedList<int[]>();
+
+        for (Box b : lay.getBoxes()) {
+            int[] p = iter.getInsideBoxPoint(b);
+            ps.addAll(iter.expandToBoxPoints(p));
+        }
+
+        return ps;
     }
 
     //*********************************FOR TESTING

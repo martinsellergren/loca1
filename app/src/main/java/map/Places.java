@@ -104,7 +104,7 @@ public class Places {
             LabelLayoutIterator iter = new LabelLayoutIterator(sub);
             LabelLayout lay;
             while ((lay = iter.next()) != null) {
-                lay.addOffset(bs[0], bs[1]);
+                lay = lay.addOffset(bs[0], bs[1]);
                 lays.add(lay);
             }
         }

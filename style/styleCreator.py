@@ -1,5 +1,6 @@
 import json
 import sys
+import colorsys
 
 
 def getLayers(data, types):
@@ -106,6 +107,7 @@ def noShortStreetLabels(data):
     getLayerFromID(data, 'road-label-medium')['filter'] = ["all", ["==", "$type", "LineString"], ["all", [">", "len", SHORT_MEANS_LESS_THAN], ["in", "class", "link", "pedestrian", "street", "street_limited"]]]
     getLayerFromID(data, 'road-label-large')['filter'] = ["all", [">", "len", SHORT_MEANS_LESS_THAN], ["in", "class", "motorway", "primary", "secondary", "tertiary", "trunk"]]
 
+
 def undecorateText(data):
     for layer in getSymbolLayers(data):
         paint = layer['paint']
@@ -123,6 +125,10 @@ def dumpStyle(data, fileName):
     f.write(json.dumps(data, indent=4))
     f.close()
 
+def colorCode(data):
+    for layer in getSymbolLayers(data):
+        r,g,b = 255,254,253
+        layer['paint']['text-color'] = 'rgb(' + str(r) + ', ' + str(g) + ', ' + str(b) + ')'
 
 LOWER_CASE_FONT_IN_LABEL_IMG = True
 LANGUAGE = 'name_en'
@@ -173,6 +179,8 @@ noJunkLabels(data)
 limitZoomOnPOI(data)
 noShortStreetLabels(data)
 
+colorCode(data)
+
 #experiment
 #setNoLabelWrapping(data)
 #setNoLabelRotation(data)
@@ -186,6 +194,7 @@ setFont(data, font_label)
 setName(data, fileName_label)
 dumpStyle(data, fileName_label)
 
+colorCode(data)
 setFont(data, font_box)
 setName(data, fileName_box)
 dumpStyle(data, fileName_box)

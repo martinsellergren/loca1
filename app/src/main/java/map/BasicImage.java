@@ -439,6 +439,35 @@ public class BasicImage {
         return this.img.createGraphics();
     }
 
+    /**
+     * Finds average color of all pixels at specified points.
+     * Ignores points outside image. Ignores alpha-values.
+     *
+     * @param ps Points.
+     * @return Average color.
+     */
+    public Color getAverageColor(LinkedList<int[]> ps) {
+        int r = 0;
+        int g = 0;
+        int b = 0;
+        double count = 0;
+
+        for (int[] p : ps) {
+            if (isInside(p)) {
+                Color c = getColor(p);
+                r += c.getRed();
+                g += c.getGreen();
+                b += c.getBlue();
+                count++;
+            }
+        }
+
+        r = Math2.toInt(r / count);
+        g = Math2.toInt(g / count);
+        b = Math2.toInt(b / count);
+        return new Color(r, g, b);
+    }
+
     //*******************************FOR TESTING
 
     /**

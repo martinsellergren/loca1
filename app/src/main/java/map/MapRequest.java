@@ -172,6 +172,7 @@ public class MapRequest {
 
         String imageUrl = staticImage.getUrl().toString();
         imageUrl += "&attribution=false&logo=false";
+        imageUrl += "&fresh=true";
 
         //System.out.println(imageUrl);
 

@@ -1,5 +1,9 @@
 package map;
 
+import java.util.LinkedList;
+import java.io.IOException;
+import java.awt.Color;
+
 /**
  * Categories of map-objects, mainly map-labels.
  */
@@ -80,4 +84,35 @@ public enum Category {
         return null;
     }
 
+    /**
+     * Converts the color of a label in a box-image to a category.
+     *
+     * @param lay Label-layout.
+     * @param bimg Box-image containing lay.
+     */
+    public static Category decipher(LabelLayout lay, TiledImage bimg) throws IOException {
+        Color c = getAvgColor(lay, bimg);
+        return convert(c);
+    }
+
+    /**
+     * @return Avg color of pixels in lay.
+     */
+    public/***/ static Color getAvgColor(LabelLayout lay, TiledImage bimg) throws IOException {
+        int[] bs = Math2.getInsideBounds (Math2.toIntBounds(lay.getBounds()), bimg.getWidth(), bimg.getHeight());
+
+        BasicImage sub = bimg.getSubImage(bs);
+        lay = lay.addOffset(-bs[0], -bs[1]);
+        LinkedList<int[]> ps = LabelLayoutIterator.getLabelPoints(lay, sub);
+        return sub.getAverageColor(ps);
+    }
+
+    /**
+     * Turn a color into a category.
+     */
+    public static Category convert(Color c) {
+        int index = c.getRed();
+
+        return BAY;
+    }
 }

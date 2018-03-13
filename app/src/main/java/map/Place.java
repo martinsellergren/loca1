@@ -185,7 +185,7 @@ public class Place {
 
             int[] tl = new int[]{bs[0], bs[1]};
             BasicImage img = new BasicImage(bs[2]-bs[0]+1, bs[3]-bs[1]+1);
-            lay.addOffset(-tl[0], -tl[1]);
+            lay = lay.addOffset(-tl[0], -tl[1]);
             img.drawLabelOverlay(lay, col);
             ovs[i] = new LabelOverlay(img, tl);
         }

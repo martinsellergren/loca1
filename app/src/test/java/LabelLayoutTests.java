@@ -114,7 +114,7 @@ public class LabelLayoutTests {
         assertEquals(10, bs[2]);
         assertEquals(11, bs[3]);
 
-        lay.addOffset(1, 1);
+        lay = lay.addOffset(1, 1);
         bs = Math2.toInt(lay.getBounds());
         assertEquals(0, bs[0]);
         assertEquals(-1, bs[1]);
