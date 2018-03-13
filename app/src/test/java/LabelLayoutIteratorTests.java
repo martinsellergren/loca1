@@ -5,11 +5,12 @@ import java.util.LinkedList;
 import java.util.Arrays;
 import java.awt.Graphics2D;
 import java.awt.Color;
+import java.io.IOException;
+import java.io.File;
 
 public class LabelLayoutIteratorTests {
-    // BasicImage img = BasicImage.load("../sweden/box.png");
-    TiledImage img = TiledImageTests.loader("../sweden/box");
-    int[] area = new int[]{0, 0, img.getWidth(), img.getHeight()};
+    // TiledImage img = TiledImage.load_("../imgs/lidingo/box");
+    // int[] area = new int[]{0, 0, img.getWidth(), img.getHeight()};
 
     // @Test
     // public void constructor() {
@@ -73,36 +74,39 @@ public class LabelLayoutIteratorTests {
     // }
 
     // @Test
-    // public void findLabelLayouts() {
-    //     img.save("test_LabelLayoutIteratorTests_findLabelLayouts_before.png");
-    //     BasicImage labelBoxes = new BasicImage(img.getWidth(), img.getHeight());
+    // public void findLabelLayouts() throws IOException {
+    //     File[] files = new File("splits").listFiles();
+    //     Arrays.sort(files);
 
-    //     LabelLayoutIterator iter = new LabelLayoutIterator(img, area);
-    //     //LabelLayoutIterator iter = new LabelLayoutIterator(img);
+    //     for (int i = 0; i < files.length; i+=2) {
+    //         File bFile = files[i];
+    //         File fFile = files[i+1];
+    //         BasicImage fimg = BasicImage.load(fFile.toString());
+    //         BasicImage bimg = BasicImage.load(bFile.toString());
 
-    //     LabelLayout lay;
-    //     while ((lay=iter.next()) != null) {
-    //         try {
-    //             labelBoxes.drawLabelLayout(lay);
+    //         LabelLayoutIterator iter = new LabelLayoutIterator(bimg);
+
+    //         LabelLayout lay;
+    //         while ((lay=iter.next()) != null) {
+    //             try {
+    //                 fimg.drawLabelLayout(lay);
+    //             }
+    //             catch (Exception e) {
+    //                 System.out.println(lay);
+    //                 throw e;
+    //             }
     //         }
-    //         catch (Exception e) {
-    //             System.out.println(lay);
-    //             throw e;
-    //         }
+
+    //         fimg.save("test_LabelLayoutIterator_findLabelLayouts_" + fFile.getName());
     //     }
-
-    //     labelBoxes.save("test_LabelLayoutIterator_findLabelLayouts_after.png");
     // }
 
     // @Test
     // public void expandToLabelLayout() {
-    //     LabelLayoutIterator iter = new LabelLayoutIterator(img);
-    //     LabelLayout l = iter.expandToLabelLayout(new int[]{2839,1273});
-    //     img.drawLabelLayout(l);
-
-    //     l = iter.expandToLabelLayout(new int[]{2836,1101});
-    //     img.drawLabelLayout(l);
-
-    //     img.save("test_LabelLayoutIterator_expandToLabelLayout.png");
+    //     BasicImage img_ = img.getOneImageWithGrid();
+    //     LabelLayoutIterator iter = new LabelLayoutIterator(img_);
+    //     LabelLayout l = iter.expandToLabelLayout(new int[]{4950,2971});
+    //     img_.drawLabelLayout(l);
+    //     img_.save_("test_LabelLayoutIterator_expandToLabelLayout.png");
     // }
 }

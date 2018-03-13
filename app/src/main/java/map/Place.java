@@ -23,16 +23,16 @@ public class Place {
 
     /**
      * Expand label-area with this to get query-area. */
-    private final double QUERY_AREA_EXPANSION_FACTOR = 1;
+    public/***/ final double QUERY_AREA_EXPANSION_FACTOR = 1;
 
     /**
      * Expand label-bounds with this to get overlay-image dims. */
-    private final double LABEL_OVERLAY_SCALE_FACTOR = 1.2;
+    public/***/ final double LABEL_OVERLAY_SCALE_FACTOR = 1.2;
 
     public/***/ String name;
-    private Category category;
-    private String id;
-    private JsonObject data;
+    public/***/ Category category;
+    public/***/ String id;
+    public/***/ JsonObject data;
     public/***/ LinkedList<Label> labels = new LinkedList<Label>();
 
     /**
@@ -57,7 +57,7 @@ public class Place {
     /**
      * Constructor from known blocks.
      */
-    private Place(String name, Category cat, String id, JsonObject data, LinkedList<Label> labs) {
+    public/***/ Place(String name, Category cat, String id, JsonObject data, LinkedList<Label> labs) {
         this.name = name;
         this.category = cat;
         this.id = id;
@@ -68,7 +68,7 @@ public class Place {
     /**
      * @return True if label doesn't seem valid.
      */
-    private boolean isJunk(Label lab, Category cat) {
+    public/***/ boolean isJunk(Label lab, Category cat) {
         return
             this.category == Category.STREET
             && lab.getText().length() < 2;
@@ -82,7 +82,7 @@ public class Place {
      * @param view Describing image of lab.
      * @param lang Prefered language of fetched data.
      */
-    private JsonObject fetchData(Label lab, MapImageView view, Language lang) throws IOException, UnknownPlaceException {
+    public/***/ JsonObject fetchData(Label lab, MapImageView view, Language lang) throws IOException, UnknownPlaceException {
         double[] bs = Math2.scaleBounds(lab.getLayout().getBounds(), QUERY_AREA_EXPANSION_FACTOR);
         double[] wsen = view.getGeoBounds(bs);
         return PlaceQuery.fetch(lab.getText(), wsen, lang);
@@ -171,7 +171,7 @@ public class Place {
     class LabelOverlay {
         public final BasicImage img;
         public final int[] topLeft;
-        private LabelOverlay(BasicImage img, int[] tl) {
+        public/***/ LabelOverlay(BasicImage img, int[] tl) {
             this.img = img; this.topLeft = tl;
         }
     }

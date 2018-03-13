@@ -143,7 +143,7 @@ public class BasicImage {
     //  * @param p Point to be rounded and corresponding pixel colored.
     //  * @param clr Color of new pixel.
     //  */
-    // private void cleverSetColor(double[] p, Color clr) {
+    // public/***/ void cleverSetColor(double[] p, Color clr) {
     //     LinkedList<int[]> ps = new LinkedList<int[]>();
     //     ps.add(Math2.lCeil(p));
     //     ps.add(Math2.rCeil(p));
@@ -501,7 +501,8 @@ public class BasicImage {
 
         for (Label lab : p.getLabels()) {
             LabelLayout lay = lab.getLayout();
-            drawLabelOverlay(lay, overlayC);
+            drawLabelLayout(lay);
+            //drawLabelOverlay(lay, overlayC);
             drawLabelData(p.getName(), p.getCategory(), p.getNoLabels(), lay, col);
         }
     }
@@ -599,11 +600,13 @@ public class BasicImage {
         int[] br = Math2.toInt(lay.getBox(-1,-1).getBottomRight());
         int[] bl = Math2.toInt(lay.getBox(-1,0).getBottomLeft());
 
+        int test = Math2.randInt(-5,5);
+
         g.setPaint(Color.RED);
-        g.drawLine(tl[0], tl[1], tr[0], tr[1]);
+        g.drawLine(tl[0]+test, tl[1], tr[0], tr[1]);
         g.drawLine(tr[0], tr[1], br[0], br[1]);
         g.drawLine(br[0], br[1], bl[0], bl[1]);
-        g.drawLine(bl[0], bl[1], tl[0], tl[1]);
+        g.drawLine(bl[0], bl[1], tl[0]+test, tl[1]);
     }
 
     //public void drawBounds(int[]

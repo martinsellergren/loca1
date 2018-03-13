@@ -6,8 +6,8 @@ package map;
  * @inv length(txt) > 0
  */
 public class Label {
-    private String text;
-    private LabelLayout layout;
+    public/***/ String text;
+    public/***/ LabelLayout layout;
 
     /**
      * Construct a label.

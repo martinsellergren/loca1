@@ -11,7 +11,7 @@ import java.util.LinkedList;
  * location on earth and specified zoom through a MapImageView-object.
  */
 public class MapImage {
-    private TiledImage img;
+    public/***/ TiledImage img;
     public/***/ MapImageView view;
     public/***/ Places places;
 
@@ -40,10 +40,10 @@ public class MapImage {
      * Constructor from existing images. Uses internet for place-data.
      * @param imgs [full label box]-img.
      */
-    public MapImage(TiledImage[] imgs, MapImageView v, Language lang) throws IOException {
+    public MapImage(TiledImage[] imgs, MapImageView view, Language lang) throws IOException {
         this.img = imgs[0];
-        this.view = v;
-        this.places = new Places(imgs[1], imgs[2], v, lang);
+        this.view = view;
+        this.places = new Places(imgs[1], imgs[2], view, lang);
     }
 
     /**

@@ -4,31 +4,31 @@ import map.*;
 import java.io.IOException;
 
 public class LabelTests {
-    BasicImage boxImg;
-    BasicImage labelImg;
+    TiledImage boxImg;
+    TiledImage labelImg;
 
     @BeforeClass
     public void setUp() throws IOException {
-        this.boxImg = BasicImage.load("../test_europe_box.png");
-        this.labelImg = BasicImage.load("../test_europe_label.png");
+        this.boxImg = TiledImage.load("../imgs/lidingo/box");
+        this.labelImg = TiledImage.load("../imgs/lidingo/label");
     }
 
     // @Test
     // public void detectLabel() {
-    //     BasicImage labelImgCpy = labelImg.copy();
-
-    //     LabelLayoutIterator iter = new LabelLayoutIterator(boxImg);
-    //     OCR ocr = new OCR(OCR.Language.eng);
+    //     LabelLayoutIterator iter = new LabelLayoutIterator(boxImg.getOneImage());
+    //     OCR ocr = new OCR(Language.EN);
 
     //     LabelLayout lay = iter.expandToLabelLayout(new int[]{2564,336});
-    //     Label l = new Label(lay, labelImg, ocr);
+    //     String txt = ocr.detectString(labelImg.extractLabel(lay));
+    //     Label l = new Label(txt, lay);
 
-    //     labelImgCpy.drawLabelLayout(lay);
-    //     labelImgCpy.drawLabelText(l.getText().toUpperCase(), lay);
+    //     BasicImage labelImg_ = labelImg.getOneImage();
+    //     labelImg_.drawLabelLayout(lay);
+    //     //labelImg_.drawLabelText(l.getText().toUpperCase(), lay);
 
     //     ocr.end();
     //     labelImg.extractLabel(lay).save("test_Label.png");
-    //     labelImgCpy.save("test_Label_detectAllLabels.png");
+    //     labelImg.save("test_Label_detectAllLabels.png");
     // }
 
     // @Test

@@ -10,7 +10,7 @@ import java.io.IOException;
  * Class for turning images of letters strings.
  */
 public class OCR {
-    private TessBaseAPI api = new TessBaseAPI();
+    public/***/ TessBaseAPI api = new TessBaseAPI();
 
     /**
      * Initializes the ocr-engine for specified language detection.

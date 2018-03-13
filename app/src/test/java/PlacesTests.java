@@ -3,12 +3,13 @@ import org.junit.Before;
 import static org.junit.Assert.*;
 import map.*;
 import java.io.IOException;
+import java.util.LinkedList;
 
 public class PlacesTests {
     TiledImage limg;
     TiledImage bimg;
     MapImageView view;
-    Language lang;
+    Language lang = Language.EN;
     Places places;
 
     // @Before
@@ -43,5 +44,26 @@ public class PlacesTests {
     //     }
 
     //     dump.save("test_PlacesTests_construction_after.png");
+    // }
+
+    // @Test
+    // public void splitIntoLabelLayoutAnalysisSize() throws IOException {
+    //     //MapRequest.ViewAndImgs vis = MapRequest.lidingo();
+    //     MapImageView view = MapImageView.lidingo().getExtendedView();
+    //     TiledImage[] imgs = new MapRequest (view, ".", Language.EN).fetch3();
+    //     TiledImage fimg = imgs[0];
+    //     TiledImage bimg = imgs[2];
+
+    //     int extTerm = view.getExtensionTerm();
+    //     int[] imgBs = new int[]{0, 0, bimg.getWidth()-1, bimg.getHeight()-1};
+    //     LinkedList<int[]> bss = Math2.split(imgBs, Places.LABEL_LAYOUT_ANALYSIS_SIZE);
+
+    //     for (int[] bs : bss) {
+    //         bs = Math2.extendBounds(bs, extTerm);
+    //         BasicImage subFimg = fimg.getSubImage(bs);
+    //         BasicImage subBimg = bimg.getSubImage(bs);
+    //         subFimg.save("test_splitIntoLabelLayoutAnalysisSize_" + bs[0] + "," + bs[1] + "_full.png");
+    //         subBimg.save("test_splitIntoLabelLayoutAnalysisSize_" + bs[0] + "," + bs[1] + "_box.png");
+    //     }
     // }
 }

@@ -81,11 +81,11 @@ public class LabelLayoutIterator {
     /**
      * d / boxHeight <= this, where d is ortogonal distance from a
      * box's baseline to neighbor box's closest bottom-point. */
-    private static final double SAME_BASELINE_LAXNESS_FACTOR = 0.15;
+    public/***/ static final double SAME_BASELINE_LAXNESS_FACTOR = 0.15;
 
     /**
      * Stricter when multiple row (all boxes on a straight baseline) */
-    private static final double SAME_BASELINE_LAXNESS_FACTOR_MULTIROW = 0.1;
+    public/***/ static final double SAME_BASELINE_LAXNESS_FACTOR_MULTIROW = 0.1;
 
 
     /** Start searching for next box-point at this pos in map. */
@@ -94,6 +94,7 @@ public class LabelLayoutIterator {
 
     /** Representation of box-image: map[row][column]. */
     public/***/ boolean[][] map;
+    public/***/ boolean[][] untouchedMap;
 
     /**
      * Constructs the iterator from an rgba-image (box-image).
@@ -109,6 +110,7 @@ public class LabelLayoutIterator {
      */
     public LabelLayoutIterator(BasicImage img, int alphaThreshold) {
         this.map = new boolean[img.getHeight()][img.getWidth()];
+        this.untouchedMap = new boolean[img.getHeight()][img.getWidth()];
 
         for (int y = 0; y < img.getHeight(); y++) {
             for (int x = 0; x < img.getWidth(); x++) {
@@ -116,9 +118,11 @@ public class LabelLayoutIterator {
                 int alpha = c.getAlpha();
                 if (alpha >= alphaThreshold) {
                     this.map[y][x] = true;
+                    this.untouchedMap[y][x] = true;
                 }
                 else {
                     this.map[y][x] = false;
+                    this.untouchedMap[y][x] = false;
                 }
             }
         }
@@ -129,23 +133,6 @@ public class LabelLayoutIterator {
     public LabelLayoutIterator(BasicImage img) {
         this(img, DEFAULT_ALPHA_THRESHOLD);
     }
-
-    // /**
-    //  * Constructs from a tiledImage and bounds.
-    //  *
-    //  * @param img Box-image stored in tiles.
-    //  * @param bs Bounds [xmin ymin xmax ymax] for the area
-    //  * in the image that will be analyzed for labels. Analysis is kept
-    //  * inside image even if bs goes outside.
-    //  *
-    //  * @pre Min-bounds < max-bounds.
-    //  */
-    // public LabelLayoutIterator(TiledImage img, int[] bs, int alphaThreshold) {
-    //     this(img.getSubImage(bs), alphaThreshold);
-    // }
-    // public LabelLayoutIterator(TiledImage img, int[] bs) {
-    //     this(img, bs, DEFAULT_ALPHA_THRESHOLD);
-    // }
 
     /**
      * Finds and returns next layout. Starts searching at startX
@@ -513,7 +500,7 @@ public class LabelLayoutIterator {
      * bottom-point.
      * @return True if boxes is positioned on same (similar) base-line.
      */
-    private boolean sameBaseline(Box b0, Box b1, double lax) {
+    public/***/ boolean sameBaseline(Box b0, Box b1, double lax) {
         double[] p0 = b0.getBottomMid();
         double[] v = b0.getDirVector();
 
@@ -528,7 +515,7 @@ public class LabelLayoutIterator {
     /**
      * Between any boxes (baseline might be curved so high lax).
      */
-    private boolean sameBaseline(Box b0, Box b1) {
+    public/***/ boolean sameBaseline(Box b0, Box b1) {
         return sameBaseline(b0, b1, this.SAME_BASELINE_LAXNESS_FACTOR);
     }
 
@@ -536,7 +523,7 @@ public class LabelLayoutIterator {
      * Boxes in a row (straight base line so low lax).
      * @return True if all boxes in row are on same baseline.
      */
-    private boolean sameBaseline(LinkedList<Box> row) {
+    public/***/ boolean sameBaseline(LinkedList<Box> row) {
         if (row.size() < 2) return true;
 
         for (int i = 0; i < row.size()-1; i++) {
@@ -651,7 +638,7 @@ public class LabelLayoutIterator {
             p[0] >= 0 && p[0] < map[0].length &&
             p[1] >= 0 && p[1] < map.length;
     }
-    private boolean isInside(double[] p) {
+    public/***/ boolean isInside(double[] p) {
         return isInside(Math2.toInt(p));
     }
 
@@ -683,12 +670,72 @@ public class LabelLayoutIterator {
     /**
      * @return True if layout might continue outside of box-image.
      */
-    public/***/ boolean isEdgeLabel(LabelLayout l) {
-        return
-            isEdgeBox(l.getBox(0, 0)) ||
-            isEdgeBox(l.getBox(0, -1)) ||
-            isEdgeBox(l.getBox(-1, 0)) ||
-            isEdgeBox(l.getBox(-1, -1));
+    public boolean isEdgeLabel(LabelLayout l) {
+        boolean[][] temp = this.map;
+        this.map = this.untouchedMap;
+        boolean res = isEdgeLabel_(l);
+        this.map = temp;
+        return res;
+    }
+    public/***/ boolean isEdgeLabel_(LabelLayout l) {
+        LinkedList<Box> row0 = l.getRow(0);
+        if (isEdgeRow(row0)) return true;
+        if (l.hasObviousRotation()) return false;
+
+        LinkedList<Box> row1 = row0;
+        boolean up = true;
+        while (true) {
+            int[] p = findPotentialNeighborRowPoint(up, row1);
+            if (p == null) break;
+            Box b = expandToBox(p);
+            if (b == null) return true;
+            LinkedList<Box> row2 = expandToRow(b);
+            if (isEdgeRow(row2)) return true;
+
+            row1 = row2;
+        }
+
+        row1 = row0;
+        up = false;
+        while (true) {
+            int[] p = findPotentialNeighborRowPoint(up, row1);
+            if (p == null) return false;
+            Box b = expandToBox(p);
+            if (b == null) return true;
+            LinkedList<Box> row2 = expandToRow(b);
+            if (isEdgeRow(row2)) return true;
+
+            row1 = row2;
+        }
+    }
+
+    /**
+     * @return True if row might continue outside view, i.e
+     * if it has clean cut-out boxes, or has a cut neighbor-box.
+     *
+     * @pre Row has been expanded properly so any complete
+     * "potential-neighbor-boxes" are part of the row.
+     *
+     */
+    private boolean isEdgeRow(LinkedList<Box> row) {
+        if (isEdgeBox(row.getFirst())
+            || isEdgeBox(row.getLast())
+            || isEdgeBox(row.get(row.size() / 2)))
+            return true;
+
+        Box first = row.getFirst();
+        Box last = row.getLast();
+
+        int[] p = findPotentialNeighborBoxPoint(true, first);
+        if (p != null && expandToBox(p) == null) return true;
+        p = findPotentialNeighborBoxPoint(true, last);
+        if (p != null && expandToBox(p) == null) return true;
+        p = findPotentialNeighborBoxPoint(false, first);
+        if (p != null && expandToBox(p) == null) return true;
+        p = findPotentialNeighborBoxPoint(false, last);
+        if (p != null && expandToBox(p) == null) return true;
+
+        return false;
     }
 
     /**
@@ -696,8 +743,8 @@ public class LabelLayoutIterator {
      * (box-neighbor or row-neighbor).
      */
     public/***/ boolean isEdgeBox(Box b) {
-        double hd = b.getHeight() * BOX_SEARCH_LENGTH_FACTOR * 2;
-        double vd = b.getHeight() * ROW_SEARCH_LENGTH_FACTOR + b.getHeight();
+        double hd = b.getHeight() * BOX_SEARCH_LENGTH_FACTOR;// * 2;
+        double vd = b.getHeight() * ROW_SEARCH_LENGTH_FACTOR;// + b.getHeight();
 
         double[] lr = b.getDirVector();
         double[] ud = b.getOrtoDirVector();

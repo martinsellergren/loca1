@@ -22,12 +22,12 @@ public class PlaceQuery {
 
     /**
      * Max number of returned place candidates. */
-    private static final int RESULT_LIMIT = 4;
+    public/***/ static final int RESULT_LIMIT = 4;
 
     /*
      * True: Search only inside specified area.
      * False: Prefer specified area but might go outside. */
-    private static final boolean BOUNDED_QUERY = false;
+    public/***/ static final boolean BOUNDED_QUERY = false;
 
     /**
      * Queries for text and bounds, and looks for a result with a
@@ -57,7 +57,7 @@ public class PlaceQuery {
      * @param wsen Query bounds.
      * @return Array of URLs for fetching json-data. Usually length=1.
      */
-    private static URL[] getURLs(String text, double[] wsen, Language lang) {
+    public/***/ static URL[] getURLs(String text, double[] wsen, Language lang) {
         String str = "https://nominatim.openstreetmap.org/search?format=json";
         String langQuery = lang.name().toLowerCase();
         str += "&accept-language=" + langQuery;
@@ -101,7 +101,7 @@ public class PlaceQuery {
      * @return First non-empty json-array from the url-array,
      * or an empty JsonArray of none.
      */
-    private static JsonArray getPlaces(URL[] urls) throws IOException {
+    public/***/ static JsonArray getPlaces(URL[] urls) throws IOException {
         for (URL url : urls) {
             HttpURLConnection request = (HttpURLConnection) url.openConnection();
             request.connect();
@@ -121,7 +121,7 @@ public class PlaceQuery {
      * @param arr Array of places, sorted after search-result-relevance.
      * @return First place with valid category, or NULL if none.
      */
-    private static JsonObject selectPlace(JsonArray arr) throws UnknownPlaceException {
+    public/***/ static JsonObject selectPlace(JsonArray arr) throws UnknownPlaceException {
         for (int i = 0; i < arr.size(); i++) {
             JsonObject place = arr.get(i).getAsJsonObject();
             if (findCategory(place) != null) return place;
@@ -134,7 +134,7 @@ public class PlaceQuery {
      * @return Category of place - searches in tags, or NULL if none
      * appropriate.
      */
-    private static Category findCategory(JsonObject place) {
+    public/***/ static Category findCategory(JsonObject place) {
         //place-tag
         if (place.has("extratags")
             && place.getAsJsonObject("extratags").has("place")) {

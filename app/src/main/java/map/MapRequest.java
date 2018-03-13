@@ -53,13 +53,13 @@ public class MapRequest {
 
     /** Tile-size of tiledImage returned by fetch(). Must be an even
      * number so that raw images can be requested correctly. */
-    private int tileSize;
+    public/***/ int tileSize;
 
     /** Directory for the fetched fetched tiledImage. */
-    private Path saveDir;
+    public/***/ Path saveDir;
 
     /** Language of labels returned by fetch3(). */
-    private Language lang;
+    public/***/ Language lang;
 
 
     /**

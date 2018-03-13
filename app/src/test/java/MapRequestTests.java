@@ -255,7 +255,7 @@ public class MapRequestTests {
     //     assertEquals(512, imgs[0][0].getHeight());
     // }
 
-    // private BasicImage[][] fetcher(MapRequest req) {
+    // public/***/ BasicImage[][] fetcher(MapRequest req) {
     //     try {
     //         return req.fetch(MapRequest.FULL_STYLE_ID);
     //     }

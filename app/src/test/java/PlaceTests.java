@@ -53,7 +53,7 @@ public class PlaceTests {
     //     assertEquals(Category.SEA, findCategory(pBalticSea));
     // }
 
-    private Category findCategory(int[] p) {
+    public/***/ Category findCategory(int[] p) {
         try {
             LabelLayout lay = iter.expandToLabelLayout(p);
             String text = ocr.detectString(labelImg.extractLabel(lay));

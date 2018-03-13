@@ -27,14 +27,14 @@ public class TiledImage {
 
     /**
      * Directory where tiles reside. */
-    private final Path dir;
+    public/***/ final Path dir;
 
     /**
      * Tile in memory (cached), at specified row and column.
      * Only one cached tile at the time: last loaded tile. */
-    private BasicImage memTile;
-    private int memTileRow;
-    private int memTileCol;
+    public/***/ BasicImage memTile;
+    public/***/ int memTileRow;
+    public/***/ int memTileCol;
 
     /**
      * Image data, so don't have to load and investigate.
@@ -42,7 +42,7 @@ public class TiledImage {
      *       last-row-height = height % tileLength.
      * also:
      * tileWidth == tileHeight except if one-row/col layout. */
-    private final int width, height, tileWidth, tileHeight, rows, cols;
+    public/***/ final int width, height, tileWidth, tileHeight, rows, cols;
 
     /**
      * Constructs the tiledImage from saved tiles.
@@ -55,7 +55,7 @@ public class TiledImage {
      * @param rs Number of rows in tile-layout.
      * @param cs Number of columns in tile-layout.
      */
-    private TiledImage(Path dir, int w, int h, int tw, int th, int rs, int cs) throws IOException {
+    public/***/ TiledImage(Path dir, int w, int h, int tw, int th, int rs, int cs) throws IOException {
         this.dir = dir;
         this.width = w;
         this.height = h;
@@ -108,14 +108,14 @@ public class TiledImage {
     /**
      * @return Width of last column tiles.
      */
-    private int getLastColWidth() {
+    public/***/ int getLastColWidth() {
         return getWidth() - getTileWidth() * (this.cols - 1);
     }
 
     /**
      * @return Height of last row tiles.
      */
-    private int getLastRowHeight() {
+    public/***/ int getLastRowHeight() {
         return getHeight() - getTileHeight() * (this.rows - 1);
     }
 
@@ -161,7 +161,7 @@ public class TiledImage {
     /**
      * @return Sub-image split in full tile-blocks where bounds fit.
      */
-    private BasicImage getSubImage_fullTiles(int[] bs) throws IOException {
+    public/***/ BasicImage getSubImage_fullTiles(int[] bs) throws IOException {
         LinkedList<LinkedList<BasicImage>> tiles = new LinkedList<LinkedList<BasicImage>>();
         int[] tl_rcxy = getTileAndPos(new int[]{bs[0], bs[1]});
 
@@ -254,7 +254,7 @@ public class TiledImage {
      * @param c Column.
      * @return Tile at [r,c].
      */
-    private BasicImage getTile(int r, int c) throws IOException {
+    public/***/ BasicImage getTile(int r, int c) throws IOException {
         if (r == this.memTileRow && c == this.memTileCol)
             return this.memTile;
 
@@ -266,7 +266,7 @@ public class TiledImage {
     /**
      * Caches specified tile.
      */
-    private void cache(int r, int c, BasicImage tile) {
+    public/***/ void cache(int r, int c, BasicImage tile) {
         this.memTileRow = r;
         this.memTileCol = c;
         this.memTile = tile;
@@ -275,21 +275,21 @@ public class TiledImage {
     /**
      * @return Tile at specified row/column loaded from hdd.
      */
-    private static BasicImage loadTile(int r, int c, Path dir) throws IOException {
+    public/***/ static BasicImage loadTile(int r, int c, Path dir) throws IOException {
         return BasicImage.load(getTilePath(r, c, dir));
     }
-    private BasicImage loadTile(int r, int c) throws IOException {
+    public/***/ BasicImage loadTile(int r, int c) throws IOException {
         return loadTile(r, c, this.dir);
     }
 
     /**
      * @return Path to tile: x/y/tile-r-c.png
      */
-    private static Path getTilePath(int r, int c, Path dir) {
+    public/***/ static Path getTilePath(int r, int c, Path dir) {
         String fn = String.format("tile-%s-%s.png", r, c);
         return dir.resolve(fn);
     }
-    private Path getTilePath(int r, int c) {
+    public/***/ Path getTilePath(int r, int c) {
         return getTilePath(r, c, this.dir);
     }
 
@@ -297,7 +297,7 @@ public class TiledImage {
      * @return [r, c, x, y] for row/col of tile containing point p,
      * and x,y local point in this tile.
      */
-    private int[] getTileAndPos(int[] p) {
+    public/***/ int[] getTileAndPos(int[] p) {
         if (!isInside(p)) throw new RuntimeException("Out of bounds");
         int r = p[1] / this.tileHeight;
         int c = p[0] / this.tileWidth;
@@ -350,7 +350,7 @@ public class TiledImage {
      * @param fn FileName: tile-r-c.png
      * @return [r, c]
      */
-    private static int[] getRowCol(String fn) throws IOException {
+    public/***/ static int[] getRowCol(String fn) throws IOException {
         try {
             String[] ps = fn.split("[-.]");
             int r = Integer.parseInt(ps[1]);
@@ -373,7 +373,7 @@ public class TiledImage {
     /**
      * Deletes all content in dir.
      */
-    private static void cleanDir(File dir) {
+    public/***/ static void cleanDir(File dir) {
         if (!dir.isDirectory()) return;
 
         for (File f : dir.listFiles()) {
@@ -385,7 +385,7 @@ public class TiledImage {
     /**
      * Deletes dir with all content.
      */
-    private static void deleteDir(File dir) {
+    public/***/ static void deleteDir(File dir) {
         if (!dir.isDirectory()) return;
         cleanDir(dir);
         dir.delete();
@@ -454,17 +454,17 @@ public class TiledImage {
      * Builds the TiledImage by saving tiles to files.
      */
     public static class Builder {
-        private int c = 0;
-        private int r = 0;
+        public/***/ int c = 0;
+        public/***/ int r = 0;
 
-        private Path dir;
-        private int rows;
-        private int cols;
+        public/***/ Path dir;
+        public/***/ int rows;
+        public/***/ int cols;
 
-        private int tileW = -1;
-        private int tileH = -1;
-        private int lastColW = -1;
-        private int lastRowH = -1;
+        public/***/ int tileW = -1;
+        public/***/ int tileH = -1;
+        public/***/ int lastColW = -1;
+        public/***/ int lastRowH = -1;
 
         /**
          * Initiates builder AND DELETES ALL FILES IN dir.
@@ -508,7 +508,7 @@ public class TiledImage {
         /**
          * @throws RuntimeException if inconsistent dims.
          */
-        private void testDims(BasicImage tile) {
+        public/***/ void testDims(BasicImage tile) {
             // set dims
             if (r == 0 && c == 0) {
                 tileW = tile.getWidth();
@@ -524,7 +524,7 @@ public class TiledImage {
             if (r == rows-1) assertEq(tile.getHeight(), lastRowH);
             else assertEq(tile.getHeight(), tileH);
         }
-        private void assertEq(int x, int y) {
+        public/***/ void assertEq(int x, int y) {
             if (x != y) throw new RuntimeException("Bad tile dims");
         }
 

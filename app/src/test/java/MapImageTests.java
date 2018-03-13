@@ -20,15 +20,15 @@ public class MapImageTests {
         FETCH = true;
         FETCH_CATEGORIES = true;
 
-        constructAndDump(MapImageView.world(), "world");
-        constructAndDump(MapImageView.europe(), "europe");
-        constructAndDump(MapImageView.sweden(), "sweden");
-        constructAndDump(MapImageView.uppsala(), "uppsala");
-        constructAndDump(MapImageView.luthagen(), "luthagen");
-        constructAndDump(MapImageView.lidingo(), "lidingo");
-        constructAndDump(MapImageView.rudboda(), "rudboda");
-        constructAndDump(MapImageView.mefjard(), "mefjard");
-        constructAndDump(MapImageView.lonEdge(), "lonEdge");
+        // constructAndDump(MapImageView.world(), "world");
+        // constructAndDump(MapImageView.europe(), "europe");
+        // constructAndDump(MapImageView.sweden(), "sweden");
+        // constructAndDump(MapImageView.uppsala(), "uppsala");
+        // constructAndDump(MapImageView.luthagen(), "luthagen");
+        // constructAndDump(MapImageView.lidingo(), "lidingo");
+        // constructAndDump(MapImageView.rudboda(), "rudboda");
+        // constructAndDump(MapImageView.mefjard(), "mefjard");
+        // constructAndDump(MapImageView.lonEdge(), "lonEdge");
     }
 
     // @Test
@@ -41,7 +41,7 @@ public class MapImageTests {
     //     }
     // }
 
-    private void constructAndDump(MapImageView v, String name) throws IOException {
+    public/***/ void constructAndDump(MapImageView v, String name) throws IOException {
         MapImage mimg;
 
         if (FETCH) {
@@ -65,7 +65,7 @@ public class MapImageTests {
         }
         dump.save("test_" + name + "_after.png");
     }
-    private void constructAndDump(MapImageView v) throws IOException {
+    public/***/ void constructAndDump(MapImageView v) throws IOException {
         constructAndDump(v, "test_" + v.toString());
     }
 

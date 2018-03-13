@@ -17,13 +17,13 @@ public class Places {
     /**
      * Width and height of image sent to label-layout-iter.
      * If too large, risk of heap-overflow. */
-    private static final int LABEL_LAYOUT_ANALYSIS_SIZE = 1000;
+    public/***/ static final int LABEL_LAYOUT_ANALYSIS_SIZE = 1000;
 
     /**
      * List of places.
      * @inv Place-IDs are unique.
      */
-    private LinkedList<Place> places = new LinkedList<Place>();
+    public/***/ LinkedList<Place> places = new LinkedList<Place>();
 
     /**
      * Finds label-layouts from a box-image, creates labels from the
@@ -46,7 +46,7 @@ public class Places {
      * Constructs from complete list of places.
      * @pre Invariants hold in places-list.
      */
-    private Places(LinkedList<Place> places) {
+    public/***/ Places(LinkedList<Place> places) {
         this.places = places;
     }
 
@@ -89,7 +89,7 @@ public class Places {
      * @param v View describing bimg.
      * @return Layouts of labels in bimg.
      */
-    private LinkedList<LabelLayout> getLabelLayouts(TiledImage bimg, MapImageView v) throws IOException {
+    public/***/ LinkedList<LabelLayout> getLabelLayouts(TiledImage bimg, MapImageView v) throws IOException {
         LinkedList<LabelLayout> lays = new LinkedList<LabelLayout>();
 
         int extTerm = v.getExtensionTerm();
@@ -100,6 +100,7 @@ public class Places {
             bs = Math2.extendBounds(bs, extTerm);
             BasicImage sub = bimg.getSubImage(bs);
             bs = Math2.getInsideBounds(bs, sub.getWidth(), sub.getHeight());
+
             LabelLayoutIterator iter = new LabelLayoutIterator(sub);
             LabelLayout lay;
             while ((lay = iter.next()) != null) {
@@ -118,7 +119,7 @@ public class Places {
      * @param lays Mighs contain duplicates.
      * @return List with no duplicates.
      */
-    private LinkedList<LabelLayout> removeDuplicateLayouts(LinkedList<LabelLayout> lays) {
+    public/***/ LinkedList<LabelLayout> removeDuplicateLayouts(LinkedList<LabelLayout> lays) {
         LinkedList<LabelLayout> filtered = new LinkedList<LabelLayout>();
         for (LabelLayout lay : lays) {
             if (!containsLayout(lay, filtered))
@@ -131,7 +132,7 @@ public class Places {
     /**
      * @return True if lays contains lay (similar enough).
      */
-    private boolean containsLayout(LabelLayout lay, LinkedList<LabelLayout> lays) {
+    public/***/ boolean containsLayout(LabelLayout lay, LinkedList<LabelLayout> lays) {
         for (LabelLayout l : lays) {
             if (l.same(lay)) return true;
         }
@@ -148,7 +149,7 @@ public class Places {
      * @param lang Language of text in limg.
      * @return Labels described by lays.
      */
-    private LinkedList<Label> getLabels(LinkedList<LabelLayout> lays, TiledImage limg, Language lang) throws IOException {
+    public/***/ LinkedList<Label> getLabels(LinkedList<LabelLayout> lays, TiledImage limg, Language lang) throws IOException {
         LinkedList<Label> labs = new LinkedList<Label>();
         OCR ocr = new OCR(lang);
 
@@ -165,7 +166,7 @@ public class Places {
     /**
      * @return True if txt couldn't possibly be a valid label text.
      */
-    private boolean isJunkLabelText(String txt) {
+    public/***/ boolean isJunkLabelText(String txt) {
         return txt.length() == 0;
     }
 
@@ -178,7 +179,7 @@ public class Places {
      * @return List of places each having only one label, where same
      * place-ID might occure multiple times.
      */
-    private LinkedList<Place> getOneLabelPlaces(LinkedList<Label> labs, MapImageView view, Language lang) throws IOException {
+    public/***/ LinkedList<Place> getOneLabelPlaces(LinkedList<Label> labs, MapImageView view, Language lang) throws IOException {
         LinkedList<Place> ps = new LinkedList<Place>();
 
         for (Label lab : labs) {
@@ -200,7 +201,7 @@ public class Places {
      * @param oneLabPs List of one-label-places.
      * @return List of places where each place-ID is unique.
      */
-    private LinkedList<Place> combinePlaces(LinkedList<Place> oneLabPs) {
+    public/***/ LinkedList<Place> combinePlaces(LinkedList<Place> oneLabPs) {
         LinkedList<Place> ps = new LinkedList<Place>();
 
         for (Place oneLabP : oneLabPs) {
@@ -216,7 +217,7 @@ public class Places {
     /**
      * @return Place in ps with specified id, or NULL if none.
      */
-    private Place findPlace(String id, LinkedList<Place> ps) {
+    public/***/ Place findPlace(String id, LinkedList<Place> ps) {
         for (Place p : ps) {
             if (p.getID() == id) return p;
         }
@@ -241,7 +242,7 @@ public class Places {
      * @return One-label-places with name by label-text and hardcoded
      * category.
      */
-    private LinkedList<Place> getOneLabelPlaces_(LinkedList<Label> labs) {
+    public/***/ LinkedList<Place> getOneLabelPlaces_(LinkedList<Label> labs) {
         LinkedList<Place> ps = new LinkedList<Place>();
 
         for (Label lab : labs) {
