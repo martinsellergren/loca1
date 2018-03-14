@@ -762,21 +762,59 @@ public class LabelLayoutIterator {
     }
 
 
-    /**
-     * @param lay Label-layout.
-     * @param bimg Box-image containing lay.
-     * @return All box-points(pixel-pos) in bimg of label lay.
-     */
-    public static LinkedList<int[]> getLabelPoints(LabelLayout lay, BasicImage bimg) {
-        LabelLayoutIterator iter = new LabelLayoutIterator(bimg);
-        LinkedList<int[]> ps = new LinkedList<int[]>();
+    //----------------------------------------------------getLayouts
 
-        for (Box b : lay.getBoxes()) {
-            int[] p = iter.getInsideBoxPoint(b);
-            ps.addAll(iter.expandToBoxPoints(p));
+    /**
+     * Width and height of image sent to label-layout-iter.
+     * If too large, risk of heap-overflow. */
+    public/***/ static final int LABEL_LAYOUT_ANALYSIS_SIZE = 1000;
+
+    /**
+     * Performs label-layout analysis for sub-images of a box-image.
+     * Sub-image max-side-length is LABEL_LAYOUT_ANALYSIS_SIZE.
+     *
+     * @param bimg Box-image.
+     * @param v View describing bimg.
+     * @return All labels in bimg, using default alphaThreshold.
+     */
+    public static LinkedList<LabelLayout> getLayouts(TiledImage bimg, MapImageView v) throws IOException {
+        LinkedList<LabelLayout> lays = new LinkedList<LabelLayout>();
+
+        int extTerm = v.getExtensionTerm();
+        int[] imgBs = new int[]{0, 0, bimg.getWidth()-1, bimg.getHeight()-1};
+        LinkedList<int[]> bss = Math2.split(imgBs, LABEL_LAYOUT_ANALYSIS_SIZE);
+
+        for (int[] bs : bss) {
+            bs = Math2.extendBounds(bs, extTerm);
+            BasicImage sub = bimg.getSubImage(bs);
+            bs = Math2.getInsideBounds(bs, sub.getWidth(), sub.getHeight());
+
+            LabelLayoutIterator iter = new LabelLayoutIterator(sub);
+            LabelLayout lay;
+            while ((lay = iter.next()) != null) {
+                lay = lay.addOffset(bs[0], bs[1]);
+                lays.add(lay);
+            }
         }
 
-        return ps;
+        return removeDuplicateLayouts(lays);
+    }
+
+    /**
+     * Removes duplicate layous. Counts as duplicate if seems like
+     * two labels have same text-label source in a map-image.
+     *
+     * @param lays Mighs contain duplicates.
+     * @return List with no duplicates.
+     */
+    public/***/ static LinkedList<LabelLayout> removeDuplicateLayouts(LinkedList<LabelLayout> lays) {
+        LinkedList<LabelLayout> filtered = new LinkedList<LabelLayout>();
+        for (LabelLayout lay : lays) {
+            if (!lay.sameAsAny(filtered))
+                filtered.add(lay);
+        }
+
+        return filtered;
     }
 
     //*********************************FOR TESTING

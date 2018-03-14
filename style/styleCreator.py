@@ -3,18 +3,12 @@ import sys
 import colorsys
 
 
-def getLayers(data, types):
+def getLayersFromTypes(data, types):
     filtered = []
     for layer in data['layers']:
         if 'type' in layer and layer['type'] in types:
             filtered.append(layer)
     return filtered
-
-def getSymbolLayers(data):
-    return getLayers(data, ['symbol'])
-
-def getNonSymbolLayers(data):
-    return getLayers(data, ['fill', 'line', 'circle', 'heatmap', 'fill-extrusion', 'raster', 'background'])
 
 def getLayersFromID(data, ids):
     filtered = []
@@ -25,6 +19,41 @@ def getLayersFromID(data, ids):
 
 def getLayerFromID(data, id):
     return getLayersFromID(data, [id])[0]
+
+def getLayersFromSourceLayer(data, sourceLayers):
+    filtered = []
+    for layer in data['layers']:
+        if 'source-layer' in layer and layer['source-layer'] in sourceLayers:
+            filtered.append(layer)
+    return filtered
+
+
+def getLabelLayers(data):
+    return getLayersFromSourceLayer(data, ['country_label',
+                                           'marine_label',
+                                           'state_label',
+                                           'place_label',
+                                           'water_label',
+                                           'poi_label',
+                                           'road_label',
+                                           'waterway_label',
+                                           'airport_label',
+                                           'rail_station_label',
+                                           'mountain_peak_label'])
+def getNonLabelLayers(data):
+    filtered = []
+    labelLayers = getLabelLayers(data)
+    for layer in data['layers']:
+        if layer not in labelLayers:
+            filtered.append(layer)
+    return filtered
+
+
+# def getSymbolLayers(data):
+#     return getLayers(data, ['symbol'])
+
+# def getNonSymbolLayers(data):
+#     return getLayers(data, ['fill', 'line', 'circle', 'heatmap', 'fill-extrusion', 'raster', 'background'])
 
 def removeCreatedAndModifiedProps(data):
     if 'created' in data:
@@ -44,44 +73,44 @@ def setName(data, name):
 def setFont(data, font):
     data['glyphs'] = "mapbox://fonts/masel/{fontstack}/{range}.pbf"
 
-    for layer in getSymbolLayers(data):
+    for layer in getLabelLayers(data):
         layer['layout']['text-font'] = [font]
 
 
 def setLetterSpacing(data, extraSpace=0):
-    for layer in getSymbolLayers(data):
+    for layer in getLabelLayers(data):
         space = extraSpace
         if 'text-letter-spacing' in layer['layout']:
             space += layer['layout']['text-letter-spacing']
         layer['layout']['text-letter-spacing'] = space
 
 def setLineHeight(data, lineHeight):
-    for layer in getSymbolLayers(data):
+    for layer in getLabelLayers(data):
         layer['layout']['text-line-height'] = lineHeight
 
 
 def setTextMaxAngle(data, maxAngle=45):
-    for layer in getSymbolLayers(data):
+    for layer in getLabelLayers(data):
         layer['layout']['text-max-angle'] = maxAngle
 
 def setNoLabelWrapping(data):
-    for layer in getSymbolLayers(data):
+    for layer in getLabelLayers(data):
         layer['layout']['text-max-width'] = 1000000
 
 def setNoLabelRotation(data):
-    for layer in getSymbolLayers(data):
+    for layer in getLabelLayers(data):
         layer['layout']['symbol-placement'] = 'point'
 
 def setNoOverlap(data):
-    for layer in getSymbolLayers(data):
+    for layer in getLabelLayers(data):
         layer['layout']['text-allow-overlap'] = False
 
 def setTextPadding(data, textPadding):
-    for layer in getSymbolLayers(data):
+    for layer in getLabelLayers(data):
         layer['layout']['text-padding'] = textPadding
 
 def setLanguageAndFullNames(data):
-    for layer in getSymbolLayers(data):
+    for layer in getLabelLayers(data):
         layer['layout']['text-field'] = '{name_en}'
 
 def noJunkLabels(data):
@@ -108,7 +137,7 @@ def noShortStreetLabels(data):
 
 
 def undecorateText(data):
-    for layer in getSymbolLayers(data):
+    for layer in getLabelLayers(data):
         paint = layer['paint']
         paint['icon-opacity'] = 0
         paint['text-opacity'] = 1
@@ -116,8 +145,12 @@ def undecorateText(data):
         paint['text-halo-color'] = 'hsla(0, 0%, 0%, 0)'
 
 def hideGraphics(data):
-    for layer in getNonSymbolLayers(data):
-        layer['layout']['visibility'] = 'none'
+    for layer in getNonLabelLayers(data):
+        if 'ref' in layer:
+            # layer['paint']['fill-opacity'] = "hsl(196, 80%, 70%)"
+            pass
+        else:
+            layer['layout']['visibility'] = 'none'
 
 def dumpStyle(data, fileName):
     f = open(fileName + ".json", 'w')
@@ -125,11 +158,12 @@ def dumpStyle(data, fileName):
     f.close()
 
 def colorCode(data):
-    for layer in getSymbolLayers(data):
+    for layer in getLabelLayers(data):
         sourceLayer = layer['source-layer']
         prop, types = getPropertyAndTypes(sourceLayer)
         colorObj = getColorObject(sourceLayer, prop, types)
         layer['paint']['text-color'] = colorObj
+        layer['paint']['text-color'] = 'rgb(5, 255, 255)'
 
 def getPropertyAndTypes(sourceLayer):
     for elem in labelTypeTable_json:
@@ -143,7 +177,7 @@ def getPropertyAndTypes(sourceLayer):
 
 def getColorObject(sourceLayer, prop, types):
     if (prop == '-'):
-        getColorStr(sourceLayer, [])
+        return getColorStr(sourceLayer, '-')
 
     co = {}
     co['type'] = 'categorical'
@@ -166,8 +200,11 @@ def getColorStr(sourceLayer, type):
 def getLabelTypeConversionTable(labelTypeTable_json):
     t = []
     for elem in labelTypeTable_json:
-        for type in elem['values']:
-            t.append((elem['source-layer'], type))
+        if elem['property'] == '-':
+            t.append((elem['source-layer'], '-'))
+        else:
+            for type in elem['values']:
+                t.append((elem['source-layer'], type))
     return t
 
 
@@ -225,8 +262,6 @@ setLanguageAndFullNames(data)
 noJunkLabels(data)
 limitZoomOnPOI(data)
 noShortStreetLabels(data)
-
-colorCode(data)
 
 #experiment
 #setNoLabelWrapping(data)

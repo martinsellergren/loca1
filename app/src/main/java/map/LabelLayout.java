@@ -1,6 +1,8 @@
 package map;
 
 import java.util.LinkedList;
+import java.io.IOException;
+import java.awt.Color;
 
 /**
  * A layout specification of a label, describing where each letter
@@ -215,6 +217,16 @@ public class LabelLayout {
     }
 
     /**
+     * @return True if sufficiently similar to any layout in lays.
+     */
+    public boolean sameAsAny(LinkedList<LabelLayout> lays) {
+        for (LabelLayout l : lays) {
+            if (same(l)) return true;
+        }
+        return false;
+    }
+
+    /**
      * @return A deep copy of this object.
      */
     public LabelLayout copy() {
@@ -237,5 +249,36 @@ public class LabelLayout {
             s += "\n";
         }
         return s;
+    }
+
+
+
+    /**
+     * @param bimg Box-image containing this label-layout.
+     * @return Avg color of pixels in bimg of lay.
+     */
+    public Color getAverageColor(TiledImage bimg) throws IOException {
+        int[] bs = Math2.getInsideBounds(Math2.toIntBounds(getBounds()), bimg.getWidth(), bimg.getHeight());
+
+        BasicImage sub = bimg.getSubImage(bs);
+        LabelLayout lay = addOffset(-bs[0], -bs[1]);
+        LinkedList<int[]> ps = lay.getLabelPoints(sub);
+        return sub.getAverageColor(ps);
+    }
+
+    /**
+     * @param bimg Box-image containing this label-layout.
+     * @return All box-points(pixel-pos) in bimg of label lay.
+     */
+    public LinkedList<int[]> getLabelPoints(BasicImage bimg) {
+        LabelLayoutIterator iter = new LabelLayoutIterator(bimg);
+        LinkedList<int[]> ps = new LinkedList<int[]>();
+
+        for (Box b : getBoxes()) {
+            int[] p = iter.getInsideBoxPoint(b);
+            ps.addAll(iter.expandToBoxPoints(p));
+        }
+
+        return ps;
     }
 }

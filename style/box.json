@@ -2470,15 +2470,6 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.2, 
-                "text-max-angle": 15, 
-                "text-allow-overlap": false, 
-                "symbol-placement": "line", 
-                "icon-padding": 2, 
-                "text-padding": 10, 
-                "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
-                ], 
                 "icon-image": {
                     "base": 1, 
                     "stops": [
@@ -2492,16 +2483,12 @@
                         ]
                     ]
                 }, 
-                "text-field": "{name_en}", 
-                "text-line-height": 1.5, 
-                "symbol-spacing": 200
+                "visibility": "none", 
+                "symbol-spacing": 200, 
+                "symbol-placement": "line", 
+                "icon-padding": 2
             }, 
-            "paint": {
-                "text-color": "rgb(255, 254, 253)", 
-                "text-opacity": 1, 
-                "text-halo-color": "hsla(0, 0%, 0%, 0)", 
-                "icon-opacity": 0
-            }, 
+            "paint": {}, 
             "filter": [
                 "all", 
                 [
@@ -2548,15 +2535,6 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.2, 
-                "text-max-angle": 15, 
-                "text-allow-overlap": false, 
-                "symbol-placement": "line", 
-                "icon-padding": 2, 
-                "text-padding": 10, 
-                "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
-                ], 
                 "icon-image": {
                     "base": 1, 
                     "stops": [
@@ -2570,16 +2548,12 @@
                         ]
                     ]
                 }, 
-                "text-field": "{name_en}", 
-                "text-line-height": 1.5, 
-                "symbol-spacing": 200
+                "visibility": "none", 
+                "symbol-spacing": 200, 
+                "symbol-placement": "line", 
+                "icon-padding": 2
             }, 
-            "paint": {
-                "text-color": "rgb(255, 254, 253)", 
-                "text-opacity": 1, 
-                "text-halo-color": "hsla(0, 0%, 0%, 0)", 
-                "icon-opacity": 0
-            }, 
+            "paint": {}, 
             "filter": [
                 "all", 
                 [
@@ -2706,15 +2680,6 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.2, 
-                "text-max-angle": 15, 
-                "text-allow-overlap": false, 
-                "symbol-placement": "line", 
-                "icon-padding": 2, 
-                "text-padding": 10, 
-                "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
-                ], 
                 "icon-image": {
                     "base": 1, 
                     "stops": [
@@ -2728,16 +2693,12 @@
                         ]
                     ]
                 }, 
-                "text-field": "{name_en}", 
-                "text-line-height": 1.5, 
-                "symbol-spacing": 200
+                "visibility": "none", 
+                "symbol-spacing": 200, 
+                "symbol-placement": "line", 
+                "icon-padding": 2
             }, 
-            "paint": {
-                "text-color": "rgb(255, 254, 253)", 
-                "text-opacity": 1, 
-                "text-halo-color": "hsla(0, 0%, 0%, 0)", 
-                "icon-opacity": 0
-            }, 
+            "paint": {}, 
             "filter": [
                 "all", 
                 [
@@ -3127,10 +3088,7 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.2, 
                 "icon-allow-overlap": true, 
-                "text-max-angle": 15, 
-                "text-allow-overlap": false, 
                 "icon-size": {
                     "base": 1.5, 
                     "stops": [
@@ -3149,22 +3107,12 @@
                     ]
                 }, 
                 "icon-padding": 0, 
-                "text-padding": 10, 
-                "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
-                ], 
+                "visibility": "none", 
                 "icon-image": "turning-circle-outline", 
-                "text-field": "{name_en}", 
                 "icon-rotation-alignment": "map", 
-                "icon-ignore-placement": true, 
-                "text-line-height": 1.5
+                "icon-ignore-placement": true
             }, 
-            "paint": {
-                "text-color": "rgb(255, 254, 253)", 
-                "text-opacity": 1, 
-                "text-halo-color": "hsla(0, 0%, 0%, 0)", 
-                "icon-opacity": 0
-            }, 
+            "paint": {}, 
             "filter": [
                 "all", 
                 [
@@ -4791,15 +4739,9 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.2, 
-                "text-max-angle": 15, 
-                "text-allow-overlap": false, 
                 "symbol-placement": "line", 
                 "icon-padding": 2, 
-                "text-padding": 10, 
-                "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
-                ], 
+                "visibility": "none", 
                 "icon-image": {
                     "base": 1, 
                     "stops": [
@@ -4813,17 +4755,10 @@
                         ]
                     ]
                 }, 
-                "text-field": "{name_en}", 
                 "icon-rotation-alignment": "map", 
-                "text-line-height": 1.5, 
                 "symbol-spacing": 200
             }, 
-            "paint": {
-                "text-color": "rgb(255, 254, 253)", 
-                "text-opacity": 1, 
-                "text-halo-color": "hsla(0, 0%, 0%, 0)", 
-                "icon-opacity": 0
-            }, 
+            "paint": {}, 
             "filter": [
                 "all", 
                 [
@@ -4871,15 +4806,9 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.2, 
-                "text-max-angle": 15, 
-                "text-allow-overlap": false, 
                 "symbol-placement": "line", 
                 "icon-padding": 2, 
-                "text-padding": 10, 
-                "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
-                ], 
+                "visibility": "none", 
                 "icon-image": {
                     "base": 1, 
                     "stops": [
@@ -4893,17 +4822,10 @@
                         ]
                     ]
                 }, 
-                "text-field": "{name_en}", 
                 "icon-rotation-alignment": "map", 
-                "text-line-height": 1.5, 
                 "symbol-spacing": 200
             }, 
-            "paint": {
-                "text-color": "rgb(255, 254, 253)", 
-                "text-opacity": 1, 
-                "text-halo-color": "hsla(0, 0%, 0%, 0)", 
-                "icon-opacity": 0
-            }, 
+            "paint": {}, 
             "filter": [
                 "all", 
                 [
@@ -5140,25 +5062,12 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.2, 
-                "icon-allow-overlap": true, 
-                "text-max-angle": 15, 
-                "text-allow-overlap": false, 
-                "icon-size": 1, 
-                "text-padding": 10, 
-                "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
-                ], 
                 "icon-image": "level-crossing", 
-                "text-field": "{name_en}", 
-                "text-line-height": 1.5
+                "icon-allow-overlap": true, 
+                "visibility": "none", 
+                "icon-size": 1
             }, 
-            "paint": {
-                "text-color": "rgb(255, 254, 253)", 
-                "text-opacity": 1, 
-                "text-halo-color": "hsla(0, 0%, 0%, 0)", 
-                "icon-opacity": 0
-            }, 
+            "paint": {}, 
             "filter": [
                 "all", 
                 [
@@ -5183,15 +5092,6 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.2, 
-                "text-max-angle": 15, 
-                "text-allow-overlap": false, 
-                "symbol-placement": "line", 
-                "icon-padding": 2, 
-                "text-padding": 10, 
-                "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
-                ], 
                 "icon-image": {
                     "base": 1, 
                     "stops": [
@@ -5205,16 +5105,12 @@
                         ]
                     ]
                 }, 
-                "text-field": "{name_en}", 
-                "text-line-height": 1.5, 
-                "symbol-spacing": 200
+                "visibility": "none", 
+                "symbol-spacing": 200, 
+                "symbol-placement": "line", 
+                "icon-padding": 2
             }, 
-            "paint": {
-                "text-color": "rgb(255, 254, 253)", 
-                "text-opacity": 1, 
-                "text-halo-color": "hsla(0, 0%, 0%, 0)", 
-                "icon-opacity": 0
-            }, 
+            "paint": {}, 
             "filter": [
                 "all", 
                 [
@@ -5263,10 +5159,7 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.2, 
                 "icon-allow-overlap": true, 
-                "text-max-angle": 15, 
-                "text-allow-overlap": false, 
                 "icon-size": {
                     "base": 1.5, 
                     "stops": [
@@ -5281,22 +5174,12 @@
                     ]
                 }, 
                 "icon-padding": 0, 
-                "text-padding": 10, 
-                "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
-                ], 
+                "visibility": "none", 
                 "icon-image": "turning-circle", 
-                "text-field": "{name_en}", 
                 "icon-rotation-alignment": "map", 
-                "icon-ignore-placement": true, 
-                "text-line-height": 1.5
+                "icon-ignore-placement": true
             }, 
-            "paint": {
-                "text-color": "rgb(255, 254, 253)", 
-                "text-opacity": 1, 
-                "text-halo-color": "hsla(0, 0%, 0%, 0)", 
-                "icon-opacity": 0
-            }, 
+            "paint": {}, 
             "filter": [
                 "all", 
                 [
@@ -7071,15 +6954,9 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.2, 
-                "text-max-angle": 15, 
-                "text-allow-overlap": false, 
                 "symbol-placement": "line", 
                 "icon-padding": 2, 
-                "text-padding": 10, 
-                "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
-                ], 
+                "visibility": "none", 
                 "icon-image": {
                     "base": 1, 
                     "stops": [
@@ -7093,17 +6970,10 @@
                         ]
                     ]
                 }, 
-                "text-field": "{name_en}", 
                 "icon-rotation-alignment": "map", 
-                "text-line-height": 1.5, 
                 "symbol-spacing": 200
             }, 
-            "paint": {
-                "text-color": "rgb(255, 254, 253)", 
-                "text-opacity": 1, 
-                "text-halo-color": "hsla(0, 0%, 0%, 0)", 
-                "icon-opacity": 0
-            }, 
+            "paint": {}, 
             "filter": [
                 "all", 
                 [
@@ -7145,15 +7015,9 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.2, 
-                "text-max-angle": 15, 
-                "text-allow-overlap": false, 
                 "symbol-placement": "line", 
                 "icon-padding": 2, 
-                "text-padding": 10, 
-                "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
-                ], 
+                "visibility": "none", 
                 "icon-image": {
                     "base": 1, 
                     "stops": [
@@ -7167,17 +7031,10 @@
                         ]
                     ]
                 }, 
-                "text-field": "{name_en}", 
                 "icon-rotation-alignment": "map", 
-                "text-line-height": 1.5, 
                 "symbol-spacing": 200
             }, 
-            "paint": {
-                "text-color": "rgb(255, 254, 253)", 
-                "text-opacity": 1, 
-                "text-halo-color": "hsla(0, 0%, 0%, 0)", 
-                "icon-opacity": 0
-            }, 
+            "paint": {}, 
             "filter": [
                 "all", 
                 [
@@ -7981,15 +7838,6 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.2, 
-                "text-max-angle": 15, 
-                "text-allow-overlap": false, 
-                "symbol-placement": "line", 
-                "icon-padding": 2, 
-                "text-padding": 10, 
-                "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
-                ], 
                 "icon-image": {
                     "base": 1, 
                     "stops": [
@@ -8003,16 +7851,12 @@
                         ]
                     ]
                 }, 
-                "text-field": "{name_en}", 
-                "text-line-height": 1.5, 
-                "symbol-spacing": 200
+                "visibility": "none", 
+                "symbol-spacing": 200, 
+                "symbol-placement": "line", 
+                "icon-padding": 2
             }, 
-            "paint": {
-                "text-color": "rgb(255, 254, 253)", 
-                "text-opacity": 1, 
-                "text-halo-color": "hsla(0, 0%, 0%, 0)", 
-                "icon-opacity": 0
-            }, 
+            "paint": {}, 
             "filter": [
                 "all", 
                 [
@@ -8493,7 +8337,7 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 0.5, 
                 "text-halo-width": 0.5, 
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -8547,7 +8391,7 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 0.5, 
                 "text-halo-width": 0.5, 
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -8624,7 +8468,7 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 0.5, 
                 "text-halo-width": 0.5, 
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -8701,7 +8545,7 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 0.5, 
                 "text-halo-width": 0.5, 
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -8773,7 +8617,7 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 0.5, 
                 "text-halo-width": 0.5, 
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -8845,7 +8689,7 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 0.5, 
                 "text-halo-width": 0.5, 
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -8912,7 +8756,7 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 1, 
                 "text-halo-width": 1.25, 
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -8984,7 +8828,7 @@
                 "symbol-spacing": 250
             }, 
             "paint": {
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "text-opacity": 1, 
                 "text-halo-width": 1, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
@@ -9057,7 +8901,7 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 1, 
                 "text-halo-width": 1, 
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -9135,7 +8979,7 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 0.5, 
                 "text-halo-width": 0.5, 
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -9218,7 +9062,7 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 0.5, 
                 "text-halo-width": 0.5, 
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -9292,7 +9136,7 @@
                 "text-halo-blur": 0.5, 
                 "text-halo-width": 0.5, 
                 "icon-halo-color": "#fff", 
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "icon-halo-width": 4, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
@@ -9334,7 +9178,7 @@
                 "text-max-width": 7
             }, 
             "paint": {
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "text-opacity": 1, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
                 "icon-opacity": 0
@@ -9380,7 +9224,7 @@
                 "text-max-width": 7
             }, 
             "paint": {
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "text-opacity": 1, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
                 "icon-opacity": 0
@@ -9436,7 +9280,7 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 0.5, 
                 "text-halo-width": 1, 
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -9518,7 +9362,7 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 0.5, 
                 "text-halo-width": 0.5, 
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -9601,7 +9445,7 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 0.5, 
                 "text-halo-width": 0.5, 
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -9684,7 +9528,7 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 0.5, 
                 "text-halo-width": 0.5, 
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -9731,7 +9575,7 @@
                 "symbol-spacing": 250
             }, 
             "paint": {
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "text-opacity": 1, 
                 "text-halo-width": 1, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
@@ -9782,7 +9626,7 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 0.5, 
                 "text-halo-width": 1, 
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -9829,7 +9673,7 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 0.5, 
                 "text-halo-width": 1, 
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -9870,7 +9714,7 @@
                 "text-line-height": 1.5
             }, 
             "paint": {
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "text-opacity": 1, 
                 "text-halo-width": 1.25, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
@@ -9915,7 +9759,7 @@
                 "text-max-width": 7
             }, 
             "paint": {
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "text-opacity": 1, 
                 "text-halo-width": 1.25, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
@@ -9993,7 +9837,7 @@
                 "text-max-width": 7
             }, 
             "paint": {
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "text-opacity": 1, 
                 "text-halo-width": 1.25, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
@@ -10044,7 +9888,7 @@
                 "symbol-spacing": 250
             }, 
             "paint": {
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "text-opacity": 1, 
                 "text-halo-width": 1, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
@@ -10121,7 +9965,7 @@
                 "text-max-width": 7
             }, 
             "paint": {
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "text-opacity": 1, 
                 "text-halo-width": 1.25, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
@@ -10217,7 +10061,7 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 1, 
                 "text-halo-width": 1, 
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -10316,7 +10160,7 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 1, 
                 "text-halo-width": 1, 
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -10415,7 +10259,7 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 1, 
                 "text-halo-width": 1, 
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -10513,7 +10357,7 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 1, 
                 "text-halo-width": 1, 
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -10589,7 +10433,7 @@
                 }
             }, 
             "paint": {
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "text-opacity": 1, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
                 "icon-opacity": 0
@@ -10644,7 +10488,7 @@
                 "text-max-width": 5
             }, 
             "paint": {
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "text-opacity": 1, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
                 "icon-opacity": 0
@@ -10702,7 +10546,7 @@
                 "symbol-spacing": 250
             }, 
             "paint": {
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "text-opacity": 1, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
                 "icon-opacity": 0
@@ -10758,7 +10602,7 @@
                 "text-max-width": 5
             }, 
             "paint": {
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "text-opacity": 1, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
                 "icon-opacity": 0
@@ -10816,7 +10660,7 @@
                 "text-max-width": 4
             }, 
             "paint": {
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "text-opacity": 1, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
                 "icon-opacity": 0
@@ -10871,7 +10715,7 @@
                 "text-max-width": 4
             }, 
             "paint": {
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "text-opacity": 1, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
                 "icon-opacity": 0
@@ -10931,7 +10775,7 @@
                 "icon-opacity": 0, 
                 "text-halo-width": 1, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
-                "text-color": "rgb(255, 254, 253)"
+                "text-color": "rgb(5, 255, 255)"
             }, 
             "filter": [
                 "<", 
@@ -10980,7 +10824,7 @@
                 "icon-opacity": 0, 
                 "text-halo-width": 1, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
-                "text-color": "rgb(255, 254, 253)"
+                "text-color": "rgb(5, 255, 255)"
             }, 
             "filter": [
                 "all", 
@@ -11037,7 +10881,7 @@
                 "icon-opacity": 0, 
                 "text-halo-width": 1, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
-                "text-color": "rgb(255, 254, 253)"
+                "text-color": "rgb(5, 255, 255)"
             }, 
             "filter": [
                 ">=", 
@@ -11081,7 +10925,7 @@
                 "text-max-width": 6
             }, 
             "paint": {
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "text-opacity": 1, 
                 "text-halo-width": 1.25, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
@@ -11129,7 +10973,7 @@
                 "text-max-width": 6
             }, 
             "paint": {
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "text-opacity": 1, 
                 "text-halo-width": 1.25, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
@@ -11190,7 +11034,7 @@
                 }
             }, 
             "paint": {
-                "text-color": "rgb(255, 254, 253)", 
+                "text-color": "rgb(5, 255, 255)", 
                 "text-opacity": 1, 
                 "text-halo-width": 1.25, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 

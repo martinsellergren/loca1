@@ -539,11 +539,18 @@ public class BasicImage {
     /**
      * Draws label name, category and label-count on label.
      */
-    public void drawLabelData(String text, Category cat, int count, LabelLayout lay, Color col) {
+    public void drawLabelData(String text, Category cat, int count, LabelLayout lay, Color c) {
+        drawLabelString(text + ", " + cat.toString() + ", x" + count, lay, c);
+    }
+
+    /**
+     * Draws a string "inside" a layout.
+     */
+    public void drawLabelString(String text, LabelLayout lay, Color c) {
         Graphics2D g = createGraphics();
-        g.setPaint(col);
+        g.setPaint(c);
         double[] bs = lay.getBounds();
-        g.drawString(text + ", " + cat.toString() + ", x" + count, (float)bs[0], (float)(bs[1]+bs[3])/2);
+        g.drawString(text, (float)bs[0], (float)(bs[1]+bs[3])/2);
     }
 
     /**

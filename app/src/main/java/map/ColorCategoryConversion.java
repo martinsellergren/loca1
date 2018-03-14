@@ -60,7 +60,7 @@ public class ColorCategoryConversion {
     /**
      * @return Category converted from color c.
      */
-    public Category getCategory(Color c) {
+    public Category convertToCategory(Color c) {
         String labelType = getLabelType(c);
         String sourceLayer = labelType.split(" : ")[0];
         String type = labelType.split(" : ")[1];
