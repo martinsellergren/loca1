@@ -102,7 +102,6 @@ def limitZoomOnPOI(data):
 
 def noShortStreetLabels(data):
     SHORT_MEANS_LESS_THAN = 200
-
     getLayerFromID(data, 'road-label-small')['filter'] = ["all", ["==", "$type", "LineString"], ["all", ["!in", "class", "golf", "link", "motorway", "pedestrian", "primary", "secondary", "street", "street_limited", "tertiary", "trunk"], [">", "len", SHORT_MEANS_LESS_THAN]]]
     getLayerFromID(data, 'road-label-medium')['filter'] = ["all", ["==", "$type", "LineString"], ["all", [">", "len", SHORT_MEANS_LESS_THAN], ["in", "class", "link", "pedestrian", "street", "street_limited"]]]
     getLayerFromID(data, 'road-label-large')['filter'] = ["all", [">", "len", SHORT_MEANS_LESS_THAN], ["in", "class", "motorway", "primary", "secondary", "tertiary", "trunk"]]
@@ -127,8 +126,55 @@ def dumpStyle(data, fileName):
 
 def colorCode(data):
     for layer in getSymbolLayers(data):
-        r,g,b = 255,254,253
-        layer['paint']['text-color'] = 'rgb(' + str(r) + ', ' + str(g) + ', ' + str(b) + ')'
+        sourceLayer = layer['source-layer']
+        prop, types = getPropertyAndTypes(sourceLayer)
+        colorObj = getColorObject(sourceLayer, prop, types)
+        layer['paint']['text-color'] = colorObj
+
+def getPropertyAndTypes(sourceLayer):
+    for elem in labelTypeTable_json:
+        if elem['source-layer'] == sourceLayer:
+            if elem['property'] == '-':
+                return '-', []
+            else:
+                return elem['property'], elem['values']
+    print sourceLayer + ' not in labelTypeTable_json.'
+    sys.exit(-1)
+
+def getColorObject(sourceLayer, prop, types):
+    if (prop == '-'):
+        getColorStr(sourceLayer, [])
+
+    co = {}
+    co['type'] = 'categorical'
+    co['property'] = prop
+
+    stops = []
+    for type in types:
+        stops.append([type, getColorStr(sourceLayer, type)])
+    co['stops'] = stops
+    return co
+
+def getColorStr(sourceLayer, type):
+    for i in range(len(labelTypeTable_conv)):
+        row = labelTypeTable_conv[i]
+        if row[0] == sourceLayer and row[1] == type:
+            return 'rgb(' + str(i) + ', 0, 0)'
+    print sourceLayer + ' & ' + type + ' not in labelTypeTable_conv.'
+    sys.exit(-1)
+
+def getLabelTypeConversionTable(labelTypeTable_json):
+    t = []
+    for elem in labelTypeTable_json:
+        for type in elem['values']:
+            t.append((elem['source-layer'], type))
+    return t
+
+
+
+
+
+#---------------------------------------------------------------START
 
 LOWER_CASE_FONT_IN_LABEL_IMG = True
 LANGUAGE = 'name_en'
@@ -161,8 +207,9 @@ fileName_full = "full"
 fileName_label = "label"
 fileName_box = "box"
 
-f = open(sys.argv[1], 'r')
-data = json.load(f)
+data = json.load(open(sys.argv[1], 'r'))
+labelTypeTable_json = json.load(open(sys.argv[2], 'r'))
+labelTypeTable_conv = getLabelTypeConversionTable(labelTypeTable_json)
 
 removeCreatedAndModifiedProps(data)
 setOwnerAndVisibility(data)

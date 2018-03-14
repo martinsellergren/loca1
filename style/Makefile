@@ -4,12 +4,13 @@ STREETS_STYLE_ID = streets-v10
 FULL_STYLE_ID = cjd9dx1oe9t712roe6qmxmfgr
 LABEL_STYLE_ID = cjd9dxg7i84ev2snt9rudqcgg
 BOX_STYLE_ID = cjd9dxq0w9tpb2ss0ysjtiwlr
+LABEL_TYPE_TABLE_PATH = ../app/labelTypeTable.json
 
 all: cleanAll fetch generate update
 
 #generate styles from Streets.json
 generate: clean
-	python styleCreator.py Streets.json
+	python styleCreator.py Streets.json $(LABEL_TYPE_TABLE_PATH)
 
 #remove generated
 clean:
