@@ -163,7 +163,6 @@ def colorCode(data):
         prop, types = getPropertyAndTypes(sourceLayer)
         colorObj = getColorObject(sourceLayer, prop, types)
         layer['paint']['text-color'] = colorObj
-        layer['paint']['text-color'] = 'rgb(5, 255, 255)'
 
 def getPropertyAndTypes(sourceLayer):
     for elem in labelTypeTable_json:
@@ -178,7 +177,6 @@ def getPropertyAndTypes(sourceLayer):
 def getColorObject(sourceLayer, prop, types):
     if (prop == '-'):
         return getColorStr(sourceLayer, '-')
-
     co = {}
     co['type'] = 'categorical'
     co['property'] = prop
@@ -193,9 +191,37 @@ def getColorStr(sourceLayer, type):
     for i in range(len(labelTypeTable_conv)):
         row = labelTypeTable_conv[i]
         if row[0] == sourceLayer and row[1] == type:
-            return 'rgb(' + str(i) + ', 0, 0)'
+            r,g,b = indexToRGB(i)
+            return 'rgb({}, {}, {})'.format(r, g, b)
     print sourceLayer + ' & ' + type + ' not in labelTypeTable_conv.'
     sys.exit(-1)
+
+'''
+steps:
+ - i [0, max-table-index] scaled to n [0, 124]
+ - n transformed to base 5: d1 d2 d3
+ - red = d1 * (255/5) + (255/10), i.e scaled and set to mid-point
+ - ...
+'''
+def indexToRGB(i):
+    f = float(124) / (len(labelTypeTable_conv)-1)
+    if (f < 1):
+        print 'Use base 6!'
+        sys.exit(0)
+    n = int(round(i * f))
+
+    d3 = n / (5*5)
+    n = n - d3*5*5
+    d2 = n / 5
+    n = n - d2*5
+    d1 = n
+
+    f = float(255) / 5
+    r = int(round(d1*f + f/2))
+    g = int(round(d2*f + f/2))
+    b = int(round(d3*f + f/2))
+
+    return r,g,b
 
 def getLabelTypeConversionTable(labelTypeTable_json):
     t = []
@@ -213,7 +239,6 @@ def getLabelTypeConversionTable(labelTypeTable_json):
 
 #---------------------------------------------------------------START
 
-LOWER_CASE_FONT_IN_LABEL_IMG = True
 LANGUAGE = 'name_en'
 '''
 name	The name (or names) used locally for the place.
@@ -231,9 +256,7 @@ noWrapping = False
 noRotation = False
 
 font = 'Inconsolata Regular'#'Cousine Regular'
-font_label = font + '-Simple-UPPER'
-if LOWER_CASE_FONT_IN_LABEL_IMG:
-    font_label = font + '-Simple-lower'
+font_label = font + '-Simple'
 font_box = font_label + '-Box'
 extraLetterSpace = 0.2
 lineHeight = 1.5

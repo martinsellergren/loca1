@@ -4,9 +4,14 @@ import unidecode
 import unicodedata
 
 # c: unicode character.
-# return: True if c is letter (not symbol..).
+# return: True if c is a letter (not symbol..).
 def isLetter(c):
     return unicodedata.category(c) in ['Lu', 'Ll', 'Lt', 'Lm', 'Lo']
+
+# c: unicode character.
+# return: True if c is a number, 1-9.
+def isDigit(c):
+    return unicodedata.category(c) in ['Nd']
 
 # Replace layout of dest with layout of src, preserving dims.
 # src: Source glyph.
@@ -28,16 +33,11 @@ def giveSpaceLayout(g):
 
 # l: Unicode letter.
 # return: Simplified unicode character (i.e ae->a).
-#  If LOWER_CASE is true, returns lower case chars,
-#   otherwise UPPER case.
 def simplify(l):
     cs = unicode(unidecode.unidecode(l))
     for c in cs:
-        if isLetter(c):
-            if LOWER_CASE:
-                return c.lower()
-            else:
-                return c.upper()
+        if isLetter(c) or isDigit(c):
+            return c.lower()
     return None
 
 # c: Unicode character.
@@ -56,8 +56,6 @@ def unlinkReferences(font):
 
 
 
-LOWER_CASE = False
-
 fname = sys.argv[1]
 x = fname.split(".")
 name = x[0]
@@ -72,7 +70,7 @@ for glyph in font.glyphs():
 
     c = unichr(glyph.unicode)
 
-    if isLetter(c):
+    if isLetter(c) or isDigit(c):
         c_simple = simplify(c)
         glyph_simple = findGlyph(c_simple, font)
 
@@ -84,9 +82,5 @@ for glyph in font.glyphs():
         giveSpaceLayout(glyph)
 
 
-if LOWER_CASE:
-    font.fontname = name + "-Simple-lower"# + str(randint(0,1000000))
-    font.generate(name + "-Simple-lower." + ext)
-else:
-    font.fontname = name + "-Simple-UPPER"
-    font.generate(name + "-Simple-UPPER." + ext)
+font.fontname = name + "-Simple"# + str(randint(0,1000000))
+font.generate(name + "-Simple." + ext)

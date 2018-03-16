@@ -25,7 +25,7 @@ public class CategoryTests {
     //     ColorCategoryConversion ccc = new ColorCategoryConversion();
     //     OCR ocr = new OCR(Language.EN);
 
-    //     MapImageView v = MapImageView.sweden();
+    //     MapImageView v = MapImageView.lidingo();
     //     TiledImage[] imgs = new MapRequest(v, "test_Category_decipherLabelTypes", Language.EN).fetch3();
     //     BasicImage full = imgs[0].getOneImage();
 

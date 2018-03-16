@@ -470,4 +470,13 @@ public class MapImageView {
         int z = 3;
         return new MapImageView(w, s, e, n, z, x2_);
     }
+
+    public static MapImageView newYork() {
+        double w = -74.016259;
+        double s = 40.717569;
+        double e = -73.972399;
+        double n = 40.737473;
+        int z = 15;
+        return new MapImageView(w, s, e, n, z, x2_);
+    }
 }

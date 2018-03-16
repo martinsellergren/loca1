@@ -8313,7 +8313,7 @@
                 "symbol-placement": "line", 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-pitch-alignment": "viewport", 
                 "text-field": "{name_en}", 
@@ -8359,7 +8359,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-anchor": "top", 
                 "icon-image": "{maki}-11", 
@@ -8436,7 +8436,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-anchor": "top", 
                 "icon-image": "{maki}-11", 
@@ -8513,7 +8513,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-anchor": "top", 
                 "icon-image": "{maki}-11", 
@@ -8585,7 +8585,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-anchor": "top", 
                 "icon-image": "{maki}-11", 
@@ -8657,7 +8657,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-anchor": "top", 
                 "icon-image": "{maki}-11", 
@@ -8730,7 +8730,7 @@
                 "symbol-placement": "line", 
                 "text-padding": 10, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-pitch-alignment": "viewport", 
                 "text-field": "{name_en}", 
@@ -8806,7 +8806,7 @@
                 "symbol-placement": "line", 
                 "text-padding": 10, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-pitch-alignment": "viewport", 
                 "text-field": "{name_en}", 
@@ -8875,7 +8875,7 @@
                 "symbol-placement": "line", 
                 "text-padding": 10, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-pitch-alignment": "viewport", 
                 "text-field": "{name_en}", 
@@ -8936,7 +8936,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-anchor": "top", 
                 "icon-image": {
@@ -9019,7 +9019,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-anchor": "top", 
                 "icon-image": {
@@ -9103,7 +9103,7 @@
                 "icon-padding": 0, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-anchor": "top", 
                 "icon-image": "{network}", 
@@ -9170,7 +9170,7 @@
                     ]
                 }, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 
@@ -9216,7 +9216,7 @@
                     ]
                 }, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 
@@ -9250,7 +9250,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 
@@ -9319,7 +9319,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-anchor": "top", 
                 "icon-image": {
@@ -9402,7 +9402,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-anchor": "top", 
                 "icon-image": {
@@ -9485,7 +9485,7 @@
                 "text-allow-overlap": false, 
                 "text-padding": 10, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-anchor": "top", 
                 "icon-image": {
@@ -9549,7 +9549,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 
@@ -9601,7 +9601,7 @@
                 "text-allow-overlap": false, 
                 "text-padding": 10, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-size": {
                     "base": 1, 
@@ -9648,7 +9648,7 @@
                 "text-allow-overlap": false, 
                 "text-padding": 10, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-size": {
                     "base": 1, 
@@ -9707,7 +9707,7 @@
                     ]
                 }, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 
@@ -9751,7 +9751,7 @@
                     ]
                 }, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 
@@ -9784,7 +9784,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-anchor": {
                     "base": 1, 
@@ -9862,7 +9862,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 
@@ -9912,7 +9912,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-anchor": {
                     "base": 1, 
@@ -10005,7 +10005,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-anchor": {
                     "base": 1, 
@@ -10103,7 +10103,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-anchor": {
                     "base": 1, 
@@ -10202,7 +10202,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-anchor": {
                     "base": 1, 
@@ -10300,7 +10300,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-anchor": {
                     "base": 1, 
@@ -10399,7 +10399,7 @@
                 "symbol-placement": "line", 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-pitch-alignment": "viewport", 
                 "text-field": "{name_en}", 
@@ -10468,7 +10468,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 
@@ -10524,7 +10524,7 @@
                 "symbol-placement": "line", 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-pitch-alignment": "viewport", 
                 "text-field": "{name_en}", 
@@ -10582,7 +10582,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 
@@ -10651,7 +10651,7 @@
                     ]
                 }, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-pitch-alignment": "viewport", 
                 "text-field": "{name_en}", 
@@ -10695,7 +10695,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 
@@ -10762,7 +10762,7 @@
                     ]
                 }, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-field": "{name_en}", 
                 "text-line-height": 1.5, 
@@ -10811,7 +10811,7 @@
                     ]
                 }, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-field": "{name_en}", 
                 "text-line-height": 1.5, 
@@ -10869,7 +10869,7 @@
                 }, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 
@@ -10917,7 +10917,7 @@
                     ]
                 }, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 
@@ -10965,7 +10965,7 @@
                     ]
                 }, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 
@@ -11014,7 +11014,7 @@
                     ]
                 }, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower"
+                    "Inconsolata Regular-Simple"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 

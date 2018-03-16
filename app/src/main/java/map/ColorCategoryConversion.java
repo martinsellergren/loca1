@@ -58,6 +58,13 @@ public class ColorCategoryConversion {
     }
 
     /**
+     * @return Number of label-types, i.e lookupTabel-entries.
+     */
+    public int getNoLabelTypes() {
+        return this.lookupTable.size();
+    }
+
+    /**
      * @return Category converted from color c.
      */
     public Category convertToCategory(Color c) {
@@ -68,12 +75,23 @@ public class ColorCategoryConversion {
     }
 
     /**
+     * Converts color to index and returns table-entry.
+     * Conversion:
+     * - r,g,b [0-255] scaled to d1,d2,d3 [0,4].
+     * - d1 d2 d3 is a number n is base 5.
+     * - n transformed to base 10 [0, 124].
+     * - n scaled to [0, max-table-index] = index.
+     *
      * @return LabelType (table-entry) of color c.
      */
     public/***/ String getLabelType(Color c) {
-        int index = c.getRed();
-        if (index >= this.lookupTable.size())
-            index = this.lookupTable.size()-1;
+        double f = 256 / 5d;
+        int d1 = (int)(c.getRed() / f);
+        int d2 = (int)(c.getGreen() / f);
+        int d3 = (int)(c.getBlue() / f);
+        int n = d1 + d2*5 + d3*5*5;
+        f = (this.lookupTable.size()-1) / 124f;
+        int index = Math2.toInt(n * f);
 
         return this.lookupTable.get(index);
     }

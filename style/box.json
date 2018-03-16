@@ -8313,7 +8313,7 @@
                 "symbol-placement": "line", 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-pitch-alignment": "viewport", 
                 "text-field": "{name_en}", 
@@ -8337,7 +8337,24 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 0.5, 
                 "text-halo-width": 0.5, 
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": {
+                    "property": "type", 
+                    "type": "categorical", 
+                    "stops": [
+                        [
+                            "river", 
+                            "rgb(77, 128, 230)"
+                        ], 
+                        [
+                            "canal", 
+                            "rgb(128, 128, 230)"
+                        ], 
+                        [
+                            "stream", 
+                            "rgb(179, 128, 230)"
+                        ]
+                    ]
+                }, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -8359,7 +8376,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-anchor": "top", 
                 "icon-image": "{maki}-11", 
@@ -8391,7 +8408,288 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 0.5, 
                 "text-halo-width": 0.5, 
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": {
+                    "property": "maki", 
+                    "type": "categorical", 
+                    "stops": [
+                        [
+                            "airfield", 
+                            "rgb(230, 179, 26)"
+                        ], 
+                        [
+                            "alcohol-shop", 
+                            "rgb(26, 230, 26)"
+                        ], 
+                        [
+                            "amusement-park", 
+                            "rgb(128, 230, 26)"
+                        ], 
+                        [
+                            "aquarium", 
+                            "rgb(179, 230, 26)"
+                        ], 
+                        [
+                            "art-gallery", 
+                            "rgb(230, 230, 26)"
+                        ], 
+                        [
+                            "attraction", 
+                            "rgb(26, 26, 77)"
+                        ], 
+                        [
+                            "bakery", 
+                            "rgb(77, 26, 77)"
+                        ], 
+                        [
+                            "bank", 
+                            "rgb(128, 26, 77)"
+                        ], 
+                        [
+                            "bar", 
+                            "rgb(179, 26, 77)"
+                        ], 
+                        [
+                            "beer", 
+                            "rgb(230, 26, 77)"
+                        ], 
+                        [
+                            "bicycle", 
+                            "rgb(26, 77, 77)"
+                        ], 
+                        [
+                            "bicycle-share", 
+                            "rgb(77, 77, 77)"
+                        ], 
+                        [
+                            "bus", 
+                            "rgb(128, 77, 77)"
+                        ], 
+                        [
+                            "cafe", 
+                            "rgb(179, 77, 77)"
+                        ], 
+                        [
+                            "campsite", 
+                            "rgb(26, 128, 77)"
+                        ], 
+                        [
+                            "car", 
+                            "rgb(77, 128, 77)"
+                        ], 
+                        [
+                            "castle", 
+                            "rgb(128, 128, 77)"
+                        ], 
+                        [
+                            "cemetery", 
+                            "rgb(179, 128, 77)"
+                        ], 
+                        [
+                            "cinema", 
+                            "rgb(230, 128, 77)"
+                        ], 
+                        [
+                            "clothing-store", 
+                            "rgb(26, 179, 77)"
+                        ], 
+                        [
+                            "college", 
+                            "rgb(77, 179, 77)"
+                        ], 
+                        [
+                            "dentist", 
+                            "rgb(128, 179, 77)"
+                        ], 
+                        [
+                            "doctor", 
+                            "rgb(179, 179, 77)"
+                        ], 
+                        [
+                            "dog-park", 
+                            "rgb(230, 179, 77)"
+                        ], 
+                        [
+                            "drinking-water", 
+                            "rgb(26, 230, 77)"
+                        ], 
+                        [
+                            "embassy", 
+                            "rgb(77, 230, 77)"
+                        ], 
+                        [
+                            "entrance", 
+                            "rgb(128, 230, 77)"
+                        ], 
+                        [
+                            "fast-food", 
+                            "rgb(230, 230, 77)"
+                        ], 
+                        [
+                            "ferry", 
+                            "rgb(26, 26, 128)"
+                        ], 
+                        [
+                            "fire-station", 
+                            "rgb(77, 26, 128)"
+                        ], 
+                        [
+                            "fuel", 
+                            "rgb(128, 26, 128)"
+                        ], 
+                        [
+                            "garden", 
+                            "rgb(179, 26, 128)"
+                        ], 
+                        [
+                            "golf", 
+                            "rgb(230, 26, 128)"
+                        ], 
+                        [
+                            "grocery", 
+                            "rgb(26, 77, 128)"
+                        ], 
+                        [
+                            "harbor", 
+                            "rgb(77, 77, 128)"
+                        ], 
+                        [
+                            "heliport", 
+                            "rgb(128, 77, 128)"
+                        ], 
+                        [
+                            "hospital", 
+                            "rgb(179, 77, 128)"
+                        ], 
+                        [
+                            "ice-cream", 
+                            "rgb(230, 77, 128)"
+                        ], 
+                        [
+                            "information", 
+                            "rgb(26, 128, 128)"
+                        ], 
+                        [
+                            "laundry", 
+                            "rgb(77, 128, 128)"
+                        ], 
+                        [
+                            "library", 
+                            "rgb(179, 128, 128)"
+                        ], 
+                        [
+                            "lodging", 
+                            "rgb(230, 128, 128)"
+                        ], 
+                        [
+                            "marker", 
+                            "rgb(26, 179, 128)"
+                        ], 
+                        [
+                            "monument", 
+                            "rgb(77, 179, 128)"
+                        ], 
+                        [
+                            "museum", 
+                            "rgb(128, 179, 128)"
+                        ], 
+                        [
+                            "music", 
+                            "rgb(179, 179, 128)"
+                        ], 
+                        [
+                            "park", 
+                            "rgb(230, 179, 128)"
+                        ], 
+                        [
+                            "pharmacy", 
+                            "rgb(26, 230, 128)"
+                        ], 
+                        [
+                            "picnic-site", 
+                            "rgb(77, 230, 128)"
+                        ], 
+                        [
+                            "place-of-worship", 
+                            "rgb(128, 230, 128)"
+                        ], 
+                        [
+                            "playground", 
+                            "rgb(179, 230, 128)"
+                        ], 
+                        [
+                            "police", 
+                            "rgb(230, 230, 128)"
+                        ], 
+                        [
+                            "post", 
+                            "rgb(26, 26, 179)"
+                        ], 
+                        [
+                            "prison", 
+                            "rgb(128, 26, 179)"
+                        ], 
+                        [
+                            "religious-christian", 
+                            "rgb(179, 26, 179)"
+                        ], 
+                        [
+                            "religious-jewish", 
+                            "rgb(230, 26, 179)"
+                        ], 
+                        [
+                            "religious-muslim", 
+                            "rgb(26, 77, 179)"
+                        ], 
+                        [
+                            "restaurant", 
+                            "rgb(77, 77, 179)"
+                        ], 
+                        [
+                            "rocket", 
+                            "rgb(128, 77, 179)"
+                        ], 
+                        [
+                            "school", 
+                            "rgb(179, 77, 179)"
+                        ], 
+                        [
+                            "shop", 
+                            "rgb(230, 77, 179)"
+                        ], 
+                        [
+                            "stadium", 
+                            "rgb(26, 128, 179)"
+                        ], 
+                        [
+                            "swimming", 
+                            "rgb(77, 128, 179)"
+                        ], 
+                        [
+                            "suitcase", 
+                            "rgb(128, 128, 179)"
+                        ], 
+                        [
+                            "theatre", 
+                            "rgb(179, 128, 179)"
+                        ], 
+                        [
+                            "toilet", 
+                            "rgb(230, 128, 179)"
+                        ], 
+                        [
+                            "town-hall", 
+                            "rgb(77, 179, 179)"
+                        ], 
+                        [
+                            "veterinary", 
+                            "rgb(128, 179, 179)"
+                        ], 
+                        [
+                            "zoo", 
+                            "rgb(179, 179, 179)"
+                        ]
+                    ]
+                }, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -8436,7 +8734,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-anchor": "top", 
                 "icon-image": "{maki}-11", 
@@ -8468,7 +8766,288 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 0.5, 
                 "text-halo-width": 0.5, 
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": {
+                    "property": "maki", 
+                    "type": "categorical", 
+                    "stops": [
+                        [
+                            "airfield", 
+                            "rgb(230, 179, 26)"
+                        ], 
+                        [
+                            "alcohol-shop", 
+                            "rgb(26, 230, 26)"
+                        ], 
+                        [
+                            "amusement-park", 
+                            "rgb(128, 230, 26)"
+                        ], 
+                        [
+                            "aquarium", 
+                            "rgb(179, 230, 26)"
+                        ], 
+                        [
+                            "art-gallery", 
+                            "rgb(230, 230, 26)"
+                        ], 
+                        [
+                            "attraction", 
+                            "rgb(26, 26, 77)"
+                        ], 
+                        [
+                            "bakery", 
+                            "rgb(77, 26, 77)"
+                        ], 
+                        [
+                            "bank", 
+                            "rgb(128, 26, 77)"
+                        ], 
+                        [
+                            "bar", 
+                            "rgb(179, 26, 77)"
+                        ], 
+                        [
+                            "beer", 
+                            "rgb(230, 26, 77)"
+                        ], 
+                        [
+                            "bicycle", 
+                            "rgb(26, 77, 77)"
+                        ], 
+                        [
+                            "bicycle-share", 
+                            "rgb(77, 77, 77)"
+                        ], 
+                        [
+                            "bus", 
+                            "rgb(128, 77, 77)"
+                        ], 
+                        [
+                            "cafe", 
+                            "rgb(179, 77, 77)"
+                        ], 
+                        [
+                            "campsite", 
+                            "rgb(26, 128, 77)"
+                        ], 
+                        [
+                            "car", 
+                            "rgb(77, 128, 77)"
+                        ], 
+                        [
+                            "castle", 
+                            "rgb(128, 128, 77)"
+                        ], 
+                        [
+                            "cemetery", 
+                            "rgb(179, 128, 77)"
+                        ], 
+                        [
+                            "cinema", 
+                            "rgb(230, 128, 77)"
+                        ], 
+                        [
+                            "clothing-store", 
+                            "rgb(26, 179, 77)"
+                        ], 
+                        [
+                            "college", 
+                            "rgb(77, 179, 77)"
+                        ], 
+                        [
+                            "dentist", 
+                            "rgb(128, 179, 77)"
+                        ], 
+                        [
+                            "doctor", 
+                            "rgb(179, 179, 77)"
+                        ], 
+                        [
+                            "dog-park", 
+                            "rgb(230, 179, 77)"
+                        ], 
+                        [
+                            "drinking-water", 
+                            "rgb(26, 230, 77)"
+                        ], 
+                        [
+                            "embassy", 
+                            "rgb(77, 230, 77)"
+                        ], 
+                        [
+                            "entrance", 
+                            "rgb(128, 230, 77)"
+                        ], 
+                        [
+                            "fast-food", 
+                            "rgb(230, 230, 77)"
+                        ], 
+                        [
+                            "ferry", 
+                            "rgb(26, 26, 128)"
+                        ], 
+                        [
+                            "fire-station", 
+                            "rgb(77, 26, 128)"
+                        ], 
+                        [
+                            "fuel", 
+                            "rgb(128, 26, 128)"
+                        ], 
+                        [
+                            "garden", 
+                            "rgb(179, 26, 128)"
+                        ], 
+                        [
+                            "golf", 
+                            "rgb(230, 26, 128)"
+                        ], 
+                        [
+                            "grocery", 
+                            "rgb(26, 77, 128)"
+                        ], 
+                        [
+                            "harbor", 
+                            "rgb(77, 77, 128)"
+                        ], 
+                        [
+                            "heliport", 
+                            "rgb(128, 77, 128)"
+                        ], 
+                        [
+                            "hospital", 
+                            "rgb(179, 77, 128)"
+                        ], 
+                        [
+                            "ice-cream", 
+                            "rgb(230, 77, 128)"
+                        ], 
+                        [
+                            "information", 
+                            "rgb(26, 128, 128)"
+                        ], 
+                        [
+                            "laundry", 
+                            "rgb(77, 128, 128)"
+                        ], 
+                        [
+                            "library", 
+                            "rgb(179, 128, 128)"
+                        ], 
+                        [
+                            "lodging", 
+                            "rgb(230, 128, 128)"
+                        ], 
+                        [
+                            "marker", 
+                            "rgb(26, 179, 128)"
+                        ], 
+                        [
+                            "monument", 
+                            "rgb(77, 179, 128)"
+                        ], 
+                        [
+                            "museum", 
+                            "rgb(128, 179, 128)"
+                        ], 
+                        [
+                            "music", 
+                            "rgb(179, 179, 128)"
+                        ], 
+                        [
+                            "park", 
+                            "rgb(230, 179, 128)"
+                        ], 
+                        [
+                            "pharmacy", 
+                            "rgb(26, 230, 128)"
+                        ], 
+                        [
+                            "picnic-site", 
+                            "rgb(77, 230, 128)"
+                        ], 
+                        [
+                            "place-of-worship", 
+                            "rgb(128, 230, 128)"
+                        ], 
+                        [
+                            "playground", 
+                            "rgb(179, 230, 128)"
+                        ], 
+                        [
+                            "police", 
+                            "rgb(230, 230, 128)"
+                        ], 
+                        [
+                            "post", 
+                            "rgb(26, 26, 179)"
+                        ], 
+                        [
+                            "prison", 
+                            "rgb(128, 26, 179)"
+                        ], 
+                        [
+                            "religious-christian", 
+                            "rgb(179, 26, 179)"
+                        ], 
+                        [
+                            "religious-jewish", 
+                            "rgb(230, 26, 179)"
+                        ], 
+                        [
+                            "religious-muslim", 
+                            "rgb(26, 77, 179)"
+                        ], 
+                        [
+                            "restaurant", 
+                            "rgb(77, 77, 179)"
+                        ], 
+                        [
+                            "rocket", 
+                            "rgb(128, 77, 179)"
+                        ], 
+                        [
+                            "school", 
+                            "rgb(179, 77, 179)"
+                        ], 
+                        [
+                            "shop", 
+                            "rgb(230, 77, 179)"
+                        ], 
+                        [
+                            "stadium", 
+                            "rgb(26, 128, 179)"
+                        ], 
+                        [
+                            "swimming", 
+                            "rgb(77, 128, 179)"
+                        ], 
+                        [
+                            "suitcase", 
+                            "rgb(128, 128, 179)"
+                        ], 
+                        [
+                            "theatre", 
+                            "rgb(179, 128, 179)"
+                        ], 
+                        [
+                            "toilet", 
+                            "rgb(230, 128, 179)"
+                        ], 
+                        [
+                            "town-hall", 
+                            "rgb(77, 179, 179)"
+                        ], 
+                        [
+                            "veterinary", 
+                            "rgb(128, 179, 179)"
+                        ], 
+                        [
+                            "zoo", 
+                            "rgb(179, 179, 179)"
+                        ]
+                    ]
+                }, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -8513,7 +9092,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-anchor": "top", 
                 "icon-image": "{maki}-11", 
@@ -8545,7 +9124,288 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 0.5, 
                 "text-halo-width": 0.5, 
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": {
+                    "property": "maki", 
+                    "type": "categorical", 
+                    "stops": [
+                        [
+                            "airfield", 
+                            "rgb(230, 179, 26)"
+                        ], 
+                        [
+                            "alcohol-shop", 
+                            "rgb(26, 230, 26)"
+                        ], 
+                        [
+                            "amusement-park", 
+                            "rgb(128, 230, 26)"
+                        ], 
+                        [
+                            "aquarium", 
+                            "rgb(179, 230, 26)"
+                        ], 
+                        [
+                            "art-gallery", 
+                            "rgb(230, 230, 26)"
+                        ], 
+                        [
+                            "attraction", 
+                            "rgb(26, 26, 77)"
+                        ], 
+                        [
+                            "bakery", 
+                            "rgb(77, 26, 77)"
+                        ], 
+                        [
+                            "bank", 
+                            "rgb(128, 26, 77)"
+                        ], 
+                        [
+                            "bar", 
+                            "rgb(179, 26, 77)"
+                        ], 
+                        [
+                            "beer", 
+                            "rgb(230, 26, 77)"
+                        ], 
+                        [
+                            "bicycle", 
+                            "rgb(26, 77, 77)"
+                        ], 
+                        [
+                            "bicycle-share", 
+                            "rgb(77, 77, 77)"
+                        ], 
+                        [
+                            "bus", 
+                            "rgb(128, 77, 77)"
+                        ], 
+                        [
+                            "cafe", 
+                            "rgb(179, 77, 77)"
+                        ], 
+                        [
+                            "campsite", 
+                            "rgb(26, 128, 77)"
+                        ], 
+                        [
+                            "car", 
+                            "rgb(77, 128, 77)"
+                        ], 
+                        [
+                            "castle", 
+                            "rgb(128, 128, 77)"
+                        ], 
+                        [
+                            "cemetery", 
+                            "rgb(179, 128, 77)"
+                        ], 
+                        [
+                            "cinema", 
+                            "rgb(230, 128, 77)"
+                        ], 
+                        [
+                            "clothing-store", 
+                            "rgb(26, 179, 77)"
+                        ], 
+                        [
+                            "college", 
+                            "rgb(77, 179, 77)"
+                        ], 
+                        [
+                            "dentist", 
+                            "rgb(128, 179, 77)"
+                        ], 
+                        [
+                            "doctor", 
+                            "rgb(179, 179, 77)"
+                        ], 
+                        [
+                            "dog-park", 
+                            "rgb(230, 179, 77)"
+                        ], 
+                        [
+                            "drinking-water", 
+                            "rgb(26, 230, 77)"
+                        ], 
+                        [
+                            "embassy", 
+                            "rgb(77, 230, 77)"
+                        ], 
+                        [
+                            "entrance", 
+                            "rgb(128, 230, 77)"
+                        ], 
+                        [
+                            "fast-food", 
+                            "rgb(230, 230, 77)"
+                        ], 
+                        [
+                            "ferry", 
+                            "rgb(26, 26, 128)"
+                        ], 
+                        [
+                            "fire-station", 
+                            "rgb(77, 26, 128)"
+                        ], 
+                        [
+                            "fuel", 
+                            "rgb(128, 26, 128)"
+                        ], 
+                        [
+                            "garden", 
+                            "rgb(179, 26, 128)"
+                        ], 
+                        [
+                            "golf", 
+                            "rgb(230, 26, 128)"
+                        ], 
+                        [
+                            "grocery", 
+                            "rgb(26, 77, 128)"
+                        ], 
+                        [
+                            "harbor", 
+                            "rgb(77, 77, 128)"
+                        ], 
+                        [
+                            "heliport", 
+                            "rgb(128, 77, 128)"
+                        ], 
+                        [
+                            "hospital", 
+                            "rgb(179, 77, 128)"
+                        ], 
+                        [
+                            "ice-cream", 
+                            "rgb(230, 77, 128)"
+                        ], 
+                        [
+                            "information", 
+                            "rgb(26, 128, 128)"
+                        ], 
+                        [
+                            "laundry", 
+                            "rgb(77, 128, 128)"
+                        ], 
+                        [
+                            "library", 
+                            "rgb(179, 128, 128)"
+                        ], 
+                        [
+                            "lodging", 
+                            "rgb(230, 128, 128)"
+                        ], 
+                        [
+                            "marker", 
+                            "rgb(26, 179, 128)"
+                        ], 
+                        [
+                            "monument", 
+                            "rgb(77, 179, 128)"
+                        ], 
+                        [
+                            "museum", 
+                            "rgb(128, 179, 128)"
+                        ], 
+                        [
+                            "music", 
+                            "rgb(179, 179, 128)"
+                        ], 
+                        [
+                            "park", 
+                            "rgb(230, 179, 128)"
+                        ], 
+                        [
+                            "pharmacy", 
+                            "rgb(26, 230, 128)"
+                        ], 
+                        [
+                            "picnic-site", 
+                            "rgb(77, 230, 128)"
+                        ], 
+                        [
+                            "place-of-worship", 
+                            "rgb(128, 230, 128)"
+                        ], 
+                        [
+                            "playground", 
+                            "rgb(179, 230, 128)"
+                        ], 
+                        [
+                            "police", 
+                            "rgb(230, 230, 128)"
+                        ], 
+                        [
+                            "post", 
+                            "rgb(26, 26, 179)"
+                        ], 
+                        [
+                            "prison", 
+                            "rgb(128, 26, 179)"
+                        ], 
+                        [
+                            "religious-christian", 
+                            "rgb(179, 26, 179)"
+                        ], 
+                        [
+                            "religious-jewish", 
+                            "rgb(230, 26, 179)"
+                        ], 
+                        [
+                            "religious-muslim", 
+                            "rgb(26, 77, 179)"
+                        ], 
+                        [
+                            "restaurant", 
+                            "rgb(77, 77, 179)"
+                        ], 
+                        [
+                            "rocket", 
+                            "rgb(128, 77, 179)"
+                        ], 
+                        [
+                            "school", 
+                            "rgb(179, 77, 179)"
+                        ], 
+                        [
+                            "shop", 
+                            "rgb(230, 77, 179)"
+                        ], 
+                        [
+                            "stadium", 
+                            "rgb(26, 128, 179)"
+                        ], 
+                        [
+                            "swimming", 
+                            "rgb(77, 128, 179)"
+                        ], 
+                        [
+                            "suitcase", 
+                            "rgb(128, 128, 179)"
+                        ], 
+                        [
+                            "theatre", 
+                            "rgb(179, 128, 179)"
+                        ], 
+                        [
+                            "toilet", 
+                            "rgb(230, 128, 179)"
+                        ], 
+                        [
+                            "town-hall", 
+                            "rgb(77, 179, 179)"
+                        ], 
+                        [
+                            "veterinary", 
+                            "rgb(128, 179, 179)"
+                        ], 
+                        [
+                            "zoo", 
+                            "rgb(179, 179, 179)"
+                        ]
+                    ]
+                }, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -8585,7 +9445,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-anchor": "top", 
                 "icon-image": "{maki}-11", 
@@ -8617,7 +9477,288 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 0.5, 
                 "text-halo-width": 0.5, 
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": {
+                    "property": "maki", 
+                    "type": "categorical", 
+                    "stops": [
+                        [
+                            "airfield", 
+                            "rgb(230, 179, 26)"
+                        ], 
+                        [
+                            "alcohol-shop", 
+                            "rgb(26, 230, 26)"
+                        ], 
+                        [
+                            "amusement-park", 
+                            "rgb(128, 230, 26)"
+                        ], 
+                        [
+                            "aquarium", 
+                            "rgb(179, 230, 26)"
+                        ], 
+                        [
+                            "art-gallery", 
+                            "rgb(230, 230, 26)"
+                        ], 
+                        [
+                            "attraction", 
+                            "rgb(26, 26, 77)"
+                        ], 
+                        [
+                            "bakery", 
+                            "rgb(77, 26, 77)"
+                        ], 
+                        [
+                            "bank", 
+                            "rgb(128, 26, 77)"
+                        ], 
+                        [
+                            "bar", 
+                            "rgb(179, 26, 77)"
+                        ], 
+                        [
+                            "beer", 
+                            "rgb(230, 26, 77)"
+                        ], 
+                        [
+                            "bicycle", 
+                            "rgb(26, 77, 77)"
+                        ], 
+                        [
+                            "bicycle-share", 
+                            "rgb(77, 77, 77)"
+                        ], 
+                        [
+                            "bus", 
+                            "rgb(128, 77, 77)"
+                        ], 
+                        [
+                            "cafe", 
+                            "rgb(179, 77, 77)"
+                        ], 
+                        [
+                            "campsite", 
+                            "rgb(26, 128, 77)"
+                        ], 
+                        [
+                            "car", 
+                            "rgb(77, 128, 77)"
+                        ], 
+                        [
+                            "castle", 
+                            "rgb(128, 128, 77)"
+                        ], 
+                        [
+                            "cemetery", 
+                            "rgb(179, 128, 77)"
+                        ], 
+                        [
+                            "cinema", 
+                            "rgb(230, 128, 77)"
+                        ], 
+                        [
+                            "clothing-store", 
+                            "rgb(26, 179, 77)"
+                        ], 
+                        [
+                            "college", 
+                            "rgb(77, 179, 77)"
+                        ], 
+                        [
+                            "dentist", 
+                            "rgb(128, 179, 77)"
+                        ], 
+                        [
+                            "doctor", 
+                            "rgb(179, 179, 77)"
+                        ], 
+                        [
+                            "dog-park", 
+                            "rgb(230, 179, 77)"
+                        ], 
+                        [
+                            "drinking-water", 
+                            "rgb(26, 230, 77)"
+                        ], 
+                        [
+                            "embassy", 
+                            "rgb(77, 230, 77)"
+                        ], 
+                        [
+                            "entrance", 
+                            "rgb(128, 230, 77)"
+                        ], 
+                        [
+                            "fast-food", 
+                            "rgb(230, 230, 77)"
+                        ], 
+                        [
+                            "ferry", 
+                            "rgb(26, 26, 128)"
+                        ], 
+                        [
+                            "fire-station", 
+                            "rgb(77, 26, 128)"
+                        ], 
+                        [
+                            "fuel", 
+                            "rgb(128, 26, 128)"
+                        ], 
+                        [
+                            "garden", 
+                            "rgb(179, 26, 128)"
+                        ], 
+                        [
+                            "golf", 
+                            "rgb(230, 26, 128)"
+                        ], 
+                        [
+                            "grocery", 
+                            "rgb(26, 77, 128)"
+                        ], 
+                        [
+                            "harbor", 
+                            "rgb(77, 77, 128)"
+                        ], 
+                        [
+                            "heliport", 
+                            "rgb(128, 77, 128)"
+                        ], 
+                        [
+                            "hospital", 
+                            "rgb(179, 77, 128)"
+                        ], 
+                        [
+                            "ice-cream", 
+                            "rgb(230, 77, 128)"
+                        ], 
+                        [
+                            "information", 
+                            "rgb(26, 128, 128)"
+                        ], 
+                        [
+                            "laundry", 
+                            "rgb(77, 128, 128)"
+                        ], 
+                        [
+                            "library", 
+                            "rgb(179, 128, 128)"
+                        ], 
+                        [
+                            "lodging", 
+                            "rgb(230, 128, 128)"
+                        ], 
+                        [
+                            "marker", 
+                            "rgb(26, 179, 128)"
+                        ], 
+                        [
+                            "monument", 
+                            "rgb(77, 179, 128)"
+                        ], 
+                        [
+                            "museum", 
+                            "rgb(128, 179, 128)"
+                        ], 
+                        [
+                            "music", 
+                            "rgb(179, 179, 128)"
+                        ], 
+                        [
+                            "park", 
+                            "rgb(230, 179, 128)"
+                        ], 
+                        [
+                            "pharmacy", 
+                            "rgb(26, 230, 128)"
+                        ], 
+                        [
+                            "picnic-site", 
+                            "rgb(77, 230, 128)"
+                        ], 
+                        [
+                            "place-of-worship", 
+                            "rgb(128, 230, 128)"
+                        ], 
+                        [
+                            "playground", 
+                            "rgb(179, 230, 128)"
+                        ], 
+                        [
+                            "police", 
+                            "rgb(230, 230, 128)"
+                        ], 
+                        [
+                            "post", 
+                            "rgb(26, 26, 179)"
+                        ], 
+                        [
+                            "prison", 
+                            "rgb(128, 26, 179)"
+                        ], 
+                        [
+                            "religious-christian", 
+                            "rgb(179, 26, 179)"
+                        ], 
+                        [
+                            "religious-jewish", 
+                            "rgb(230, 26, 179)"
+                        ], 
+                        [
+                            "religious-muslim", 
+                            "rgb(26, 77, 179)"
+                        ], 
+                        [
+                            "restaurant", 
+                            "rgb(77, 77, 179)"
+                        ], 
+                        [
+                            "rocket", 
+                            "rgb(128, 77, 179)"
+                        ], 
+                        [
+                            "school", 
+                            "rgb(179, 77, 179)"
+                        ], 
+                        [
+                            "shop", 
+                            "rgb(230, 77, 179)"
+                        ], 
+                        [
+                            "stadium", 
+                            "rgb(26, 128, 179)"
+                        ], 
+                        [
+                            "swimming", 
+                            "rgb(77, 128, 179)"
+                        ], 
+                        [
+                            "suitcase", 
+                            "rgb(128, 128, 179)"
+                        ], 
+                        [
+                            "theatre", 
+                            "rgb(179, 128, 179)"
+                        ], 
+                        [
+                            "toilet", 
+                            "rgb(230, 128, 179)"
+                        ], 
+                        [
+                            "town-hall", 
+                            "rgb(77, 179, 179)"
+                        ], 
+                        [
+                            "veterinary", 
+                            "rgb(128, 179, 179)"
+                        ], 
+                        [
+                            "zoo", 
+                            "rgb(179, 179, 179)"
+                        ]
+                    ]
+                }, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -8657,7 +9798,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-anchor": "top", 
                 "icon-image": "{maki}-11", 
@@ -8689,7 +9830,288 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 0.5, 
                 "text-halo-width": 0.5, 
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": {
+                    "property": "maki", 
+                    "type": "categorical", 
+                    "stops": [
+                        [
+                            "airfield", 
+                            "rgb(230, 179, 26)"
+                        ], 
+                        [
+                            "alcohol-shop", 
+                            "rgb(26, 230, 26)"
+                        ], 
+                        [
+                            "amusement-park", 
+                            "rgb(128, 230, 26)"
+                        ], 
+                        [
+                            "aquarium", 
+                            "rgb(179, 230, 26)"
+                        ], 
+                        [
+                            "art-gallery", 
+                            "rgb(230, 230, 26)"
+                        ], 
+                        [
+                            "attraction", 
+                            "rgb(26, 26, 77)"
+                        ], 
+                        [
+                            "bakery", 
+                            "rgb(77, 26, 77)"
+                        ], 
+                        [
+                            "bank", 
+                            "rgb(128, 26, 77)"
+                        ], 
+                        [
+                            "bar", 
+                            "rgb(179, 26, 77)"
+                        ], 
+                        [
+                            "beer", 
+                            "rgb(230, 26, 77)"
+                        ], 
+                        [
+                            "bicycle", 
+                            "rgb(26, 77, 77)"
+                        ], 
+                        [
+                            "bicycle-share", 
+                            "rgb(77, 77, 77)"
+                        ], 
+                        [
+                            "bus", 
+                            "rgb(128, 77, 77)"
+                        ], 
+                        [
+                            "cafe", 
+                            "rgb(179, 77, 77)"
+                        ], 
+                        [
+                            "campsite", 
+                            "rgb(26, 128, 77)"
+                        ], 
+                        [
+                            "car", 
+                            "rgb(77, 128, 77)"
+                        ], 
+                        [
+                            "castle", 
+                            "rgb(128, 128, 77)"
+                        ], 
+                        [
+                            "cemetery", 
+                            "rgb(179, 128, 77)"
+                        ], 
+                        [
+                            "cinema", 
+                            "rgb(230, 128, 77)"
+                        ], 
+                        [
+                            "clothing-store", 
+                            "rgb(26, 179, 77)"
+                        ], 
+                        [
+                            "college", 
+                            "rgb(77, 179, 77)"
+                        ], 
+                        [
+                            "dentist", 
+                            "rgb(128, 179, 77)"
+                        ], 
+                        [
+                            "doctor", 
+                            "rgb(179, 179, 77)"
+                        ], 
+                        [
+                            "dog-park", 
+                            "rgb(230, 179, 77)"
+                        ], 
+                        [
+                            "drinking-water", 
+                            "rgb(26, 230, 77)"
+                        ], 
+                        [
+                            "embassy", 
+                            "rgb(77, 230, 77)"
+                        ], 
+                        [
+                            "entrance", 
+                            "rgb(128, 230, 77)"
+                        ], 
+                        [
+                            "fast-food", 
+                            "rgb(230, 230, 77)"
+                        ], 
+                        [
+                            "ferry", 
+                            "rgb(26, 26, 128)"
+                        ], 
+                        [
+                            "fire-station", 
+                            "rgb(77, 26, 128)"
+                        ], 
+                        [
+                            "fuel", 
+                            "rgb(128, 26, 128)"
+                        ], 
+                        [
+                            "garden", 
+                            "rgb(179, 26, 128)"
+                        ], 
+                        [
+                            "golf", 
+                            "rgb(230, 26, 128)"
+                        ], 
+                        [
+                            "grocery", 
+                            "rgb(26, 77, 128)"
+                        ], 
+                        [
+                            "harbor", 
+                            "rgb(77, 77, 128)"
+                        ], 
+                        [
+                            "heliport", 
+                            "rgb(128, 77, 128)"
+                        ], 
+                        [
+                            "hospital", 
+                            "rgb(179, 77, 128)"
+                        ], 
+                        [
+                            "ice-cream", 
+                            "rgb(230, 77, 128)"
+                        ], 
+                        [
+                            "information", 
+                            "rgb(26, 128, 128)"
+                        ], 
+                        [
+                            "laundry", 
+                            "rgb(77, 128, 128)"
+                        ], 
+                        [
+                            "library", 
+                            "rgb(179, 128, 128)"
+                        ], 
+                        [
+                            "lodging", 
+                            "rgb(230, 128, 128)"
+                        ], 
+                        [
+                            "marker", 
+                            "rgb(26, 179, 128)"
+                        ], 
+                        [
+                            "monument", 
+                            "rgb(77, 179, 128)"
+                        ], 
+                        [
+                            "museum", 
+                            "rgb(128, 179, 128)"
+                        ], 
+                        [
+                            "music", 
+                            "rgb(179, 179, 128)"
+                        ], 
+                        [
+                            "park", 
+                            "rgb(230, 179, 128)"
+                        ], 
+                        [
+                            "pharmacy", 
+                            "rgb(26, 230, 128)"
+                        ], 
+                        [
+                            "picnic-site", 
+                            "rgb(77, 230, 128)"
+                        ], 
+                        [
+                            "place-of-worship", 
+                            "rgb(128, 230, 128)"
+                        ], 
+                        [
+                            "playground", 
+                            "rgb(179, 230, 128)"
+                        ], 
+                        [
+                            "police", 
+                            "rgb(230, 230, 128)"
+                        ], 
+                        [
+                            "post", 
+                            "rgb(26, 26, 179)"
+                        ], 
+                        [
+                            "prison", 
+                            "rgb(128, 26, 179)"
+                        ], 
+                        [
+                            "religious-christian", 
+                            "rgb(179, 26, 179)"
+                        ], 
+                        [
+                            "religious-jewish", 
+                            "rgb(230, 26, 179)"
+                        ], 
+                        [
+                            "religious-muslim", 
+                            "rgb(26, 77, 179)"
+                        ], 
+                        [
+                            "restaurant", 
+                            "rgb(77, 77, 179)"
+                        ], 
+                        [
+                            "rocket", 
+                            "rgb(128, 77, 179)"
+                        ], 
+                        [
+                            "school", 
+                            "rgb(179, 77, 179)"
+                        ], 
+                        [
+                            "shop", 
+                            "rgb(230, 77, 179)"
+                        ], 
+                        [
+                            "stadium", 
+                            "rgb(26, 128, 179)"
+                        ], 
+                        [
+                            "swimming", 
+                            "rgb(77, 128, 179)"
+                        ], 
+                        [
+                            "suitcase", 
+                            "rgb(128, 128, 179)"
+                        ], 
+                        [
+                            "theatre", 
+                            "rgb(179, 128, 179)"
+                        ], 
+                        [
+                            "toilet", 
+                            "rgb(230, 128, 179)"
+                        ], 
+                        [
+                            "town-hall", 
+                            "rgb(77, 179, 179)"
+                        ], 
+                        [
+                            "veterinary", 
+                            "rgb(128, 179, 179)"
+                        ], 
+                        [
+                            "zoo", 
+                            "rgb(179, 179, 179)"
+                        ]
+                    ]
+                }, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -8730,7 +10152,7 @@
                 "symbol-placement": "line", 
                 "text-padding": 10, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-pitch-alignment": "viewport", 
                 "text-field": "{name_en}", 
@@ -8756,7 +10178,76 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 1, 
                 "text-halo-width": 1.25, 
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": {
+                    "property": "class", 
+                    "type": "categorical", 
+                    "stops": [
+                        [
+                            "motorway", 
+                            "rgb(230, 179, 179)"
+                        ], 
+                        [
+                            "motorway_link", 
+                            "rgb(26, 230, 179)"
+                        ], 
+                        [
+                            "trunk", 
+                            "rgb(77, 230, 179)"
+                        ], 
+                        [
+                            "primary", 
+                            "rgb(128, 230, 179)"
+                        ], 
+                        [
+                            "secondary", 
+                            "rgb(179, 230, 179)"
+                        ], 
+                        [
+                            "tertiary", 
+                            "rgb(230, 230, 179)"
+                        ], 
+                        [
+                            "link", 
+                            "rgb(26, 26, 230)"
+                        ], 
+                        [
+                            "street", 
+                            "rgb(77, 26, 230)"
+                        ], 
+                        [
+                            "street_limited", 
+                            "rgb(128, 26, 230)"
+                        ], 
+                        [
+                            "pedestrian", 
+                            "rgb(230, 26, 230)"
+                        ], 
+                        [
+                            "construction", 
+                            "rgb(26, 77, 230)"
+                        ], 
+                        [
+                            "track", 
+                            "rgb(77, 77, 230)"
+                        ], 
+                        [
+                            "service", 
+                            "rgb(128, 77, 230)"
+                        ], 
+                        [
+                            "ferry", 
+                            "rgb(179, 77, 230)"
+                        ], 
+                        [
+                            "path", 
+                            "rgb(230, 77, 230)"
+                        ], 
+                        [
+                            "golf", 
+                            "rgb(26, 128, 230)"
+                        ]
+                    ]
+                }, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -8806,7 +10297,7 @@
                 "symbol-placement": "line", 
                 "text-padding": 10, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-pitch-alignment": "viewport", 
                 "text-field": "{name_en}", 
@@ -8828,7 +10319,76 @@
                 "symbol-spacing": 250
             }, 
             "paint": {
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": {
+                    "property": "class", 
+                    "type": "categorical", 
+                    "stops": [
+                        [
+                            "motorway", 
+                            "rgb(230, 179, 179)"
+                        ], 
+                        [
+                            "motorway_link", 
+                            "rgb(26, 230, 179)"
+                        ], 
+                        [
+                            "trunk", 
+                            "rgb(77, 230, 179)"
+                        ], 
+                        [
+                            "primary", 
+                            "rgb(128, 230, 179)"
+                        ], 
+                        [
+                            "secondary", 
+                            "rgb(179, 230, 179)"
+                        ], 
+                        [
+                            "tertiary", 
+                            "rgb(230, 230, 179)"
+                        ], 
+                        [
+                            "link", 
+                            "rgb(26, 26, 230)"
+                        ], 
+                        [
+                            "street", 
+                            "rgb(77, 26, 230)"
+                        ], 
+                        [
+                            "street_limited", 
+                            "rgb(128, 26, 230)"
+                        ], 
+                        [
+                            "pedestrian", 
+                            "rgb(230, 26, 230)"
+                        ], 
+                        [
+                            "construction", 
+                            "rgb(26, 77, 230)"
+                        ], 
+                        [
+                            "track", 
+                            "rgb(77, 77, 230)"
+                        ], 
+                        [
+                            "service", 
+                            "rgb(128, 77, 230)"
+                        ], 
+                        [
+                            "ferry", 
+                            "rgb(179, 77, 230)"
+                        ], 
+                        [
+                            "path", 
+                            "rgb(230, 77, 230)"
+                        ], 
+                        [
+                            "golf", 
+                            "rgb(26, 128, 230)"
+                        ]
+                    ]
+                }, 
                 "text-opacity": 1, 
                 "text-halo-width": 1, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
@@ -8875,7 +10435,7 @@
                 "symbol-placement": "line", 
                 "text-padding": 10, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-pitch-alignment": "viewport", 
                 "text-field": "{name_en}", 
@@ -8901,7 +10461,76 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 1, 
                 "text-halo-width": 1, 
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": {
+                    "property": "class", 
+                    "type": "categorical", 
+                    "stops": [
+                        [
+                            "motorway", 
+                            "rgb(230, 179, 179)"
+                        ], 
+                        [
+                            "motorway_link", 
+                            "rgb(26, 230, 179)"
+                        ], 
+                        [
+                            "trunk", 
+                            "rgb(77, 230, 179)"
+                        ], 
+                        [
+                            "primary", 
+                            "rgb(128, 230, 179)"
+                        ], 
+                        [
+                            "secondary", 
+                            "rgb(179, 230, 179)"
+                        ], 
+                        [
+                            "tertiary", 
+                            "rgb(230, 230, 179)"
+                        ], 
+                        [
+                            "link", 
+                            "rgb(26, 26, 230)"
+                        ], 
+                        [
+                            "street", 
+                            "rgb(77, 26, 230)"
+                        ], 
+                        [
+                            "street_limited", 
+                            "rgb(128, 26, 230)"
+                        ], 
+                        [
+                            "pedestrian", 
+                            "rgb(230, 26, 230)"
+                        ], 
+                        [
+                            "construction", 
+                            "rgb(26, 77, 230)"
+                        ], 
+                        [
+                            "track", 
+                            "rgb(77, 77, 230)"
+                        ], 
+                        [
+                            "service", 
+                            "rgb(128, 77, 230)"
+                        ], 
+                        [
+                            "ferry", 
+                            "rgb(179, 77, 230)"
+                        ], 
+                        [
+                            "path", 
+                            "rgb(230, 77, 230)"
+                        ], 
+                        [
+                            "golf", 
+                            "rgb(26, 128, 230)"
+                        ]
+                    ]
+                }, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -8936,7 +10565,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-anchor": "top", 
                 "icon-image": {
@@ -8979,7 +10608,288 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 0.5, 
                 "text-halo-width": 0.5, 
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": {
+                    "property": "maki", 
+                    "type": "categorical", 
+                    "stops": [
+                        [
+                            "airfield", 
+                            "rgb(230, 179, 26)"
+                        ], 
+                        [
+                            "alcohol-shop", 
+                            "rgb(26, 230, 26)"
+                        ], 
+                        [
+                            "amusement-park", 
+                            "rgb(128, 230, 26)"
+                        ], 
+                        [
+                            "aquarium", 
+                            "rgb(179, 230, 26)"
+                        ], 
+                        [
+                            "art-gallery", 
+                            "rgb(230, 230, 26)"
+                        ], 
+                        [
+                            "attraction", 
+                            "rgb(26, 26, 77)"
+                        ], 
+                        [
+                            "bakery", 
+                            "rgb(77, 26, 77)"
+                        ], 
+                        [
+                            "bank", 
+                            "rgb(128, 26, 77)"
+                        ], 
+                        [
+                            "bar", 
+                            "rgb(179, 26, 77)"
+                        ], 
+                        [
+                            "beer", 
+                            "rgb(230, 26, 77)"
+                        ], 
+                        [
+                            "bicycle", 
+                            "rgb(26, 77, 77)"
+                        ], 
+                        [
+                            "bicycle-share", 
+                            "rgb(77, 77, 77)"
+                        ], 
+                        [
+                            "bus", 
+                            "rgb(128, 77, 77)"
+                        ], 
+                        [
+                            "cafe", 
+                            "rgb(179, 77, 77)"
+                        ], 
+                        [
+                            "campsite", 
+                            "rgb(26, 128, 77)"
+                        ], 
+                        [
+                            "car", 
+                            "rgb(77, 128, 77)"
+                        ], 
+                        [
+                            "castle", 
+                            "rgb(128, 128, 77)"
+                        ], 
+                        [
+                            "cemetery", 
+                            "rgb(179, 128, 77)"
+                        ], 
+                        [
+                            "cinema", 
+                            "rgb(230, 128, 77)"
+                        ], 
+                        [
+                            "clothing-store", 
+                            "rgb(26, 179, 77)"
+                        ], 
+                        [
+                            "college", 
+                            "rgb(77, 179, 77)"
+                        ], 
+                        [
+                            "dentist", 
+                            "rgb(128, 179, 77)"
+                        ], 
+                        [
+                            "doctor", 
+                            "rgb(179, 179, 77)"
+                        ], 
+                        [
+                            "dog-park", 
+                            "rgb(230, 179, 77)"
+                        ], 
+                        [
+                            "drinking-water", 
+                            "rgb(26, 230, 77)"
+                        ], 
+                        [
+                            "embassy", 
+                            "rgb(77, 230, 77)"
+                        ], 
+                        [
+                            "entrance", 
+                            "rgb(128, 230, 77)"
+                        ], 
+                        [
+                            "fast-food", 
+                            "rgb(230, 230, 77)"
+                        ], 
+                        [
+                            "ferry", 
+                            "rgb(26, 26, 128)"
+                        ], 
+                        [
+                            "fire-station", 
+                            "rgb(77, 26, 128)"
+                        ], 
+                        [
+                            "fuel", 
+                            "rgb(128, 26, 128)"
+                        ], 
+                        [
+                            "garden", 
+                            "rgb(179, 26, 128)"
+                        ], 
+                        [
+                            "golf", 
+                            "rgb(230, 26, 128)"
+                        ], 
+                        [
+                            "grocery", 
+                            "rgb(26, 77, 128)"
+                        ], 
+                        [
+                            "harbor", 
+                            "rgb(77, 77, 128)"
+                        ], 
+                        [
+                            "heliport", 
+                            "rgb(128, 77, 128)"
+                        ], 
+                        [
+                            "hospital", 
+                            "rgb(179, 77, 128)"
+                        ], 
+                        [
+                            "ice-cream", 
+                            "rgb(230, 77, 128)"
+                        ], 
+                        [
+                            "information", 
+                            "rgb(26, 128, 128)"
+                        ], 
+                        [
+                            "laundry", 
+                            "rgb(77, 128, 128)"
+                        ], 
+                        [
+                            "library", 
+                            "rgb(179, 128, 128)"
+                        ], 
+                        [
+                            "lodging", 
+                            "rgb(230, 128, 128)"
+                        ], 
+                        [
+                            "marker", 
+                            "rgb(26, 179, 128)"
+                        ], 
+                        [
+                            "monument", 
+                            "rgb(77, 179, 128)"
+                        ], 
+                        [
+                            "museum", 
+                            "rgb(128, 179, 128)"
+                        ], 
+                        [
+                            "music", 
+                            "rgb(179, 179, 128)"
+                        ], 
+                        [
+                            "park", 
+                            "rgb(230, 179, 128)"
+                        ], 
+                        [
+                            "pharmacy", 
+                            "rgb(26, 230, 128)"
+                        ], 
+                        [
+                            "picnic-site", 
+                            "rgb(77, 230, 128)"
+                        ], 
+                        [
+                            "place-of-worship", 
+                            "rgb(128, 230, 128)"
+                        ], 
+                        [
+                            "playground", 
+                            "rgb(179, 230, 128)"
+                        ], 
+                        [
+                            "police", 
+                            "rgb(230, 230, 128)"
+                        ], 
+                        [
+                            "post", 
+                            "rgb(26, 26, 179)"
+                        ], 
+                        [
+                            "prison", 
+                            "rgb(128, 26, 179)"
+                        ], 
+                        [
+                            "religious-christian", 
+                            "rgb(179, 26, 179)"
+                        ], 
+                        [
+                            "religious-jewish", 
+                            "rgb(230, 26, 179)"
+                        ], 
+                        [
+                            "religious-muslim", 
+                            "rgb(26, 77, 179)"
+                        ], 
+                        [
+                            "restaurant", 
+                            "rgb(77, 77, 179)"
+                        ], 
+                        [
+                            "rocket", 
+                            "rgb(128, 77, 179)"
+                        ], 
+                        [
+                            "school", 
+                            "rgb(179, 77, 179)"
+                        ], 
+                        [
+                            "shop", 
+                            "rgb(230, 77, 179)"
+                        ], 
+                        [
+                            "stadium", 
+                            "rgb(26, 128, 179)"
+                        ], 
+                        [
+                            "swimming", 
+                            "rgb(77, 128, 179)"
+                        ], 
+                        [
+                            "suitcase", 
+                            "rgb(128, 128, 179)"
+                        ], 
+                        [
+                            "theatre", 
+                            "rgb(179, 128, 179)"
+                        ], 
+                        [
+                            "toilet", 
+                            "rgb(230, 128, 179)"
+                        ], 
+                        [
+                            "town-hall", 
+                            "rgb(77, 179, 179)"
+                        ], 
+                        [
+                            "veterinary", 
+                            "rgb(128, 179, 179)"
+                        ], 
+                        [
+                            "zoo", 
+                            "rgb(179, 179, 179)"
+                        ]
+                    ]
+                }, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -9019,7 +10929,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-anchor": "top", 
                 "icon-image": {
@@ -9062,7 +10972,288 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 0.5, 
                 "text-halo-width": 0.5, 
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": {
+                    "property": "maki", 
+                    "type": "categorical", 
+                    "stops": [
+                        [
+                            "airfield", 
+                            "rgb(230, 179, 26)"
+                        ], 
+                        [
+                            "alcohol-shop", 
+                            "rgb(26, 230, 26)"
+                        ], 
+                        [
+                            "amusement-park", 
+                            "rgb(128, 230, 26)"
+                        ], 
+                        [
+                            "aquarium", 
+                            "rgb(179, 230, 26)"
+                        ], 
+                        [
+                            "art-gallery", 
+                            "rgb(230, 230, 26)"
+                        ], 
+                        [
+                            "attraction", 
+                            "rgb(26, 26, 77)"
+                        ], 
+                        [
+                            "bakery", 
+                            "rgb(77, 26, 77)"
+                        ], 
+                        [
+                            "bank", 
+                            "rgb(128, 26, 77)"
+                        ], 
+                        [
+                            "bar", 
+                            "rgb(179, 26, 77)"
+                        ], 
+                        [
+                            "beer", 
+                            "rgb(230, 26, 77)"
+                        ], 
+                        [
+                            "bicycle", 
+                            "rgb(26, 77, 77)"
+                        ], 
+                        [
+                            "bicycle-share", 
+                            "rgb(77, 77, 77)"
+                        ], 
+                        [
+                            "bus", 
+                            "rgb(128, 77, 77)"
+                        ], 
+                        [
+                            "cafe", 
+                            "rgb(179, 77, 77)"
+                        ], 
+                        [
+                            "campsite", 
+                            "rgb(26, 128, 77)"
+                        ], 
+                        [
+                            "car", 
+                            "rgb(77, 128, 77)"
+                        ], 
+                        [
+                            "castle", 
+                            "rgb(128, 128, 77)"
+                        ], 
+                        [
+                            "cemetery", 
+                            "rgb(179, 128, 77)"
+                        ], 
+                        [
+                            "cinema", 
+                            "rgb(230, 128, 77)"
+                        ], 
+                        [
+                            "clothing-store", 
+                            "rgb(26, 179, 77)"
+                        ], 
+                        [
+                            "college", 
+                            "rgb(77, 179, 77)"
+                        ], 
+                        [
+                            "dentist", 
+                            "rgb(128, 179, 77)"
+                        ], 
+                        [
+                            "doctor", 
+                            "rgb(179, 179, 77)"
+                        ], 
+                        [
+                            "dog-park", 
+                            "rgb(230, 179, 77)"
+                        ], 
+                        [
+                            "drinking-water", 
+                            "rgb(26, 230, 77)"
+                        ], 
+                        [
+                            "embassy", 
+                            "rgb(77, 230, 77)"
+                        ], 
+                        [
+                            "entrance", 
+                            "rgb(128, 230, 77)"
+                        ], 
+                        [
+                            "fast-food", 
+                            "rgb(230, 230, 77)"
+                        ], 
+                        [
+                            "ferry", 
+                            "rgb(26, 26, 128)"
+                        ], 
+                        [
+                            "fire-station", 
+                            "rgb(77, 26, 128)"
+                        ], 
+                        [
+                            "fuel", 
+                            "rgb(128, 26, 128)"
+                        ], 
+                        [
+                            "garden", 
+                            "rgb(179, 26, 128)"
+                        ], 
+                        [
+                            "golf", 
+                            "rgb(230, 26, 128)"
+                        ], 
+                        [
+                            "grocery", 
+                            "rgb(26, 77, 128)"
+                        ], 
+                        [
+                            "harbor", 
+                            "rgb(77, 77, 128)"
+                        ], 
+                        [
+                            "heliport", 
+                            "rgb(128, 77, 128)"
+                        ], 
+                        [
+                            "hospital", 
+                            "rgb(179, 77, 128)"
+                        ], 
+                        [
+                            "ice-cream", 
+                            "rgb(230, 77, 128)"
+                        ], 
+                        [
+                            "information", 
+                            "rgb(26, 128, 128)"
+                        ], 
+                        [
+                            "laundry", 
+                            "rgb(77, 128, 128)"
+                        ], 
+                        [
+                            "library", 
+                            "rgb(179, 128, 128)"
+                        ], 
+                        [
+                            "lodging", 
+                            "rgb(230, 128, 128)"
+                        ], 
+                        [
+                            "marker", 
+                            "rgb(26, 179, 128)"
+                        ], 
+                        [
+                            "monument", 
+                            "rgb(77, 179, 128)"
+                        ], 
+                        [
+                            "museum", 
+                            "rgb(128, 179, 128)"
+                        ], 
+                        [
+                            "music", 
+                            "rgb(179, 179, 128)"
+                        ], 
+                        [
+                            "park", 
+                            "rgb(230, 179, 128)"
+                        ], 
+                        [
+                            "pharmacy", 
+                            "rgb(26, 230, 128)"
+                        ], 
+                        [
+                            "picnic-site", 
+                            "rgb(77, 230, 128)"
+                        ], 
+                        [
+                            "place-of-worship", 
+                            "rgb(128, 230, 128)"
+                        ], 
+                        [
+                            "playground", 
+                            "rgb(179, 230, 128)"
+                        ], 
+                        [
+                            "police", 
+                            "rgb(230, 230, 128)"
+                        ], 
+                        [
+                            "post", 
+                            "rgb(26, 26, 179)"
+                        ], 
+                        [
+                            "prison", 
+                            "rgb(128, 26, 179)"
+                        ], 
+                        [
+                            "religious-christian", 
+                            "rgb(179, 26, 179)"
+                        ], 
+                        [
+                            "religious-jewish", 
+                            "rgb(230, 26, 179)"
+                        ], 
+                        [
+                            "religious-muslim", 
+                            "rgb(26, 77, 179)"
+                        ], 
+                        [
+                            "restaurant", 
+                            "rgb(77, 77, 179)"
+                        ], 
+                        [
+                            "rocket", 
+                            "rgb(128, 77, 179)"
+                        ], 
+                        [
+                            "school", 
+                            "rgb(179, 77, 179)"
+                        ], 
+                        [
+                            "shop", 
+                            "rgb(230, 77, 179)"
+                        ], 
+                        [
+                            "stadium", 
+                            "rgb(26, 128, 179)"
+                        ], 
+                        [
+                            "swimming", 
+                            "rgb(77, 128, 179)"
+                        ], 
+                        [
+                            "suitcase", 
+                            "rgb(128, 128, 179)"
+                        ], 
+                        [
+                            "theatre", 
+                            "rgb(179, 128, 179)"
+                        ], 
+                        [
+                            "toilet", 
+                            "rgb(230, 128, 179)"
+                        ], 
+                        [
+                            "town-hall", 
+                            "rgb(77, 179, 179)"
+                        ], 
+                        [
+                            "veterinary", 
+                            "rgb(128, 179, 179)"
+                        ], 
+                        [
+                            "zoo", 
+                            "rgb(179, 179, 179)"
+                        ]
+                    ]
+                }, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -9103,7 +11294,7 @@
                 "icon-padding": 0, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-anchor": "top", 
                 "icon-image": "{network}", 
@@ -9136,7 +11327,28 @@
                 "text-halo-blur": 0.5, 
                 "text-halo-width": 0.5, 
                 "icon-halo-color": "#fff", 
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": {
+                    "property": "maki", 
+                    "type": "categorical", 
+                    "stops": [
+                        [
+                            "rail", 
+                            "rgb(230, 179, 230)"
+                        ], 
+                        [
+                            "rail-metro", 
+                            "rgb(26, 230, 230)"
+                        ], 
+                        [
+                            "rail-light", 
+                            "rgb(77, 230, 230)"
+                        ], 
+                        [
+                            "entrance", 
+                            "rgb(128, 230, 230)"
+                        ]
+                    ]
+                }, 
                 "icon-halo-width": 4, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
@@ -9170,7 +11382,7 @@
                     ]
                 }, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 
@@ -9178,7 +11390,7 @@
                 "text-max-width": 7
             }, 
             "paint": {
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": "rgb(179, 179, 26)", 
                 "text-opacity": 1, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
                 "icon-opacity": 0
@@ -9216,7 +11428,7 @@
                     ]
                 }, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 
@@ -9224,7 +11436,7 @@
                 "text-max-width": 7
             }, 
             "paint": {
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": "rgb(179, 179, 26)", 
                 "text-opacity": 1, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
                 "icon-opacity": 0
@@ -9250,7 +11462,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 
@@ -9280,7 +11492,56 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 0.5, 
                 "text-halo-width": 1, 
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": {
+                    "property": "type", 
+                    "type": "categorical", 
+                    "stops": [
+                        [
+                            "city", 
+                            "rgb(77, 77, 26)"
+                        ], 
+                        [
+                            "town", 
+                            "rgb(179, 77, 26)"
+                        ], 
+                        [
+                            "village", 
+                            "rgb(230, 77, 26)"
+                        ], 
+                        [
+                            "hamlet", 
+                            "rgb(26, 128, 26)"
+                        ], 
+                        [
+                            "suburb", 
+                            "rgb(77, 128, 26)"
+                        ], 
+                        [
+                            "neighbourhood", 
+                            "rgb(128, 128, 26)"
+                        ], 
+                        [
+                            "island", 
+                            "rgb(179, 128, 26)"
+                        ], 
+                        [
+                            "islet", 
+                            "rgb(230, 128, 26)"
+                        ], 
+                        [
+                            "archipelago", 
+                            "rgb(26, 179, 26)"
+                        ], 
+                        [
+                            "residential", 
+                            "rgb(77, 179, 26)"
+                        ], 
+                        [
+                            "aboriginal_lands", 
+                            "rgb(128, 179, 26)"
+                        ]
+                    ]
+                }, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -9319,7 +11580,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-anchor": "top", 
                 "icon-image": {
@@ -9362,7 +11623,288 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 0.5, 
                 "text-halo-width": 0.5, 
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": {
+                    "property": "maki", 
+                    "type": "categorical", 
+                    "stops": [
+                        [
+                            "airfield", 
+                            "rgb(230, 179, 26)"
+                        ], 
+                        [
+                            "alcohol-shop", 
+                            "rgb(26, 230, 26)"
+                        ], 
+                        [
+                            "amusement-park", 
+                            "rgb(128, 230, 26)"
+                        ], 
+                        [
+                            "aquarium", 
+                            "rgb(179, 230, 26)"
+                        ], 
+                        [
+                            "art-gallery", 
+                            "rgb(230, 230, 26)"
+                        ], 
+                        [
+                            "attraction", 
+                            "rgb(26, 26, 77)"
+                        ], 
+                        [
+                            "bakery", 
+                            "rgb(77, 26, 77)"
+                        ], 
+                        [
+                            "bank", 
+                            "rgb(128, 26, 77)"
+                        ], 
+                        [
+                            "bar", 
+                            "rgb(179, 26, 77)"
+                        ], 
+                        [
+                            "beer", 
+                            "rgb(230, 26, 77)"
+                        ], 
+                        [
+                            "bicycle", 
+                            "rgb(26, 77, 77)"
+                        ], 
+                        [
+                            "bicycle-share", 
+                            "rgb(77, 77, 77)"
+                        ], 
+                        [
+                            "bus", 
+                            "rgb(128, 77, 77)"
+                        ], 
+                        [
+                            "cafe", 
+                            "rgb(179, 77, 77)"
+                        ], 
+                        [
+                            "campsite", 
+                            "rgb(26, 128, 77)"
+                        ], 
+                        [
+                            "car", 
+                            "rgb(77, 128, 77)"
+                        ], 
+                        [
+                            "castle", 
+                            "rgb(128, 128, 77)"
+                        ], 
+                        [
+                            "cemetery", 
+                            "rgb(179, 128, 77)"
+                        ], 
+                        [
+                            "cinema", 
+                            "rgb(230, 128, 77)"
+                        ], 
+                        [
+                            "clothing-store", 
+                            "rgb(26, 179, 77)"
+                        ], 
+                        [
+                            "college", 
+                            "rgb(77, 179, 77)"
+                        ], 
+                        [
+                            "dentist", 
+                            "rgb(128, 179, 77)"
+                        ], 
+                        [
+                            "doctor", 
+                            "rgb(179, 179, 77)"
+                        ], 
+                        [
+                            "dog-park", 
+                            "rgb(230, 179, 77)"
+                        ], 
+                        [
+                            "drinking-water", 
+                            "rgb(26, 230, 77)"
+                        ], 
+                        [
+                            "embassy", 
+                            "rgb(77, 230, 77)"
+                        ], 
+                        [
+                            "entrance", 
+                            "rgb(128, 230, 77)"
+                        ], 
+                        [
+                            "fast-food", 
+                            "rgb(230, 230, 77)"
+                        ], 
+                        [
+                            "ferry", 
+                            "rgb(26, 26, 128)"
+                        ], 
+                        [
+                            "fire-station", 
+                            "rgb(77, 26, 128)"
+                        ], 
+                        [
+                            "fuel", 
+                            "rgb(128, 26, 128)"
+                        ], 
+                        [
+                            "garden", 
+                            "rgb(179, 26, 128)"
+                        ], 
+                        [
+                            "golf", 
+                            "rgb(230, 26, 128)"
+                        ], 
+                        [
+                            "grocery", 
+                            "rgb(26, 77, 128)"
+                        ], 
+                        [
+                            "harbor", 
+                            "rgb(77, 77, 128)"
+                        ], 
+                        [
+                            "heliport", 
+                            "rgb(128, 77, 128)"
+                        ], 
+                        [
+                            "hospital", 
+                            "rgb(179, 77, 128)"
+                        ], 
+                        [
+                            "ice-cream", 
+                            "rgb(230, 77, 128)"
+                        ], 
+                        [
+                            "information", 
+                            "rgb(26, 128, 128)"
+                        ], 
+                        [
+                            "laundry", 
+                            "rgb(77, 128, 128)"
+                        ], 
+                        [
+                            "library", 
+                            "rgb(179, 128, 128)"
+                        ], 
+                        [
+                            "lodging", 
+                            "rgb(230, 128, 128)"
+                        ], 
+                        [
+                            "marker", 
+                            "rgb(26, 179, 128)"
+                        ], 
+                        [
+                            "monument", 
+                            "rgb(77, 179, 128)"
+                        ], 
+                        [
+                            "museum", 
+                            "rgb(128, 179, 128)"
+                        ], 
+                        [
+                            "music", 
+                            "rgb(179, 179, 128)"
+                        ], 
+                        [
+                            "park", 
+                            "rgb(230, 179, 128)"
+                        ], 
+                        [
+                            "pharmacy", 
+                            "rgb(26, 230, 128)"
+                        ], 
+                        [
+                            "picnic-site", 
+                            "rgb(77, 230, 128)"
+                        ], 
+                        [
+                            "place-of-worship", 
+                            "rgb(128, 230, 128)"
+                        ], 
+                        [
+                            "playground", 
+                            "rgb(179, 230, 128)"
+                        ], 
+                        [
+                            "police", 
+                            "rgb(230, 230, 128)"
+                        ], 
+                        [
+                            "post", 
+                            "rgb(26, 26, 179)"
+                        ], 
+                        [
+                            "prison", 
+                            "rgb(128, 26, 179)"
+                        ], 
+                        [
+                            "religious-christian", 
+                            "rgb(179, 26, 179)"
+                        ], 
+                        [
+                            "religious-jewish", 
+                            "rgb(230, 26, 179)"
+                        ], 
+                        [
+                            "religious-muslim", 
+                            "rgb(26, 77, 179)"
+                        ], 
+                        [
+                            "restaurant", 
+                            "rgb(77, 77, 179)"
+                        ], 
+                        [
+                            "rocket", 
+                            "rgb(128, 77, 179)"
+                        ], 
+                        [
+                            "school", 
+                            "rgb(179, 77, 179)"
+                        ], 
+                        [
+                            "shop", 
+                            "rgb(230, 77, 179)"
+                        ], 
+                        [
+                            "stadium", 
+                            "rgb(26, 128, 179)"
+                        ], 
+                        [
+                            "swimming", 
+                            "rgb(77, 128, 179)"
+                        ], 
+                        [
+                            "suitcase", 
+                            "rgb(128, 128, 179)"
+                        ], 
+                        [
+                            "theatre", 
+                            "rgb(179, 128, 179)"
+                        ], 
+                        [
+                            "toilet", 
+                            "rgb(230, 128, 179)"
+                        ], 
+                        [
+                            "town-hall", 
+                            "rgb(77, 179, 179)"
+                        ], 
+                        [
+                            "veterinary", 
+                            "rgb(128, 179, 179)"
+                        ], 
+                        [
+                            "zoo", 
+                            "rgb(179, 179, 179)"
+                        ]
+                    ]
+                }, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -9402,7 +11944,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-anchor": "top", 
                 "icon-image": {
@@ -9445,7 +11987,288 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 0.5, 
                 "text-halo-width": 0.5, 
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": {
+                    "property": "maki", 
+                    "type": "categorical", 
+                    "stops": [
+                        [
+                            "airfield", 
+                            "rgb(230, 179, 26)"
+                        ], 
+                        [
+                            "alcohol-shop", 
+                            "rgb(26, 230, 26)"
+                        ], 
+                        [
+                            "amusement-park", 
+                            "rgb(128, 230, 26)"
+                        ], 
+                        [
+                            "aquarium", 
+                            "rgb(179, 230, 26)"
+                        ], 
+                        [
+                            "art-gallery", 
+                            "rgb(230, 230, 26)"
+                        ], 
+                        [
+                            "attraction", 
+                            "rgb(26, 26, 77)"
+                        ], 
+                        [
+                            "bakery", 
+                            "rgb(77, 26, 77)"
+                        ], 
+                        [
+                            "bank", 
+                            "rgb(128, 26, 77)"
+                        ], 
+                        [
+                            "bar", 
+                            "rgb(179, 26, 77)"
+                        ], 
+                        [
+                            "beer", 
+                            "rgb(230, 26, 77)"
+                        ], 
+                        [
+                            "bicycle", 
+                            "rgb(26, 77, 77)"
+                        ], 
+                        [
+                            "bicycle-share", 
+                            "rgb(77, 77, 77)"
+                        ], 
+                        [
+                            "bus", 
+                            "rgb(128, 77, 77)"
+                        ], 
+                        [
+                            "cafe", 
+                            "rgb(179, 77, 77)"
+                        ], 
+                        [
+                            "campsite", 
+                            "rgb(26, 128, 77)"
+                        ], 
+                        [
+                            "car", 
+                            "rgb(77, 128, 77)"
+                        ], 
+                        [
+                            "castle", 
+                            "rgb(128, 128, 77)"
+                        ], 
+                        [
+                            "cemetery", 
+                            "rgb(179, 128, 77)"
+                        ], 
+                        [
+                            "cinema", 
+                            "rgb(230, 128, 77)"
+                        ], 
+                        [
+                            "clothing-store", 
+                            "rgb(26, 179, 77)"
+                        ], 
+                        [
+                            "college", 
+                            "rgb(77, 179, 77)"
+                        ], 
+                        [
+                            "dentist", 
+                            "rgb(128, 179, 77)"
+                        ], 
+                        [
+                            "doctor", 
+                            "rgb(179, 179, 77)"
+                        ], 
+                        [
+                            "dog-park", 
+                            "rgb(230, 179, 77)"
+                        ], 
+                        [
+                            "drinking-water", 
+                            "rgb(26, 230, 77)"
+                        ], 
+                        [
+                            "embassy", 
+                            "rgb(77, 230, 77)"
+                        ], 
+                        [
+                            "entrance", 
+                            "rgb(128, 230, 77)"
+                        ], 
+                        [
+                            "fast-food", 
+                            "rgb(230, 230, 77)"
+                        ], 
+                        [
+                            "ferry", 
+                            "rgb(26, 26, 128)"
+                        ], 
+                        [
+                            "fire-station", 
+                            "rgb(77, 26, 128)"
+                        ], 
+                        [
+                            "fuel", 
+                            "rgb(128, 26, 128)"
+                        ], 
+                        [
+                            "garden", 
+                            "rgb(179, 26, 128)"
+                        ], 
+                        [
+                            "golf", 
+                            "rgb(230, 26, 128)"
+                        ], 
+                        [
+                            "grocery", 
+                            "rgb(26, 77, 128)"
+                        ], 
+                        [
+                            "harbor", 
+                            "rgb(77, 77, 128)"
+                        ], 
+                        [
+                            "heliport", 
+                            "rgb(128, 77, 128)"
+                        ], 
+                        [
+                            "hospital", 
+                            "rgb(179, 77, 128)"
+                        ], 
+                        [
+                            "ice-cream", 
+                            "rgb(230, 77, 128)"
+                        ], 
+                        [
+                            "information", 
+                            "rgb(26, 128, 128)"
+                        ], 
+                        [
+                            "laundry", 
+                            "rgb(77, 128, 128)"
+                        ], 
+                        [
+                            "library", 
+                            "rgb(179, 128, 128)"
+                        ], 
+                        [
+                            "lodging", 
+                            "rgb(230, 128, 128)"
+                        ], 
+                        [
+                            "marker", 
+                            "rgb(26, 179, 128)"
+                        ], 
+                        [
+                            "monument", 
+                            "rgb(77, 179, 128)"
+                        ], 
+                        [
+                            "museum", 
+                            "rgb(128, 179, 128)"
+                        ], 
+                        [
+                            "music", 
+                            "rgb(179, 179, 128)"
+                        ], 
+                        [
+                            "park", 
+                            "rgb(230, 179, 128)"
+                        ], 
+                        [
+                            "pharmacy", 
+                            "rgb(26, 230, 128)"
+                        ], 
+                        [
+                            "picnic-site", 
+                            "rgb(77, 230, 128)"
+                        ], 
+                        [
+                            "place-of-worship", 
+                            "rgb(128, 230, 128)"
+                        ], 
+                        [
+                            "playground", 
+                            "rgb(179, 230, 128)"
+                        ], 
+                        [
+                            "police", 
+                            "rgb(230, 230, 128)"
+                        ], 
+                        [
+                            "post", 
+                            "rgb(26, 26, 179)"
+                        ], 
+                        [
+                            "prison", 
+                            "rgb(128, 26, 179)"
+                        ], 
+                        [
+                            "religious-christian", 
+                            "rgb(179, 26, 179)"
+                        ], 
+                        [
+                            "religious-jewish", 
+                            "rgb(230, 26, 179)"
+                        ], 
+                        [
+                            "religious-muslim", 
+                            "rgb(26, 77, 179)"
+                        ], 
+                        [
+                            "restaurant", 
+                            "rgb(77, 77, 179)"
+                        ], 
+                        [
+                            "rocket", 
+                            "rgb(128, 77, 179)"
+                        ], 
+                        [
+                            "school", 
+                            "rgb(179, 77, 179)"
+                        ], 
+                        [
+                            "shop", 
+                            "rgb(230, 77, 179)"
+                        ], 
+                        [
+                            "stadium", 
+                            "rgb(26, 128, 179)"
+                        ], 
+                        [
+                            "swimming", 
+                            "rgb(77, 128, 179)"
+                        ], 
+                        [
+                            "suitcase", 
+                            "rgb(128, 128, 179)"
+                        ], 
+                        [
+                            "theatre", 
+                            "rgb(179, 128, 179)"
+                        ], 
+                        [
+                            "toilet", 
+                            "rgb(230, 128, 179)"
+                        ], 
+                        [
+                            "town-hall", 
+                            "rgb(77, 179, 179)"
+                        ], 
+                        [
+                            "veterinary", 
+                            "rgb(128, 179, 179)"
+                        ], 
+                        [
+                            "zoo", 
+                            "rgb(179, 179, 179)"
+                        ]
+                    ]
+                }, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -9485,7 +12308,7 @@
                 "text-allow-overlap": false, 
                 "text-padding": 10, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-anchor": "top", 
                 "icon-image": {
@@ -9528,7 +12351,28 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 0.5, 
                 "text-halo-width": 0.5, 
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": {
+                    "property": "maki", 
+                    "type": "categorical", 
+                    "stops": [
+                        [
+                            "airport", 
+                            "rgb(230, 128, 230)"
+                        ], 
+                        [
+                            "airfield", 
+                            "rgb(26, 179, 230)"
+                        ], 
+                        [
+                            "heliport", 
+                            "rgb(77, 179, 230)"
+                        ], 
+                        [
+                            "rocket", 
+                            "rgb(179, 179, 230)"
+                        ]
+                    ]
+                }, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -9549,7 +12393,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 
@@ -9575,7 +12419,56 @@
                 "symbol-spacing": 250
             }, 
             "paint": {
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": {
+                    "property": "type", 
+                    "type": "categorical", 
+                    "stops": [
+                        [
+                            "city", 
+                            "rgb(77, 77, 26)"
+                        ], 
+                        [
+                            "town", 
+                            "rgb(179, 77, 26)"
+                        ], 
+                        [
+                            "village", 
+                            "rgb(230, 77, 26)"
+                        ], 
+                        [
+                            "hamlet", 
+                            "rgb(26, 128, 26)"
+                        ], 
+                        [
+                            "suburb", 
+                            "rgb(77, 128, 26)"
+                        ], 
+                        [
+                            "neighbourhood", 
+                            "rgb(128, 128, 26)"
+                        ], 
+                        [
+                            "island", 
+                            "rgb(179, 128, 26)"
+                        ], 
+                        [
+                            "islet", 
+                            "rgb(230, 128, 26)"
+                        ], 
+                        [
+                            "archipelago", 
+                            "rgb(26, 179, 26)"
+                        ], 
+                        [
+                            "residential", 
+                            "rgb(77, 179, 26)"
+                        ], 
+                        [
+                            "aboriginal_lands", 
+                            "rgb(128, 179, 26)"
+                        ]
+                    ]
+                }, 
                 "text-opacity": 1, 
                 "text-halo-width": 1, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
@@ -9601,7 +12494,7 @@
                 "text-allow-overlap": false, 
                 "text-padding": 10, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-size": {
                     "base": 1, 
@@ -9626,7 +12519,56 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 0.5, 
                 "text-halo-width": 1, 
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": {
+                    "property": "type", 
+                    "type": "categorical", 
+                    "stops": [
+                        [
+                            "city", 
+                            "rgb(77, 77, 26)"
+                        ], 
+                        [
+                            "town", 
+                            "rgb(179, 77, 26)"
+                        ], 
+                        [
+                            "village", 
+                            "rgb(230, 77, 26)"
+                        ], 
+                        [
+                            "hamlet", 
+                            "rgb(26, 128, 26)"
+                        ], 
+                        [
+                            "suburb", 
+                            "rgb(77, 128, 26)"
+                        ], 
+                        [
+                            "neighbourhood", 
+                            "rgb(128, 128, 26)"
+                        ], 
+                        [
+                            "island", 
+                            "rgb(179, 128, 26)"
+                        ], 
+                        [
+                            "islet", 
+                            "rgb(230, 128, 26)"
+                        ], 
+                        [
+                            "archipelago", 
+                            "rgb(26, 179, 26)"
+                        ], 
+                        [
+                            "residential", 
+                            "rgb(77, 179, 26)"
+                        ], 
+                        [
+                            "aboriginal_lands", 
+                            "rgb(128, 179, 26)"
+                        ]
+                    ]
+                }, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -9648,7 +12590,7 @@
                 "text-allow-overlap": false, 
                 "text-padding": 10, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-size": {
                     "base": 1, 
@@ -9673,7 +12615,56 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 0.5, 
                 "text-halo-width": 1, 
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": {
+                    "property": "type", 
+                    "type": "categorical", 
+                    "stops": [
+                        [
+                            "city", 
+                            "rgb(77, 77, 26)"
+                        ], 
+                        [
+                            "town", 
+                            "rgb(179, 77, 26)"
+                        ], 
+                        [
+                            "village", 
+                            "rgb(230, 77, 26)"
+                        ], 
+                        [
+                            "hamlet", 
+                            "rgb(26, 128, 26)"
+                        ], 
+                        [
+                            "suburb", 
+                            "rgb(77, 128, 26)"
+                        ], 
+                        [
+                            "neighbourhood", 
+                            "rgb(128, 128, 26)"
+                        ], 
+                        [
+                            "island", 
+                            "rgb(179, 128, 26)"
+                        ], 
+                        [
+                            "islet", 
+                            "rgb(230, 128, 26)"
+                        ], 
+                        [
+                            "archipelago", 
+                            "rgb(26, 179, 26)"
+                        ], 
+                        [
+                            "residential", 
+                            "rgb(77, 179, 26)"
+                        ], 
+                        [
+                            "aboriginal_lands", 
+                            "rgb(128, 179, 26)"
+                        ]
+                    ]
+                }, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -9707,14 +12698,63 @@
                     ]
                 }, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 
                 "text-line-height": 1.5
             }, 
             "paint": {
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": {
+                    "property": "type", 
+                    "type": "categorical", 
+                    "stops": [
+                        [
+                            "city", 
+                            "rgb(77, 77, 26)"
+                        ], 
+                        [
+                            "town", 
+                            "rgb(179, 77, 26)"
+                        ], 
+                        [
+                            "village", 
+                            "rgb(230, 77, 26)"
+                        ], 
+                        [
+                            "hamlet", 
+                            "rgb(26, 128, 26)"
+                        ], 
+                        [
+                            "suburb", 
+                            "rgb(77, 128, 26)"
+                        ], 
+                        [
+                            "neighbourhood", 
+                            "rgb(128, 128, 26)"
+                        ], 
+                        [
+                            "island", 
+                            "rgb(179, 128, 26)"
+                        ], 
+                        [
+                            "islet", 
+                            "rgb(230, 128, 26)"
+                        ], 
+                        [
+                            "archipelago", 
+                            "rgb(26, 179, 26)"
+                        ], 
+                        [
+                            "residential", 
+                            "rgb(77, 179, 26)"
+                        ], 
+                        [
+                            "aboriginal_lands", 
+                            "rgb(128, 179, 26)"
+                        ]
+                    ]
+                }, 
                 "text-opacity": 1, 
                 "text-halo-width": 1.25, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
@@ -9751,7 +12791,7 @@
                     ]
                 }, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 
@@ -9759,7 +12799,56 @@
                 "text-max-width": 7
             }, 
             "paint": {
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": {
+                    "property": "type", 
+                    "type": "categorical", 
+                    "stops": [
+                        [
+                            "city", 
+                            "rgb(77, 77, 26)"
+                        ], 
+                        [
+                            "town", 
+                            "rgb(179, 77, 26)"
+                        ], 
+                        [
+                            "village", 
+                            "rgb(230, 77, 26)"
+                        ], 
+                        [
+                            "hamlet", 
+                            "rgb(26, 128, 26)"
+                        ], 
+                        [
+                            "suburb", 
+                            "rgb(77, 128, 26)"
+                        ], 
+                        [
+                            "neighbourhood", 
+                            "rgb(128, 128, 26)"
+                        ], 
+                        [
+                            "island", 
+                            "rgb(179, 128, 26)"
+                        ], 
+                        [
+                            "islet", 
+                            "rgb(230, 128, 26)"
+                        ], 
+                        [
+                            "archipelago", 
+                            "rgb(26, 179, 26)"
+                        ], 
+                        [
+                            "residential", 
+                            "rgb(77, 179, 26)"
+                        ], 
+                        [
+                            "aboriginal_lands", 
+                            "rgb(128, 179, 26)"
+                        ]
+                    ]
+                }, 
                 "text-opacity": 1, 
                 "text-halo-width": 1.25, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
@@ -9784,7 +12873,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-anchor": {
                     "base": 1, 
@@ -9837,7 +12926,56 @@
                 "text-max-width": 7
             }, 
             "paint": {
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": {
+                    "property": "type", 
+                    "type": "categorical", 
+                    "stops": [
+                        [
+                            "city", 
+                            "rgb(77, 77, 26)"
+                        ], 
+                        [
+                            "town", 
+                            "rgb(179, 77, 26)"
+                        ], 
+                        [
+                            "village", 
+                            "rgb(230, 77, 26)"
+                        ], 
+                        [
+                            "hamlet", 
+                            "rgb(26, 128, 26)"
+                        ], 
+                        [
+                            "suburb", 
+                            "rgb(77, 128, 26)"
+                        ], 
+                        [
+                            "neighbourhood", 
+                            "rgb(128, 128, 26)"
+                        ], 
+                        [
+                            "island", 
+                            "rgb(179, 128, 26)"
+                        ], 
+                        [
+                            "islet", 
+                            "rgb(230, 128, 26)"
+                        ], 
+                        [
+                            "archipelago", 
+                            "rgb(26, 179, 26)"
+                        ], 
+                        [
+                            "residential", 
+                            "rgb(77, 179, 26)"
+                        ], 
+                        [
+                            "aboriginal_lands", 
+                            "rgb(128, 179, 26)"
+                        ]
+                    ]
+                }, 
                 "text-opacity": 1, 
                 "text-halo-width": 1.25, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
@@ -9862,7 +13000,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 
@@ -9888,7 +13026,56 @@
                 "symbol-spacing": 250
             }, 
             "paint": {
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": {
+                    "property": "type", 
+                    "type": "categorical", 
+                    "stops": [
+                        [
+                            "city", 
+                            "rgb(77, 77, 26)"
+                        ], 
+                        [
+                            "town", 
+                            "rgb(179, 77, 26)"
+                        ], 
+                        [
+                            "village", 
+                            "rgb(230, 77, 26)"
+                        ], 
+                        [
+                            "hamlet", 
+                            "rgb(26, 128, 26)"
+                        ], 
+                        [
+                            "suburb", 
+                            "rgb(77, 128, 26)"
+                        ], 
+                        [
+                            "neighbourhood", 
+                            "rgb(128, 128, 26)"
+                        ], 
+                        [
+                            "island", 
+                            "rgb(179, 128, 26)"
+                        ], 
+                        [
+                            "islet", 
+                            "rgb(230, 128, 26)"
+                        ], 
+                        [
+                            "archipelago", 
+                            "rgb(26, 179, 26)"
+                        ], 
+                        [
+                            "residential", 
+                            "rgb(77, 179, 26)"
+                        ], 
+                        [
+                            "aboriginal_lands", 
+                            "rgb(128, 179, 26)"
+                        ]
+                    ]
+                }, 
                 "text-opacity": 1, 
                 "text-halo-width": 1, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
@@ -9912,7 +13099,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-anchor": {
                     "base": 1, 
@@ -9965,7 +13152,56 @@
                 "text-max-width": 7
             }, 
             "paint": {
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": {
+                    "property": "type", 
+                    "type": "categorical", 
+                    "stops": [
+                        [
+                            "city", 
+                            "rgb(77, 77, 26)"
+                        ], 
+                        [
+                            "town", 
+                            "rgb(179, 77, 26)"
+                        ], 
+                        [
+                            "village", 
+                            "rgb(230, 77, 26)"
+                        ], 
+                        [
+                            "hamlet", 
+                            "rgb(26, 128, 26)"
+                        ], 
+                        [
+                            "suburb", 
+                            "rgb(77, 128, 26)"
+                        ], 
+                        [
+                            "neighbourhood", 
+                            "rgb(128, 128, 26)"
+                        ], 
+                        [
+                            "island", 
+                            "rgb(179, 128, 26)"
+                        ], 
+                        [
+                            "islet", 
+                            "rgb(230, 128, 26)"
+                        ], 
+                        [
+                            "archipelago", 
+                            "rgb(26, 179, 26)"
+                        ], 
+                        [
+                            "residential", 
+                            "rgb(77, 179, 26)"
+                        ], 
+                        [
+                            "aboriginal_lands", 
+                            "rgb(128, 179, 26)"
+                        ]
+                    ]
+                }, 
                 "text-opacity": 1, 
                 "text-halo-width": 1.25, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
@@ -10005,7 +13241,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-anchor": {
                     "base": 1, 
@@ -10061,7 +13297,56 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 1, 
                 "text-halo-width": 1, 
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": {
+                    "property": "type", 
+                    "type": "categorical", 
+                    "stops": [
+                        [
+                            "city", 
+                            "rgb(77, 77, 26)"
+                        ], 
+                        [
+                            "town", 
+                            "rgb(179, 77, 26)"
+                        ], 
+                        [
+                            "village", 
+                            "rgb(230, 77, 26)"
+                        ], 
+                        [
+                            "hamlet", 
+                            "rgb(26, 128, 26)"
+                        ], 
+                        [
+                            "suburb", 
+                            "rgb(77, 128, 26)"
+                        ], 
+                        [
+                            "neighbourhood", 
+                            "rgb(128, 128, 26)"
+                        ], 
+                        [
+                            "island", 
+                            "rgb(179, 128, 26)"
+                        ], 
+                        [
+                            "islet", 
+                            "rgb(230, 128, 26)"
+                        ], 
+                        [
+                            "archipelago", 
+                            "rgb(26, 179, 26)"
+                        ], 
+                        [
+                            "residential", 
+                            "rgb(77, 179, 26)"
+                        ], 
+                        [
+                            "aboriginal_lands", 
+                            "rgb(128, 179, 26)"
+                        ]
+                    ]
+                }, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -10103,7 +13388,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-anchor": {
                     "base": 1, 
@@ -10160,7 +13445,56 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 1, 
                 "text-halo-width": 1, 
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": {
+                    "property": "type", 
+                    "type": "categorical", 
+                    "stops": [
+                        [
+                            "city", 
+                            "rgb(77, 77, 26)"
+                        ], 
+                        [
+                            "town", 
+                            "rgb(179, 77, 26)"
+                        ], 
+                        [
+                            "village", 
+                            "rgb(230, 77, 26)"
+                        ], 
+                        [
+                            "hamlet", 
+                            "rgb(26, 128, 26)"
+                        ], 
+                        [
+                            "suburb", 
+                            "rgb(77, 128, 26)"
+                        ], 
+                        [
+                            "neighbourhood", 
+                            "rgb(128, 128, 26)"
+                        ], 
+                        [
+                            "island", 
+                            "rgb(179, 128, 26)"
+                        ], 
+                        [
+                            "islet", 
+                            "rgb(230, 128, 26)"
+                        ], 
+                        [
+                            "archipelago", 
+                            "rgb(26, 179, 26)"
+                        ], 
+                        [
+                            "residential", 
+                            "rgb(77, 179, 26)"
+                        ], 
+                        [
+                            "aboriginal_lands", 
+                            "rgb(128, 179, 26)"
+                        ]
+                    ]
+                }, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -10202,7 +13536,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-anchor": {
                     "base": 1, 
@@ -10259,7 +13593,56 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 1, 
                 "text-halo-width": 1, 
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": {
+                    "property": "type", 
+                    "type": "categorical", 
+                    "stops": [
+                        [
+                            "city", 
+                            "rgb(77, 77, 26)"
+                        ], 
+                        [
+                            "town", 
+                            "rgb(179, 77, 26)"
+                        ], 
+                        [
+                            "village", 
+                            "rgb(230, 77, 26)"
+                        ], 
+                        [
+                            "hamlet", 
+                            "rgb(26, 128, 26)"
+                        ], 
+                        [
+                            "suburb", 
+                            "rgb(77, 128, 26)"
+                        ], 
+                        [
+                            "neighbourhood", 
+                            "rgb(128, 128, 26)"
+                        ], 
+                        [
+                            "island", 
+                            "rgb(179, 128, 26)"
+                        ], 
+                        [
+                            "islet", 
+                            "rgb(230, 128, 26)"
+                        ], 
+                        [
+                            "archipelago", 
+                            "rgb(26, 179, 26)"
+                        ], 
+                        [
+                            "residential", 
+                            "rgb(77, 179, 26)"
+                        ], 
+                        [
+                            "aboriginal_lands", 
+                            "rgb(128, 179, 26)"
+                        ]
+                    ]
+                }, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -10300,7 +13683,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-anchor": {
                     "base": 1, 
@@ -10357,7 +13740,56 @@
                 "icon-opacity": 0, 
                 "text-halo-blur": 1, 
                 "text-halo-width": 1, 
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": {
+                    "property": "type", 
+                    "type": "categorical", 
+                    "stops": [
+                        [
+                            "city", 
+                            "rgb(77, 77, 26)"
+                        ], 
+                        [
+                            "town", 
+                            "rgb(179, 77, 26)"
+                        ], 
+                        [
+                            "village", 
+                            "rgb(230, 77, 26)"
+                        ], 
+                        [
+                            "hamlet", 
+                            "rgb(26, 128, 26)"
+                        ], 
+                        [
+                            "suburb", 
+                            "rgb(77, 128, 26)"
+                        ], 
+                        [
+                            "neighbourhood", 
+                            "rgb(128, 128, 26)"
+                        ], 
+                        [
+                            "island", 
+                            "rgb(179, 128, 26)"
+                        ], 
+                        [
+                            "islet", 
+                            "rgb(230, 128, 26)"
+                        ], 
+                        [
+                            "archipelago", 
+                            "rgb(26, 179, 26)"
+                        ], 
+                        [
+                            "residential", 
+                            "rgb(77, 179, 26)"
+                        ], 
+                        [
+                            "aboriginal_lands", 
+                            "rgb(128, 179, 26)"
+                        ]
+                    ]
+                }, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)"
             }, 
             "filter": [
@@ -10399,7 +13831,7 @@
                 "symbol-placement": "line", 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-pitch-alignment": "viewport", 
                 "text-field": "{name_en}", 
@@ -10433,7 +13865,7 @@
                 }
             }, 
             "paint": {
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": "rgb(230, 26, 26)", 
                 "text-opacity": 1, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
                 "icon-opacity": 0
@@ -10468,7 +13900,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 
@@ -10488,7 +13920,7 @@
                 "text-max-width": 5
             }, 
             "paint": {
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": "rgb(230, 26, 26)", 
                 "text-opacity": 1, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
                 "icon-opacity": 0
@@ -10524,7 +13956,7 @@
                 "symbol-placement": "line", 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-pitch-alignment": "viewport", 
                 "text-field": "{name_en}", 
@@ -10546,7 +13978,7 @@
                 "symbol-spacing": 250
             }, 
             "paint": {
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": "rgb(230, 26, 26)", 
                 "text-opacity": 1, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
                 "icon-opacity": 0
@@ -10582,7 +14014,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 
@@ -10602,7 +14034,7 @@
                 "text-max-width": 5
             }, 
             "paint": {
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": "rgb(230, 26, 26)", 
                 "text-opacity": 1, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
                 "icon-opacity": 0
@@ -10651,7 +14083,7 @@
                     ]
                 }, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-pitch-alignment": "viewport", 
                 "text-field": "{name_en}", 
@@ -10660,7 +14092,7 @@
                 "text-max-width": 4
             }, 
             "paint": {
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": "rgb(230, 26, 26)", 
                 "text-opacity": 1, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
                 "icon-opacity": 0
@@ -10695,7 +14127,7 @@
                 "text-allow-overlap": false, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 
@@ -10715,7 +14147,7 @@
                 "text-max-width": 4
             }, 
             "paint": {
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": "rgb(230, 26, 26)", 
                 "text-opacity": 1, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
                 "icon-opacity": 0
@@ -10762,7 +14194,7 @@
                     ]
                 }, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-field": "{name_en}", 
                 "text-line-height": 1.5, 
@@ -10775,7 +14207,7 @@
                 "icon-opacity": 0, 
                 "text-halo-width": 1, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
-                "text-color": "rgb(5, 255, 255)"
+                "text-color": "rgb(26, 77, 26)"
             }, 
             "filter": [
                 "<", 
@@ -10811,7 +14243,7 @@
                     ]
                 }, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-field": "{name_en}", 
                 "text-line-height": 1.5, 
@@ -10824,7 +14256,7 @@
                 "icon-opacity": 0, 
                 "text-halo-width": 1, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
-                "text-color": "rgb(5, 255, 255)"
+                "text-color": "rgb(26, 77, 26)"
             }, 
             "filter": [
                 "all", 
@@ -10869,7 +14301,7 @@
                 }, 
                 "text-line-height": 1.5, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 
@@ -10881,7 +14313,7 @@
                 "icon-opacity": 0, 
                 "text-halo-width": 1, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
-                "text-color": "rgb(5, 255, 255)"
+                "text-color": "rgb(26, 77, 26)"
             }, 
             "filter": [
                 ">=", 
@@ -10917,7 +14349,7 @@
                     ]
                 }, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 
@@ -10925,7 +14357,28 @@
                 "text-max-width": 6
             }, 
             "paint": {
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": {
+                    "property": "type", 
+                    "type": "categorical", 
+                    "stops": [
+                        [
+                            "country", 
+                            "rgb(26, 26, 26)"
+                        ], 
+                        [
+                            "territory", 
+                            "rgb(77, 26, 26)"
+                        ], 
+                        [
+                            "disputed territory", 
+                            "rgb(128, 26, 26)"
+                        ], 
+                        [
+                            "sar", 
+                            "rgb(179, 26, 26)"
+                        ]
+                    ]
+                }, 
                 "text-opacity": 1, 
                 "text-halo-width": 1.25, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
@@ -10965,7 +14418,7 @@
                     ]
                 }, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 
@@ -10973,7 +14426,28 @@
                 "text-max-width": 6
             }, 
             "paint": {
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": {
+                    "property": "type", 
+                    "type": "categorical", 
+                    "stops": [
+                        [
+                            "country", 
+                            "rgb(26, 26, 26)"
+                        ], 
+                        [
+                            "territory", 
+                            "rgb(77, 26, 26)"
+                        ], 
+                        [
+                            "disputed territory", 
+                            "rgb(128, 26, 26)"
+                        ], 
+                        [
+                            "sar", 
+                            "rgb(179, 26, 26)"
+                        ]
+                    ]
+                }, 
                 "text-opacity": 1, 
                 "text-halo-width": 1.25, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
@@ -11014,7 +14488,7 @@
                     ]
                 }, 
                 "text-font": [
-                    "Inconsolata Regular-Simple-lower-Box"
+                    "Inconsolata Regular-Simple-Box"
                 ], 
                 "text-field": "{name_en}", 
                 "text-padding": 10, 
@@ -11034,7 +14508,28 @@
                 }
             }, 
             "paint": {
-                "text-color": "rgb(5, 255, 255)", 
+                "text-color": {
+                    "property": "type", 
+                    "type": "categorical", 
+                    "stops": [
+                        [
+                            "country", 
+                            "rgb(26, 26, 26)"
+                        ], 
+                        [
+                            "territory", 
+                            "rgb(77, 26, 26)"
+                        ], 
+                        [
+                            "disputed territory", 
+                            "rgb(128, 26, 26)"
+                        ], 
+                        [
+                            "sar", 
+                            "rgb(179, 26, 26)"
+                        ]
+                    ]
+                }, 
                 "text-opacity": 1, 
                 "text-halo-width": 1.25, 
                 "text-halo-color": "hsla(0, 0%, 0%, 0)", 
