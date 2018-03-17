@@ -255,11 +255,11 @@ name_zh-Hans	Simplified Chinese* (if available, otherwise same as name)
 noWrapping = False
 noRotation = False
 
-font = 'Inconsolata Regular'#'Cousine Regular'
-font_label = font + '-Simple'
-font_box = font_label + '-Box'
+font = 'Roboto Mono Regular'#'Inconsolata Regular'
+font_label = font + '-Code'
+font_box = font + '-Box'
 extraLetterSpace = 0.2
-lineHeight = 1.5
+lineHeight = 1.2#1.5
 textMaxAngle = 15
 textPadding = 10#default 2
 

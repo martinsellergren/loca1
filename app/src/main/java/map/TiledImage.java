@@ -183,15 +183,40 @@ public class TiledImage {
         return BasicImage.concatenateImages(tiles);
     }
 
+    // /**
+    //  * Creates a new image made up of all letters in the layout
+    //  * on a straight line, in correct label-order.
+    //  *
+    //  * @param lay Label-layout.
+    //  * @param spaceLen Horizontal space between letters.
+    //  * @return One-line letter-image with hight of tallest letter-img.
+    //  */
+    // public BasicImage extractLabel(LabelLayout lay, int spaceLen) throws IOException {
+    //     LinkedList<BasicImage> ls = extractLetters(lay);
+    //     BasicImage img = BasicImage.concatenateImages(ls, spaceLen);
+    //     img = img.addAlpha(100);
+    //     //img = img.addBackground(Color.WHITE);
+
+    //     //img.save("bla.png");
+    //     return img;
+    // }
+
+    // /**
+    //  * Uses default padding = average box height / 3.
+    //  *
+    //  * @param lay Label-layout.
+    //  * @return One-line letter-image with hight of tallest letter-img.
+    //  */
+    // public BasicImage extractLabel(LabelLayout lay) throws IOException {
+    //     int s = Math2.toInt(lay.getAverageBoxHeight() / 3);
+    //     return extractLabel(lay, s);
+    // }
+
     /**
-     * Creates a new image made up of all letters in the layout
-     * on a straight line, in correct label-order.
-     *
-     * @param lay Label-layout.
-     * @param spaceLen Horizontal space between letters.
-     * @return One-line letter-image with hight of tallest letter-img.
+     * @return All letter-images in lay without rotation.
+     * @pre lay describes a label in this image.
      */
-    public BasicImage extractLabel(LabelLayout lay, int spaceLen) throws IOException {
+    public LinkedList<BasicImage> extractLetters(LabelLayout lay) throws IOException {
         LinkedList<BasicImage> ls = new LinkedList<BasicImage>();
 
         for (Box b : lay.getBoxesWithNewlines()) {
@@ -205,24 +230,7 @@ public class TiledImage {
                 ls.add(space);
             }
         }
-
-        BasicImage img = BasicImage.concatenateImages(ls, spaceLen);
-        img = img.addAlpha(100);
-        //img = img.addBackground(Color.WHITE);
-
-        //img.save("bla.png");
-        return img;
-    }
-
-    /**
-     * Uses default padding = average box height / 3.
-     *
-     * @param lay Label-layout.
-     * @return One-line letter-image with hight of tallest letter-img.
-     */
-    public BasicImage extractLabel(LabelLayout lay) throws IOException {
-        int s = Math2.toInt(lay.getAverageBoxHeight() / 3);
-        return extractLabel(lay, s);
+        return ls;
     }
 
     /**
