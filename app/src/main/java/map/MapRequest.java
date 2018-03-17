@@ -223,18 +223,30 @@ public class MapRequest {
 
     //----------------------------------------for testing. local reqs.
 
+    static boolean FETCH = true;
+    static Language LANG = Language.EN;
     static String imgsDir = "../imgs";
 
     public static class ViewAndImgs {
         public MapImageView view;
         public TiledImage[] imgs;
 
-        public ViewAndImgs(String dir, MapImageView v) {
+        public ViewAndImgs(String name, MapImageView v) {
             this.view = v;
-            this.imgs = new TiledImage[] {
-                TiledImage.load_(imgsDir + "/" + dir + "/full"),
-                TiledImage.load_(imgsDir + "/" + dir + "/label"),
-                TiledImage.load_(imgsDir + "/" + dir + "/box") };
+            if (FETCH) {
+                try {
+                    this.imgs = new MapRequest(v, name, LANG).fetch3();
+                }
+                catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            else {
+                this.imgs = new TiledImage[] {
+                    TiledImage.load_(imgsDir + "/" + name + "/full"),
+                    TiledImage.load_(imgsDir + "/" + name + "/label"),
+                };
+            }
         }
     }
 

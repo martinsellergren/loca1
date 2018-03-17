@@ -20,7 +20,7 @@ import com.google.gson.GsonBuilder;
  * corresponding category.
  */
 public class ColorCategoryConversion {
-    public/***/ String tablePath = "labelTypeTable.json";
+    public/***/ final String TABLE_PATH = "labelTypeTable.json";
 
     /**
      * Derived tabel where every row is a label-type, and the row-index
@@ -36,7 +36,7 @@ public class ColorCategoryConversion {
      * parse it.
      */
     public ColorCategoryConversion() throws IOException {
-        JsonArray elems = new JsonParser().parse(new FileReader(tablePath)).getAsJsonArray();
+        JsonArray elems = new JsonParser().parse(new FileReader(TABLE_PATH)).getAsJsonArray();
 
         for (int i = 0; i < elems.size(); i++) {
             JsonObject elem = elems.get(i).getAsJsonObject();

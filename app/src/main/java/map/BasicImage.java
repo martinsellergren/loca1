@@ -353,33 +353,33 @@ public class BasicImage {
         return arr;
     }
 
-    /**
-     * @param imgs One row of images with varying dims.
-     * @param padding between images.
-     * @return All imgs consecutively concatenated into
-     * one image, with width=sum(widths) and height max(heights).
-     */
-    public static BasicImage concatenateImages(LinkedList<BasicImage> imgs, int padding) {
-        int width = 0;
-        int height = -1;
-        for (BasicImage img : imgs) {
-            width += img.getWidth();
-            if (height < img.getHeight()) height = img.getHeight();
-        }
-        width += padding * (imgs.size()+1);
+    // /**
+    //  * @param imgs One row of images with varying dims.
+    //  * @param padding between images.
+    //  * @return All imgs consecutively concatenated into
+    //  * one image, with width=sum(widths) and height max(heights).
+    //  */
+    // public static BasicImage concatenateImages(LinkedList<BasicImage> imgs, int padding) {
+    //     int width = 0;
+    //     int height = -1;
+    //     for (BasicImage img : imgs) {
+    //         width += img.getWidth();
+    //         if (height < img.getHeight()) height = img.getHeight();
+    //     }
+    //     width += padding * (imgs.size()+1);
 
-        BasicImage res = new BasicImage(width, height);
-        Graphics2D g = res.createGraphics();
-        int x = padding;
+    //     BasicImage res = new BasicImage(width, height);
+    //     Graphics2D g = res.createGraphics();
+    //     int x = padding;
 
-        for (BasicImage img : imgs) {
-            int y = (res.getHeight() - img.getHeight()) / 2;
-            g.drawImage(img.getBufferedImage(), null, x, y);
-            x += img.getWidth() + padding;
-        }
+    //     for (BasicImage img : imgs) {
+    //         int y = (res.getHeight() - img.getHeight()) / 2;
+    //         g.drawImage(img.getBufferedImage(), null, x, y);
+    //         x += img.getWidth() + padding;
+    //     }
 
-        return res;
-    }
+    //     return res;
+    // }
 
     /**
      * Save img. Overwrites if file exists.
@@ -507,7 +507,6 @@ public class BasicImage {
     }
 
 
-
     /**
      * Color image in one color.
      */
@@ -541,16 +540,6 @@ public class BasicImage {
      */
     public void drawLabelData(String text, Category cat, int count, LabelLayout lay, Color c) {
         drawLabelString(text + ", " + cat.toString() + ", x" + count, lay, c);
-    }
-
-    /**
-     * Draws a string "inside" a layout.
-     */
-    public void drawLabelString(String text, LabelLayout lay, Color c) {
-        Graphics2D g = createGraphics();
-        g.setPaint(c);
-        double[] bs = lay.getBounds();
-        g.drawString(text, (float)bs[0], (float)(bs[1]+bs[3])/2);
     }
 
     /**
@@ -645,7 +634,25 @@ public class BasicImage {
         g.drawLine(bl[0], bl[1], tl[0]+test, tl[1]);
     }
 
-    //public void drawBounds(int[]
+
+    /**
+     * Draws a string "inside" a layout.
+     */
+    public void drawLabelString(String text, LabelLayout lay, Color c) {
+        Graphics2D g = createGraphics();
+        g.setPaint(c);
+        double[] bs = lay.getBounds();
+        g.drawString(text, (float)bs[0], (float)(bs[1]+bs[3])/2);
+    }
+
+    /**
+     * Draws a label (layout and text).
+     */
+    public void drawLabel(Label lab) {
+        Color c = Color.RED;
+        drawLabelLayout(lab.getLayout());
+        drawLabelString(lab.getText(), lab.getLayout(), c);
+    }
 
     /**
      * Draw img to screen.

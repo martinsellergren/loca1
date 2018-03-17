@@ -75,6 +75,10 @@ def encodeNumberInGlyph(number, glyph, bbs):
     pen = glyph.glyphPen()
 
     binary = format(number, 'b')
+    if len(binary) > CODE_BOX_ROWS * CODE_BOX_COLS:
+        print "Binary dosn't fit in grid-layout!"
+        sys.exit(1)
+
     for i in range(len(binary)):
         r = i / 3
         c = i % 3
