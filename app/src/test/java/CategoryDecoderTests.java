@@ -4,7 +4,7 @@ import map.*;
 import java.awt.Color;
 import java.io.IOException;
 
-public class ColorCategoryConversionTests {
+public class CategoryDecoderTests {
 
     // @Test
     // public void getCategory() throws IOException {

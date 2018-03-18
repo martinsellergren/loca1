@@ -18,12 +18,12 @@ public class MapRequest {
 
     //eng
     public static final String FULL_STYLE_ID_EN = "cjd9dx1oe9t712roe6qmxmfgr";
-    public static final String LABEL_STYLE_ID_EN = "cjd9dxg7i84ev2snt9rudqcgg";
+    public static final String CODE_STYLE_ID_EN = "cjd9dxg7i84ev2snt9rudqcgg";
     public static final String BOX_STYLE_ID_EN = "cjd9dxq0w9tpb2ss0ysjtiwlr";
 
     //swe (same for now..)
     public static final String FULL_STYLE_ID_SV = "cjd9dx1oe9t712roe6qmxmfgr";
-    public static final String LABEL_STYLE_ID_SV = "cjd9dxg7i84ev2snt9rudqcgg";
+    public static final String CODE_STYLE_ID_SV = "cjd9dxg7i84ev2snt9rudqcgg";
     public static final String BOX_STYLE_ID_SV = "cjd9dxq0w9tpb2ss0ysjtiwlr";
 
     /**
@@ -91,30 +91,30 @@ public class MapRequest {
     }
 
     /**
-     * @return [mapImage, labelImage, boxImage]
+     * @return [mapImage, codeImage, boxImage]
      * @throws IOException if failed to fetch image (bad internet-conn?)
      */
     public TiledImage[] fetch3() throws IOException {
         String fullID = "";
-        String labelID = "";
+        String codeID = "";
         String boxID = "";
 
         switch (this.lang) {
         case EN:
             fullID = FULL_STYLE_ID_EN;
-            labelID = LABEL_STYLE_ID_EN;
+            codeID = CODE_STYLE_ID_EN;
             boxID = BOX_STYLE_ID_EN;
             break;
         case SV:
             fullID = FULL_STYLE_ID_SV;
-            labelID = LABEL_STYLE_ID_SV;
+            codeID = CODE_STYLE_ID_SV;
             boxID = BOX_STYLE_ID_SV;
             break;
         }
 
         return new TiledImage[] {
             fetch(fullID, "full"),
-            fetch(labelID, "label"),
+            fetch(codeID, "code"),
             fetch(boxID, "box") };
     }
 
@@ -244,7 +244,8 @@ public class MapRequest {
             else {
                 this.imgs = new TiledImage[] {
                     TiledImage.load_(imgsDir + "/" + name + "/full"),
-                    TiledImage.load_(imgsDir + "/" + name + "/label"),
+                    TiledImage.load_(imgsDir + "/" + name + "/code"),
+                    TiledImage.load_(imgsDir + "/" + name + "/box"),
                 };
             }
         }

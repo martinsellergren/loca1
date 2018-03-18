@@ -212,47 +212,47 @@ public class TiledImage {
     //     return extractLabel(lay, s);
     // }
 
-    /**
-     * @return All letter-images in lay without rotation.
-     * @pre lay describes a label in this image.
-     */
-    public LinkedList<BasicImage> extractLetters(LabelLayout lay) throws IOException {
-        LinkedList<BasicImage> ls = new LinkedList<BasicImage>();
+    // /**
+    //  * @return All letter-images in lay without rotation.
+    //  * @pre lay describes a label in this image.
+    //  */
+    // public LinkedList<BasicImage> extractLetters(LabelLayout lay) throws IOException {
+    //     LinkedList<BasicImage> ls = new LinkedList<BasicImage>();
 
-        for (Box b : lay.getBoxesWithNewlines()) {
-            if (b != null) {
-                ls.add(extractElement(b));
-            }
-            else {
-                int h = Math2.toInt(lay.getAverageBoxHeight());
-                int w = Math2.toInt(h * 0.7f);
-                BasicImage space = new BasicImage(w, h);
-                ls.add(space);
-            }
-        }
-        return ls;
-    }
+    //     for (Box b : lay.getBoxesWithNewlines()) {
+    //         if (b != null) {
+    //             ls.add(extractElement(b));
+    //         }
+    //         else {
+    //             int h = Math2.toInt(lay.getAverageBoxHeight());
+    //             int w = Math2.toInt(h * 0.7f);
+    //             BasicImage space = new BasicImage(w, h);
+    //             ls.add(space);
+    //         }
+    //     }
+    //     return ls;
+    // }
 
-    /**
-     * Returns an element in the image contained inside a box.
-     * The box (and element in image) may be rotated, but returned
-     * element is not.
-     *
-     * @param b Box describing element to be extracted.
-     * @return A new image where non-rotated element fits perfectly,
-     * i.e an un-rotated subsection of this image.
-     */
-    public BasicImage extractElement(Box box) throws IOException {
-        int[] bs = Math2.toIntBounds(box.getBounds());
-        BasicImage rotated = getSubImage(bs);
-        BasicImage straight = rotated.rotate(-box.getRotation());
-        double w = box.getWidth();
-        double h = box.getHeight();
-        double x0 = (straight.getWidth() - w) / 2;
-        double y0 = (straight.getHeight() - h) / 2;
-        double[] bs_ = new double[]{x0, y0, x0+w, y0+h};
-        return straight.getSubImage(Math2.toIntBounds(bs_));
-    }
+    // /**
+    //  * Returns an element in the image contained inside a box.
+    //  * The box (and element in image) may be rotated, but returned
+    //  * element is not.
+    //  *
+    //  * @param b Box describing element to be extracted.
+    //  * @return A new image where non-rotated element fits perfectly,
+    //  * i.e an un-rotated subsection of this image.
+    //  */
+    // public BasicImage extractElement(Box box) throws IOException {
+    //     int[] bs = Math2.toIntBounds(box.getBounds());
+    //     BasicImage rotated = getSubImage(bs);
+    //     BasicImage straight = rotated.rotate(-box.getRotation());
+    //     double w = box.getWidth();
+    //     double h = box.getHeight();
+    //     double x0 = (straight.getWidth() - w) / 2;
+    //     double y0 = (straight.getHeight() - h) / 2;
+    //     double[] bs_ = new double[]{x0, y0, x0+w, y0+h};
+    //     return straight.getSubImage(Math2.toIntBounds(bs_));
+    // }
 
     /**
      * Returns specified tile. If tile not in memory, loads from

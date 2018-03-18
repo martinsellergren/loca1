@@ -12,7 +12,7 @@ Note:
 "Monospace" fonts sometimes contains some incorrectly sized glyphs so
 code-box/box may still very in width.
 
-Code-box contains a binary code.. Dir-box contains a box shaped as the
+Code-box contains a binary code. Dir-box contains a box shaped as the
 symbol [ .
 '''
 
@@ -58,7 +58,7 @@ def drawBlock(r, c, bbs, pen):
     w = (bbs[2] - bbs[0]) / float(CODE_BOX_COLS)
     h = (bbs[3] - bbs[1]) / float(CODE_BOX_ROWS)
     x1 = bbs[0] + w*c
-    y1 = bbs[1] + h*r
+    y1 = bbs[3] - h*r
     x2 = x1 + w
     y2 = y1 + h
     pen.moveTo((x1,y1))

@@ -31,7 +31,7 @@ public class MapRequestTests {
             TiledImage[] imgs = req.fetch3();
             try {
                 imgs[0].save(p.resolve("full.png"));
-                imgs[1].save(p.resolve("label.png"));
+                imgs[1].save(p.resolve("code.png"));
                 imgs[2].save(p.resolve("box.png"));
             }
             catch (OutOfMemoryError exc) {

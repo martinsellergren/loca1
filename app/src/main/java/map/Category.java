@@ -83,15 +83,4 @@ public enum Category {
         }
         return null;
     }
-
-    /**
-     * Converts the color of a label in a box-image to a category.
-     *
-     * @param lay Label-layout.
-     * @param bimg Box-image containing lay.
-     */
-    public static Category decipher(LabelLayout lay, TiledImage bimg, ColorCategoryConversion conv) throws IOException {
-        Color c = lay.getAverageColor(bimg);
-        return conv.convertToCategory(c);
-    }
 }

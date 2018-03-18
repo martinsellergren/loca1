@@ -94,43 +94,43 @@ public class BasicImage {
     //     return straight.getSubImage(x0, y0, x0+w, y0+h);
     // }
 
-    /**
-     * @return Rotated image, by angle degrees. Dims...
-     */
-    public BasicImage rotate(double angle) {
-        angle *= -1;
-        float radianAngle = (float) Math.toRadians(angle) ;
+    // /**
+    //  * @return Rotated image, by angle degrees. Dims...
+    //  */
+    // public BasicImage rotate(double angle) {
+    //     angle *= -1;
+    //     float radianAngle = (float) Math.toRadians(angle) ;
 
-        float sin = (float) Math.abs(Math.sin(radianAngle));
-        float cos = (float) Math.abs(Math.cos(radianAngle));
+    //     float sin = (float) Math.abs(Math.sin(radianAngle));
+    //     float cos = (float) Math.abs(Math.cos(radianAngle));
 
-        int w = getWidth() ;
-        int h = getHeight();
+    //     int w = getWidth() ;
+    //     int h = getHeight();
 
-        int neww = (int) Math.round(w * cos + h * sin);
-        int newh = (int) Math.round(h * cos + w * sin);
+    //     int neww = (int) Math.round(w * cos + h * sin);
+    //     int newh = (int) Math.round(h * cos + w * sin);
 
-        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        GraphicsDevice gd = ge.getDefaultScreenDevice();
-        GraphicsConfiguration gc = gd.getDefaultConfiguration();
+    //     GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+    //     GraphicsDevice gd = ge.getDefaultScreenDevice();
+    //     GraphicsConfiguration gc = gd.getDefaultConfiguration();
 
-        BufferedImage result = gc.createCompatibleImage(neww, newh, Transparency.TRANSLUCENT);
-        Graphics2D g = result.createGraphics();
+    //     BufferedImage result = gc.createCompatibleImage(neww, newh, Transparency.TRANSLUCENT);
+    //     Graphics2D g = result.createGraphics();
 
-        //-----------------------MODIFIED--------------------------------------
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON) ;
-        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC) ;
-        g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY) ;
+    //     //-----------------------MODIFIED--------------------------------------
+    //     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON) ;
+    //     g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC) ;
+    //     g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY) ;
 
-        AffineTransform at = AffineTransform.getTranslateInstance((neww-w)/2, (newh-h)/2);
-        at.rotate(radianAngle, w/2, h/2);
-        //---------------------------------------------------------------------
+    //     AffineTransform at = AffineTransform.getTranslateInstance((neww-w)/2, (newh-h)/2);
+    //     at.rotate(radianAngle, w/2, h/2);
+    //     //---------------------------------------------------------------------
 
-        g.drawRenderedImage(this.img, at);
-        g.dispose();
+    //     g.drawRenderedImage(this.img, at);
+    //     g.dispose();
 
-        return new BasicImage(result);
-    }
+    //     return new BasicImage(result);
+    // }
 
     // /**
     //  * Rounds to int-point so that color-overwriting is avoided if

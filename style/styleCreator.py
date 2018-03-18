@@ -256,7 +256,7 @@ noWrapping = False
 noRotation = False
 
 font = 'Roboto Mono Regular'#'Inconsolata Regular'
-font_label = font + '-Code'
+font_code = font + '-Code'
 font_box = font + '-Box'
 extraLetterSpace = 0.2
 lineHeight = 1.2#1.5
@@ -264,7 +264,7 @@ textMaxAngle = 15
 textPadding = 10#default 2
 
 fileName_full = "full"
-fileName_label = "label"
+fileName_code = "code"
 fileName_box = "box"
 
 data = json.load(open(sys.argv[1], 'r'))
@@ -295,9 +295,9 @@ dumpStyle(data, fileName_full)
 
 undecorateText(data)
 hideGraphics(data)
-setFont(data, font_label)
-setName(data, fileName_label)
-dumpStyle(data, fileName_label)
+setFont(data, font_code)
+setName(data, fileName_code)
+dumpStyle(data, fileName_code)
 
 colorCode(data)
 setFont(data, font_box)

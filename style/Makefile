@@ -2,7 +2,7 @@ USER_NAME = masel
 TOKEN = sk.eyJ1IjoibWFzZWwiLCJhIjoiY2pkM2YwYXlvMncyZTMzczYzbXJ1Mzd3ayJ9.OBMENh5mWq6iwPZut8s0iw
 STREETS_STYLE_ID = streets-v10
 FULL_STYLE_ID = cjd9dx1oe9t712roe6qmxmfgr
-LABEL_STYLE_ID = cjd9dxg7i84ev2snt9rudqcgg
+CODE_STYLE_ID = cjd9dxg7i84ev2snt9rudqcgg
 BOX_STYLE_ID = cjd9dxq0w9tpb2ss0ysjtiwlr
 LABEL_TYPE_TABLE_PATH = ../app/labelTypeTable.json
 
@@ -14,7 +14,7 @@ generate: clean
 
 #remove generated
 clean:
-	rm -f full.json label.json box.json
+	rm -f full.json code.json box.json
 
 #also remove Streets.json
 cleanAll: clean
@@ -27,7 +27,7 @@ fetch:
 #update styles (mirror local files (full.json, label.json, box.json) in mapbox-server)
 update:
 	curl -X PATCH "https://api.mapbox.com/styles/v1/$(USER_NAME)/$(FULL_STYLE_ID)?access_token=$(TOKEN)" --data @full.json --header "Content-Type:application/json"
-	curl -X PATCH "https://api.mapbox.com/styles/v1/$(USER_NAME)/$(LABEL_STYLE_ID)?access_token=$(TOKEN)" --data @label.json --header "Content-Type:application/json"
+	curl -X PATCH "https://api.mapbox.com/styles/v1/$(USER_NAME)/$(CODE_STYLE_ID)?access_token=$(TOKEN)" --data @code.json --header "Content-Type:application/json"
 	curl -X PATCH "https://api.mapbox.com/styles/v1/$(USER_NAME)/$(BOX_STYLE_ID)?access_token=$(TOKEN)" --data @box.json --header "Content-Type:application/json"
 
 # #create new styles (mirror local files (full.json, label.json, box.json) in mapbox-server)

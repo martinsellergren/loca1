@@ -121,6 +121,23 @@ public class BoxTests {
         assertEquals(1, bounds[3]);
     }
 
+    // @Test
+    // public void split() {
+    //     double[] topL = new double[]{0,300};
+    //     double[] topR = new double[]{300,0};
+    //     double h = 300;
+    //     Box b = new Box(topL, topR, h);
+    //     Box[] bxs = b.split(3,5);
+
+    //     int[] bs = Math2.toIntBounds(b.getBounds());
+    //     BasicImage img = new BasicImage(bs[2], bs[3]);
+
+    //     for (Box block : bxs) {
+    //         img.drawBox(block);
+    //     }
+    //     img.save_("test_BoxTests_split.png");
+    // }
+
     //*************************rectangle fitting
 
     @Test

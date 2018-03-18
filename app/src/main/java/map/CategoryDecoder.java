@@ -14,13 +14,13 @@ import com.google.gson.GsonBuilder;
 
 
 /**
- * Class for converting between color and category.
+ * Static class for converting between color and category.
  * Uses a json-table of Mapbox Vector-tile label-types where the
  * indexing determines the color of this label-type and the
  * corresponding category.
  */
-public class ColorCategoryConversion {
-    public/***/ final String TABLE_PATH = "labelTypeTable.json";
+public class CategoryDecoder {
+    private static final String TABLE_PATH = "labelTypeTable.json";
 
     /**
      * Derived tabel where every row is a label-type, and the row-index
@@ -29,13 +29,14 @@ public class ColorCategoryConversion {
      * Each row a string: "source-layer : type"
      * If no types:       "source-layer : -"
      */
-    public/***/ LinkedList<String> lookupTable = new LinkedList<String>();
+    private static LinkedList<String> lookupTable = null;
 
     /**
      * Creates the lookupTable by loading json-table from file and
-     * parse it.
+     * parse it. Call before all else.
      */
-    public ColorCategoryConversion() throws IOException {
+    public static void init() throws IOException {
+        lookupTable = new LinkedList<String>();
         JsonArray elems = new JsonParser().parse(new FileReader(TABLE_PATH)).getAsJsonArray();
 
         for (int i = 0; i < elems.size(); i++) {
@@ -44,7 +45,7 @@ public class ColorCategoryConversion {
             String property = elem.get("property").getAsString();
 
             if (property.equals("-")) {
-                this.lookupTable.add(sourceLayer + " : -");
+                lookupTable.add(sourceLayer + " : -");
                 continue;
             }
 
@@ -52,26 +53,9 @@ public class ColorCategoryConversion {
 
             for (int j = 0; j < types.size(); j++) {
                 String type = types.get(j).getAsString();
-                this.lookupTable.add(sourceLayer + " : " + type);
+                lookupTable.add(sourceLayer + " : " + type);
             }
         }
-    }
-
-    /**
-     * @return Number of label-types, i.e lookupTabel-entries.
-     */
-    public int getNoLabelTypes() {
-        return this.lookupTable.size();
-    }
-
-    /**
-     * @return Category converted from color c.
-     */
-    public Category convertToCategory(Color c) {
-        String labelType = getLabelType(c);
-        String sourceLayer = labelType.split(" : ")[0];
-        String type = labelType.split(" : ")[1];
-        return getCategory(sourceLayer, type);
     }
 
     /**
@@ -84,23 +68,41 @@ public class ColorCategoryConversion {
      *
      * @return LabelType (table-entry) of color c.
      */
-    public/***/ String getLabelType(Color c) {
+    private static String getLabelType(Color c) throws IOException {
+        if (lookupTable == null)
+            throw new RuntimeException("Call init() !");
+
         double f = 256 / 5d;
         int d1 = (int)(c.getRed() / f);
         int d2 = (int)(c.getGreen() / f);
         int d3 = (int)(c.getBlue() / f);
         int n = d1 + d2*5 + d3*5*5;
-        f = (this.lookupTable.size()-1) / 124f;
+        f = (lookupTable.size()-1) / 124f;
         int index = Math2.toInt(n * f);
+        if (index >= lookupTable.size())
+            throw new IOException("Bad code:" + index);
 
-        return this.lookupTable.get(index);
+        return lookupTable.get(index);
     }
+
 
     /**
      * @return Category derived from sourceLayer and type.
      */
-    public/***/ Category getCategory(String sourceLayer, String type) {
+    public static Category getCategory(String sourceLayer, String type) {
         return Category.BAY;
     }
 
+    /**
+     * @param lay Label-layout.
+     * @param boxImg Box-image containing label described by lay.
+     * @return Category of label described by lay.
+     */
+    public static Category decode(LabelLayout lay, TiledImage boxImg) throws IOException {
+        Color avg = lay.getAverageColor(boxImg);
+        String labelType = getLabelType(avg);
+        String sourceLayer = labelType.split(" : ")[0];
+        String type = labelType.split(" : ")[1];
+        return getCategory(sourceLayer, type);
+    }
 }

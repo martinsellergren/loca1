@@ -2,39 +2,41 @@ import org.junit.*;
 import static org.junit.Assert.*;
 import map.*;
 import java.io.IOException;
+import java.util.LinkedList;
 
 public class LabelTests {
-    TiledImage[] imgs = MapRequest.sweden().imgs;
+    // MapRequest.ViewAndImgs vis = MapRequest.sweden();
 
-    @Test
-    public void detectLabel() {
-        LabelLayoutIterator iter = new LabelLayoutIterator(imgs[2].getOneImage());
-        OCR ocr = new OCR(Language.EN);
+    // @BeforeClass
+    // public static void setUp() throws IOException {
+    //     LabelTextDecoder.init();
+    //     CategoryDecoder.init();
+    // }
 
-        LabelLayout lay = iter.expandToLabelLayout(new int[]{2564,336});
-        String txt = ocr.detectString(labelImg.extractLabel(lay));
-        Label l = new Label(txt, lay);
-
-        BasicImage labelImg_ = labelImg.getOneImage();
-        labelImg_.drawLabelLayout(lay);
-        //labelImg_.drawLabelText(l.getText().toUpperCase(), lay);
-
-        ocr.end();
-        labelImg.extractLabel(lay).save("test_Label.png");
-        labelImg.save("test_Label_detectAllLabels.png");
-    }
+    // @Test
+    // public void detectLabel() throws IOException {
+    //     LabelLayoutIterator iter = new LabelLayoutIterator(vis.imgs[2].getOneImage());
+    //     LabelLayout lay = iter.expandToLabelLayout(new int[]{924, 1516});
+    //     try {
+    //         Label lab = new Label(lay, vis.imgs[1], vis.imgs[2]);
+    //         BasicImage full = vis.imgs[0].getOneImage();
+    //         full.drawLabel(lab);
+    //         full.save("test_Label_detectAllLabels.png");
+    //     }
+    //     catch (Label.JunkException e) {
+    //         e.printStackTrace();
+    //     }
+    // }
 
     // @Test
     // public void detectAllLabels() {
-    //     LabelLayoutIterator iter = new LabelLayoutIterator(boxImg);
-    //     OCR ocr = new OCR(OCR.Language.eng);
+    //     BasicImage full = vis.imgs[0].getOneImage();
+    //     LinkedList<LabelLayout> lays = LabelLayoutIterator.getLayouts(vis.imgs[2], vis.view);
 
-    //     LabelLayout lay;
-    //     while ((lay=iter.next()) != null) {
+    //     for (LabelLayout lay : lays) {
     //         try {
-    //             Label l = new Label(lay, labelImg, ocr);
-    //             labelImg.drawLabelLayout(lay);
-    //             labelImg.drawLabelText(l.getText(), lay);
+    //             Label lab = new Label(lay, vis.imgs[1], vis.imgs[2]);
+    //             full.drawLabel(lab);
     //         }
     //         catch (Exception e) {
     //             System.out.println(lay);
@@ -42,7 +44,6 @@ public class LabelTests {
     //         }
     //     }
 
-    //     ocr.end();
-    //     labelImg.save("test_Label_detectAllLabels.png");
+    //     full.save("test_Label_detectAllLabels.png");
     // }
 }

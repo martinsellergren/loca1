@@ -185,6 +185,31 @@ public class Box {
             Math.max(Math.max(tl[1], tr[1]), Math.max(br[1], bl[1])) };
     }
 
+    /**
+     * Splits box into a grid of blocks, layed out in one row.
+     *
+     * @param rows Number of rows in grid.
+     * @param cols Number of cols in grid.
+     * @return Blocks in grid when this box is split.
+     */
+    public Box[] split(int rows, int cols) {
+        double blockW = getWidth() / cols;
+        double blockH = getHeight() / rows;
+        Box[] blocks = new Box[rows * cols];
+
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                double[] tl = getTopLeft();
+                tl = Math2.step(tl, getDirVector(), blockW * c);
+                tl = Math2.step(tl, getOrtoDirVector(), blockH * r);
+                double[] tr = Math2.step(tl, getDirVector(), blockW);
+                double[] bl = Math2.step(tl, getOrtoDirVector(), blockH);
+                blocks[r*cols + c] = new Box(tl, tr, Math2.distance(tl, bl));
+            }
+        }
+        return blocks;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == this) return true;
