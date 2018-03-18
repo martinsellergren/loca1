@@ -20,7 +20,7 @@ import com.google.gson.GsonBuilder;
  * corresponding category.
  */
 public class CategoryDecoder {
-    private static final String TABLE_PATH = "labelTypeTable.json";
+    public/***/ static final String TABLE_PATH = "labelTypeTable.json";
 
     /**
      * Derived tabel where every row is a label-type, and the row-index
@@ -29,7 +29,7 @@ public class CategoryDecoder {
      * Each row a string: "source-layer : type"
      * If no types:       "source-layer : -"
      */
-    private static LinkedList<String> lookupTable = null;
+    public/***/ static LinkedList<String> lookupTable = null;
 
     /**
      * Creates the lookupTable by loading json-table from file and
@@ -59,16 +59,22 @@ public class CategoryDecoder {
     }
 
     /**
-     * Converts color to index and returns table-entry.
+     * Decodes color to index and returns table-entry.
+     * Decoded index [0, max-table-entry + 1].
+     * Decoded index = table.length means unknown label-type
+     * (not defined in labelTypeTable.json so color fell to
+     * default color-value).
+     *
      * Conversion:
      * - r,g,b [0-255] scaled to d1,d2,d3 [0,4].
      * - d1 d2 d3 is a number n is base 5.
      * - n transformed to base 10 [0, 124].
-     * - n scaled to [0, max-table-index] = index.
+     * - n scaled to [0, max-table-index + 1] = index.
      *
      * @return LabelType (table-entry) of color c.
+     * @throws UnknownCategoryException if unknown label-type.
      */
-    private static String getLabelType(Color c) throws IOException {
+    public/***/ static String getLabelType(Color c) throws UnknownCategoryException, IOException {
         if (lookupTable == null)
             throw new RuntimeException("Call init() !");
 
@@ -76,11 +82,11 @@ public class CategoryDecoder {
         int d1 = (int)(c.getRed() / f);
         int d2 = (int)(c.getGreen() / f);
         int d3 = (int)(c.getBlue() / f);
-        int n = d1 + d2*5 + d3*5*5;
-        f = (lookupTable.size()-1) / 124f;
+        int n = d1*5*5 + d2*5 + d3;
+        f = lookupTable.size() / 124f;
         int index = Math2.toInt(n * f);
-        if (index >= lookupTable.size())
-            throw new IOException("Bad code:" + index);
+        if (index == lookupTable.size())
+            throw new UnknownCategoryException();
 
         return lookupTable.get(index);
     }
@@ -98,7 +104,7 @@ public class CategoryDecoder {
      * @param boxImg Box-image containing label described by lay.
      * @return Category of label described by lay.
      */
-    public static Category decode(LabelLayout lay, TiledImage boxImg) throws IOException {
+    public static Category decode(LabelLayout lay, TiledImage boxImg) throws UnknownCategoryException, IOException {
         Color avg = lay.getAverageColor(boxImg);
         String labelType = getLabelType(avg);
         String sourceLayer = labelType.split(" : ")[0];

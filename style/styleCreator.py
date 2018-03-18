@@ -157,6 +157,19 @@ def dumpStyle(data, fileName):
     f.write(json.dumps(data, indent=4))
     f.close()
 
+'''
+Sets every label-layer's text-color to a color-object where all
+label-types of this label (i.e of the source-label of this label)
+are mapped to a specific color.
+
+Label-types defined in: labelTypeTable_json. Parsed array where every
+row is a specific label-type: labelTypeTable_conv. The rows in this
+table are mapped to a colors (a conversion table..).
+
+Default colors in the color-object set to a color that no label-type
+is mapped to. If this color is found of a label: Update json-table
+to include missing data (so default value never used).
+'''
 def colorCode(data):
     for layer in getLabelLayers(data):
         sourceLayer = layer['source-layer']
@@ -185,6 +198,7 @@ def getColorObject(sourceLayer, prop, types):
     for type in types:
         stops.append([type, getColorStr(sourceLayer, type)])
     co['stops'] = stops
+    co['default'] = getDefaultColorStr()
     return co
 
 def getColorStr(sourceLayer, type):
@@ -196,25 +210,32 @@ def getColorStr(sourceLayer, type):
     print sourceLayer + ' & ' + type + ' not in labelTypeTable_conv.'
     sys.exit(-1)
 
+# Returns a color not mapped by any index.
+def getDefaultColorStr():
+    r,g,b = indexToRGB(len(labelTypeTable_conv))
+    return 'rgb({}, {}, {})'.format(r, g, b)
+
 '''
 steps:
- - i [0, max-table-index] scaled to n [0, 124]
+ - i [0, max-table-index + 1] scaled to n [0, 124].
+   (+1 for default-color which is given with i=len(table_conv)).
  - n transformed to base 5: d1 d2 d3
  - red = d1 * (255/5) + (255/10), i.e scaled and set to mid-point
  - ...
 '''
 def indexToRGB(i):
-    f = float(124) / (len(labelTypeTable_conv)-1)
-    if (f < 1):
+    if len(labelTypeTable_conv) > 124:
         print 'Use base 6!'
         sys.exit(0)
+
+    f = float(124) / len(labelTypeTable_conv)
     n = int(round(i * f))
 
-    d3 = n / (5*5)
-    n = n - d3*5*5
+    d1 = n / (5*5)
+    n = n - d1*5*5
     d2 = n / 5
     n = n - d2*5
-    d1 = n
+    d3 = n
 
     f = float(255) / 5
     r = int(round(d1*f + f/2))

@@ -23,8 +23,8 @@ public class LabelTextDecoder {
 
     /**
      * Mappings-array where index map to unicode-point. */
-    private static final String MAPPINGS_PATH = "codeFontMappings.json";
-    private static int[] mappings = null;
+    public/***/ static final String MAPPINGS_PATH = "codeFontMappings.json";
+    public/***/ static int[] mappings = null;
 
     /**
      * Layout of code-image. */
@@ -34,7 +34,7 @@ public class LabelTextDecoder {
     /**
      * If alpha[0,255] in code-image of block-mid < this: binary 0.
      *                                              else: binary 1. */
-    private static final int ALPHA_THRESHOLD = 1;
+    public/***/ static final int ALPHA_THRESHOLD = 1;
 
 
     /**

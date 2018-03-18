@@ -14,7 +14,7 @@ public class LabelTests {
     // }
 
     // @Test
-    // public void detectLabel() throws IOException {
+    // public void detectLabel() throws UnknownCategoryException, IOException {
     //     LabelLayoutIterator iter = new LabelLayoutIterator(vis.imgs[2].getOneImage());
     //     LabelLayout lay = iter.expandToLabelLayout(new int[]{924, 1516});
     //     try {
@@ -29,19 +29,13 @@ public class LabelTests {
     // }
 
     // @Test
-    // public void detectAllLabels() {
+    // public void detectAllLabels() throws UnknownCategoryException, Label.JunkException, IOException {
     //     BasicImage full = vis.imgs[0].getOneImage();
     //     LinkedList<LabelLayout> lays = LabelLayoutIterator.getLayouts(vis.imgs[2], vis.view);
 
     //     for (LabelLayout lay : lays) {
-    //         try {
-    //             Label lab = new Label(lay, vis.imgs[1], vis.imgs[2]);
-    //             full.drawLabel(lab);
-    //         }
-    //         catch (Exception e) {
-    //             System.out.println(lay);
-    //             throw e;
-    //         }
+    //         Label lab = new Label(lay, vis.imgs[1], vis.imgs[2]);
+    //         full.drawLabel(lab);
     //     }
 
     //     full.save("test_Label_detectAllLabels.png");

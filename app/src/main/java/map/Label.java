@@ -10,7 +10,7 @@ import java.io.IOException;
  */
 public class Label {
     public/***/ String text;
-    private Category category;
+    public/***/ Category category;
     public/***/ LabelLayout layout;
 
     public static class JunkException extends Exception {
@@ -22,10 +22,15 @@ public class Label {
      *
      * @throws JunkException if lay describes a junk-label.
      */
-    public Label(LabelLayout lay, TiledImage codeImg, TiledImage boxImg) throws JunkException, IOException {
+    public Label(LabelLayout lay, TiledImage codeImg, TiledImage boxImg) throws JunkException, UnknownCategoryException, IOException {
         this.text = LabelTextDecoder.decode(lay, codeImg);
-        this.category = CategoryDecoder.decode(lay, boxImg);
         this.layout = lay;
+        try {
+            this.category = CategoryDecoder.decode(lay, boxImg);
+        }
+        catch (UnknownCategoryException e) {
+            throw new UnknownCategoryException("Unknown label category of label with text: " + this.text);
+        }
 
         if (isJunkLabel(text, category))
             throw new JunkException(String.format("Junk: %s, %s", text, category));
@@ -34,7 +39,7 @@ public class Label {
     /**
      * @return True if label has junk text/category.
      */
-    private boolean isJunkLabel(String text, Category c) {
+    public/***/ boolean isJunkLabel(String text, Category c) {
         return
             text.length() == 0 ||
             text.length() == 1 && c == Category.STREET;

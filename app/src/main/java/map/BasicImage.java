@@ -651,7 +651,7 @@ public class BasicImage {
     public void drawLabel(Label lab) {
         Color c = Color.RED;
         drawLabelLayout(lab.getLayout());
-        drawLabelString(lab.getText(), lab.getLayout(), c);
+        drawLabelString(lab.getText() + ", " + lab.getCategory(), lab.getLayout(), c);
     }
 
     /**

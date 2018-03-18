@@ -60,7 +60,7 @@ def drawBlock(r, c, bbs, pen):
     x1 = bbs[0] + w*c
     y1 = bbs[3] - h*r
     x2 = x1 + w
-    y2 = y1 + h
+    y2 = y1 - h
     pen.moveTo((x1,y1))
     pen.lineTo((x1,y2))
     pen.lineTo((x2,y2))

@@ -26,6 +26,8 @@ public class MapRequest {
     public static final String CODE_STYLE_ID_SV = "cjd9dxg7i84ev2snt9rudqcgg";
     public static final String BOX_STYLE_ID_SV = "cjd9dxq0w9tpb2ss0ysjtiwlr";
 
+    public static final boolean NO_STYLE_CACHING = true;
+
     /**
      * Max width and height in pixels of request from server. */
     public static final int IMAGE_REQUEST_SIZE_LIMIT = 1280;
@@ -172,7 +174,9 @@ public class MapRequest {
 
         String imageUrl = staticImage.getUrl().toString();
         imageUrl += "&attribution=false&logo=false";
-        imageUrl += "&fresh=true";
+
+        if (NO_STYLE_CACHING)
+            imageUrl += "&fresh=true";
 
         //System.out.println(imageUrl);
 
