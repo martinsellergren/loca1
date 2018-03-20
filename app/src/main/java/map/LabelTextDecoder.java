@@ -54,7 +54,7 @@ public class LabelTextDecoder {
      * @param codeImg Image containing letter specified by b.
      * @return The character mapped by decoded integer.
      */
-    public static char decode(Box b, TiledImage codeImg) throws IOException {
+    public static char decode(Box b, TiledImage codeImg) throws UnknownCharacterException, IOException {
         if (mappings == null)
             throw new RuntimeException("Call init() !");
 
@@ -73,7 +73,8 @@ public class LabelTextDecoder {
         binary = new StringBuilder(binary).reverse().toString();
         int index = Integer.parseInt(binary, 2);
         if (index >= mappings.length)
-            throw new IOException("Bad code:" + index);
+            throw new UnknownCharacterException("Bad code: " + index + ", caused by box: " + b);
+
         int codePoint = mappings[index];
         return new String(Character.toChars(codePoint)).charAt(0);
     }
@@ -84,10 +85,11 @@ public class LabelTextDecoder {
      * @return Label-text forlabel described by lay. One char
      * per box in the layout.
      */
-    public static String decode(LabelLayout lay, TiledImage codeImg) throws IOException {
+    public static String decode(LabelLayout lay, TiledImage codeImg) throws UnknownCharacterException, IOException {
         String txt = "";
-        for (Box b : lay.getBoxes())
-            txt += decode(b, codeImg);
+        for (Box b : lay.getBoxesWithNewlines())
+            if (b == null) txt += " ";
+            else txt += decode(b, codeImg);
         return txt;
     }
 }

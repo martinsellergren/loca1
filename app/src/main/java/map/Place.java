@@ -202,7 +202,7 @@ public class Place {
     public Place(Label lab) {
         this.data = null;
         this.name = lab.getText();
-        this.category = Category.OCEAN;
+        this.category = Category.WATERBODY;
         this.id = this.name;
         labels.add(lab);
     }

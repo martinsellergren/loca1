@@ -173,29 +173,28 @@ to include missing data (so default value never used).
 def colorCode(data):
     for layer in getLabelLayers(data):
         sourceLayer = layer['source-layer']
-        prop, types = getPropertyAndTypes(sourceLayer)
-        colorObj = getColorObject(sourceLayer, prop, types)
+        prop, values = getPropertyAndValues(sourceLayer)
+        colorObj = getColorObject(sourceLayer, prop, values)
         layer['paint']['text-color'] = colorObj
 
-def getPropertyAndTypes(sourceLayer):
+def getPropertyAndValues(sourceLayer):
     for elem in labelTypeTable_json:
         if elem['source-layer'] == sourceLayer:
-            if elem['property'] == '-':
-                return '-', []
-            else:
-                return elem['property'], elem['values']
+            return elem['property'], elem['values']
     print sourceLayer + ' not in labelTypeTable_json.'
     sys.exit(-1)
 
-def getColorObject(sourceLayer, prop, types):
+def getColorObject(sourceLayer, prop, values):
     if (prop == '-'):
         return getColorStr(sourceLayer, '-')
+
     co = {}
     co['type'] = 'categorical'
     co['property'] = prop
 
     stops = []
-    for type in types:
+    for v in values:
+        type = v[0]
         stops.append([type, getColorStr(sourceLayer, type)])
     co['stops'] = stops
     co['default'] = getDefaultColorStr()
@@ -244,14 +243,17 @@ def indexToRGB(i):
 
     return r,g,b
 
+'''
+return: List parsed from json-table where every row is:
+   source-layer, type
+where type what is to be assigned to property-field.
+'''
 def getLabelTypeConversionTable(labelTypeTable_json):
     t = []
     for elem in labelTypeTable_json:
-        if elem['property'] == '-':
-            t.append((elem['source-layer'], '-'))
-        else:
-            for type in elem['values']:
-                t.append((elem['source-layer'], type))
+        for v in elem['values']:
+            type = v[0]
+            t.append((elem['source-layer'], type))
     return t
 
 

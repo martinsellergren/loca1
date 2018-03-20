@@ -22,9 +22,10 @@ public class Label {
      *
      * @throws JunkException if lay describes a junk-label.
      */
-    public Label(LabelLayout lay, TiledImage codeImg, TiledImage boxImg) throws JunkException, UnknownCategoryException, IOException {
-        this.text = LabelTextDecoder.decode(lay, codeImg);
+    public Label(LabelLayout lay, TiledImage codeImg, TiledImage boxImg) throws JunkException, UnknownCharacterException, UnknownCategoryException, IOException {
         this.layout = lay;
+        this.text = LabelTextDecoder.decode(lay, codeImg);
+
         try {
             this.category = CategoryDecoder.decode(lay, boxImg);
         }

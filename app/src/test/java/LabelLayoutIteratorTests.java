@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.File;
 
 public class LabelLayoutIteratorTests {
+    MapRequest.ViewAndImgs vis = MapRequest.lidingo();
+
     // TiledImage img = TiledImage.load_("../imgs/lidingo/box");
     // int[] area = new int[]{0, 0, img.getWidth(), img.getHeight()};
 
@@ -73,33 +75,23 @@ public class LabelLayoutIteratorTests {
     //     img.save("test_LabelLayoutIterator_expandToBox_all.png");
     // }
 
-    // @Test
-    // public void findLabelLayouts() throws IOException {
-    //     File[] files = new File("splits").listFiles();
-    //     Arrays.sort(files);
+    @Test
+    public void findLabelLayouts() throws IOException {
+        BasicImage fimg = vis.imgs[0].getOneImage();
+        LinkedList<LabelLayout> lays = LabelLayoutIterator.getLayouts(vis.imgs[2], vis.view);
 
-    //     for (int i = 0; i < files.length; i+=2) {
-    //         File bFile = files[i];
-    //         File fFile = files[i+1];
-    //         BasicImage fimg = BasicImage.load(fFile.toString());
-    //         BasicImage bimg = BasicImage.load(bFile.toString());
+        for (LabelLayout lay : lays) {
+            try {
+                fimg.drawLabelLayout(lay);
+            }
+            catch (Exception e) {
+                System.out.println(lay);
+                throw e;
+            }
+        }
 
-    //         LabelLayoutIterator iter = new LabelLayoutIterator(bimg);
-
-    //         LabelLayout lay;
-    //         while ((lay=iter.next()) != null) {
-    //             try {
-    //                 fimg.drawLabelLayout(lay);
-    //             }
-    //             catch (Exception e) {
-    //                 System.out.println(lay);
-    //                 throw e;
-    //             }
-    //         }
-
-    //         fimg.save("test_LabelLayoutIterator_findLabelLayouts_" + fFile.getName());
-    //     }
-    // }
+        fimg.save("test_LabelLayoutIterator_findLabelLayouts.png");
+    }
 
     // @Test
     // public void expandToLabelLayout() {

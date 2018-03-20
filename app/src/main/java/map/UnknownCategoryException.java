@@ -1,7 +1,7 @@
 package map;
 
 /**
- * Exception thrown when can' determine category from color-coded
+ * Exception thrown when can't determine category from color-coded
  * box-label.
  *
  * General cause: Color of box-label is the default color given

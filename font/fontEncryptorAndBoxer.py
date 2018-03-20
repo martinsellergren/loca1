@@ -31,6 +31,13 @@ def isLetter(c):
 def isDigit(c):
     return unicodedata.category(c) in ['Nd', 'Nl', 'No']
 
+# c: unicode character.
+# return: True if c is a symbol of interest (i.e don't translate
+# it to space).
+def isSymbolOfInterest(c):
+    return c in ['(', ')', '[', ']', '&', '%', '$', '@', '!', '.', ',', '-', '*', '?', '{', '}']
+
+
 #uni: int representing a unicode code-point
 #return: unicode char, A->a, symbol->space
 def getAppropriateChar(uni):
@@ -38,6 +45,7 @@ def getAppropriateChar(uni):
     c = unichr(uni)
     if isLetter(c): return c.lower()
     if isDigit(c): return c
+    if isSymbolOfInterest(c): return c
     else: return u' '
 
 #char: unicode char

@@ -5,67 +5,116 @@ import java.io.IOException;
 import java.awt.Color;
 
 /**
- * Categories of map-objects, mainly map-labels.
+ * Categories of map-objects (map-labels).
  */
 public enum Category {
-    BAY,
-    LAKE,
-    NATURE_RESERVE,
-    SEA,
-    STREET,
-    OCEAN,
-
-    WATERWAY,
-    RIVER,
-    STREAM,
-    CANAL,
-    DRAIN,
-    DITCH,
-
-    SHOP,
-    CAFE,
-
-    HIGHWAY,
-
-    //PLACE-TAG
-    //Administratively declared places
     COUNTRY,
-    STATE,
-    REGION,
-    PROVINCE,
-    DISTRICT,
-    COUNTY,
-    MUNICIPALITY,
+    TERRITORY,
 
-    //Populated settlements, urban
+    WATERBODY,
+
+    SUBDIVISION,
+
     CITY,
-    BOROUGH,
-    SUBURB,
-    QUARTER,
-    NEIGHBOURHOOD,
-    CITY_BLOCK,
-    PLOT,
-
-    //Populated settlements, urban and rural
     TOWN,
     VILLAGE,
-    HAMLET,
-    ISOLATED_DWELLING,
-    FARM,
-    ALLOTMENTS,
-
-    //Other places
-    CONTINENT,
-    ARCHIPELAGO,
+    DISTRICT,
     ISLAND,
     ISLET,
-    SQUARE,
-    LOCALITY;
+    ARCHIPELAGO,
+    REGION,
 
+    AIRFIELD,
+    ALCOHOL_SHOP,
+    AMUSEMENT_PARK,
+    AQUARIUM,
+    ART_GALLERY,
+    ATTRACTION,
+    BAKERY,
+    BANK,
+    BAR,
+    BICYCLE_SERVICE,
+    BICYCLE_SHARING_SERVICE,
+    BUS_STOP,
+    CAFE,
+    CAMPSITE,
+    CAR_SERVICE,
+    CASTLE,
+    CEMETERY,
+    CINEMA,
+    CLOTHING_STORE,
+    COLLEGE,
+    DENTAL_OFFICE,
+    HEALTH_CLINIC,
+    DOG_PARK,
+    DRINKING_WATER_SERVICE,
+    EMBASSY,
+    ENTRANCE,
+    FAST_FOOD_RESTAURANT,
+    FERRY_SERVICE,
+    FIRE_STATION,
+    FILLING_STATION,
+    GARDEN,
+    GOLF_COURSE,
+    GROCERY_STORE,
+    HARBOR,
+    HELIPORT,
+    HOSPITAL,
+    ICE_CREAM_PLACE,
+    INFORMATION_SERVICE,
+    LAUNDRY_SERVICE,
+    LIBRARY,
+    LODGING_SERVICE,
+    PLACE,
+    MONUMENT,
+    MUSEUM,
+    MUSIC_STORE,
+    PARK,
+    PHARMACY,
+    PICNIC_SITE,
+    PLACE_OF_WORSHIP,
+    PLAYGROUND,
+    POLICE_STATION,
+    POST_OFFICE,
+    PRISON,
+    CHRISTIAN_CHURCH,
+    JEWISH_CHURCH,
+    MUSLIM_CHURCH,
+    RESTAURANT,
+    ROCKET_STATION,
+    SCHOOL,
+    SHOP,
+    STADIUM,
+    PUBLIC_SWIMMING_POOL,
+    OFFICE,
+    THEATRE,
+    PUBLIC_TOILET,
+    TOWN_HALL,
+    VETERINARY_CLINIC,
+    ZOO,
 
+    MOTORWAY,
+    HIGHWAY,
+    STREET,
+    PEDESTRIAN_STREET,
+    UNFINISHED_ROAD,
+    SMALL_ROAD,
+    PATH,
+    GOLF_ROAD,
 
+    RIVER,
+    CANAL,
+    STREAM,
 
+    AIRPORT,
+    HEILPORT,
 
+    RAILWAY_STATION,
+    METRO_STATION,
+    RAILWAY_STATION_ENTRANCE,
+
+    MOUNTAIN,
+    VOLCANO;
 
 
     /**
