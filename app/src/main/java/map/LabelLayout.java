@@ -171,6 +171,14 @@ public class LabelLayout {
     }
 
     /**
+     * @return Mid-point.
+     */
+    public double[] getMid() {
+        double[] bs = getBounds();
+        return new double[]{ (bs[0]+bs[2]) / 2, (bs[1]+bs[3]) / 2 };
+    }
+
+    /**
      * @return True if any letter-box has a significant rotation,
      * i.e if the label is rotated as a whole, or has a curver baseline.
      * Rather claims 'no rotation' than rotation.

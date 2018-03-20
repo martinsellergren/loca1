@@ -85,4 +85,12 @@ public class Label {
     public Label copy() {
         return new Label(this.text, this.category, this.layout.copy());
     }
+
+    @Override
+    public String toString() {
+        return String.format("text: %s\ncategory: %s\n midP: %s",
+                             this.text,
+                             this.category,
+                             Math2.toInt(this.layout.getMid()));
+    }
 }

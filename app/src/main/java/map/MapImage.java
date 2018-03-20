@@ -7,17 +7,18 @@ import java.util.LinkedList;
 
 /**
  * An image of a map with full specification of its labels
- * (letter-precise positions and osm-data). The image has a
+ * (letter-precise positions and categories). The image has a
  * location on earth and specified zoom through a MapImageView-object.
  */
 public class MapImage {
     public/***/ TiledImage img;
     public/***/ MapImageView view;
-    public/***/ Places places;
+    public/***/ MapObjects objects;
 
     /**
-     * Fetches map-images from internet, finds places (labels) using
-     * OCR and internet.
+     * Fetches map-images from internet (full image, and auxiliary-
+     * images used for analysis) and finds map-objects in them
+     * (merged labels with unique text/category-combo).
      * Extends view to 1) Fit cut labels, 2) Detect edge-labels.
      * New image is stored in working-dir/zoom_level_x/full.
      *
@@ -31,19 +32,21 @@ public class MapImage {
         MapRequest req = new MapRequest(view, p, lang);
         TiledImage[] imgs = req.fetch3();
         this.img = imgs[0];
-        this.places = new Places(imgs[1], imgs[2], view, lang);
+        this.objects = new MapObjects(imgs[1], imgs[2], view);
         imgs[1].delete();
         imgs[2].delete();
     }
 
     /**
-     * Constructor from existing images. Uses internet for place-data.
+     * Constructor from existing images.
+     *
      * @param imgs [full label box]-img.
+     * @param view Describing imgs.
      */
     public MapImage(TiledImage[] imgs, MapImageView view, Language lang) throws IOException {
         this.img = imgs[0];
         this.view = view;
-        this.places = new Places(imgs[1], imgs[2], view, lang);
+        this.objects = new MapObjects(imgs[1], imgs[2], view);
     }
 
     /**
@@ -54,10 +57,10 @@ public class MapImage {
     }
 
     /**
-     * @return Places in map-image.
+     * @return Map-objects in image, i.e detailed label-specification.
      */
-    public LinkedList<Place> getPlaces() {
-        return this.places.getPlaces();
+    public MapObjects getObjects() {
+        return this.objects;
     }
 
     /**
@@ -70,16 +73,8 @@ public class MapImage {
     //-------------------------for testing
 
     /**
-     * Constructor from existing images. Uses internet for place-data.
-     * @param imgs [full label box]-img.
-     * @param o Just to allow another constructor (pass null).
+     * Beware of heap-overflow.
      */
-    public MapImage(TiledImage[] imgs, MapImageView v, Language l, Object o) throws IOException {
-        this.img = imgs[0];
-        this.view = v;
-        this.places = new Places(imgs[1], imgs[2], v, l, null);
-    }
-
     public BasicImage getImg() {
         return this.img.getOneImage();
     }

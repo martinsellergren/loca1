@@ -227,16 +227,18 @@ public class MapRequest {
 
     //----------------------------------------for testing. local reqs.
 
-    static boolean FETCH = false;
+    public static boolean FETCH = true;
     static Language LANG = Language.EN;
     static String imgsDir = "../imgs";
 
     public static class ViewAndImgs {
         public MapImageView view;
         public TiledImage[] imgs;
+        public String name;
 
         public ViewAndImgs(String name, MapImageView v) {
             this.view = v;
+            this.name = name;
             if (FETCH) {
                 try {
                     this.imgs = new MapRequest(v, name, LANG).fetch3();

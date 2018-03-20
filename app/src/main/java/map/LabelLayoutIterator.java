@@ -777,6 +777,7 @@ public class LabelLayoutIterator {
      * @param bimg Box-image.
      * @param v View describing bimg.
      * @return All labels in bimg, using default alphaThreshold.
+     * No duplicates (sufficiently similar).
      */
     public static LinkedList<LabelLayout> getLayouts(TiledImage bimg, MapImageView v) throws IOException {
         LinkedList<LabelLayout> lays = new LinkedList<LabelLayout>();

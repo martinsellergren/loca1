@@ -523,15 +523,14 @@ public class BasicImage {
      *  3) Draws place-category in corner.
      *  4) Draws a number indicating number of labels in corner.
      */
-    public void drawPlace(Place p) {
-        Color overlayC = Color.RED;
-        Color col = Color.BLACK;
+    public void drawMapObject(MapObject mob) {
+        Color overlayC = Color.BLACK;
+        Color col = Color.RED;
 
-        for (Label lab : p.getLabels()) {
-            LabelLayout lay = lab.getLayout();
-            drawLabelLayout(lay);
-            //drawLabelOverlay(lay, overlayC);
-            drawLabelData(p.getName(), p.getCategory(), p.getNoLabels(), lay, col);
+        for (LabelLayout lay : mob.getLayouts()) {
+            //drawLabelLayout(lay);
+            drawLabelOverlay(lay, overlayC);
+            drawLabelData(mob.getName(), mob.getCategory(), mob.getNoLayouts(), lay, col);
         }
     }
 
