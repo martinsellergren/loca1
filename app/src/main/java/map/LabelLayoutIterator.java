@@ -51,7 +51,8 @@ import java.io.IOException;
  */
 public class LabelLayoutIterator {
     /**
-     * Pixels alpha-value-threshold where over means box-point. */
+     * Pixels alpha-value-threshold where over means
+     * box-point. [0, 255]. */
     public/***/ static final int DEFAULT_ALPHA_THRESHOLD = 1;
 
     /**
@@ -81,8 +82,8 @@ public class LabelLayoutIterator {
 
     /**
      * d / boxHeight <= this, where d is ortogonal distance from a
-     * box's baseline to neighbor box's closest bottom-point. */
-    public/***/ static final double SAME_BASELINE_LAXNESS_FACTOR = 0.15;
+     * box's baseline to neighbor-box's closest bottom-point. */
+    public/***/ static final double SAME_BASELINE_LAXNESS_FACTOR = 0.3;//0.15;
 
     /**
      * Stricter when multiple row (all boxes on a straight baseline) */
