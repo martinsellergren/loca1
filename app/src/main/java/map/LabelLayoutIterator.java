@@ -53,7 +53,7 @@ public class LabelLayoutIterator {
     /**
      * Pixels alpha-value-threshold where over means
      * box-point. [0, 255]. */
-    public/***/ static final int DEFAULT_ALPHA_THRESHOLD = 50;
+    public/***/ static final int DEFAULT_ALPHA_THRESHOLD = 75;
 
     /**
      * Max search length from left/right edge of a box to

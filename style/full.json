@@ -8164,7 +8164,7 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.2, 
+                "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
                 "text-allow-overlap": false, 
                 "symbol-placement": "line", 
@@ -8209,7 +8209,7 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.21000000000000002, 
+                "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
                 "text-allow-overlap": false, 
                 "text-line-height": 1.2, 
@@ -8284,7 +8284,7 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.21000000000000002, 
+                "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
                 "text-allow-overlap": false, 
                 "text-line-height": 1.2, 
@@ -8359,7 +8359,7 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.21000000000000002, 
+                "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
                 "text-allow-overlap": false, 
                 "text-line-height": 1.2, 
@@ -8429,7 +8429,7 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.21000000000000002, 
+                "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
                 "text-allow-overlap": false, 
                 "text-line-height": 1.2, 
@@ -8499,7 +8499,7 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.21000000000000002, 
+                "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
                 "text-allow-overlap": false, 
                 "text-line-height": 1.2, 
@@ -8569,7 +8569,7 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.21000000000000002, 
+                "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
                 "text-allow-overlap": false, 
                 "symbol-placement": "line", 
@@ -8643,7 +8643,7 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.21000000000000002, 
+                "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
                 "text-allow-overlap": false, 
                 "symbol-placement": "line", 
@@ -8710,7 +8710,7 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.21000000000000002, 
+                "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
                 "text-allow-overlap": false, 
                 "symbol-placement": "line", 
@@ -8770,7 +8770,7 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.21000000000000002, 
+                "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
                 "text-allow-overlap": false, 
                 "text-line-height": 1.2, 
@@ -8851,7 +8851,7 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.21000000000000002, 
+                "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
                 "text-allow-overlap": false, 
                 "text-line-height": 1.2, 
@@ -8932,7 +8932,7 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.21000000000000002, 
+                "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
                 "text-allow-overlap": false, 
                 "icon-padding": 0, 
@@ -8999,7 +8999,7 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.2, 
+                "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
                 "text-allow-overlap": false, 
                 "text-size": {
@@ -9042,7 +9042,7 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.2, 
+                "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
                 "text-allow-overlap": false, 
                 "text-size": {
@@ -9085,7 +9085,7 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.2, 
+                "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
                 "text-allow-overlap": false, 
                 "text-line-height": 1.2, 
@@ -9152,7 +9152,7 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.21000000000000002, 
+                "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
                 "text-allow-overlap": false, 
                 "text-line-height": 1.2, 
@@ -9233,7 +9233,7 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.21000000000000002, 
+                "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
                 "text-allow-overlap": false, 
                 "text-line-height": 1.2, 
@@ -9314,7 +9314,7 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.21000000000000002, 
+                "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
                 "text-allow-overlap": false, 
                 "text-padding": 10, 
@@ -9376,7 +9376,7 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.21000000000000002, 
+                "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
                 "text-allow-overlap": false, 
                 "text-line-height": 1.2, 
@@ -9426,7 +9426,7 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.30000000000000004, 
+                "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
                 "text-allow-overlap": false, 
                 "text-padding": 10, 
@@ -9516,7 +9516,7 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.2, 
+                "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
                 "text-allow-overlap": false, 
                 "text-size": {
@@ -9558,7 +9558,7 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.2, 
+                "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
                 "text-allow-overlap": false, 
                 "text-size": {
@@ -9601,7 +9601,7 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.2, 
+                "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
                 "text-allow-overlap": false, 
                 "text-line-height": 1.2, 
@@ -9690,7 +9690,7 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.21000000000000002, 
+                "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
                 "text-allow-overlap": false, 
                 "text-line-height": 1.2, 
@@ -9738,7 +9738,7 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.2, 
+                "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
                 "text-allow-overlap": false, 
                 "text-line-height": 1.2, 
@@ -9842,7 +9842,7 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.2, 
+                "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
                 "text-allow-overlap": false, 
                 "text-line-height": 1.2, 
@@ -9951,7 +9951,7 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.2, 
+                "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
                 "text-allow-overlap": false, 
                 "text-line-height": 1.2, 
@@ -10061,7 +10061,7 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.2, 
+                "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
                 "text-allow-overlap": false, 
                 "text-line-height": 1.2, 
@@ -10170,7 +10170,7 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.2, 
+                "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
                 "text-allow-overlap": false, 
                 "text-line-height": 1.2, 
@@ -10280,7 +10280,7 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.30000000000000004, 
+                "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
                 "text-allow-overlap": false, 
                 "symbol-placement": "line", 
@@ -10347,7 +10347,7 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.30000000000000004, 
+                "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
                 "text-allow-overlap": false, 
                 "text-line-height": 1.2, 
@@ -10508,7 +10508,7 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.45, 
+                "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
                 "text-allow-overlap": false, 
                 "symbol-placement": "line", 
@@ -10562,7 +10562,7 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.45, 
+                "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
                 "text-allow-overlap": false, 
                 "text-line-height": 1.2, 
@@ -10766,7 +10766,7 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.2, 
+                "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
                 "text-allow-overlap": false, 
                 "text-size": {
@@ -10824,7 +10824,7 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.2, 
+                "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
                 "text-allow-overlap": false, 
                 "text-size": {
@@ -10883,7 +10883,7 @@
         }, 
         {
             "layout": {
-                "text-letter-spacing": 0.2, 
+                "text-letter-spacing": 0.35, 
                 "text-max-angle": 15, 
                 "text-allow-overlap": false, 
                 "text-size": {

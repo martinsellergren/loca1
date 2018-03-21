@@ -546,6 +546,9 @@ public class BasicImage {
 
         for (LabelLayout lay : mob.getLayouts()) {
             drawLabelLayout(lay);
+            for (Box b : lay.getBoxes())
+                drawBox(b);
+
 
             // LabelOverlay lo = new LabelOverlay(lay, Color.BLACK);
             // drawImage(lo.getTopLeft(), lo.getOverlayImage());

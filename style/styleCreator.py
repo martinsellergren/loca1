@@ -77,12 +77,17 @@ def setFont(data, font):
         layer['layout']['text-font'] = [font]
 
 
-def setLetterSpacing(data, extraSpace=0):
+def addLetterSpacing(data, extraSpace=0):
     for layer in getLabelLayers(data):
         space = extraSpace
         if 'text-letter-spacing' in layer['layout']:
             space += layer['layout']['text-letter-spacing']
         layer['layout']['text-letter-spacing'] = space
+
+def setMinLetterSpace(data, minLetterSpace):
+    for layer in getLabelLayers(data):
+        if 'text-letter-spacing' not in layer['layout'] or layer['layout']['text-letter-spacing'] < minLetterSpace:
+            layer['layout']['text-letter-spacing'] = minLetterSpace
 
 def setLineHeight(data, lineHeight):
     for layer in getLabelLayers(data):
@@ -282,6 +287,7 @@ font = 'Roboto Mono Regular'#'Inconsolata Regular'
 font_code = font + '-Code'
 font_box = font + '-Box'
 extraLetterSpace = 0.2
+minLetterSpace = 0.35
 lineHeight = 1.2#1.5
 textMaxAngle = 15
 textPadding = 10#default 2
@@ -298,7 +304,8 @@ removeCreatedAndModifiedProps(data)
 setOwnerAndVisibility(data)
 
 setFont(data, font)
-setLetterSpacing(data, extraLetterSpace)
+#addLetterSpacing(data, extraLetterSpace)
+setMinLetterSpace(data, minLetterSpace)
 setLineHeight(data, lineHeight)
 setTextMaxAngle(data, textMaxAngle)
 setNoOverlap(data)
