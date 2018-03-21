@@ -43,7 +43,8 @@ public class Label {
     public/***/ boolean isJunkLabel(String text, Category c) {
         return
             text.length() == 0 ||
-            text.length() == 1 && c == Category.STREET;
+            text.length() == 1 && c == Category.STREET ||
+            text.length() == 1 && !Character.isLetter(text.charAt(0));
     }
 
     /**

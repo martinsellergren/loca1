@@ -227,7 +227,7 @@ public class MapRequest {
 
     //----------------------------------------for testing. local reqs.
 
-    public static boolean FETCH = true;
+    public static boolean FETCH = false;
     static Language LANG = Language.EN;
     static String imgsDir = "../imgs";
 

@@ -9,7 +9,7 @@ import java.io.IOException;
  * covering this area.
  *
  * @inv Every zoom-level's map-image covers the map's area.
- * @inv No duplicate zoom-levels.
+ * @inv Strictly increasing zoom-level in zoom-level-imgs-list.
  */
 public class Map {
 
@@ -46,6 +46,7 @@ public class Map {
      * Adds zoom level by fetching images from internet and analyzing
      * them for labels.
      * If this zoom-level already exists, does nothing.
+     * Beware: might easily be an infinite call.
      *
      * @param z Zoom-level [0, 22].
      * @return True if zoom-level added.

@@ -9,7 +9,7 @@ public class MapImageTests {
 
     @Test
     public void construction() throws IOException {
-        constructAndDump(view);
+        //constructAndDump(view, "lidingo");
     }
 
     /** Set MapRequest.FETCH = true */

@@ -408,13 +408,14 @@ public class BasicImage {
      *
      * @param l Label to be covered.
      * @param c Color used for the overlay.
-     * @param extra Extension-term of overlay.
+     * @param fact Tallest box-height * this = extra size.
      *
      * @pre l fits inside this image with some margin.
      */
     public void drawLabelOverlay(LabelLayout l, Color c, double extra) {
         Graphics2D g = createGraphics();
         g.setColor(c);
+        double extra = l.getTallestBoxHeight() * fact;
 
         if (l.getNoRows() > 1) {
             double[] bs = Math2.extendBounds(l.getBounds(), extra);
@@ -545,12 +546,12 @@ public class BasicImage {
         Color col = Color.RED;
 
         for (LabelLayout lay : mob.getLayouts()) {
-            drawLabelLayout(lay);
+            //drawLabelLayout(lay);
 
-            // LabelOverlay lo = new LabelOverlay(lay, Color.BLACK);
-            // drawImage(lo.getTopLeft(), lo.getOverlayImage());
+            LabelOverlay lo = new LabelOverlay(lay, Color.BLACK);
+            drawImage(lo.getTopLeft(), lo.getOverlayImage());
 
-            // drawLabelData(mob.getName(), mob.getCategory(), mob.getNoLayouts(), lay, col);
+            drawLabelData(mob.getName(), mob.getCategory(), mob.getNoLayouts(), lay, col);
         }
     }
 

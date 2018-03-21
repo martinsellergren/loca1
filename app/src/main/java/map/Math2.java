@@ -787,11 +787,14 @@ public class Math2 {
      * @param extTerm Extension-term.
      * @return Extended bounds.
      */
+    public static double[] extendBounds(double[] bs, double extTerm) {
+        return new double[]{ bs[0] - extTerm,
+                             bs[1] - extTerm,
+                             bs[2] + extTerm,
+                             bs[3] + extTerm };
+    }
     public static int[] extendBounds(int[] bs, int extTerm) {
-        return new int[]{ bs[0] - extTerm,
-                          bs[1] - extTerm,
-                          bs[2] + extTerm,
-                          bs[3] + extTerm };
+        return toInt( extendBounds(toDouble(bs), extTerm) );
     }
 
     /**

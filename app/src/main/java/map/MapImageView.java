@@ -371,7 +371,7 @@ public class MapImageView {
 
     //------------------------------------------for testing
 
-    public static boolean x2_ = true;
+    public static boolean x2_ = false;
 
     public static MapImageView randomize() {
         int minDim = 100;

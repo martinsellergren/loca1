@@ -5,4 +5,8 @@ import java.io.IOException;
 
 public class MapTests {
 
+    @Test
+    public void addZoomLevel() {
+
+    }
 }

@@ -1,9 +1,7 @@
 # loca-studies
 
 todo:
-codeFont paretesis
-place -> mapObject
-
+Logging
 Attribution
 Spec, docs (box-img color coded...etc)
 

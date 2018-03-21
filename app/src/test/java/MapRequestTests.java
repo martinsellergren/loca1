@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 
 public class MapRequestTests {
 
-    boolean highQ = true;
+    // boolean highQ = true;
     Language lang = Language.EN;
 
     @Test

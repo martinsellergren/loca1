@@ -5,9 +5,9 @@ Creates two fonts from one:
 
 Also creates a mapping table, code->unicode.
 
-Code-box and dir-box have same pos and dims. All boxes have same height
-(=ascent+descent=em). Box width might vary depending on glyph-width.
-Code, box bad if font has thin glyphs - use mono-space-font.
+Code-box and dir-box have same pos and dims. All boxes have same
+height. Box width might vary depending on glyph-width.
+Code/box bad if font has thin glyphs - use mono-space-font.
 Note:
 "Monospace" fonts sometimes contains some incorrectly sized glyphs so
 code-box/box may still very in width.
@@ -49,13 +49,13 @@ def getAppropriateChar(uni):
     else: return u' '
 
 #char: unicode char
-def getAndSetMapping(char):
+def getMapping(char):
     cp = ord(char)
     if cp in MAPPINGS:
         return MAPPINGS.index(cp)
     else:
-        MAPPINGS.append(cp)
-        return len(MAPPINGS) - 1
+        print 'cp not in mappings'
+        sys.exit(-1)
 
 # draws a block (a box) at specified row/col, where bbs is devided into
 # CODE_BOX_ROWS rows and CODE_BOX_COLS columns.
@@ -84,12 +84,12 @@ def encodeNumberInGlyph(number, glyph, bbs):
 
     binary = format(number, 'b')
     if len(binary) > CODE_BOX_ROWS * CODE_BOX_COLS:
-        print "Binary dosn't fit in grid-layout!"
+        print "Binary doesn't fit in grid-layout!"
         sys.exit(1)
 
     for i in range(len(binary)):
-        r = i / 3
-        c = i % 3
+        r = i / CODE_BOX_COLS
+        c = i % CODE_BOX_COLS
         d = binary[-(i+1)]
         if d == '1':
             drawBlock(r, c, bbs, pen)
@@ -101,7 +101,7 @@ def encodeNumberInGlyph(number, glyph, bbs):
 #bbs: [xmin ymin xmax ymax] of codeBox.
 def replaceWithCodeBox(glyph, bbs):
     char = getAppropriateChar(glyph.unicode)
-    mapping = getAndSetMapping(char)
+    mapping = getMapping(char)
     encodeNumberInGlyph(mapping, glyph, bbs)
 
 #bbs: [xmin ymin xmax ymax] of dirBox
@@ -126,12 +126,26 @@ def replaceWithDirBox(glyph, bbs):
     pen = None
     glyph.width = temp_glyphW
 
+def getYBounds(font):
+    ymin = 999999999
+    ymax = -999999999
+    for g in font.glyphs():
+        bs = g.boundingBox()
+        if bs[1] < ymin: ymin = bs[1]
+        if bs[3] > ymax: ymax = bs[3]
+    return ymin, ymax
 
 def getXBounds(glyph):
     w = glyph.width * BOX_WIDTH_FACTOR
     xmin = round((glyph.width - w) / 2)
     xmax = round(glyph.width - (glyph.width - w) / 2)
     return xmin, xmax
+
+def createMappings(font):
+    for g in font.glyphs():
+        cp = ord(getAppropriateChar(g.unicode))
+        if cp not in MAPPINGS:
+            MAPPINGS.append(cp)
 
 def saveMappings():
     f = open(MAPPINGS_SAVE_PATH, 'w')
@@ -140,8 +154,8 @@ def saveMappings():
 
 #-------------------------------------------------------------START
 
-CODE_BOX_ROWS = 4
-CODE_BOX_COLS = 3
+CODE_BOX_ROWS = 5
+CODE_BOX_COLS = 2
 
 #maps index to unicode
 MAPPINGS = []
@@ -154,18 +168,12 @@ fname = sys.argv[1]
 name = fname.split(".")[0]
 ext = fname.split(".")[1]
 codeFont = fontforge.open(fname)
-ymin,ymax = -codeFont.descent, codeFont.ascent
+createMappings(codeFont)
+ymin,ymax = -codeFont.descent, codeFont.ascent#getYBounds(codeFont)
 
 for g in codeFont.glyphs():
     xmin,xmax = getXBounds(g)
     replaceWithCodeBox(g, (xmin,ymin,xmax,ymax))
-
-    # temp_glyphW = g.width
-    # g.clear()
-    # pen = g.glyphPen()
-    # drawBlock(3, 2, (xmin,ymin,xmax,ymax), pen)
-    # pen = None
-    # g.width = temp_glyphW
 
 codeFont.fontname = name + "-Code"
 codeFont.generate(name + "-Code." + ext)

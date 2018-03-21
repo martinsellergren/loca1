@@ -15,6 +15,8 @@ public class MapObjectsTests {
     //         fimg.drawMapObject(mob);
     //     }
 
-    //     fimg.save("test_MapObjects_ construction.png");
+    //     fimg.save("test_MapObjects_ construction_full.png");
+    //     vis.imgs[1].save("test_MapObjects_construction_code.png");
+    //     vis.imgs[2].save("test_MapObjects_construction_box.png");
     // }
 }

@@ -53,7 +53,7 @@ public class LabelLayoutIterator {
     /**
      * Pixels alpha-value-threshold where over means
      * box-point. [0, 255]. */
-    public/***/ static final int DEFAULT_ALPHA_THRESHOLD = 1;
+    public/***/ static final int DEFAULT_ALPHA_THRESHOLD = 50;
 
     /**
      * Max search length from left/right edge of a box to
@@ -72,7 +72,7 @@ public class LabelLayoutIterator {
 
     /**
      * The maximum change in angle between two adjacent boxes. */
-    public/***/ static final double MAX_ANGLE_CHANGE = 25;
+    public/***/ static final double MAX_ANGLE_CHANGE = 35;
 
     /**
      * w0 = (dL + w1 + dR) where w0 is width of longest line, w1

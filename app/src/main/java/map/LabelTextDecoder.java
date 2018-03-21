@@ -28,13 +28,13 @@ public class LabelTextDecoder {
 
     /**
      * Layout of code-image. */
-    public static final int CODE_BOX_ROWS = 4;
-    public static final int CODE_BOX_COLS = 3;
+    public static final int CODE_BOX_ROWS = 5;
+    public static final int CODE_BOX_COLS = 2;
 
     /**
      * If alpha[0,255] in code-image of block-mid < this: binary 0.
      *                                              else: binary 1. */
-    public/***/ static final int ALPHA_THRESHOLD = 1;
+    public/***/ static final int ALPHA_THRESHOLD = 50;
 
 
     /**
