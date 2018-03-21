@@ -13,6 +13,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import static loca.Utils.*;
 
 
 /**
@@ -41,7 +42,7 @@ public class PlaceQuery {
     public static JsonObject fetch(String text, double[] wsen, Language lang) throws IOException, UnknownPlaceException {
         URL[] urls = getURLs(text, wsen, lang);
 
-        System.out.println(Arrays.toString(urls));
+        LOGGER.fine("Place-query requests: " + Arrays.toString(urls));
 
         JsonArray places = getPlaces(urls);
         JsonObject place = selectPlace(places);

@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Iterator;
+import static loca.Utils.*;
+import java.util.logging.Level;
 
 /**
  * A list of map-objects.
@@ -56,13 +58,13 @@ public class MapObjects implements Iterable<MapObject> {
                 labs.add(new Label(lay, cimg, bimg));
             }
             catch (UnknownCharacterException e) {
-                System.out.println(e);
+                LOGGER.info(e.toString());
             }
             catch (UnknownCategoryException e) {
-                System.out.println(e);
+                LOGGER.info(e.toString());
             }
             catch (Label.JunkException e) {
-                System.out.println(e);
+                LOGGER.info(e.toString());
             }
         }
 

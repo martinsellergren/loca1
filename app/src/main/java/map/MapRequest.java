@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import static loca.Utils.*;
 
 /**
  * Fetch map images from mapbox server.
@@ -178,7 +179,8 @@ public class MapRequest {
         if (NO_STYLE_CACHING)
             imageUrl += "&fresh=true";
 
-        //System.out.println(imageUrl);
+        LOGGER.fine("Image-url-request: " + imageUrl);
+
 
         try {
             BufferedImage img = ImageIO.read(new URL(imageUrl));

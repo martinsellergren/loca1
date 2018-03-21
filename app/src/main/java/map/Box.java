@@ -2,6 +2,7 @@ package map;
 
 import java.util.Arrays;
 import java.util.LinkedList;
+import static loca.Utils.*;
 
 /**
  * A box located in an integer-grid, with some rotation.
@@ -360,13 +361,6 @@ public class Box {
                 maxD = d;
                 maxI = i;
             }
-
-            // if (d == 0) {
-            //     System.out.println(minD);
-            //     System.out.println(maxD);
-            //     System.out.println("\n");
-            // }
-
         }
 
         return new int[][]{ ps.get(minI), ps.get(maxI) };
@@ -428,7 +422,7 @@ public class Box {
             if (Math2.contains(p, ps)) return Math2.distance(p, start);
         }
 
-        System.out.println("Box.openingSize(): Bad box-shape");
+        LOGGER.severe("Box.openingSize(): Bad box-shape");
         return 0;
     }
 }
