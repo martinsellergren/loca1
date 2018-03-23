@@ -14,7 +14,7 @@ generate: clean
 
 #remove generated
 clean:
-	rm -f full.json code.json box.json
+	rm -f full.json code.json box.json *.pyc
 
 #also remove Streets.json
 cleanAll: clean
