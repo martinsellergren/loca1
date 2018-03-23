@@ -161,6 +161,9 @@ public class MapImageView {
         double[] xy = getPixelCoordinates_global(179.999999999, -LATITUDE_BOUND, z, x2);
         return new int[]{ Math.round((float)xy[0]), Math.round((float)xy[1]) };
     }
+    public/***/ int[] getGlobalPixelMax() {
+        return getGlobalPixelMax(this.zoom, this.x2);
+    }
 
     /**
      * @return [wLon, sLat, eLon, nLat]
@@ -171,17 +174,38 @@ public class MapImageView {
         return new double[]{ nw[0], se[1], se[0], nw[1] };
     }
 
-    // /**
-    //  * Finds the bounds of another view when it is placed inside
-    //  * this one.
-    //  * @return [xmin, ymin, xmax, ymax]. Returned points are inside
-    //  * this view, even if other view extends outside.
-    //  */
-    // public double[] getPixelBoundsOfOtherView(MapImageView other) {
+    /**
+     * Finds the bounds of another view when it is placed inside
+     * this one.
+     * @return [xmin, ymin, xmax, ymax]. Returned points are inside
+     * this view, even if other view extends outside.
+     */
+    public double[] getPixelBoundsOfOtherView(MapImageView other) {
+        double[] bs0 = this.getGlobalPixelBounds();
+        double[] bs1 = other.getGlobalPixelBounds();
 
+        return new double[] {
+            Math.max(bs1[0] - bs0[0], 0),
+            Math.max(bs1[1] - bs0[1], 0),
+            Math.min(bs1[2] - bs0[0], bs0[2]),
+            Math.min(bs1[3] - bs0[1], bs0[3])
+        };
+    }
 
-    //     return null;
-    // }
+    /**
+     * @returns Global pixel bounds [xmin ymin xmax ymax].
+     * Unwrapped, i.e xmax might go beyond global-max-value.
+     */
+    public/***/ double[] getGlobalPixelBounds() {
+        double[] wsen = getGeoBounds();
+        double[] tl = getPixelCoordinates_global(wsen[0], wsen[3]);
+        double[] br = getPixelCoordinates_global(wsen[2], wsen[1]);
+
+        double[] bs = new double[]{tl[0], tl[1], br[0], br[1]};
+        if (bs[2] <= bs[0]) bs[2] += getGlobalPixelMax()[0];
+
+        return bs;
+    }
 
     /**
      * Splits view into smaller blocks, each with a maximum side-
@@ -356,6 +380,9 @@ public class MapImageView {
         double x = q / (2*Math.PI) * Math.pow(2, z) * (lon + Math.PI);
         double y = q / (2*Math.PI) * Math.pow(2, z) * (Math.PI - Math.log(Math.tan(Math.PI/4 + lat/2)));
         return new double[]{ x, y };
+    }
+    public/***/ double[] getPixelCoordinates_global(double lon, double lat) {
+        return getPixelCoordinates_global(lon, lat, this.zoom, this.x2);
     }
 
     @Override

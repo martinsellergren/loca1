@@ -35,3 +35,6 @@ update:
 # 	curl -X POST "https://api.mapbox.com/styles/v1/$(USER_NAME)?access_token=$(TOKEN)" --data @full.json --header "Content-Type:application/json" > /dev/null
 # 	curl -X POST "https://api.mapbox.com/styles/v1/$(USER_NAME)?access_token=$(TOKEN)" --data @label.json --header "Content-Type:application/json" > /dev/null
 # 	curl -X POST "https://api.mapbox.com/styles/v1/$(USER_NAME)?access_token=$(TOKEN)" --data @box.json --header "Content-Type:application/json" > /dev/null
+
+info: generate
+	python info.py full.json

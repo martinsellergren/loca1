@@ -1,6 +1,7 @@
 import org.junit.Test;
 import static org.junit.Assert.*;
 import java.util.Arrays;
+import java.util.Arrays;
 import map.*;
 
 public class MapImageViewTests {
@@ -250,5 +251,25 @@ public class MapImageViewTests {
     //     System.out.println(Arrays.toString(wsen));
 
     //     //img.drawBounds(wsen);
+    // }
+
+    // @Test
+    // public void getGlobalPixelBounds() {
+    //     double w = -180;
+    //     double s = -MapImageView.LATITUDE_BOUND;
+    //     double e = 180;
+    //     double n = MapImageView.LATITUDE_BOUND;
+    //     int z = 3;
+    //     boolean x2 = false;
+    //     MapImageView v = new MapImageView(w, s, e, n, z, x2);
+    //     System.out.println(Arrays.toString(v.getGlobalPixelBounds()));
+
+    //     w = -18.36914062;
+    //     s = 32.99023556;
+    //     e = 56.33789063;
+    //     n = 60.06484046;
+    //     z = 5;
+    //     v = new MapImageView(w, s, e, n, z, x2);
+    //     System.out.println(Arrays.toString(v.getGlobalPixelBounds()));
     // }
 }

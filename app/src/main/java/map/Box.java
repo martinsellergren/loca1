@@ -403,14 +403,14 @@ public class Box {
     }
 
     /**
-     * Start in middle between p0,p1, walk towards point-center,
+     * Start in middle between c0,c1, walk towards point-center,
      * how long til point?
      *
      * @param ps Points making up something like the symbol [.
      * @return "Opening size indicator"
      */
-    public/***/ static double openingSize(double[] p0, double[] p1, LinkedList<int[]> ps) {
-        int[] start = Math2.toInt(Math2.mean(new double[][]{p0, p1}));
+    public/***/ static double openingSize(double[] c0, double[] c1, LinkedList<int[]> ps) {
+        int[] start = Math2.toInt(Math2.mean(new double[][]{c0, c1}));
         int[] mid = Math2.toInt(Math2.mean(ps));
         double length = Math2.distance(start, mid) * 1.5;
         int[] end = Math2.step(start, Math2.toDouble(Math2.minus(mid, start)), length);

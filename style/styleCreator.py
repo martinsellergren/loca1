@@ -266,8 +266,6 @@ def getLabelTypeConversionTable(labelTypeTable_json):
 
 
 #---------------------------------------------------------------START
-
-LANGUAGE = 'name_en'
 '''
 name	The name (or names) used locally for the place.
 name_ar	Arabic (if available, otherwise same as name)
@@ -280,56 +278,61 @@ name_ru	Russian (if available, otherwise same as name)
 name_zh	Chinese* (if available, otherwise same as name)
 name_zh-Hans	Simplified Chinese* (if available, otherwise same as name)
 '''
-noWrapping = False
-noRotation = False
+if __name__ == '__main__':
 
-font = 'Roboto Mono Regular'#'Inconsolata Regular'
-font_code = font + '-Code'
-font_box = font + '-Box'
-extraLetterSpace = 0.2
-minLetterSpace = 0.35
-lineHeight = 1.2#1.5
-textMaxAngle = 15
-textPadding = 10#default 2
 
-fileName_full = "full"
-fileName_code = "code"
-fileName_box = "box"
+    LANGUAGE = 'name_en'
 
-data = json.load(open(sys.argv[1], 'r'))
-labelTypeTable_json = json.load(open(sys.argv[2], 'r'))
-labelTypeTable_conv = getLabelTypeConversionTable(labelTypeTable_json)
+    noWrapping = False
+    noRotation = False
 
-removeCreatedAndModifiedProps(data)
-setOwnerAndVisibility(data)
+    font = 'Roboto Mono Regular'#'Inconsolata Regular'
+    font_code = font + '-Code'
+    font_box = font + '-Box'
+    extraLetterSpace = 0.2
+    minLetterSpace = 0.35
+    lineHeight = 1.2#1.5
+    textMaxAngle = 15
+    textPadding = 10#default 2
 
-setFont(data, font)
-#addLetterSpacing(data, extraLetterSpace)
-setMinLetterSpace(data, minLetterSpace)
-setLineHeight(data, lineHeight)
-setTextMaxAngle(data, textMaxAngle)
-setNoOverlap(data)
-setTextPadding(data, textPadding)
+    fileName_full = "full"
+    fileName_code = "code"
+    fileName_box = "box"
 
-setLanguageAndFullNames(data)
-noJunkLabels(data)
-limitZoomOnPOI(data)
-noShortStreetLabels(data)
+    data = json.load(open(sys.argv[1], 'r'))
+    labelTypeTable_json = json.load(open(sys.argv[2], 'r'))
+    labelTypeTable_conv = getLabelTypeConversionTable(labelTypeTable_json)
 
-#experiment
-#setNoLabelWrapping(data)
-#setNoLabelRotation(data)
+    removeCreatedAndModifiedProps(data)
+    setOwnerAndVisibility(data)
 
-setName(data, fileName_full)
-dumpStyle(data, fileName_full)
+    setFont(data, font)
+    #addLetterSpacing(data, extraLetterSpace)
+    setMinLetterSpace(data, minLetterSpace)
+    setLineHeight(data, lineHeight)
+    setTextMaxAngle(data, textMaxAngle)
+    setNoOverlap(data)
+    setTextPadding(data, textPadding)
 
-undecorateText(data)
-hideGraphics(data)
-setFont(data, font_code)
-setName(data, fileName_code)
-dumpStyle(data, fileName_code)
+    setLanguageAndFullNames(data)
+    noJunkLabels(data)
+    limitZoomOnPOI(data)
+    noShortStreetLabels(data)
 
-colorCode(data)
-setFont(data, font_box)
-setName(data, fileName_box)
-dumpStyle(data, fileName_box)
+    #experiment
+    #setNoLabelWrapping(data)
+    #setNoLabelRotation(data)
+
+    setName(data, fileName_full)
+    dumpStyle(data, fileName_full)
+
+    undecorateText(data)
+    hideGraphics(data)
+    setFont(data, font_code)
+    setName(data, fileName_code)
+    dumpStyle(data, fileName_code)
+
+    colorCode(data)
+    setFont(data, font_box)
+    setName(data, fileName_box)
+    dumpStyle(data, fileName_box)

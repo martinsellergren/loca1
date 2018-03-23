@@ -1,101 +1,132 @@
-package map;
+// package map;
 
-import java.util.LinkedList;
-import java.io.IOException;
+// import java.util.LinkedList;
+// import java.io.IOException;
 
-/**
- * A map is represented as a defined area on earth and an array
- * of map-images ({@link MapImage}) of different zoom-levels
- * covering this area.
- *
- * @inv Every zoom-level's map-image covers the map's area.
- * @inv Strictly increasing zoom-level in zoom-level-imgs-list.
- */
-public class Map {
+// /**
+//  * A map is represented as a defined area on earth and an array
+//  * of map-images ({@link MapImage}) of different zoom-levels
+//  * covering this area.
+//  *
+//  * @inv Every zoom-level's map-image covers the map's area.
+//  * @inv Strictly increasing zoom-level in zoom-level-imgs-list.
+//  * @inv len(zoom-level-imgs) > 0
+//  */
+// public class Map {
 
-    /**
-     * Use double quality images. Slower to fetch and analyse. */
-    public static final boolean X2 = true;
+//     /**
+//      * Use double quality images. Slower to fetch and analyse. */
+//     public static final boolean X2 = true;
 
-    /**
-     * Max zoom-level. */
-    public static final int MAX_ZOOM_LEVEL = 22;
+//     /**
+//      * Max allowed zoom-level. */
+//     public/***/ static final int MAX_ZOOM = 17;
 
-    /** [west, south, east, north]-lat/lon-bounds. */
-    private final double[] area;
+//     /**
+//      * Preferred area of first-zoom-level-image, in pixels defined in
+//      * default pixel-density (i.e no doubled image-quality). */
+//     public/***/ static int PREFERRED_INIT_AREA = 1000 * 1000;
 
-    /** Map-images of zoom-levels, ordered by increasing zoom. */
-    private final LinkedList<MapImage> zoomLevels;
+//     /**
+//      * Min allowed side-length of first-zoom-level-image, in pixels
+//      * defined in default pixel-density. */
+//     public/***/ static int MIN_INIT_SIDE_LENGTH = 1000;
 
-    /** Language of map-labels. */
-    private final Language language;
+//     /**
+//      * Max allowed zoom for first zoom-level. */
+//     public/***/ static int MAX_INIT_ZOOM = MAX_ZOOM - 4;
 
-    /**
-     * Constructs an empty map (no zoom-levels).
-     *
-     * @param wsen Lat/lon-bounds.
-     * @param lang Language of label-text in zoomLevel-images.
-     */
-    public Map(double[] wsen, Language lang) {
-        this.area = wsen.clone();
-        this.language = lang;
-        this.zoomLevels = new LinkedList<MapImage>();
-    }
 
-    /**
-     * Adds zoom level by fetching images from internet and analyzing
-     * them for labels.
-     * If this zoom-level already exists, does nothing.
-     * Beware: might easily be an infinite call.
-     *
-     * @param z Zoom-level [0, 22].
-     * @return True if zoom-level added.
-     */
-    public boolean addZoomLevel(int z) throws IOException {
-        if (!hasZoomLevel(z) && z > 0 && z <= MAX_ZOOM_LEVEL) {
-            MapImageView v = new MapImageView(area, z, X2);
-            zoomLevels.add( new MapImage(v, this.language) );
-            return true;
-        }
-        else return false;
-    }
+//     /** [west, south, east, north]-latlon-bounds. */
+//     public/***/ final double[] wsen;
 
-    /**
-     * Finds an appropriate zoom-level and adds it.
-     * Appropriate zoom-level is a zoom-level that is:
-     *  - Bigger than current maximum zoom,
-     *  - That has an approximate increase in map-objects defined by
-     *    factor-constant,
-     *  - Never has fewer map-objects than min-limit defined by
-     *    factor-constant (unless last zoom-level).
-     *
-     * Increasing zoom-levels are fetched and analysed (by steps of
-     * constant) until finds a good one, or one worse than
-     * previous one.
-     *
-     * If zoom-level-list currently empty, finds an appropriate
-     * start-level for analysis quickly without any fetching/ analysing.
-     *
-     * @return True if there are any more appropriate zoom-levels.
-     */
-    public boolean addAppropriateZoomLevel() {
-        return false;
-    }
+//     /** Map-images of zoom-levels, ordered by increasing zoom. */
+//     public/***/ final LinkedList<MapImage> zimgs;
 
-    /**
-     * @param z Zoom-level.
-     * @return True if z present.
-     */
-    public boolean hasZoomLevel(int z) {
-        for (MapImage mimg : zoomLevels)
-            if (z == mimg.getView().zoom) return true;
-        return false;
-    }
+//     /** Language of map-labels. */
+//     public/***/ final Language language;
 
-    /**
-     * @return [WSEN].
-     */
-    public double[] getArea() {
-        return this.area.clone();
-    }
-}
+//     /**
+//      * Constructs a map with one zoom-level. Fetches and analyses
+//      * map-images.
+//      *
+//      * @param wsen Lat/lon-bounds.
+//      * @param lang Language of label-text in zoomLevel-images.
+//      * @throws IllegalArgumentException if bad bounds. Test bounds
+//      * beforehand!
+//      */
+//     public Map(double[] wsen, Language lang) throws IOException {
+//         MapImage zimg0 = findFirstZImg(wsen, lang);
+//         if (zimg0 == null)
+//             throw new IllegalArgumentException("Bad map-bounds");
+
+//         this.wsen = wsen.clone();
+//         this.language = lang;
+//         this.zimgs = new LinkedList<MapImage>();
+//         zimgs.add(zimg0);
+//     }
+
+//     /**
+//      * Finds and fetches first zoom-level-image, i.e an image of some
+//      * zoom-level with dimensions matching preference defined by
+//      * constants.
+//      *
+//      * @return First zoom-level-image of this map, or NULL if
+//      * none appropriate (bad wsen-bounds).
+//      */
+//     public/***/ static MapImage findFirstZImg(double[] wsen, Language lang) throws IOException {
+//         if (!validStartBounds(wsen)) return null;
+//         int z = getZoom(wsen, PREFERRED_INIT_AREA);
+//         MapImageView v = new MapImageView(wsen, z, X2);
+//         return new MapImage(v, lang);
+//     }
+
+
+//     /**
+//      * Fetches and adds next zoom-level-image, i.e and image with
+//      * one step closer zoom. If already has closest zoom-level,
+//      * adds nothing.
+//      *
+//      * @return True if zoom-level added.
+//      */
+//     public boolean addNextZImg() throws IOException {
+//         if (zimgs.getLast().getView().zoom == MAX_ZOOM)
+//             return false;
+
+//         int z = zimgs.getLast().getView().zoom + 1;
+//         MapImageView v = new MapImageView(this.wsen, z, this.X2);
+//         this.zimgs.add( new MapImage(v, this.language) );
+//         return true;
+//     }
+
+//     // /**
+//     //  * @param z Zoom-level.
+//     //  * @return True if z present.
+//     //  */
+//     // public boolean hasZoomLevel(int z) {
+//     //     for (MapImage mimg : this.zimgs)
+//     //         if (z == mimg.getView().zoom) return true;
+//     //     return false;
+//     // }
+
+//     /**
+//      * @return [WSEN].
+//      */
+//     public double[] getBounds() {
+//         return this.wsen.clone();
+//     }
+
+//     /**
+//      * @return Language of map-labels.
+//      */
+//     public Language getLanguage() {
+//         return this.language;
+//     }
+
+//     /**
+//      *
+//      */
+//     public MapImage findZImage(int i) {
+//         if (hasZoomLevel(z)
+//     }
+// }

@@ -546,14 +546,13 @@ public class BasicImage {
 
         for (LabelLayout lay : mob.getLayouts()) {
             drawLabelLayout(lay);
-            for (Box b : lay.getBoxes())
-                drawBox(b);
-
+            // for (Box b : lay.getBoxes())
+            //     drawBox(b);
 
             // LabelOverlay lo = new LabelOverlay(lay, Color.BLACK);
             // drawImage(lo.getTopLeft(), lo.getOverlayImage());
 
-            // drawLabelData(mob.getName(), mob.getCategory(), mob.getNoLayouts(), lay, col);
+            drawLabelData(mob.getName(), mob.getCategory(), mob.getNoLayouts(), lay, col);
         }
     }
 
@@ -652,8 +651,8 @@ public class BasicImage {
     public void drawLabelLayout(LabelLayout lay) {
         Graphics2D g = createGraphics();
 
-        // for (Box b : lay.getBoxes())
-        //     drawBox(b);
+        for (Box b : lay.getBoxes())
+            drawBox(b);
 
         int[] tl = Math2.toInt(lay.getBox(0,0).getTopLeft());
         int[] tr = Math2.toInt(lay.getBox(0,-1).getTopRight());
@@ -662,7 +661,7 @@ public class BasicImage {
 
         int test = Math2.randInt(-5,5);
 
-        g.setPaint(Color.RED);
+        g.setPaint(Color.YELLOW);
         g.drawLine(tl[0]+test, tl[1], tr[0], tr[1]);
         g.drawLine(tr[0], tr[1], br[0], br[1]);
         g.drawLine(br[0], br[1], bl[0], bl[1]);

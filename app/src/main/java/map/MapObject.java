@@ -1,6 +1,7 @@
 package map;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.awt.Color;
 import java.io.IOException;
 
@@ -14,9 +15,9 @@ import java.io.IOException;
  */
 public class MapObject {
 
-    private String name;
-    private Category category;
-    private LinkedList<LabelLayout> layouts = new LinkedList<LabelLayout>();
+    public/***/ String name;
+    public/***/ Category category;
+    public/***/ LinkedList<LabelLayout> layouts = new LinkedList<LabelLayout>();
 
     /**
      * Constructs a one-layout map-object from a label.
@@ -30,7 +31,7 @@ public class MapObject {
     /**
      * Constructor from known blocks, where invariants hold.
      */
-    private MapObject(String n, Category c, LinkedList<LabelLayout> lays) {
+    public/***/ MapObject(String n, Category c, LinkedList<LabelLayout> lays) {
         this.name = n;
         this.category = c;
         this.layouts = lays;
@@ -100,5 +101,26 @@ public class MapObject {
             laysCpy.add(lay.copy());
         }
         return new MapObject(this.name, this.category, laysCpy);
+    }
+
+    /**
+     * Removes layouts outside bounds.
+     *
+     * @param bs [xmin ymin xmax ymax] in pixels.
+     * @return Map-object with <= number of layouts, or NULL if no
+     * layouts left.
+     */
+    public MapObject filter(double[] bs) {
+        LinkedList<LabelLayout> filtered = new LinkedList<LabelLayout>();
+
+        for (LabelLayout lay : this.layouts) {
+            double[] mid = lay.getMid();
+            if (Math2.isInsideBounds(bs, mid))
+                filtered.add(lay);
+        }
+
+        if (filtered.size() > 0)
+            return new MapObject(this.name, this.category, filtered);
+        else return null;
     }
 }

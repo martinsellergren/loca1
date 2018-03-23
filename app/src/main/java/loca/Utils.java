@@ -33,11 +33,11 @@ public class Utils {
 
     static {
          LOGGER = Logger.getGlobal();
-         ConsoleHandler hand = new ConsoleHandler();
-         SimpleFormatter form = new SimpleFormatter();
-         hand.setFormatter(form);
-         LOGGER.addHandler(hand);
-         hand.setLevel(LOG_LEVEL);
+         // ConsoleHandler hand = new ConsoleHandler();
+         // SimpleFormatter form = new SimpleFormatter();
+         // hand.setFormatter(form);
+         // LOGGER.addHandler(hand);
+         // hand.setLevel(LOG_LEVEL);
          LOGGER.setLevel(LOG_LEVEL);
     }
 }

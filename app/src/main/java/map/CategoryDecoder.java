@@ -31,7 +31,7 @@ public class CategoryDecoder {
     /**
      * Parsed json-table: a list if Categories where the index of
      * a category is encoded in the label-color in a box-image. */
-    private static LinkedList<Category> colorCategoryMappings = null;
+    public/***/ static LinkedList<Category> colorCategoryMappings = null;
 
     /**
      * Creates the mappings by loading json-table from file and

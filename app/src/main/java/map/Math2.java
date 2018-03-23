@@ -763,6 +763,17 @@ public class Math2 {
 
     /**
      * @param bs [xmin ymin xmax ymax]
+     * @param p [x y]
+     * @return True if point p is inside bounds bs.
+     */
+    public static boolean isInsideBounds(double[] bs, double[] p) {
+        return
+            p[0] >= bs[0] && p[0] <= bs[2] &&
+            p[1] >= bs[1] && p[1] <= bs[3];
+    }
+
+    /**
+     * @param bs [xmin ymin xmax ymax]
      * @param fact Scale factor.
      * @return Bounds with ~same mid-point but width and height
      * scaled by fact, and rounded to int. Note: Might return negative

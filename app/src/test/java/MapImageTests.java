@@ -5,7 +5,7 @@ import java.io.IOException;
 
 public class MapImageTests {
     Language lang = Language.EN;
-    MapImageView view = MapImageView.lidingo();
+    MapImageView view = MapImageView.luthagen();
 
     @Test
     public void construction() throws IOException {
@@ -23,7 +23,7 @@ public class MapImageTests {
     //     }
     // }
 
-    private void constructAndDump(MapImageView v, String name) throws IOException {
+    public/***/ void constructAndDump(MapImageView v, String name) throws IOException {
         MapImage mimg;
 
         if (MapRequest.FETCH) {
@@ -46,4 +46,17 @@ public class MapImageTests {
         constructAndDump(v, "test_" + v.toString());
     }
 
+
+
+    // @Test
+    // public void wrappers() throws IOException {
+    //     MapImage mimg = MapImage.fetchInit(view.getGeoBounds(), lang);
+    //     mimg.getAssembledImg().save("test_MapImage_wrappers_0.png");
+
+    //     int N = 0;
+    //     for (int i = 1; i <= N; i++) {
+    //         mimg = MapImage.fetchNext(mimg);
+    //         mimg.getAssembledImg().save("test_MapImage_wrappers_" + i + ".png");
+    //     }
+    // }
 }

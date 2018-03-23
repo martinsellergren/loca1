@@ -15,7 +15,7 @@ import java.util.logging.Level;
  */
 public class MapObjects implements Iterable<MapObject> {
 
-    private List<MapObject> mobs = new LinkedList<MapObject>();
+    public/***/ List<MapObject> mobs = new LinkedList<MapObject>();
 
     /**
      * Constructs by extracting labels from code-image and box-image,
@@ -37,7 +37,7 @@ public class MapObjects implements Iterable<MapObject> {
     /**
      * Constructs from a existing list, where invariants hold.
      */
-    private MapObjects(List<MapObject> mobs) {
+    public/***/ MapObjects(List<MapObject> mobs) {
         this.mobs = mobs;
     }
 
@@ -50,7 +50,7 @@ public class MapObjects implements Iterable<MapObject> {
      * @param bimg Box-image.
      * @return Corresponding labels. All with unique layouts.
      */
-    private List<Label> getLabels(List<LabelLayout> lays, TiledImage cimg, TiledImage bimg) throws IOException {
+    public/***/ List<Label> getLabels(List<LabelLayout> lays, TiledImage cimg, TiledImage bimg) throws IOException {
         List<Label> labs = new LinkedList<Label>();
 
         for (LabelLayout lay : lays) {
@@ -79,7 +79,7 @@ public class MapObjects implements Iterable<MapObject> {
      * @param labs List of labels. Has unique layouts.
      * @return List of map-objects. All layouts unique.
      */
-    private List<MapObject> mergeLabels(List<Label> labs) {
+    public/***/ List<MapObject> mergeLabels(List<Label> labs) {
         List<MapObject> mobs = new LinkedList<MapObject>();
 
         for (Label lab : labs) {
@@ -96,7 +96,7 @@ public class MapObjects implements Iterable<MapObject> {
      * @return Map-object where lab.text=mob.name and lab.category=
      * mob.category, or NULL if none in list.
      */
-    private MapObject findCorrespondingMapObject(Label lab, List<MapObject> mobs) {
+    public/***/ MapObject findCorrespondingMapObject(Label lab, List<MapObject> mobs) {
         for (MapObject mob : mobs) {
             if (mob.correspondsTo(lab)) return mob;
         }
@@ -117,5 +117,20 @@ public class MapObjects implements Iterable<MapObject> {
     @Override
     public Iterator<MapObject> iterator() {
         return this.mobs.iterator();
+    }
+
+    /**
+     * Removes objects outside bounds. Might remove all objects.
+     * @param bs [xmin ymin xmax ymax] in pixels.
+     */
+    public void filter(double[] bs) {
+        List<MapObject> filtered = new LinkedList<MapObject>();
+
+        for (MapObject mo : this.mobs) {
+            MapObject mo_ = mo.filter(bs);
+            if (mo_ != null) filtered.add(mo_);
+        }
+
+        this.mobs = filtered;
     }
 }
