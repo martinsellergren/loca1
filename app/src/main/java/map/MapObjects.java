@@ -114,6 +114,9 @@ public class MapObjects implements Iterable<MapObject> {
         return new MapObjects(mobsCpy);
     }
 
+    /**
+     * @return Iterator for map-objects, so can use in for-each.
+     */
     @Override
     public Iterator<MapObject> iterator() {
         return this.mobs.iterator();
@@ -128,6 +131,20 @@ public class MapObjects implements Iterable<MapObject> {
 
         for (MapObject mo : this.mobs) {
             MapObject mo_ = mo.filter(bs);
+            if (mo_ != null) filtered.add(mo_);
+        }
+
+        this.mobs = filtered;
+    }
+
+    /**
+     * Removes objects outside shape. Might remove all objects.
+     */
+    public void filter(Shape sh, MapImageView v) {
+        List<MapObject> filtered = new LinkedList<MapObject>();
+
+        for (MapObject mo : this.mobs) {
+            MapObject mo_ = mo.filter(sh, v);
             if (mo_ != null) filtered.add(mo_);
         }
 

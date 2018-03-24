@@ -114,9 +114,12 @@ def setTextPadding(data, textPadding):
     for layer in getLabelLayers(data):
         layer['layout']['text-padding'] = textPadding
 
-def setLanguageAndFullNames(data):
+def setLanguageAndFullNames(data, lang):
+    value = '{name_' + lang + '}'
+    if lang == 'local': value = '{name}'
+
     for layer in getLabelLayers(data):
-        layer['layout']['text-field'] = '{name_en}'
+        layer['layout']['text-field'] = value
 
 def noJunkLabels(data):
     for layer in getLayersFromID(data, ['road-shields-black',
@@ -278,30 +281,15 @@ name_ru	Russian (if available, otherwise same as name)
 name_zh	Chinese* (if available, otherwise same as name)
 name_zh-Hans	Simplified Chinese* (if available, otherwise same as name)
 '''
-if __name__ == '__main__':
 
+#lang: local/ar/en/es/fr/de/pt/ru/zh/zh-Hans
+def generate(lang):
 
-    LANGUAGE = 'name_en'
-
-    noWrapping = False
-    noRotation = False
-
-    font = 'Roboto Mono Regular'#'Inconsolata Regular'
-    font_code = font + '-Code'
-    font_box = font + '-Box'
-    extraLetterSpace = 0.2
-    minLetterSpace = 0.35
-    lineHeight = 1.2#1.5
-    textMaxAngle = 15
-    textPadding = 10#default 2
-
-    fileName_full = "full"
-    fileName_code = "code"
-    fileName_box = "box"
+    fileName_full = "full-" + lang
+    fileName_code = "code-" + lang
+    fileName_box = "box-" + lang
 
     data = json.load(open(sys.argv[1], 'r'))
-    labelTypeTable_json = json.load(open(sys.argv[2], 'r'))
-    labelTypeTable_conv = getLabelTypeConversionTable(labelTypeTable_json)
 
     removeCreatedAndModifiedProps(data)
     setOwnerAndVisibility(data)
@@ -314,7 +302,7 @@ if __name__ == '__main__':
     setNoOverlap(data)
     setTextPadding(data, textPadding)
 
-    setLanguageAndFullNames(data)
+    setLanguageAndFullNames(data, lang)
     noJunkLabels(data)
     limitZoomOnPOI(data)
     noShortStreetLabels(data)
@@ -336,3 +324,24 @@ if __name__ == '__main__':
     setFont(data, font_box)
     setName(data, fileName_box)
     dumpStyle(data, fileName_box)
+
+
+if __name__ == '__main__':
+    noWrapping = False
+    noRotation = False
+
+    font = 'Roboto Mono Regular'#'Inconsolata Regular'
+    font_code = font + '-Code'
+    font_box = font + '-Box'
+    extraLetterSpace = 0.2
+    minLetterSpace = 0.35
+    lineHeight = 1.2#1.5
+    textMaxAngle = 15
+    textPadding = 10#default 2
+
+    labelTypeTable_json = json.load(open(sys.argv[2], 'r'))
+    labelTypeTable_conv = getLabelTypeConversionTable(labelTypeTable_json)
+
+
+    generate('local')
+    generate('en');

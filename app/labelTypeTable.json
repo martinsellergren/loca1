@@ -125,7 +125,7 @@
                    ["pedestrian", "PEDESTRIAN_STREET"],
                    ["construction", "UNFINISHED_ROAD"],
                    ["track", "SMALL_ROAD"],
-                   ["service", "CAR_SERVICE"],
+                   ["service", "SMALL_ROAD"],
                    ["ferry", "HARBOR"],
                    ["path", "PATH"],
                    ["golf", "GOLF_ROAD"]]

@@ -9,7 +9,14 @@ import java.io.IOException;
 import java.io.File;
 
 public class LabelLayoutIteratorTests {
-    MapRequest.ViewAndImgs vis = MapRequest.lidingo();
+    static MapRequest.ViewAndImgs vis = MapRequest.luthagen();
+
+    @BeforeClass
+    public static void setup() throws IOException {
+         MapImageView view = new MapImageView(vis.view.getGeoBounds(), 15, false);
+         vis = new MapRequest.ViewAndImgs(vis.name, view);
+    }
+
 
     // @Test
     // public void constructor() {

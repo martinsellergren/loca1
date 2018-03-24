@@ -22,10 +22,10 @@ public class MapRequest {
     public static final String CODE_STYLE_ID_EN = "cjd9dxg7i84ev2snt9rudqcgg";
     public static final String BOX_STYLE_ID_EN = "cjd9dxq0w9tpb2ss0ysjtiwlr";
 
-    //swe (same for now..)
-    public static final String FULL_STYLE_ID_SV = "cjd9dx1oe9t712roe6qmxmfgr";
-    public static final String CODE_STYLE_ID_SV = "cjd9dxg7i84ev2snt9rudqcgg";
-    public static final String BOX_STYLE_ID_SV = "cjd9dxq0w9tpb2ss0ysjtiwlr";
+    //local
+    public static final String FULL_STYLE_ID_LOCAL = "cjf4gb4va1alg2rqkxtbld0bi";
+    public static final String CODE_STYLE_ID_LOCAL = "cjf4gbdzi154q2sk9g1xscdjv";
+    public static final String BOX_STYLE_ID_LOCAL = "cjf4gbk611afc2rnv12akrryr";
 
     public static final boolean DISABLE_STYLE_CACHING = false;
 
@@ -108,10 +108,10 @@ public class MapRequest {
             codeID = CODE_STYLE_ID_EN;
             boxID = BOX_STYLE_ID_EN;
             break;
-        case SV:
-            fullID = FULL_STYLE_ID_SV;
-            codeID = CODE_STYLE_ID_SV;
-            boxID = BOX_STYLE_ID_SV;
+        case LOCAL:
+            fullID = FULL_STYLE_ID_LOCAL;
+            codeID = CODE_STYLE_ID_LOCAL;
+            boxID = BOX_STYLE_ID_LOCAL;
             break;
         }
 
@@ -230,7 +230,7 @@ public class MapRequest {
     //----------------------------------------for testing. local reqs.
 
     public static boolean FETCH = true;
-    static Language LANG = Language.EN;
+    static Language LANG = Language.LOCAL;
     static String imgsDir = "../imgs";
 
     public static class ViewAndImgs {
@@ -241,6 +241,7 @@ public class MapRequest {
         public ViewAndImgs(String name, MapImageView v) {
             this.view = v;
             this.name = name;
+
             if (FETCH) {
                 try {
                     this.imgs = new MapRequest(v, name, LANG).fetch3();

@@ -353,7 +353,7 @@ public class Math2Tests {
         v0 = new double[]{1, 1};
         p1 = new double[]{0, 1};
         ip = Math2.intersectPoint(p0, v0, p1, v0);
-        //System.out.println(Arrays.toString(ip));
+        System.out.println(Arrays.toString(ip));
     }
 
     @Test

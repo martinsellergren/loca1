@@ -318,6 +318,9 @@ public class MapImageView {
 
         return getGeoCoordinates_global(globalX, globalY, this.zoom, this.x2);
     }
+    public double[] getGeoCoordinates(double[] xy) {
+        return getGeoCoordinates(xy[0], xy[1]);
+    }
 
     /**
      * Turn geo-coordinates into pixel-coordinates (local to this
@@ -334,6 +337,9 @@ public class MapImageView {
 
         double[] globalXY = getPixelCoordinates_global(lon, lat, this.zoom, this.x2);
         return new double[]{ globalXY[0]-tlx, globalXY[1]-tly };
+    }
+    public double[] getPixelCoordinates(double[] ll) {
+        return getPixelCoordinates(ll[0], ll[1]);
     }
 
     /**

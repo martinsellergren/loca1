@@ -5,7 +5,7 @@ package map;
  */
 public enum Language {
     EN,
-    SV;
+    LOCAL
 }
 
 

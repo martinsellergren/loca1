@@ -58,7 +58,7 @@ public class LabelLayoutIterator {
     /**
      * Max search length from left/right edge of a box to
      * a neighbor-box (same label) is boxHeight*this. */
-    public/***/ static final double BOX_SEARCH_LENGTH_FACTOR = 0.5;
+    public/***/ static final double BOX_SEARCH_LENGTH_FACTOR = 0.7;
 
     /**
      * Max search length from top/botten edge of a box to a

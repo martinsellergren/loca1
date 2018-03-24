@@ -662,26 +662,13 @@ public class Math2 {
                              A[1][0]*b[0] + A[1][1]*b[1] };
     }
 
-    // /**
-    //  * How long walk from point p0 along v0 (pDist), and from p1 along
-    //  * v1 (qDist) until they intersect.
-    //  *
-    //  * @return [pDist, qDist]
-    //  */
-    // public static double[] intersectDistance(double[] p0, double[] v0, double[] p1, double[] v1) {
-    //     double[] pv = normalize(minus(p1, p0));
-    //     double[] qv = Math2.scale(normalize(minus(q1, q0)), -1);
-    //     double[][] A = transpose(new double[][]{pv, qv});
-    //     double[] b = minus(q0, p0);
-    //     return solve(A, b);
-    // }
-
     /**
-     * @prarm p0,v0 Line0 = p0 + t*v0, t<-R
-     * @param p1,v1 Line1 = p1 + t*v1, t<-R
-     * @return Point where lines intersect.
+     * How long walk from point p0 along v0 (pDist), and from p1 along
+     * v1 (qDist) until they intersect?
+     *
+     * @return [pDist, qDist]
      */
-    public static double[] intersectPoint(double[] p0, double[] v0, double[] p1, double[] v1) {
+    public static double[] intersectDistance(double[] p0, double[] v0, double[] p1, double[] v1) {
         v0 = normalize(v0);
         v1 = normalize(Math2.scale(v1, -1));
         double[][] A = transpose(new double[][]{v0, v1});
@@ -689,7 +676,17 @@ public class Math2 {
         double[] xs = solve(A, b);
         double d0 = xs[0];
         double d1 = xs[1];
-        return step(p0, v0, d0);
+        return new double[]{d0, d1};
+    }
+
+    /**
+     * @prarm p0,v0 Line0 = p0 + t*v0, t<-R
+     * @param p1,v1 Line1 = p1 + t*v1, t<-R
+     * @return Point where lines intersect.
+     */
+    public static double[] intersectPoint(double[] p0, double[] v0, double[] p1, double[] v1) {
+        double[] d = intersectDistance(p0, v0, p1, v1);
+        return step(p0, v0, d[0]);
     }
 
     /**
@@ -922,6 +919,15 @@ public class Math2 {
     public static LinkedList<Integer> toList(int[] xs) {
         LinkedList<Integer> l = new LinkedList<Integer>();
         for (int x : xs) l.add(x);
+        return l;
+    }
+
+    /*
+     * Turn array of double-points into list.
+     */
+    public static LinkedList<double[]> toList(double[][] ps) {
+        LinkedList<double[]> l = new LinkedList<double[]>();
+        for (double[] p : ps) l.add(p);
         return l;
     }
 }

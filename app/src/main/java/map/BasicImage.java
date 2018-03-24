@@ -569,7 +569,8 @@ public class BasicImage {
     public void drawBounds(double[] bs) { drawBounds(Math2.toInt(bs)); }
     public void drawBounds(int[] bs) {
         Graphics2D g = createGraphics();
-        g.setPaint(Color.GREEN);
+        g.setPaint(Color.BLUE);
+        g.setStroke(new BasicStroke(5));
         g.drawLine(bs[0], bs[1], bs[2], bs[1]);
         g.drawLine(bs[2], bs[1], bs[2], bs[3]);
         g.drawLine(bs[2], bs[3], bs[0], bs[3]);
@@ -596,13 +597,13 @@ public class BasicImage {
         int[] tr = Math2.toInt(box.getTopRight());
         int[] bl = Math2.toInt(box.getBottomLeft());
         int[] br = Math2.toInt(box.getBottomRight());
-        g.setPaint(red);
-        g.drawLine(tl[0], tl[1], tr[0], tr[1]);
-        g.setPaint(green);
-        g.drawLine(tr[0], tr[1], br[0], br[1]);
-        g.setPaint(blue);
-        g.drawLine(br[0], br[1], bl[0], bl[1]);
         g.setPaint(yellow);
+        g.drawLine(tl[0], tl[1], tr[0], tr[1]);
+        //g.setPaint(green);
+        g.drawLine(tr[0], tr[1], br[0], br[1]);
+        //g.setPaint(blue);
+        g.drawLine(br[0], br[1], bl[0], bl[1]);
+        //g.setPaint(yellow);
         g.drawLine(bl[0], bl[1], tl[0], tl[1]);
 
         // int[] tm = Math2.toInt(box.getTopMid());
@@ -651,9 +652,6 @@ public class BasicImage {
     public void drawLabelLayout(LabelLayout lay) {
         Graphics2D g = createGraphics();
 
-        for (Box b : lay.getBoxes())
-            drawBox(b);
-
         int[] tl = Math2.toInt(lay.getBox(0,0).getTopLeft());
         int[] tr = Math2.toInt(lay.getBox(0,-1).getTopRight());
         int[] br = Math2.toInt(lay.getBox(-1,-1).getBottomRight());
@@ -661,11 +659,14 @@ public class BasicImage {
 
         int test = Math2.randInt(-5,5);
 
-        g.setPaint(Color.YELLOW);
+        g.setPaint(Color.GREEN);
         g.drawLine(tl[0]+test, tl[1], tr[0], tr[1]);
         g.drawLine(tr[0], tr[1], br[0], br[1]);
         g.drawLine(br[0], br[1], bl[0], bl[1]);
         g.drawLine(bl[0], bl[1], tl[0]+test, tl[1]);
+
+        for (Box b : lay.getBoxes())
+            drawBox(b);
     }
 
 
@@ -674,6 +675,10 @@ public class BasicImage {
      */
     public void drawLabelString(String text, LabelLayout lay, Color c) {
         Graphics2D g = createGraphics();
+        Font currentFont = g.getFont();
+        Font  newFont = currentFont.deriveFont(currentFont.getSize() * 1.4F);
+        g.setFont(newFont);
+
         g.setPaint(c);
         double[] bs = lay.getBounds();
         g.drawString(text, (float)bs[0], (float)(bs[1]+bs[3])/2);

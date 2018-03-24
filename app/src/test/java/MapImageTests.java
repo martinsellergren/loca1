@@ -4,7 +4,7 @@ import map.*;
 import java.io.IOException;
 
 public class MapImageTests {
-    Language lang = Language.EN;
+    Language lang = Language.LOCAL;
     MapImageView view = MapImageView.luthagen();
 
     @Test
@@ -44,19 +44,5 @@ public class MapImageTests {
     }
     public/***/ void constructAndDump(MapImageView v) throws IOException {
         constructAndDump(v, "test_" + v.toString());
-    }
-
-
-
-    //@Test
-    public void wrappers() throws IOException {
-        MapImage mimg = MapImage.fetchInit(view.getGeoBounds(), lang);
-        mimg.getAssembledImg().save("test_MapImage_wrappers_0.png");
-
-        int N = 0;
-        for (int i = 1; i <= N; i++) {
-            mimg = MapImage.fetchNext(mimg);
-            mimg.getAssembledImg().save("test_MapImage_wrappers_" + i + ".png");
-        }
     }
 }

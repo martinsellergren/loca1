@@ -35,7 +35,7 @@ def isDigit(c):
 # return: True if c is a symbol of interest (i.e don't translate
 # it to space).
 def isSymbolOfInterest(c):
-    return c in ['(', ')', '[', ']', '&', '%', '$', '@', '!', '.', ',', '-', '*', '?', '{', '}']
+    return c in ['(', ')', '[', ']', '&', '%', '$', '@', '!', '.', ',', '-', '*', '?', '{', '}', ':', ';']
 
 
 #uni: int representing a unicode code-point

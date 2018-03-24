@@ -107,8 +107,8 @@ public class MapObject {
      * Removes layouts outside bounds.
      *
      * @param bs [xmin ymin xmax ymax] in pixels.
-     * @return Map-object with <= number of layouts, or NULL if no
-     * layouts left.
+     * @return Map-object with <= current number of layouts, or NULL
+     * if no layouts left.
      */
     public MapObject filter(double[] bs) {
         LinkedList<LabelLayout> filtered = new LinkedList<LabelLayout>();
@@ -116,6 +116,30 @@ public class MapObject {
         for (LabelLayout lay : this.layouts) {
             double[] mid = lay.getMid();
             if (Math2.isInsideBounds(bs, mid))
+                filtered.add(lay);
+        }
+
+        if (filtered.size() > 0)
+            return new MapObject(this.name, this.category, filtered);
+        else return null;
+    }
+
+    /**
+     * Removes layouts outside shape.
+     *
+     * @param sh Shape.
+     * @param v View describing image where this map-object resides.
+     * @return Map-object with <= current number of layouts, or NULL
+     * if no layouts left.
+     */
+    public MapObject filter(Shape sh, MapImageView v) {
+        LinkedList<LabelLayout> filtered = new LinkedList<LabelLayout>();
+
+        for (LabelLayout lay : this.layouts) {
+            double[] mid = lay.getMid();
+            double[] ll = v.getGeoCoordinates(mid[0], mid[1]);
+
+            if (sh.isInside(ll))
                 filtered.add(lay);
         }
 
