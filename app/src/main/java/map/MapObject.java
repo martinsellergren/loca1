@@ -139,7 +139,9 @@ public class MapObject {
             double[] mid = lay.getMid();
             double[] ll = v.getGeoCoordinates(mid[0], mid[1]);
 
-            if (sh.isInside(ll))
+            if (sh.isInside(ll) ||
+                sh.isInside(new double[]{ll[0]-360, ll[1]}) ||
+                sh.isInside(new double[]{ll[0]+360, ll[1]}))
                 filtered.add(lay);
         }
 

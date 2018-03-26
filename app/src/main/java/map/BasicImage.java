@@ -560,7 +560,7 @@ public class BasicImage {
      * Draws label name, category and label-count on label.
      */
     public void drawLabelData(String text, Category cat, int count, LabelLayout lay, Color c) {
-        drawLabelString(text + ", " + cat.toString() + ", x" + count, lay, c);
+        drawLabelString(text + "\n" + cat.toString() + "(x" + count + ")", lay, c);
     }
 
     /**
@@ -681,7 +681,15 @@ public class BasicImage {
 
         g.setPaint(c);
         double[] bs = lay.getBounds();
-        g.drawString(text, (float)bs[0], (float)(bs[1]+bs[3])/2);
+        drawString(g, text, (float)bs[0], (float)(bs[1]+bs[3])/2);
+    }
+
+    /**
+     * Handles line-break.
+     */
+    public void drawString(Graphics2D g, String text, float x, float y) {
+        for (String line : text.split("\n"))
+            g.drawString(line, x, y += g.getFontMetrics().getHeight());
     }
 
     /**
@@ -710,5 +718,17 @@ public class BasicImage {
     public void drawImage(int[] tl, BasicImage img) {
         Graphics2D g = createGraphics();
         g.drawImage(img.img, tl[0], tl[1], null);
+    }
+
+    /**
+     * Draw point on image.
+     */
+    public void drawPoint(int[] p) {
+        Graphics2D g = createGraphics();
+        g.setColor(Color.RED);
+        int r = 6;
+        int x = p[0] - (r/2);
+        int y = p[1] - (r/2);
+        g.fillOval(x, y, r, r);
     }
 }

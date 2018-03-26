@@ -27,15 +27,17 @@ public class Shape {
 
     /**
      * Constructs a shape by connecting lon-lat points, one after
-     * the other. Finally closes the path.
+     * the other. Finally closes the path if necessary.
      *
-     * @param lls LonLat-list.
+     * @param lls LonLat-list. No wrapping at lon 180, i.e langitudes
+     * might go beyond bounds.
      */
     public Shape(LinkedList<double[]> lls) {
         for (int i = 0; i < lls.size()-1; i++)
             this.segs.add( new Segment(lls.get(i), lls.get(i+1)) );
 
-        segs.add( new Segment(lls.getLast(), lls.getFirst()) );
+        if (!Math2.same(lls.getFirst(), lls.getLast()))
+            segs.add( new Segment(lls.getLast(), lls.getFirst()) );
     }
 
     /**
@@ -153,12 +155,13 @@ public class Shape {
 
     public void drawYourself(BasicImage img, MapImageView v) {
         Graphics2D g = img.createGraphics();
+        //img.drawPoint(Math2.toInt(v.getPixelMid()));
 
         for (Segment seg : this.segs) {
             int[] a = Math2.toInt(v.getPixelCoordinates(seg.p));
             int[] b = Math2.toInt(v.getPixelCoordinates(seg.q));
 
-            g.setStroke(new BasicStroke(5));
+            g.setStroke(new BasicStroke(2));
             g.setPaint(Color.BLUE);
 
             g.drawLine(a[0], a[1], b[0], b[1]);

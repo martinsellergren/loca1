@@ -51,11 +51,11 @@ public class MapImage {
         MapRequest req = new MapRequest(imgView, p, lang);
         TiledImage[] imgs = req.fetch3();
         MapObjects mobs = new MapObjects(imgs[1], imgs[2], imgView);
-        imgs[1].delete();
-        imgs[2].delete();
+        // imgs[1].delete();
+        // imgs[2].delete();
 
         double[] viewBs = imgView.getPixelBoundsOfOtherView(v);
-        //mobs.filter(viewBs);
+        mobs.filter(viewBs);
 
         this.img = imgs[0];
         this.view = imgView;

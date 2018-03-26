@@ -143,8 +143,8 @@ public class MapImageViewTests {
         ll = v.getGeoCoordinates(xy[0], xy[1]);
         assertEquals(ll[0], lon, 0.0001);
         assertEquals(ll[1], lat, 0.0001);
-        assert(xy[0] > w);
-        assert(xy[1] > h);
+        // assert(xy[0] >= w);
+        // assert(xy[1] >= h);
 
         lon = -170;
         lat = 80;
@@ -152,8 +152,8 @@ public class MapImageViewTests {
         ll = v.getGeoCoordinates(xy[0], xy[1]);
         assertEquals(ll[0], lon, 0.0001);
         assertEquals(ll[1], lat, 0.0001);
-        assert(xy[0] < w);
-        assert(xy[1] < h);
+        // assert(xy[0] <= w);
+        // assert(xy[1] <= h);
 
         mlon = 166.12332;
         mlat = -59.034323;
@@ -167,6 +167,23 @@ public class MapImageViewTests {
         ll = v.getGeoCoordinates(xy[0], xy[1]);
         assertEquals(ll[0], lon, 0.0001);
         assertEquals(ll[1], lat, 0.0001);
+
+        mlon = -300;
+        mlat = -59.034323;
+        w = 1234;
+        h = 54321;
+        z = 21;
+        v = new MapImageView(mlon, mlat, w, h, z, x2);
+        lon = 166.19;
+        lat = -60.100001;
+        xy = v.getPixelCoordinates(lon, lat);
+        double[] xy1 = v.getPixelCoordinates(lon + 360*3, lat);
+        double[] xy2 = v.getPixelCoordinates(lon - 360*2, lat);
+        ll = v.getGeoCoordinates(xy[0], xy[1]);
+        double[] ll1 = v.getGeoCoordinates(xy1[0], xy1[1]);
+        double[] ll2 = v.getGeoCoordinates(xy2[0], xy2[1]);
+        assertEquals(ll[0], ll1[0], 0.0001);
+        assertEquals(ll1[0], ll2[0], 0.0001);
     }
 
     @Test

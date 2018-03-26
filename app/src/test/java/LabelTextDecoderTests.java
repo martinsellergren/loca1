@@ -5,51 +5,64 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 public class LabelTextDecoderTests {
-    // MapRequest.ViewAndImgs vis = MapRequest.sweden();
+    //MapRequest.ViewAndImgs vis = MapRequest.sweden();
+    static BasicImage fimg;
+    static BasicImage cimg;
+    static BasicImage bimg;
 
-    // @BeforeClass
-    // public static void setUp() throws IOException {
-    //     LabelTextDecoder.init();
-    //     CategoryDecoder.init();
-    // }
+    @BeforeClass
+    public static void setUp() throws IOException {
+        LabelTextDecoder.init();
+
+        fimg = BasicImage.load("tile-2-1-full.png");
+        cimg = BasicImage.load("tile-2-1-code.png");
+        bimg = BasicImage.load("tile-2-1-box.png");
+    }
 
     // @Test
     // public void drawSingleAnalysisGrid() throws IOException {
-    //     LabelLayoutIterator iter = new LabelLayoutIterator(imgs[2].getOneImage());
-    //     LabelLayout lay = iter.expandToLabelLayout(new int[]{924, 1516});
+    //     LabelLayoutIterator iter = new LabelLayoutIterator(bimg);
+    //     LabelLayout lay = iter.expandToLabelLayout(new int[]{999, 701});
     //     Box[] bs = lay.getBoxes();
-    //     Box b = bs[5];
-    //     BasicImage img = imgs[1].getOneImage();
+    //     Box b = bs[9];
+    //     BasicImage cimg_ = cimg.copy();
     //     Box[] blocks = b.split(LabelTextDecoder.CODE_BOX_ROWS, LabelTextDecoder.CODE_BOX_COLS);
 
     //     for (Box block : blocks) {
-    //         img.drawBox(block);
+    //         cimg_.drawBox(block);
     //     }
 
-    //     img.save("test_CodeFontDecoder_drawAnalysisGrid_code.png");
-    //     imgs[0].save("test_CodeFontDecoder_drawAnalysisGrid_full.png");
+    //     cimg_.save("test_CodeFontDecoder_drawAnalysisGrid_code.png");
+    //     fimg.save("test_CodeFontDecoder_drawAnalysisGrid_full.png");
     // }
 
-    // @Test
-    // public void drawAllAnalysisGrids() throws IOException {
-    //     LinkedList<LabelLayout> lays = LabelLayoutIterator.getLayouts(vis.imgs[2], vis.view);
-    //     BasicImage cimg = vis.imgs[1].getOneImage();
+    @Test
+    public void drawAllAnalysisGrids() throws IOException {
+        LabelLayoutIterator iter = new LabelLayoutIterator(bimg);
+        LabelLayout lay;
+        BasicImage cimg_ = cimg.copy();
 
-    //     for (LabelLayout lay : lays) {
-    //         Box[] bs = lay.getBoxes();
+        while ((lay=iter.next()) != null) {
+            Box[] bs = lay.getBoxes();
 
-    //         for (Box b : bs) {
-    //             Box[] blocks = b.split(LabelTextDecoder.CODE_BOX_ROWS, LabelTextDecoder.CODE_BOX_COLS);
+            for (Box b : bs) {
+                Box[] blocks = b.split(LabelTextDecoder.CODE_BOX_ROWS, LabelTextDecoder.CODE_BOX_COLS);
 
-    //             for (Box block : blocks) {
-    //                 cimg.drawBox(block);
-    //             }
-    //         }
-    //     }
+                for (Box block : blocks) {
+                    cimg_.drawBox(block);
+                }
 
-    //     cimg.save("test_CodeFontDecoder_drawAnalysisGrid_code.png");
-    //     vis.imgs[0].save("test_CodeFontDecoder_drawAnalysisGrid_full.png");
-    // }
+                try {
+                    System.out.println(LabelTextDecoder.decode(lay, cimg));
+                }catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+        }
+
+        cimg_.save("test_CodeFontDecoder_drawAnalysisGrid_code.png");
+        fimg.save("test_CodeFontDecoder_drawAnalysisGrid_full.png");
+    }
 
 
     // @Test

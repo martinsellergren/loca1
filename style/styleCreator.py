@@ -148,7 +148,7 @@ def undecorateText(data):
     for layer in getLabelLayers(data):
         paint = layer['paint']
         paint['icon-opacity'] = 0
-        paint['text-opacity'] = 1
+        #paint['text-opacity'] = 1
         paint['text-color'] = 'hsla(0, 0%, 0%, 1)'
         paint['text-halo-color'] = 'hsla(0, 0%, 0%, 0)'
 

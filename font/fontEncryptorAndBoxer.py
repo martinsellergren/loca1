@@ -19,6 +19,7 @@ symbol [ .
 import fontforge
 import sys
 import unicodedata
+import unidecode
 import json
 
 # c: unicode character.
@@ -35,7 +36,7 @@ def isDigit(c):
 # return: True if c is a symbol of interest (i.e don't translate
 # it to space).
 def isSymbolOfInterest(c):
-    return c in ['(', ')', '[', ']', '&', '%', '$', '@', '!', '.', ',', '-', '*', '?', '{', '}', ':', ';']
+    return c in ['(', ')', '[', ']', '&', '%', '$', '@', '!', '.', ',', '-', '*', '?', '{', '}', ':', ';', '\'']
 
 
 #uni: int representing a unicode code-point
@@ -43,10 +44,20 @@ def isSymbolOfInterest(c):
 def getAppropriateChar(uni):
     if uni < 0: return u' '
     c = unichr(uni)
+    if uni > 591: #outside latin
+        c = simplify(c)
     if isLetter(c): return c.lower()
     if isDigit(c): return c
     if isSymbolOfInterest(c): return c
     else: return u' '
+
+#c: unicode char
+#return ae->a etc
+def simplify(c):
+    str = unicode(unidecode.unidecode(c))
+    if len(str) == 0: return u' '
+    else: return str[0]
+
 
 #char: unicode char
 def getMapping(char):
@@ -154,7 +165,7 @@ def saveMappings():
 
 #-------------------------------------------------------------START
 
-CODE_BOX_ROWS = 5
+CODE_BOX_ROWS = 4
 CODE_BOX_COLS = 2
 
 #maps index to unicode

@@ -1,5 +1,7 @@
 package map;
 
+import java.util.Arrays;
+
 /**
  * A representation of a subsection of an image containing a map.
  * Enables easy convertion between image-pixel and geo-coordinates.
@@ -175,6 +177,27 @@ public class MapImageView {
     }
 
     /**
+     * @return Geo-coordinates lon-lat center.
+     */
+    public double[] getGeoMid() {
+        return new double[]{this.lon, this.lat};
+    }
+
+    /**
+     * @return Local mid-point [x,y].
+     */
+    public double[] getPixelMid() {
+        return new double[]{this.width / 2, this.height / 2};
+    }
+
+    /**
+     * @return Global-pixel-midpoint [x,y].
+     */
+    private double[] getGlobalPixelMid() {
+        return getPixelCoordinates_global(this.lon, this.lat);
+    }
+
+    /**
      * Finds the bounds of another view when it is placed inside
      * this one.
      * @return [xmin, ymin, xmax, ymax]. Returned points are inside
@@ -194,17 +217,24 @@ public class MapImageView {
 
     /**
      * @returns Global pixel bounds [xmin ymin xmax ymax].
-     * Unwrapped, i.e xmax might go beyond global-max-value.
+     * Unwrapped, i.e xmax might go beyond global-max-value,
+     * xmin might be less than zero.
      */
     public/***/ double[] getGlobalPixelBounds() {
-        double[] wsen = getGeoBounds();
-        double[] tl = getPixelCoordinates_global(wsen[0], wsen[3]);
-        double[] br = getPixelCoordinates_global(wsen[2], wsen[1]);
+        double[] mid = getGlobalPixelMid();
+        return new double[]{mid[0] - width/2,
+                            mid[1] - height/2,
+                            mid[0] + width/2,
+                            mid[1] + height/2};
 
-        double[] bs = new double[]{tl[0], tl[1], br[0], br[1]};
-        if (bs[2] <= bs[0]) bs[2] += getGlobalPixelMax()[0];
+        // double[] wsen = getGeoBounds();
+        // double[] tl = getPixelCoordinates_global(wsen[0], wsen[3]);
+        // double[] br = getPixelCoordinates_global(wsen[2], wsen[1]);
 
-        return bs;
+        // double[] bs = new double[]{tl[0], tl[1], br[0], br[1]};
+        // if (bs[2] <= bs[0]) bs[2] += getGlobalPixelMax()[0];
+
+        // return bs;
     }
 
     /**
@@ -312,6 +342,9 @@ public class MapImageView {
      * @return [lon, lat]]
      */
     public double[] getGeoCoordinates(double x, double y) {
+        if (x < 0) x += getGlobalPixelMax()[0];
+        if (x > this.width) x -= getGlobalPixelMax()[0];
+
         double[] globalMid = getPixelCoordinates_global(this.lon, this.lat, this.zoom, this.x2);
         double globalX = globalMid[0] - this.width/2d + x;
         double globalY = globalMid[1] - this.height/2d + y;
@@ -336,7 +369,12 @@ public class MapImageView {
         double tly = globalMid[1] - this.height/2d;
 
         double[] globalXY = getPixelCoordinates_global(lon, lat, this.zoom, this.x2);
-        return new double[]{ globalXY[0]-tlx, globalXY[1]-tly };
+
+        double[] p = new double[]{ globalXY[0]-tlx, globalXY[1]-tly };
+        if (p[0] < 0) p[0] += getGlobalPixelMax()[0];
+        if (p[0] > this.width) p[0] -= getGlobalPixelMax()[0];
+
+        return p;
     }
     public double[] getPixelCoordinates(double[] ll) {
         return getPixelCoordinates(ll[0], ll[1]);

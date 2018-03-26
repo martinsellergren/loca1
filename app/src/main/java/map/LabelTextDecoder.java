@@ -28,7 +28,7 @@ public class LabelTextDecoder {
 
     /**
      * Layout of code-image. */
-    public static final int CODE_BOX_ROWS = 5;
+    public static final int CODE_BOX_ROWS = 4;
     public static final int CODE_BOX_COLS = 2;
 
     /**
@@ -86,6 +86,53 @@ public class LabelTextDecoder {
      * per box in the layout.
      */
     public static String decode(LabelLayout lay, TiledImage codeImg) throws UnknownCharacterException, IOException {
+        String txt = "";
+        for (Box b : lay.getBoxesWithNewlines())
+            if (b == null) txt += " ";
+            else txt += decode(b, codeImg);
+        return txt;
+    }
+
+    //--------------------------------------------testing
+
+
+    /**
+     * @param b Specifies area of a letter.
+     * @param codeImg Image containing letter specified by b.
+     * @return The character mapped by decoded integer.
+     */
+    public static char decode(Box b, BasicImage codeImg) throws UnknownCharacterException, IOException {
+        if (mappings == null)
+            throw new RuntimeException("Call init() !");
+
+        Box[] bs = b.split(CODE_BOX_ROWS, CODE_BOX_COLS);
+        String binary = "";
+
+        for (Box block : bs) {
+            int[] mid = Math2.toInt(block.getMid());
+
+            if (codeImg.getColor(mid).getAlpha() < ALPHA_THRESHOLD)
+                binary += "0";
+            else
+                binary += "1";
+        }
+
+        binary = new StringBuilder(binary).reverse().toString();
+        int index = Integer.parseInt(binary, 2);
+        if (index >= mappings.length)
+            throw new UnknownCharacterException("Bad code: " + index + ", caused by box: " + b);
+
+        int codePoint = mappings[index];
+        return new String(Character.toChars(codePoint)).charAt(0);
+    }
+
+    /**
+     * @param lay Label-layout.
+     * @param codeImg Code-image containing label described by lay.
+     * @return Label-text forlabel described by lay. One char
+     * per box in the layout.
+     */
+    public static String decode(LabelLayout lay, BasicImage codeImg) throws UnknownCharacterException, IOException {
         String txt = "";
         for (Box b : lay.getBoxesWithNewlines())
             if (b == null) txt += " ";
