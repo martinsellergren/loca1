@@ -10,14 +10,14 @@ public class LabelTextDecoderTests {
     static BasicImage cimg;
     static BasicImage bimg;
 
-    @BeforeClass
-    public static void setUp() throws IOException {
-        LabelTextDecoder.init();
+    // @BeforeClass
+    // public static void setUp() throws IOException {
+    //     LabelTextDecoder.init();
 
-        fimg = BasicImage.load("tile-2-1-full.png");
-        cimg = BasicImage.load("tile-2-1-code.png");
-        bimg = BasicImage.load("tile-2-1-box.png");
-    }
+    //     fimg = BasicImage.load("tile-2-1-full.png");
+    //     cimg = BasicImage.load("tile-2-1-code.png");
+    //     bimg = BasicImage.load("tile-2-1-box.png");
+    // }
 
     // @Test
     // public void drawSingleAnalysisGrid() throws IOException {
@@ -36,33 +36,33 @@ public class LabelTextDecoderTests {
     //     fimg.save("test_CodeFontDecoder_drawAnalysisGrid_full.png");
     // }
 
-    @Test
-    public void drawAllAnalysisGrids() throws IOException {
-        LabelLayoutIterator iter = new LabelLayoutIterator(bimg);
-        LabelLayout lay;
-        BasicImage cimg_ = cimg.copy();
+    // @Test
+    // public void drawAllAnalysisGrids() throws IOException {
+    //     LabelLayoutIterator iter = new LabelLayoutIterator(bimg);
+    //     LabelLayout lay;
+    //     BasicImage cimg_ = cimg.copy();
 
-        while ((lay=iter.next()) != null) {
-            Box[] bs = lay.getBoxes();
+    //     while ((lay=iter.next()) != null) {
+    //         Box[] bs = lay.getBoxes();
 
-            for (Box b : bs) {
-                Box[] blocks = b.split(LabelTextDecoder.CODE_BOX_ROWS, LabelTextDecoder.CODE_BOX_COLS);
+    //         for (Box b : bs) {
+    //             Box[] blocks = b.split(LabelTextDecoder.CODE_BOX_ROWS, LabelTextDecoder.CODE_BOX_COLS);
 
-                for (Box block : blocks) {
-                    cimg_.drawBox(block);
-                }
+    //             for (Box block : blocks) {
+    //                 cimg_.drawBox(block);
+    //             }
 
-                try {
-                    System.out.println(LabelTextDecoder.decode(lay, cimg));
-                }catch (Exception e) {
-                    System.out.println(e);
-                }
-            }
-        }
+    //             try {
+    //                 System.out.println(LabelTextDecoder.decode(lay, cimg));
+    //             }catch (Exception e) {
+    //                 System.out.println(e);
+    //             }
+    //         }
+    //     }
 
-        cimg_.save("test_CodeFontDecoder_drawAnalysisGrid_code.png");
-        fimg.save("test_CodeFontDecoder_drawAnalysisGrid_full.png");
-    }
+    //     cimg_.save("test_CodeFontDecoder_drawAnalysisGrid_code.png");
+    //     fimg.save("test_CodeFontDecoder_drawAnalysisGrid_full.png");
+    // }
 
 
     // @Test
